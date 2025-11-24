@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("SUPERVISOR") // ADMIN, SUPERVISOR
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reports   Report[] @relation("AssignedReports")
+}
+
+model Report {
+  id           String       @id @default(uuid())
+  trackingCode String       @unique
+  type         String
+  description  String
+  status       String       @default("PENDING") // PENDING, IN_PROGRESS, RESOLVED, REJECTED
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  assignedToId String?
+  assignedTo   User?        @relation("AssignedReports", fields: [assignedToId], references: [id])
+  attachments  Attachment[]
+  messages     Message[]
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  reportId  String
+  url       String
+  type      String
+  createdAt DateTime @default(now())
+  report    Report   @relation(fields: [reportId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  reportId  String
+  content   String
+  sender    String // USER, ADMIN
+  createdAt DateTime @default(now())
+  report    Report   @relation(fields: [reportId], references: [id])
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
