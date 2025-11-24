@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createReport } from '@/app/actions/reports'
 import { reportSchema, type ReportInput } from '@/app/schemas/report'
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/app/_components/ui/button"
+import { Textarea } from "@/app/_components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/app/_components/ui/card"
 import {
   Form,
   FormControl,
@@ -17,15 +17,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/app/_components/ui/form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
+} from "@/app/_components/ui/select"
+import { Input } from "@/app/_components/ui/input"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 

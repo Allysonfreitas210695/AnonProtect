@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { Card, CardContent } from "@/components/ui/card"
-import { getReportByCode } from '@/lib/data'
-import { MessageList } from '@/components/shared/message-list'
-import { ReportCard } from '@/components/shared/report-card'
+import { Card, CardContent } from "@/app/_components/ui/card"
+import { getReportByCode } from '@/app/_lib/data'
+import { MessageList } from '@/app/_components/shared/message-list'
+import { ReportCard } from '@/app/_components/shared/report-card'
 import { MessageForm } from './message-form'
 
 export const dynamic = 'force-dynamic'

@@ -1,4 +1,4 @@
-import { getReportStats, getQuickStats } from '@/lib/stats'
+import { getReportStats, getQuickStats } from '@/app/_lib/stats'
 import { StatsCards } from './stats'
 import { StatusChart, CategoryChart, TimelineChart } from './charts'
 

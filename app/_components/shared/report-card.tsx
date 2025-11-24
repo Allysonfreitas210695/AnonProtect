@@ -1,8 +1,8 @@
 import { Report } from '@prisma/client'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { formatDate, formatStatus, formatCategory } from '@/lib/utils/formatters'
-import { STATUS_COLORS } from '@/lib/constants'
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
+import { Badge } from '@/app/_components/ui/badge'
+import { formatDate, formatStatus, formatCategory } from '@/app/_lib/utils/formatters'
+import { STATUS_COLORS } from '@/app/_lib/constants'
 
 interface ReportCardProps {
   report: Report

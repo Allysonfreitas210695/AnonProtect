@@ -6,11 +6,11 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { login } from './actions'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/app/_components/ui/button"
+import { Input } from "@/app/_components/ui/input"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form"
+import { Alert, AlertDescription } from "@/app/_components/ui/alert"
 import { Shield, Loader2 } from 'lucide-react'
 
 const loginSchema = z.object({

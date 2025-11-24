@@ -1,8 +1,8 @@
 'use client'
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, LineChart, Line } from 'recharts'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { REPORT_STATUS, REPORT_TYPES } from '@/lib/constants'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card"
+import { REPORT_STATUS, REPORT_TYPES } from '@/app/_lib/constants'
 
 const STATUS_COLORS = {
   PENDING: '#f59e0b',
@@ -36,7 +36,7 @@ export function StatusChart({ data }: StatusChartProps) {
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, percentage }) => `${name}: ${percentage}%`}
+              label={({ name, percentage }: any) => `${name}: ${percentage}%`}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"

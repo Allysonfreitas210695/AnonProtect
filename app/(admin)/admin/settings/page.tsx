@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/app/_components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/_components/ui/card"
+import { Badge } from "@/app/_components/ui/badge"
 import { ArrowLeft } from 'lucide-react'
-import { getAllCategories } from '@/lib/data'
+import { getAllCategories } from '@/app/_lib/data'
 import { CategoryForm } from './category-form'
 import { CategoryActions } from './category-actions'
 

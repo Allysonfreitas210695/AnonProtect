@@ -3,10 +3,10 @@
 import { useEffect, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { createCategory } from './actions'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/app/_components/ui/button"
+import { Input } from "@/app/_components/ui/input"
+import { Textarea } from "@/app/_components/ui/textarea"
+import { Label } from "@/app/_components/ui/label"
 import { toast } from 'sonner'
 import { Plus } from 'lucide-react'
 

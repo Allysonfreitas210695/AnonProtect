@@ -1,8 +1,8 @@
 'use client'
 
 import { useActionState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/app/_components/ui/button"
+import { Input } from "@/app/_components/ui/input"
 import { sendMessage } from '@/app/actions/messages'
 import { useEffect } from 'react'
 import { toast } from 'sonner'

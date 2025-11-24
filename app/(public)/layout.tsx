@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 import { Shield, Home } from 'lucide-react'
 
 export default function PublicLayout({

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 import Link from 'next/link'
 import { logout } from '@/app/(public)/login/actions'
 import { LayoutDashboard, FileText, Settings, LogOut, User, Shield, Menu, X } from 'lucide-react'

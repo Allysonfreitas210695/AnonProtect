@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Report } from '@prisma/client'
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/app/_components/ui/button"
+import { Badge } from "@/app/_components/ui/badge"
 import {
   Table,
   TableBody,
@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { getAllReports } from '@/lib/data'
-import { REPORT_STATUS, STATUS_COLORS, REPORT_TYPES } from '@/lib/constants'
+} from "@/app/_components/ui/table"
+import { getAllReports } from '@/app/_lib/data'
+import { REPORT_STATUS, STATUS_COLORS, REPORT_TYPES } from '@/app/_lib/constants'
 import { Settings } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'

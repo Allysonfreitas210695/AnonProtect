@@ -1,7 +1,7 @@
 'use client'
 
 import { Message } from '@prisma/client'
-import { formatTime } from '@/lib/utils/formatters'
+import { formatTime } from '@/app/_lib/utils/formatters'
 
 interface MessageListProps {
   messages: Message[]

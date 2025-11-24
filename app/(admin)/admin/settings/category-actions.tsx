@@ -2,7 +2,7 @@
 
 import { useEffect, useActionState } from 'react'
 import { toggleCategory, deleteCategory } from './actions'
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 import { toast } from 'sonner'
 import { Power, Trash2 } from 'lucide-react'
 

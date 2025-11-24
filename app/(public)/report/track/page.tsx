@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/app/_components/ui/button"
+import { Input } from "@/app/_components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card"
+import { Label } from "@/app/_components/ui/label"
 
 async function trackReport(formData: FormData) {
   'use server'

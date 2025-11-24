@@ -3,7 +3,7 @@
 import { useEffect, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { updateReportStatus } from '@/app/actions/reports'
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/_components/ui/button"
 import { toast } from 'sonner'
 
 export function StatusUpdateForm({ reportId, currentStatus }: { reportId: string, currentStatus: string }) {

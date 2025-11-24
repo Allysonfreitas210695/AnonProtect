@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/app/_components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/app/_components/ui/alert"
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card"
 import { CheckCircle2 } from "lucide-react"
 
 export default async function SuccessPage({

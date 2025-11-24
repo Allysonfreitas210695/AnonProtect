@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card"
 import { FileText, Clock, CheckCircle2, TrendingUp } from 'lucide-react'
 
 interface StatsCardsProps {

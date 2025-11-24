@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/app/_lib/prisma'
 
 export async function getReportByCode(code: string) {
   return await prisma.report.findUnique({

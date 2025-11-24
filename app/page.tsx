@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/app/_components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/app/_components/ui/card";
 import { Shield, MessageSquare, CheckCircle2 } from "lucide-react";
 
 export default function Home() {

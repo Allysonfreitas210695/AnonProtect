@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
-import { verifyPassword } from '@/lib/password'
+import { prisma } from '@/app/_lib/prisma'
+import { verifyPassword } from '@/app/_lib/password'
 
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get('email') as string

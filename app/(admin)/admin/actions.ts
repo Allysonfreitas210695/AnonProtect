@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/app/_lib/prisma'
 import { revalidatePath } from 'next/cache'
 
 export async function updateStatus(formData: FormData) {
