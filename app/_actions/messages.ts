@@ -2,8 +2,8 @@
 
 import { prisma } from '@/app/_lib/prisma'
 import { revalidatePath } from 'next/cache'
-import { messageSchema } from '../schemas/category'
-import type { ActionResult } from '../types'
+import { messageSchema } from '@/app/_schemas/category'
+import type { ActionResult } from '@/app/_types'
 
 export async function sendMessage(prevState: any, formData: FormData): Promise<ActionResult> {
   const data = {

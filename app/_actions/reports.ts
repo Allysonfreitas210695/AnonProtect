@@ -3,8 +3,8 @@
 import { prisma } from '@/app/_lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { reportSchema, reportStatusSchema } from '../schemas/report'
-import type { ActionResult } from '../types'
+import { reportSchema, reportStatusSchema } from '@/app/_schemas/report'
+import type { ActionResult } from '@/app/_types'
 
 export async function createReport(prevState: any, formData: FormData) {
   const data = {

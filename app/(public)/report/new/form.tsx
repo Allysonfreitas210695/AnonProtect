@@ -4,8 +4,8 @@ import { useEffect, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createReport } from '@/app/actions/reports'
-import { reportSchema, type ReportInput } from '@/app/schemas/report'
+import { createReport } from '@/app/_actions/reports'
+import { reportSchema, type ReportInput } from '@/app/_schemas/report'
 import { Button } from "@/app/_components/ui/button"
 import { Textarea } from "@/app/_components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/app/_components/ui/card"

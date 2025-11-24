@@ -2,7 +2,7 @@
 
 import { useEffect, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { updateReportStatus } from '@/app/actions/reports'
+import { updateReportStatus } from '@/app/_actions/reports'
 import { Button } from "@/app/_components/ui/button"
 import { toast } from 'sonner'
 

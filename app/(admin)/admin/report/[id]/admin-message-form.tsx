@@ -3,7 +3,7 @@
 import { useActionState, useEffect } from 'react'
 import { Button } from "@/app/_components/ui/button"
 import { Input } from "@/app/_components/ui/input"
-import { sendAdminReply } from '@/app/actions/messages'
+import { sendAdminReply } from '@/app/_actions/messages'
 import { toast } from 'sonner'
 
 interface AdminMessageFormProps {
