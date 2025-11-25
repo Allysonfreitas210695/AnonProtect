@@ -2,10 +2,11 @@
 
 import { prisma } from '@/app/_lib/prisma'
 import { revalidatePath } from 'next/cache'
+import { ReportStatus, MessageSender } from '@prisma/client'
 
 export async function updateStatus(formData: FormData) {
   const reportId = formData.get('reportId') as string
-  const status = formData.get('status') as string
+  const status = formData.get('status') as ReportStatus
 
   if (!reportId || !status) {
     throw new Error('Dados inválidos')
@@ -19,7 +20,7 @@ export async function updateStatus(formData: FormData) {
 
     revalidatePath(`/admin/report/${reportId}`)
     revalidatePath('/admin')
-    
+
     return { success: true, message: 'Status atualizado com sucesso!' }
   } catch (error) {
     console.error('Error updating status:', error)
@@ -40,12 +41,12 @@ export async function replyToReport(formData: FormData) {
       data: {
         reportId,
         content,
-        sender: 'ADMIN',
+        sender: MessageSender.ADMIN,
       },
     })
 
     revalidatePath(`/admin/report/${reportId}`)
-    
+
     return { success: true, message: 'Mensagem enviada!' }
   } catch (error) {
     console.error('Error sending message:', error)

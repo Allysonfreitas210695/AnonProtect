@@ -1,4 +1,4 @@
-import { Attachment } from '@prisma/client'
+import { Attachment, AttachmentCategory } from '@prisma/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { Badge } from '@/app/_components/ui/badge'
 import { FileText, Image, Video, Music, Download } from 'lucide-react'
@@ -8,30 +8,30 @@ interface EvidenceGalleryProps {
   attachments: Attachment[]
 }
 
-function getIconByCategory(category: string) {
+function getIconByCategory(category: AttachmentCategory) {
   switch (category) {
-    case 'PHOTO':
+    case AttachmentCategory.PHOTO:
       return <Image className="h-5 w-5" />
-    case 'VIDEO':
+    case AttachmentCategory.VIDEO:
       return <Video className="h-5 w-5" />
-    case 'AUDIO':
+    case AttachmentCategory.AUDIO:
       return <Music className="h-5 w-5" />
-    case 'DOCUMENT':
+    case AttachmentCategory.DOCUMENT:
       return <FileText className="h-5 w-5" />
     default:
       return <FileText className="h-5 w-5" />
   }
 }
 
-function getCategoryLabel(category: string) {
-  const labels: Record<string, string> = {
-    PHOTO: 'Foto',
-    VIDEO: 'Vídeo',
-    AUDIO: 'Áudio',
-    DOCUMENT: 'Documento',
-    OTHER: 'Outro',
+function getCategoryLabel(category: AttachmentCategory) {
+  const labels: Record<AttachmentCategory, string> = {
+    [AttachmentCategory.PHOTO]: 'Foto',
+    [AttachmentCategory.VIDEO]: 'Vídeo',
+    [AttachmentCategory.AUDIO]: 'Áudio',
+    [AttachmentCategory.DOCUMENT]: 'Documento',
+    [AttachmentCategory.OTHER]: 'Outro',
   }
-  return labels[category] || 'Outro'
+  return labels[category]
 }
 
 function formatFileSize(bytes?: number) {
@@ -49,23 +49,23 @@ function formatFileSize(bytes?: number) {
 export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
   const evidenceByCategory = attachments.reduce(
     (acc, attachment) => {
-      const category = attachment.category || 'OTHER'
+      const category = attachment.category
       if (!acc[category]) {
         acc[category] = []
       }
       acc[category].push(attachment)
       return acc
     },
-    {} as Record<string, Attachment[]>
+    {} as Record<AttachmentCategory, Attachment[]>
   )
 
   const stats = {
     total: attachments.length,
-    photos: evidenceByCategory.PHOTO?.length || 0,
-    videos: evidenceByCategory.VIDEO?.length || 0,
-    documents: evidenceByCategory.DOCUMENT?.length || 0,
-    audios: evidenceByCategory.AUDIO?.length || 0,
-    others: evidenceByCategory.OTHER?.length || 0,
+    photos: evidenceByCategory[AttachmentCategory.PHOTO]?.length || 0,
+    videos: evidenceByCategory[AttachmentCategory.VIDEO]?.length || 0,
+    documents: evidenceByCategory[AttachmentCategory.DOCUMENT]?.length || 0,
+    audios: evidenceByCategory[AttachmentCategory.AUDIO]?.length || 0,
+    others: evidenceByCategory[AttachmentCategory.OTHER]?.length || 0,
   }
 
   if (attachments.length === 0) {
@@ -187,7 +187,7 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
                 </div>
 
                 {/* Preview for images */}
-                {attachment.category === 'PHOTO' && (
+                {attachment.category === AttachmentCategory.PHOTO && (
                   <div className="mt-3">
                     <img
                       src={attachment.url}

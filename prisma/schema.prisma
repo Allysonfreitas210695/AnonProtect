@@ -10,12 +10,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Enums for type-safety
+enum UserRole {
+  ADMIN
+  SUPERVISOR
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum AttachmentCategory {
+  PHOTO
+  VIDEO
+  DOCUMENT
+  AUDIO
+  OTHER
+}
+
+enum MessageSender {
+  USER
+  ADMIN
+}
+
+enum ActivityAction {
+  CREATED
+  STATUS_CHANGED
+  ASSIGNED
+  MESSAGE_SENT
+  NOTE_ADDED
+  EVIDENCE_ADDED
+}
+
 model User {
   id                 String              @id @default(uuid())
   email              String              @unique
   password           String
   name               String
-  role               String              @default("SUPERVISOR") // ADMIN, SUPERVISOR
+  role               UserRole            @default(SUPERVISOR)
   active             Boolean             @default(true)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
@@ -25,41 +60,41 @@ model User {
 }
 
 model Report {
-  id                String             @id @default(uuid())
-  trackingCode      String             @unique
-  type              String
-  description       String
-  status            String             @default("PENDING") // PENDING, IN_PROGRESS, RESOLVED, REJECTED
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  assignedToId      String?
-  assignedTo        User?              @relation("AssignedReports", fields: [assignedToId], references: [id])
-  attachments       Attachment[]
-  messages          Message[]
+  id                 String              @id @default(uuid())
+  trackingCode       String              @unique
+  type               String
+  description        String
+  status             ReportStatus        @default(PENDING)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  assignedToId       String?
+  assignedTo         User?               @relation("AssignedReports", fields: [assignedToId], references: [id])
+  attachments        Attachment[]
+  messages           Message[]
   investigationNotes InvestigationNote[]
-  activityLogs      ActivityLog[]
+  activityLogs       ActivityLog[]
 }
 
 model Attachment {
-  id          String   @id @default(uuid())
+  id          String             @id @default(uuid())
   reportId    String
   url         String
-  type        String   // MIME type (image/jpeg, video/mp4, etc.)
-  category    String   @default("OTHER") // PHOTO, VIDEO, DOCUMENT, AUDIO, OTHER
+  type        String             // MIME type (image/jpeg, video/mp4, etc.)
+  category    AttachmentCategory @default(OTHER)
   description String?
   fileName    String
   fileSize    Int?
-  createdAt   DateTime @default(now())
-  report      Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  createdAt   DateTime           @default(now())
+  report      Report             @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model Message {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   reportId  String
   content   String
-  sender    String   // USER, ADMIN
-  createdAt DateTime @default(now())
-  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  sender    MessageSender
+  createdAt DateTime      @default(now())
+  report    Report        @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -85,15 +120,15 @@ model InvestigationNote {
 }
 
 model ActivityLog {
-  id          String   @id @default(uuid())
+  id          String         @id @default(uuid())
   reportId    String
   userId      String?
-  action      String   // CREATED, STATUS_CHANGED, ASSIGNED, MESSAGE_SENT, NOTE_ADDED, EVIDENCE_ADDED
+  action      ActivityAction
   description String
-  metadata    String?  // JSON string for additional data
-  createdAt   DateTime @default(now())
-  report      Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  user        User?    @relation("ActivityLogs", fields: [userId], references: [id])
+  metadata    String?        // JSON string for additional data
+  createdAt   DateTime       @default(now())
+  report      Report         @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  user        User?          @relation("ActivityLogs", fields: [userId], references: [id])
 
   @@index([reportId])
   @@index([createdAt])

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, UserRole, ReportStatus, MessageSender } from '@prisma/client'
 import { hashPassword } from '../app/_lib/password'
 
 const prisma = new PrismaClient()
@@ -39,7 +39,7 @@ async function main() {
       email: 'admin@sistema.com',
       password: adminPassword,
       name: 'Administrador',
-      role: 'ADMIN',
+      role: UserRole.ADMIN,
     },
   })
 
@@ -50,7 +50,7 @@ async function main() {
       email: 'supervisor@sistema.com',
       password: supervisorPassword,
       name: 'Supervisor',
-      role: 'SUPERVISOR',
+      role: UserRole.SUPERVISOR,
     },
   })
 
@@ -60,41 +60,42 @@ async function main() {
     {
       trackingCode: 'RPT-DEMO01',
       type: 'Bullying',
-      description: 'Presenciei um colega sendo constantemente humilhado por um grupo de estudantes no corredor.',
-      status: 'IN_PROGRESS',
+      description:
+        'Presenciei um colega sendo constantemente humilhado por um grupo de estudantes no corredor.',
+      status: ReportStatus.IN_PROGRESS,
       assignedToId: supervisor.id,
     },
     {
       trackingCode: 'RPT-DEMO02',
       type: 'Assédio',
       description: 'Recebi comentários inapropriados de um superior hierárquico durante reunião.',
-      status: 'PENDING',
+      status: ReportStatus.PENDING,
     },
     {
       trackingCode: 'RPT-DEMO03',
       type: 'Violência',
       description: 'Houve uma briga física no pátio durante o intervalo.',
-      status: 'RESOLVED',
+      status: ReportStatus.RESOLVED,
       assignedToId: admin.id,
     },
     {
       trackingCode: 'RPT-DEMO04',
       type: 'Irregularidade',
       description: 'Notei irregularidades no processo de compras do departamento.',
-      status: 'IN_PROGRESS',
+      status: ReportStatus.IN_PROGRESS,
       assignedToId: admin.id,
     },
     {
       trackingCode: 'RPT-DEMO05',
       type: 'Discriminação',
       description: 'Presenciei comentários discriminatórios contra um colega.',
-      status: 'PENDING',
+      status: ReportStatus.PENDING,
     },
     {
       trackingCode: 'RPT-DEMO06',
       type: 'Vandalismo',
       description: 'Equipamentos da sala de informática foram danificados propositalmente.',
-      status: 'RESOLVED',
+      status: ReportStatus.RESOLVED,
       assignedToId: supervisor.id,
     },
   ]
@@ -115,14 +116,14 @@ async function main() {
       data: {
         reportId: report1.id,
         content: 'Obrigado por reportar. Estamos investigando o caso.',
-        sender: 'ADMIN',
+        sender: MessageSender.ADMIN,
       },
     })
     await prisma.message.create({
       data: {
         reportId: report1.id,
         content: 'Vocês já identificaram os envolvidos?',
-        sender: 'USER',
+        sender: MessageSender.USER,
       },
     })
   }

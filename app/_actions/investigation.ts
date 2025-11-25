@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/app/_lib/prisma'
 import { z } from 'zod'
+import { ActivityAction } from '@prisma/client'
 
 const investigationNoteSchema = z.object({
   reportId: z.string().uuid(),
@@ -39,7 +40,7 @@ export async function createInvestigationNote(prevState: unknown, formData: Form
       data: {
         reportId: validated.reportId,
         userId,
-        action: 'NOTE_ADDED',
+        action: ActivityAction.NOTE_ADDED,
         description: 'Nota de investigação adicionada',
       },
     })
@@ -54,7 +55,7 @@ export async function createInvestigationNote(prevState: unknown, formData: Form
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        message: error.errors[0].message,
+        message: error.issues[0].message,
       }
     }
 
@@ -94,7 +95,7 @@ export async function deleteInvestigationNote(prevState: unknown, formData: Form
 
 export async function logActivity(
   reportId: string,
-  action: string,
+  action: ActivityAction,
   description: string,
   userId?: string,
   metadata?: Record<string, unknown>

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ReportStatus } from '@prisma/client'
 
 export const reportSchema = z.object({
   type: z.string().min(1, 'Selecione um tipo de ocorrência'),
@@ -7,7 +8,7 @@ export const reportSchema = z.object({
 
 export const reportStatusSchema = z.object({
   reportId: z.string().uuid(),
-  status: z.enum(['PENDING', 'IN_PROGRESS', 'RESOLVED', 'REJECTED']),
+  status: z.nativeEnum(ReportStatus),
 })
 
 export const trackingCodeSchema = z.object({

@@ -1,4 +1,4 @@
-import { ActivityLog } from '@prisma/client'
+import { ActivityLog, ActivityAction } from '@prisma/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { Badge } from '@/app/_components/ui/badge'
 import {
@@ -20,38 +20,38 @@ interface ActivityTimelineProps {
   })[]
 }
 
-function getActivityIcon(action: string) {
+function getActivityIcon(action: ActivityAction) {
   switch (action) {
-    case 'CREATED':
+    case ActivityAction.CREATED:
       return <FileText className="h-4 w-4" />
-    case 'STATUS_CHANGED':
+    case ActivityAction.STATUS_CHANGED:
       return <CheckCircle2 className="h-4 w-4" />
-    case 'ASSIGNED':
+    case ActivityAction.ASSIGNED:
       return <UserCheck className="h-4 w-4" />
-    case 'MESSAGE_SENT':
+    case ActivityAction.MESSAGE_SENT:
       return <MessageSquare className="h-4 w-4" />
-    case 'NOTE_ADDED':
+    case ActivityAction.NOTE_ADDED:
       return <StickyNote className="h-4 w-4" />
-    case 'EVIDENCE_ADDED':
+    case ActivityAction.EVIDENCE_ADDED:
       return <Paperclip className="h-4 w-4" />
     default:
       return <AlertCircle className="h-4 w-4" />
   }
 }
 
-function getActivityColor(action: string) {
+function getActivityColor(action: ActivityAction) {
   switch (action) {
-    case 'CREATED':
+    case ActivityAction.CREATED:
       return 'bg-blue-500'
-    case 'STATUS_CHANGED':
+    case ActivityAction.STATUS_CHANGED:
       return 'bg-green-500'
-    case 'ASSIGNED':
+    case ActivityAction.ASSIGNED:
       return 'bg-purple-500'
-    case 'MESSAGE_SENT':
+    case ActivityAction.MESSAGE_SENT:
       return 'bg-yellow-500'
-    case 'NOTE_ADDED':
+    case ActivityAction.NOTE_ADDED:
       return 'bg-orange-500'
-    case 'EVIDENCE_ADDED':
+    case ActivityAction.EVIDENCE_ADDED:
       return 'bg-pink-500'
     default:
       return 'bg-gray-500'
