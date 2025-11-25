@@ -15,6 +15,32 @@ export async function getReportById(id: string) {
         orderBy: { createdAt: 'asc' },
       },
       assignedTo: true,
+      attachments: {
+        orderBy: { createdAt: 'desc' },
+      },
+      investigationNotes: {
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      },
+      activityLogs: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      },
     },
   })
 }
