@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { UserRole } from '@prisma/client'
 import { prisma } from '@/app/_lib/prisma'
 import { z } from 'zod'
 import { ActivityAction } from '@prisma/client'
@@ -24,8 +25,14 @@ export async function createInvestigationNote(prevState: unknown, formData: Form
 
     const validated = investigationNoteSchema.parse(data)
 
-    // TODO: Get userId from session
-    const userId = 'temp-user-id' // Replace with actual session user ID
+    // Retrieve a user ID (e.g., the first ADMIN) as a fallback for development
+    const adminUser = await prisma.user.findFirst({ where: { role: UserRole.ADMIN } })
+
+    if (!adminUser) {
+      throw new Error('Nenhum administrador encontrado para associar à nota')
+    }
+
+    const userId = adminUser.id
 
     await prisma.investigationNote.create({
       data: {
@@ -52,6 +59,7 @@ export async function createInvestigationNote(prevState: unknown, formData: Form
       message: 'Nota adicionada com sucesso',
     }
   } catch (error) {
+    console.error('Error creating investigation note:', error)
     if (error instanceof z.ZodError) {
       return {
         success: false,
@@ -61,7 +69,7 @@ export async function createInvestigationNote(prevState: unknown, formData: Form
 
     return {
       success: false,
-      message: 'Erro ao adicionar nota',
+      message: error instanceof Error ? error.message : 'Erro ao adicionar nota',
     }
   }
 }
