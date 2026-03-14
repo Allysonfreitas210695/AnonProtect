@@ -12,7 +12,7 @@ interface LogoProps {
 export function Logo({ className, showText = true, size = 40 }: LogoProps) {
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <div className="relative overflow-hidden rounded-lg">
+      <div className="relative overflow-hidden rounded-lg bg-white p-1 shadow-sm ring-1 ring-border/10">
         <Image
           src="/logo.png"
           alt="AnonProtect Logo"
