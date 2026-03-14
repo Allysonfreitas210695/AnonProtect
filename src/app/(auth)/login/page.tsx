@@ -13,22 +13,18 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Loader2 } from 'lucide-react'
-import Link from 'next/link'
 import { Logo } from '@/_components/shared/logo'
+import Link from 'next/link'
 
 export default function LoginPage() {
   const { form, onSubmit, isExecuting } = useLogin()
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
-      <Card className="border-border/50 w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl border-border/50">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
-            <Logo
-              size={60}
-              showText={false}
-              className="bg-primary/10 rounded-2xl p-4 shadow-inner"
-            />
+            <Logo size={60} showText={false} className="rounded-2xl bg-primary/10 p-4 shadow-inner" />
           </div>
           <div>
             <CardTitle className="text-3xl font-bold">Área Administrativa</CardTitle>
@@ -88,8 +84,8 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-3 text-sm">
-            <Link
-              href="/forgot-password"
+            <Link 
+              href="/forgot-password" 
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Esqueceu sua senha?
