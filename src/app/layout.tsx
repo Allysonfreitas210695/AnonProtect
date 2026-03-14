@@ -8,8 +8,11 @@ import { ThemeProvider } from '@/_components/shared/theme-provider'
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
-  title: 'Sistema de Denúncia Anônima',
-  description: 'Canal seguro e anônimo para denúncias.',
+  title: 'AnonProtect - Sistema de Denúncia Anônima',
+  description: 'Canal seguro e anônimo para denúncias de irregularidades.',
+  icons: {
+    icon: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
