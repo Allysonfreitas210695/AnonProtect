@@ -6,6 +6,7 @@ import { logoutAction } from '@/_actions/public/logout.action'
 import { LayoutDashboard, FileText, Settings, LogOut, User, Shield, Menu, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { ThemeToggle } from '@/_components/shared/theme-toggle'
 
 interface AdminLayoutClientProps {
   children: React.ReactNode
@@ -49,9 +50,9 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-white/95 shadow-sm backdrop-blur-sm dark:bg-slate-900/95">
+      <header className="sticky top-0 z-50 border-b bg-background/95 shadow-sm backdrop-blur-sm">
         <div className="flex h-16 items-center justify-between px-4 lg:px-6">
           {/* Logo e Menu Mobile */}
           <div className="flex items-center gap-3">
@@ -68,19 +69,20 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                 <Shield className="h-5 w-5" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-slate-900 dark:text-white">Painel Admin</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Sistema de Denúncias</p>
+                <h1 className="text-lg font-bold">Painel Admin</h1>
+                <p className="text-xs text-muted-foreground">Sistema de Denúncias</p>
               </div>
             </div>
           </div>
 
           {/* User Info */}
           <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 md:flex dark:bg-slate-800">
-              <User className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+            <ThemeToggle />
+            <div className="hidden items-center gap-2 rounded-lg bg-secondary px-3 py-2 md:flex">
+              <User className="h-4 w-4 text-muted-foreground" />
               <div className="text-sm">
-                <p className="font-medium text-slate-900 dark:text-white">{user.name}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{user.role}</p>
+                <p className="font-medium">{user.name}</p>
+                <p className="text-xs text-muted-foreground">{user.role}</p>
               </div>
             </div>
             <form action={logoutAction}>
@@ -96,7 +98,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       <div className="flex">
         {/* Sidebar */}
         <aside
-          className={`fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-white shadow-lg transition-transform duration-300 ease-in-out lg:sticky lg:shadow-none dark:bg-slate-900 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} `}
+          className={`fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-card shadow-lg transition-transform duration-300 ease-in-out lg:sticky lg:shadow-none ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} `}
         >
           <nav className="flex flex-col gap-1 p-4">
             {navItems.map((item) => {
@@ -109,11 +111,11 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                   onClick={() => setSidebarOpen(false)}
                   className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-200 ${
                     active
-                      ? 'bg-blue-50 font-medium text-blue-700 shadow-sm dark:bg-blue-950 dark:text-blue-300'
-                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                      ? 'bg-primary/10 font-medium text-primary shadow-sm'
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                   } `}
                 >
-                  <Icon className={`h-5 w-5 ${active ? 'text-blue-600 dark:text-blue-400' : ''}`} />
+                  <Icon className={`h-5 w-5 ${active ? 'text-primary' : ''}`} />
                   <span>{item.label}</span>
                 </Link>
               )
@@ -136,8 +138,8 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       </div>
 
       {/* Footer */}
-      <footer className="border-t bg-white py-4 lg:py-6 dark:bg-slate-900">
-        <div className="container mx-auto px-4 text-center text-sm text-slate-500 dark:text-slate-400">
+      <footer className="border-t bg-card py-4 lg:py-6">
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>Sistema de Denúncias Anônimas - Área Administrativa</p>
         </div>
       </footer>

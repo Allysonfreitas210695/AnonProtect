@@ -30,7 +30,7 @@ export function MessageList({ messages, currentUserType }: MessageListProps) {
               "flex flex-col max-w-[85%] rounded-2xl px-4 py-3 shadow-sm transition-all hover:shadow-md",
               isCurrentUser
                 ? "ml-auto bg-primary text-primary-foreground rounded-tr-none border-primary shadow-primary/10" 
-                : "mr-auto bg-card text-card-foreground rounded-tl-none border shadow-slate-200"
+                : "mr-auto bg-card text-card-foreground rounded-tl-none border shadow-sm ring-1 ring-border/50"
             )}
           >
             <div className="flex items-center justify-between gap-4 mb-1">

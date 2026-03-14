@@ -19,10 +19,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_co
 import { REPORT_STATUS, REPORT_TYPES } from '@/_lib/constants'
 
 const STATUS_COLORS = {
-  PENDING: '#f59e0b',
-  IN_PROGRESS: '#3b82f6',
-  RESOLVED: '#10b981',
-  REJECTED: '#ef4444',
+  PENDING: 'hsl(var(--warning))',
+  IN_PROGRESS: 'hsl(var(--primary))',
+  RESOLVED: 'hsl(var(--success))',
+  REJECTED: 'hsl(var(--destructive))',
 }
 
 interface StatusChartProps {
@@ -37,7 +37,7 @@ export function StatusChart({ data }: StatusChartProps) {
   }))
 
   return (
-    <Card>
+    <Card className="bg-card">
       <CardHeader>
         <CardTitle>Denúncias por Status</CardTitle>
         <CardDescription>Distribuição atual das denúncias</CardDescription>
@@ -50,9 +50,11 @@ export function StatusChart({ data }: StatusChartProps) {
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, percentage }: { name: string; percentage: number }) => `${name}: ${percentage}%`}
+              label={({ name, percentage }: { name: string; percentage: number }) =>
+                `${name}: ${percentage}%`
+              }
               outerRadius={80}
-              fill="#8884d8"
+              fill="hsl(var(--primary))"
               dataKey="value"
             >
               {data.map((entry, index) => (
@@ -62,7 +64,14 @@ export function StatusChart({ data }: StatusChartProps) {
                 />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
+              }}
+              itemStyle={{ color: 'hsl(var(--foreground))' }}
+            />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
@@ -84,7 +93,7 @@ export function CategoryChart({ data }: CategoryChartProps) {
     .sort((a, b) => b.count - a.count)
 
   return (
-    <Card>
+    <Card className="bg-card">
       <CardHeader>
         <CardTitle>Denúncias por Categoria</CardTitle>
         <CardDescription>Tipos mais reportados</CardDescription>
@@ -92,11 +101,24 @@ export function CategoryChart({ data }: CategoryChartProps) {
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#3b82f6" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.2} />
+            <XAxis
+              dataKey="name"
+              angle={-45}
+              textAnchor="end"
+              height={100}
+              stroke="hsl(var(--foreground))"
+            />
+            <YAxis stroke="hsl(var(--foreground))" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
+              }}
+              itemStyle={{ color: 'hsl(var(--foreground))' }}
+            />
+            <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
@@ -110,7 +132,7 @@ interface TimelineChartProps {
 
 export function TimelineChart({ data }: TimelineChartProps) {
   return (
-    <Card>
+    <Card className="bg-card">
       <CardHeader>
         <CardTitle>Denúncias ao Longo do Tempo</CardTitle>
         <CardDescription>Últimos 30 dias</CardDescription>
@@ -118,11 +140,25 @@ export function TimelineChart({ data }: TimelineChartProps) {
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.2} />
+            <XAxis dataKey="date" stroke="hsl(var(--foreground))" />
+            <YAxis stroke="hsl(var(--foreground))" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
+              }}
+              itemStyle={{ color: 'hsl(var(--foreground))' }}
+            />
+            <Line
+              type="monotone"
+              dataKey="count"
+              stroke="hsl(var(--primary))"
+              strokeWidth={3}
+              dot={{ fill: 'hsl(var(--primary))', r: 4 }}
+              activeDot={{ r: 6, strokeWidth: 0 }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </CardContent>

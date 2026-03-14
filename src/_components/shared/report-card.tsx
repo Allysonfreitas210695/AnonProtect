@@ -19,32 +19,36 @@ export function ReportCard({
   children,
 }: ReportCardProps) {
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <CardTitle>Denúncia #{report.trackingCode}</CardTitle>
+    <Card className="border-border shadow-sm bg-card/50">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-4">
+          <CardTitle className="text-xl font-bold lg:text-2xl">Denúncia #{report.trackingCode}</CardTitle>
           {showStatus && (
             <StatusBadge status={report.status} />
           )}
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {showCategory && (
-          <div>
-            <p className="text-muted-foreground text-sm font-medium">Tipo</p>
-            <p className="text-lg font-semibold">{formatCategory(report.type)}</p>
-          </div>
-        )}
-        <div>
-          <p className="text-muted-foreground text-sm font-medium">Descrição</p>
-          <p className="text-foreground whitespace-pre-wrap">{report.description}</p>
+      <CardContent className="space-y-6">
+        <div className="grid gap-6 sm:grid-cols-2">
+          {showCategory && (
+            <div>
+              <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">Categoria</p>
+              <p className="text-lg font-semibold text-primary">{formatCategory(report.type)}</p>
+            </div>
+          )}
+          {showDate && (
+            <div>
+              <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">Data de Criação</p>
+              <p className="text-lg font-medium">{formatDate(report.createdAt)}</p>
+            </div>
+          )}
         </div>
-        {showDate && (
-          <div>
-            <p className="text-muted-foreground text-sm font-medium">Data de Criação</p>
-            <p>{formatDate(report.createdAt)}</p>
-          </div>
-        )}
+        
+        <div className="rounded-lg bg-muted/50 p-4 ring-1 ring-border/50">
+          <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-2">Descrição da Ocorrência</p>
+          <p className="text-foreground whitespace-pre-wrap leading-relaxed">{report.description}</p>
+        </div>
+        
         {children}
       </CardContent>
     </Card>

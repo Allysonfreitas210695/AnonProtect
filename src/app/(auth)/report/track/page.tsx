@@ -20,17 +20,19 @@ export default async function TrackPage({
   const { code } = await searchParams
 
   return (
-    <div className="mx-auto my-12 max-w-md text-center">
-      <h1 className="mb-8 text-3xl font-bold">Acompanhar Denúncia</h1>
+    <div className="mx-auto px-4 py-12 max-w-md text-center">
+      <h1 className="mb-8 text-3xl font-bold bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+        Acompanhar Denúncia
+      </h1>
 
-      <Card>
+      <Card className="border-border shadow-md">
         <CardHeader>
-          <CardTitle>Acesso Seguro</CardTitle>
+          <CardTitle className="text-xl">Acesso Seguro</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={trackReport} className="space-y-4">
+          <form action={trackReport} className="space-y-6">
             <div className="space-y-2 text-left">
-              <Label htmlFor="code">Código de Acompanhamento</Label>
+              <Label htmlFor="code" className="text-sm font-medium">Código de Acompanhamento</Label>
               <Input
                 type="text"
                 name="code"
@@ -38,9 +40,13 @@ export default async function TrackPage({
                 placeholder="Ex: RPT-X8Y9Z"
                 defaultValue={code}
                 required
+                className="h-11 font-mono uppercase"
               />
+              <p className="text-[10px] text-muted-foreground">
+                Informe o código de 8 caracteres que você recebeu ao enviar a denúncia.
+              </p>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-11 text-base shadow-sm">
               Acessar
             </Button>
           </form>

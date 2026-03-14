@@ -16,18 +16,23 @@ export default async function ReportStatusPage({ params }: { params: Promise<{ c
   }
 
   return (
-    <div className="mx-auto my-12 max-w-3xl space-y-8">
+    <div className="mx-auto px-4 py-8 lg:py-12 max-w-4xl space-y-8">
+      <header className="space-y-2">
+        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">Acompanhamento</h1>
+        <p className="text-muted-foreground">Veja abaixo o status e histórico da sua denúncia</p>
+      </header>
+
       <ReportCard report={report} />
 
-      <div>
-        <h2 className="mb-4 text-2xl font-bold">Comunicação</h2>
-        <Card className="flex h-[500px] flex-col">
-          <CardContent className="flex-1 overflow-hidden p-4">
-            <div className="h-full overflow-y-auto pr-4">
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold tracking-tight">Comunicação e Histórico</h2>
+        <Card className="flex h-[600px] flex-col overflow-hidden border-border shadow-md bg-card">
+          <CardContent className="flex-1 overflow-hidden p-0">
+            <div className="h-full overflow-y-auto p-4 lg:p-6">
               <MessageList messages={report.messages} currentUserType="USER" />
             </div>
           </CardContent>
-          <div className="border-t p-4">
+          <div className="border-t bg-muted/30 p-4 lg:p-6">
             <MessageForm reportId={report.id} code={code} />
           </div>
         </Card>
