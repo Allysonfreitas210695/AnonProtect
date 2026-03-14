@@ -3,10 +3,14 @@ import { Button } from '@/_components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/_components/ui/card'
 import { Shield, MessageSquare, CheckCircle2 } from 'lucide-react'
 import { Logo } from '@/_components/shared/logo'
+import { ThemeToggle } from '@/_components/shared/theme-toggle'
 
 export default function Home() {
   return (
-    <div className="flex min-h-[85vh] flex-col items-center justify-center gap-12 py-10">
+    <div className="relative flex min-h-[85vh] flex-col items-center justify-center gap-12 py-10">
+      <div className="absolute top-4 right-4 lg:top-8 lg:right-8">
+        <ThemeToggle />
+      </div>
       <header className="max-w-3xl space-y-6 px-4 text-center">
         <div className="mb-4 flex justify-center">
           <Logo

@@ -1,16 +1,5 @@
-import { redirect } from 'next/navigation'
-import { Button } from '@/_components/ui/button'
-import { Input } from '@/_components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
-import { Label } from '@/_components/ui/label'
-
-async function trackReport(formData: FormData) {
-  'use server'
-  const code = formData.get('code') as string
-  if (code) {
-    redirect(`/report/${code}`)
-  }
-}
+import { TrackForm } from './_components/track-form'
 
 export default async function TrackPage({
   searchParams,
@@ -30,26 +19,7 @@ export default async function TrackPage({
           <CardTitle className="text-xl">Acesso Seguro</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={trackReport} className="space-y-6">
-            <div className="space-y-2 text-left">
-              <Label htmlFor="code" className="text-sm font-medium">Código de Acompanhamento</Label>
-              <Input
-                type="text"
-                name="code"
-                id="code"
-                placeholder="Ex: RPT-X8Y9Z"
-                defaultValue={code}
-                required
-                className="h-11 font-mono uppercase"
-              />
-              <p className="text-[10px] text-muted-foreground">
-                Informe o código de 8 caracteres que você recebeu ao enviar a denúncia.
-              </p>
-            </div>
-            <Button type="submit" className="w-full h-11 text-base shadow-sm">
-              Acessar
-            </Button>
-          </form>
+          <TrackForm initialCode={code} />
         </CardContent>
       </Card>
     </div>

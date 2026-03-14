@@ -14,33 +14,40 @@ export default async function SuccessPage({
   return (
     <div className="mx-auto my-12 max-w-xl text-center">
       <div className="mb-6 flex justify-center">
-        <CheckCircle2 className="h-24 w-24 text-green-500" />
+        <div className="rounded-full bg-success/10 p-4 ring-1 ring-success/20">
+          <CheckCircle2 className="h-16 w-16 text-success" />
+        </div>
       </div>
 
-      <h1 className="mb-4 text-3xl font-bold">Denúncia Enviada com Sucesso</h1>
-      <p className="text-muted-foreground mb-8">
-        Sua denúncia foi recebida e será analisada pela administração.
+      <h1 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Denúncia Enviada!
+      </h1>
+      <p className="text-muted-foreground mx-auto max-w-md text-base sm:text-lg">
+        Sua ocorrência foi registrada com sucesso e nossa equipe já foi notificada.
       </p>
 
-      <Card className="border-primary/50 bg-primary/5 mb-8">
-        <CardHeader>
-          <CardTitle className="text-muted-foreground text-sm font-medium">
+      <Card className="border-border/50 bg-card/50 my-8 shadow-lg backdrop-blur-sm">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
             Seu Código de Acompanhamento
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-primary font-mono text-4xl font-bold tracking-widest">{code}</div>
+          <div className="text-primary font-mono text-4xl font-bold tracking-[0.3em] lg:text-5xl">
+            {code}
+          </div>
         </CardContent>
       </Card>
 
       <Alert
-        variant="destructive"
-        className="mb-8 border-orange-200 bg-orange-50 text-left text-orange-900 [&>svg]:text-orange-900"
+        className="mb-8 border-warning/20 bg-warning/10 text-left text-foreground/90"
       >
-        <AlertTitle>IMPORTANTE</AlertTitle>
-        <AlertDescription>
-          Guarde este código com segurança. Ele é a única forma de acompanhar o status da sua
-          denúncia e responder a solicitações de mais informações, mantendo seu anonimato.
+        <AlertTitle className="flex items-center gap-2 font-bold text-warning">
+          IMPORTANTE
+        </AlertTitle>
+        <AlertDescription className="text-sm leading-relaxed">
+          Guarde este código em um local seguro. Ele é a sua **única identidade** para 
+          acompanhar o progresso e responder mensagens anonimamente.
         </AlertDescription>
       </Alert>
 

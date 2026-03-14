@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Shield } from 'lucide-react'
+import { Logo } from '@/_components/shared/logo'
+import { ThemeToggle } from '@/_components/shared/theme-toggle'
 
 export default function ReportLayout({
   children,
@@ -7,21 +8,17 @@ export default function ReportLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-background">
       {/* Header - Sem link para login */}
-      <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-slate-900/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-center">
+      <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg">
-                <Shield className="h-6 w-6" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-slate-900 dark:text-white">Canal de Denúncia</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Anônimo e Seguro</p>
-              </div>
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <Logo size={36} />
             </Link>
+
+            <ThemeToggle />
           </div>
         </div>
       </header>

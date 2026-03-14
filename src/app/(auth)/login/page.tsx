@@ -12,23 +12,28 @@ import {
   FormLabel,
   FormMessage,
 } from '@/_components/ui/form'
-import { Shield, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { Logo } from '@/_components/shared/logo'
 
 export default function LoginPage() {
   const { form, onSubmit, isExecuting } = useLogin()
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 dark:from-gray-900 dark:to-gray-800">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+      <Card className="border-border/50 w-full max-w-md shadow-xl">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
-            <Shield className="text-primary h-16 w-16" />
+            <Logo
+              size={60}
+              showText={false}
+              className="bg-primary/10 rounded-2xl p-4 shadow-inner"
+            />
           </div>
           <div>
-            <CardTitle className="text-3xl">Área Administrativa</CardTitle>
+            <CardTitle className="text-3xl font-bold">Área Administrativa</CardTitle>
             <CardDescription className="mt-2 text-base">
-              Sistema de Denúncias Anônimas
+              Identifique-se para acessar o painel de gestão
             </CardDescription>
           </div>
         </CardHeader>
@@ -83,8 +88,8 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-3 text-sm">
-            <Link 
-              href="/forgot-password" 
+            <Link
+              href="/forgot-password"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Esqueceu sua senha?
