@@ -36,13 +36,47 @@ export default async function AdminDashboard({ searchParams }: Props) {
   const { page } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 10
+  let reports: ReportWithCategory[] = []
+  let totalPages = 0
+  let quickStats: Awaited<ReturnType<typeof getQuickStats>> = {
+    total: 0,
+    pending: 0,
+    inProgress: 0,
+    resolved: 0,
+  }
+  let fullStats: Awaited<ReturnType<typeof getReportStats>> | undefined
+  let activities: Awaited<ReturnType<typeof getGlobalActivityLogs>> = []
 
-  const [{ reports, totalPages }, quickStats, fullStats, activities] = await Promise.all([
-    getReportsPaginated(currentPage, pageSize),
-    getQuickStats(),
-    getReportStats(),
-    getGlobalActivityLogs(8),
-  ])
+  try {
+    const [paginatedData, qs, fs, act] = await Promise.all([
+      getReportsPaginated(currentPage, pageSize),
+      getQuickStats(),
+      getReportStats(),
+      getGlobalActivityLogs(8),
+    ])
+
+    reports = paginatedData.reports
+    totalPages = paginatedData.totalPages
+    quickStats = qs
+    fullStats = fs
+    activities = act
+  } catch (error) {
+    console.error('AdminDashboard error:', error)
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-4">
+        <h1 className="text-destructive text-2xl font-bold">Erro ao carregar Dashboard</h1>
+        <p className="text-muted-foreground">Ocorreu um problema ao buscar os dados do servidor.</p>
+        <pre className="bg-muted max-w-full overflow-auto rounded p-4 text-xs">
+          {error instanceof Error ? error.message : String(error)}
+        </pre>
+        <Button asChild variant="outline">
+          <Link href="/admin">Tentar Novamente</Link>
+        </Button>
+      </div>
+    )
+  }
+
+  if (!fullStats) return null
 
   const statsWithTTR = {
     ...quickStats,
@@ -133,20 +167,22 @@ export default async function AdminDashboard({ searchParams }: Props) {
                     {t('noDepartmentData')}
                   </p>
                 ) : (
-                  fullStats.departmentStats.map((dept) => (
-                    <div key={dept.departmentId} className="space-y-1">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="max-w-[150px] truncate font-medium">{dept.name}</span>
-                        <span className="text-muted-foreground">{dept.count}</span>
+                  fullStats.departmentStats.map(
+                    (dept: { departmentId: string; name: string; count: number }) => (
+                      <div key={dept.departmentId} className="space-y-1">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="max-w-[150px] truncate font-medium">{dept.name}</span>
+                          <span className="text-muted-foreground">{dept.count}</span>
+                        </div>
+                        <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
+                          <div
+                            className="bg-primary h-full"
+                            style={{ width: `${(dept.count / quickStats.total) * 100}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
-                        <div
-                          className="bg-primary h-full"
-                          style={{ width: `${(dept.count / quickStats.total) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))
+                    )
+                  )
                 )}
               </div>
             </CardContent>

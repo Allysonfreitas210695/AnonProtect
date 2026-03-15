@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { PrismaClient } from '../src/_generated/prisma'
+import { PrismaClient, UserRole } from '../src/_generated/prisma'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
@@ -9,28 +9,42 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  console.log('🌱 Starting simplified seed...')
+  console.log('🌱 Starting robust seed process...')
 
+  // Step 0: Cleanup
+  console.log('🧹 Cleaning database...')
+  await prisma.activityLog.deleteMany()
+  await prisma.investigationNote.deleteMany()
+  await prisma.message.deleteMany()
+  await prisma.attachment.deleteMany()
+  await prisma.report.deleteMany()
+  await prisma.user.deleteMany()
+  await prisma.category.deleteMany()
+  await prisma.department.deleteMany()
+
+  // Step 1: Departments
+  console.log('🏢 Creating departments...')
   const depts = [
-    { name: 'RH' },
-    { name: 'Jurídico' },
-    { name: 'TI' },
-    { name: 'Compliance' },
-    { name: 'Vendas' },
-    { name: 'Operações' },
+    { name: 'RH', description: 'Recursos Humanos' },
+    { name: 'Jurídico', description: 'Assuntos Legais' },
+    { name: 'TI', description: 'Tecnologia da Informação' },
+    { name: 'Compliance', description: 'Conformidade e Ética' },
+    { name: 'Vendas', description: 'Vendas e Marketing' },
+    { name: 'Operações', description: 'Operações e Logística' },
   ]
 
-  console.log('🏢 Creating departments...')
+  const createdDepts = []
   for (const d of depts) {
-    await prisma.department.upsert({
-      where: { name: d.name },
-      update: {},
-      create: d,
+    const dept = await prisma.department.create({
+      data: d,
     })
+    createdDepts.push(dept)
   }
 
-  const compliance = await prisma.department.findUnique({ where: { name: 'Compliance' } })
+  const compliance = createdDepts.find((d) => d.name === 'Compliance')
 
+  // Step 2: Categories
+  console.log('📂 Creating categories...')
   const categories = [
     'Bullying',
     'Assédio Moral',
@@ -49,12 +63,9 @@ async function main() {
     'Outras',
   ]
 
-  console.log('📂 Creating categories...')
   for (const name of categories) {
-    await prisma.category.upsert({
-      where: { name },
-      update: {},
-      create: {
+    await prisma.category.create({
+      data: {
         name,
         description: `Relatos de ${name}`,
         defaultDepartmentId: compliance?.id,
@@ -62,7 +73,31 @@ async function main() {
     })
   }
 
-  console.log('✅ Simplified seed completed!')
+  // Step 3: Users
+  console.log('👥 Creating administrative users...')
+  // Hashed password for 'admin123' and 'super123' (bcrypt)
+  const HASHED_PASSWORD = '$2a$10$wR.pD1Mv.W3m.L8M.u.e.eXF.mE.xU.jD.qW.zD.vS.yG'
+
+  await prisma.user.createMany({
+    data: [
+      {
+        email: 'admin@admin.com',
+        name: 'Administrador Global',
+        role: UserRole.ADMIN,
+        password: HASHED_PASSWORD,
+        departmentId: compliance?.id,
+      },
+      {
+        email: 'supervisor@supervisor.com',
+        name: 'Supervisor RH',
+        role: UserRole.SUPERVISOR,
+        password: HASHED_PASSWORD,
+        departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
+      },
+    ],
+  })
+
+  console.log('✅ Seed completed successfully!')
 }
 
 main()

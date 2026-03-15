@@ -18,10 +18,10 @@ export const getReportStats = unstable_cache(
           select: { createdAt: true, updatedAt: true },
         }),
         prisma.$queryRaw<{ date: string; count: bigint }[]>`
-        SELECT TO_CHAR(created_at, 'DD/MM') as date, COUNT(*) as count
+        SELECT TO_CHAR(created_at, 'DD/MM') as date, COUNT(*)::bigint as count
         FROM reports
         WHERE created_at >= ${thirtyDaysAgo}
-        GROUP BY TO_CHAR(created_at, 'DD/MM'), date
+        GROUP BY TO_CHAR(created_at, 'DD/MM')
         ORDER BY MIN(created_at) ASC
       `,
       ])
