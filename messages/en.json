@@ -92,6 +92,7 @@
     "forgotPassword": "Forgot your password?",
     "noAccount": "Don't have an account yet?",
     "registerNow": "Register now",
+    "google": "Sign in with Google",
     "errors": {
       "invalid": "Invalid email or password",
       "server": "Internal server error"

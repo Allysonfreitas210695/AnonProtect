@@ -84,7 +84,8 @@
     "testCredentials": "Credenciais de teste:",
     "forgotPassword": "Esqueceu sua senha?",
     "noAccount": "Ainda não tem conta?",
-    "registerNow": "Cadastre-se"
+    "registerNow": "Cadastre-se",
+    "google": "Entrar com Google"
   },
   "NewReport": {
     "title": "Nova Denúncia",
