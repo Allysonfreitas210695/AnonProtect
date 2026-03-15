@@ -1,4 +1,5 @@
-import { PrismaClient, UserRole, ReportStatus, MessageSender } from '../src/_generated/prisma'
+import 'dotenv/config'
+import { PrismaClient } from '../src/_generated/prisma'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
@@ -8,100 +9,60 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  console.log('🌱 Seeding database...')
+  console.log('🌱 Starting simplified seed...')
 
-  // Seed departments
-  console.log('🏢 Creating departments...')
   const depts = [
-    { name: 'RH', description: 'Recursos Humanos' },
-    { name: 'Jurídico', description: 'Assuntos Legais' },
-    { name: 'TI', description: 'Tecnologia da Informação' },
-    { name: 'Compliance', description: 'Conformidade e Ética' },
+    { name: 'RH' },
+    { name: 'Jurídico' },
+    { name: 'TI' },
+    { name: 'Compliance' },
+    { name: 'Vendas' },
+    { name: 'Operações' },
   ]
 
-  const createdDepts = []
-  for (const dept of depts) {
-    const d = await prisma.department.upsert({
-      where: { name: dept.name },
+  console.log('🏢 Creating departments...')
+  for (const d of depts) {
+    await prisma.department.upsert({
+      where: { name: d.name },
       update: {},
-      create: dept,
+      create: d,
     })
-    createdDepts.push(d)
   }
 
-  // Seed users
-  console.log('👥 Creating users...')
-  const adminPassword = 'admin123'
-  const supervisorPassword = 'super123'
+  const compliance = await prisma.department.findUnique({ where: { name: 'Compliance' } })
 
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@sistema.com' },
-    update: {},
-    create: {
-      email: 'admin@sistema.com',
-      password: adminPassword,
-      name: 'Administrador',
-      role: UserRole.ADMIN,
-    },
-  })
-
-  // ... (supervisor creation)
-  const supervisor = await prisma.user.upsert({
-    where: { email: 'supervisor@sistema.com' },
-    update: {},
-    create: {
-      email: 'supervisor@sistema.com',
-      password: supervisorPassword,
-      name: 'Supervisor',
-      role: UserRole.SUPERVISOR,
-    },
-  })
-
-  // Seed sample reports with dates for TTR
-  console.log('📝 Creating sample reports...')
-  const now = new Date()
-  const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000)
-  const fiveDaysAgo = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000)
-
-  const sampleReports = [
-    {
-      trackingCode: 'RPT-DEMO01',
-      type: 'Bullying',
-      description: 'Presenciei um colega sendo constantemente humilhado...',
-      status: ReportStatus.IN_PROGRESS,
-      assignedToId: supervisor.id,
-      assignedDepartmentId: createdDepts[0].id, // RH
-      createdAt: fiveDaysAgo,
-    },
-    {
-      trackingCode: 'RPT-DEMO02',
-      type: 'Assédio',
-      description: 'Recebi comentários inapropriados...',
-      status: ReportStatus.PENDING,
-      assignedDepartmentId: createdDepts[3].id, // Compliance
-      createdAt: twoDaysAgo,
-    },
-    {
-      trackingCode: 'RPT-DEMO03',
-      type: 'Violência',
-      description: 'Houve uma briga física no pátio...',
-      status: ReportStatus.RESOLVED,
-      assignedToId: admin.id,
-      assignedDepartmentId: createdDepts[0].id,
-      createdAt: fiveDaysAgo,
-      updatedAt: twoDaysAgo, // 3 days resolution
-    },
+  const categories = [
+    'Bullying',
+    'Assédio Moral',
+    'Assédio Sexual',
+    'Discriminação',
+    'Corrupção/Suborno',
+    'Fraude',
+    'Roubo/Furto',
+    'Vandalismo',
+    'Conflito de Interesses',
+    'Vazamento de Dados',
+    'Uso Indevido de Recursos',
+    'Segurança do Trabalho',
+    'Lavagem de Dinheiro',
+    'Espionagem Industrial',
+    'Outras',
   ]
 
-  for (const report of sampleReports) {
-    await prisma.report.upsert({
-      where: { trackingCode: report.trackingCode },
-      update: report,
-      create: report,
+  console.log('📂 Creating categories...')
+  for (const name of categories) {
+    await prisma.category.upsert({
+      where: { name },
+      update: {},
+      create: {
+        name,
+        description: `Relatos de ${name}`,
+        defaultDepartmentId: compliance?.id,
+      },
     })
   }
 
-  console.log('✅ Seed completed with Compliance Data!')
+  console.log('✅ Simplified seed completed!')
 }
 
 main()

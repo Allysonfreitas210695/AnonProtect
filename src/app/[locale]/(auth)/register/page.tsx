@@ -2,6 +2,7 @@
 
 import { useRegister } from '@/_hooks/public/use-register'
 import { Button } from '@/_components/ui/button'
+import { PasswordInput } from '@/_components/ui/password-input'
 import { Input } from '@/_components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import {
@@ -13,13 +14,13 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { UserPlus, Loader2, ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 
 export default function RegisterPage() {
   const { form, onSubmit, isExecuting } = useRegister()
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 dark:from-gray-900 dark:to-gray-800">
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
@@ -70,7 +71,7 @@ export default function RegisterPage() {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <PasswordInput placeholder="••••••••" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -84,7 +85,7 @@ export default function RegisterPage() {
                   <FormItem>
                     <FormLabel>Confirmar Senha</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <PasswordInput placeholder="••••••••" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

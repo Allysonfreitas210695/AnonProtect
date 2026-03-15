@@ -4,13 +4,12 @@ Sistema completo de denúncias anônimas com autenticação, dashboard administr
 
 ## 🚀 Tecnologias
 
-- **Framework**: Next.js 16 (App Router)
-- **Database**: SQLite via Prisma ORM v6
-- **Autenticação**: bcryptjs
+- **Framework**: Next.js 15+ (App Router)
+- **Database**: PostgreSQL via Prisma ORM v7
+- **Autenticação**: Auth.js (NextAuth v5) + bcryptjs
+- **Social Login**: Google OAuth
 - **UI**: Tailwind CSS + Shadcn UI
-- **Forms**: React Hook Form + Zod
-- **Gráficos**: Recharts
-- **Notificações**: Sonner
+- **Internacionalização**: next-intl
 
 ## 📁 Estrutura do Projeto
 
@@ -35,16 +34,22 @@ Sistema completo de denúncias anônimas com autenticação, dashboard administr
 ## 🔧 Instalação
 
 ```bash
-# Instalar dependências
+# 1. Instalar dependências
 npm install
 
-# Configurar banco de dados
-npx prisma db push
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
 
-# Popular com dados de exemplo
-npx tsx prisma/seed.ts
+# 3. Gerar cliente do Prisma
+npx prisma generate
 
-# Iniciar servidor de desenvolvimento
+# 4. Configurar banco de dados
+npx prisma migrate dev
+
+# 5. Seed dos dados
+npx prisma db seed
+
+# 6. Iniciar
 npm run dev
 ```
 
@@ -63,12 +68,14 @@ Supervisor:
 ## 📝 Funcionalidades
 
 ### Área Pública
+
 - ✅ Submissão anônima de denúncias
 - ✅ Rastreamento por código
 - ✅ Chat anônimo com administração
 - ✅ Categorias dinâmicas
 
 ### Área Administrativa
+
 - ✅ Dashboard com gráficos
 - ✅ Gerenciamento de denúncias
 - ✅ Atualização de status
@@ -79,18 +86,23 @@ Supervisor:
 ## 🏗️ Arquitetura
 
 ### Server Actions
+
 Todas as ações do servidor estão centralizadas em `lib/actions/`:
+
 - `reports.ts` - Criar e atualizar denúncias
 - `messages.ts` - Enviar mensagens
 - `categories.ts` - Gerenciar categorias
 
 ### Schemas
+
 Validação com Zod em `lib/schemas/`:
+
 - `report.ts` - Validação de denúncias
 - `auth.ts` - Validação de autenticação
 - `category.ts` - Validação de categorias
 
 ### Componentes Reutilizáveis
+
 - `MessageList` - Lista de mensagens (user/admin)
 - `ReportCard` - Card de denúncia
 - `StatusChart` - Gráfico de status
@@ -109,6 +121,7 @@ curl -X POST http://localhost:3000/login
 ## 📊 Dashboard
 
 O dashboard administrativo inclui:
+
 - Cards de estatísticas (Total, Pendentes, Em Análise, Resolvidas)
 - Gráfico de pizza (distribuição por status)
 - Gráfico de barras (denúncias por categoria)
