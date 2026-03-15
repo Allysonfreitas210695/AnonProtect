@@ -85,8 +85,8 @@ export function CategoryActions({
           <DialogHeader>
             <DialogTitle>Confirmar Exclusão</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a categoria <strong>"{name}"</strong>? Esta ação não
-              pode ser desfeita.
+              Tem certeza que deseja excluir a categoria <strong>&quot;{name}&quot;</strong>? Esta
+              ação não pode ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -102,11 +102,7 @@ export function CategoryActions({
               onClick={() => executeDelete({ id })}
               disabled={isDeleting}
             >
-              {isDeleting ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                'Excluir'
-              )}
+              {isDeleting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Excluir'}
             </Button>
           </DialogFooter>
         </DialogContent>
