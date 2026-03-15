@@ -1,0 +1,134 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+import { Category } from '@/_generated/prisma'
+import { useNewReport } from '@/_hooks/public/use-new-report'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/_components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/_components/ui/select'
+import { Textarea } from '@/_components/ui/textarea'
+import { Input } from '@/_components/ui/input'
+import { Button } from '@/_components/ui/button'
+import { Loader2 } from 'lucide-react'
+export default function NewReportForm({ categories }: { categories: Category[] }) {
+  const t = useTranslations('NewReport')
+  const { form, onSubmit, isExecuting } = useNewReport()
+
+  return (
+    <div className="mx-auto max-w-2xl px-4 py-8 lg:py-12">
+      <div className="mb-8 text-center">
+        <h1 className="from-primary to-primary/70 mb-2 bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent lg:text-4xl">
+          {t('title')}
+        </h1>
+        <p className="text-muted-foreground text-sm lg:text-base">{t('description')}</p>
+      </div>
+
+      <Card className="border-border shadow-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-xl">{t('occurrenceDetails')}</CardTitle>
+          <CardDescription>{t('confidentialityNotice')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={onSubmit} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('occurrenceType')}</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder={t('selectType')} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.length === 0 ? (
+                          <SelectItem value="none" disabled>
+                            {t('noCategories')}
+                          </SelectItem>
+                        ) : (
+                          categories.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('detailedDescription')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('descriptionPlaceholder')}
+                        className="min-h-[150px] resize-none lg:min-h-[200px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription className="text-xs">{t('descriptionHint')}</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">{t('evidenceOptional')}</label>
+                <Input
+                  type="file"
+                  multiple
+                  disabled
+                  className="h-11 cursor-not-allowed opacity-60"
+                />
+                <p className="text-muted-foreground text-[10px] lg:text-xs">
+                  {t('uploadComingSoon')}
+                </p>
+              </div>
+
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isExecuting}
+                  className="h-12 w-full text-lg shadow-sm sm:w-auto sm:min-w-[200px]"
+                >
+                  {isExecuting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      {t('submitting')}
+                    </>
+                  ) : (
+                    t('submit')
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}

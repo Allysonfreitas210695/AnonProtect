@@ -74,3 +74,28 @@ export async function getQuickStats() {
     resolved,
   }
 }
+
+export const getGlobalActivityLogs = unstable_cache(
+  async (limit: number = 10) => {
+    return await prisma.activityLog.findMany({
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        report: {
+          select: {
+            id: true,
+            trackingCode: true,
+          },
+        },
+      },
+    })
+  },
+  ['global-activity-logs'],
+  { revalidate: 60, tags: ['activity-logs'] }
+)

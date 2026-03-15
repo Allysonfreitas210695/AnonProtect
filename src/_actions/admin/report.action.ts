@@ -6,7 +6,14 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { reportStatusSchema } from '@/_schemas/report'
 
-// ── Update Report Status ──────────────────────────────────────────────────────
+/**
+ * Atualiza o status de uma denúncia.
+ *
+ * @param {string} reportId - O ID único da denúncia.
+ * @param {ReportStatus} status - O novo status (PENDING, IN_PROGRESS, RESOLVED, REJECTED).
+ * @returns {Promise<ActionResult>} Resultado da operação com mensagem de sucesso.
+ * @throws {ActionError} Se a atualização falhar ou o usuário não tiver permissão.
+ */
 export const updateReportStatusAction = authActionClient
   .schema(reportStatusSchema)
   .action(async ({ parsedInput: { reportId, status } }) => {
@@ -21,6 +28,13 @@ const sendAdminReplySchema = z.object({
   content: z.string().min(1, 'Mensagem não pode estar vazia'),
 })
 
+/**
+ * Envia uma mensagem oficial da administração para o denunciante.
+ *
+ * @param {string} reportId - O ID da denúncia correspondente.
+ * @param {string} content - O conteúdo da mensagem.
+ * @returns {Promise<ActionResult>} Confirmação do envio.
+ */
 export const sendAdminReplyAction = authActionClient
   .schema(sendAdminReplySchema)
   .action(async ({ parsedInput: { reportId, content } }) => {
@@ -35,6 +49,13 @@ const createNoteSchema = z.object({
   content: z.string().min(1, 'Conteúdo é obrigatório'),
 })
 
+/**
+ * Adiciona uma nota de investigação privada visível apenas para admin e supervisores.
+ *
+ * @param {string} reportId - O ID da denúncia.
+ * @param {string} content - O conteúdo da nota técnica.
+ * @returns {Promise<ActionResult>} Confirmação da criação da nota.
+ */
 export const createInvestigationNoteAction = authActionClient
   .schema(createNoteSchema)
   .action(async ({ parsedInput: { reportId, content }, ctx: { user } }) => {
@@ -73,6 +94,14 @@ const forwardReportSchema = z.object({
   description: z.string().min(1, 'Justificativa é obrigatória'),
 })
 
+/**
+ * Encaminha uma denúncia para um departamento específico.
+ *
+ * @param {string} reportId - O ID da denúncia.
+ * @param {string} departmentId - O ID do departamento de destino.
+ * @param {string} description - Justificativa para o encaminhamento.
+ * @returns {Promise<ActionResult>} Confirmação do encaminhamento.
+ */
 export const forwardReportAction = authActionClient
   .schema(forwardReportSchema)
   .action(async ({ parsedInput: { reportId, departmentId, description }, ctx: { user } }) => {

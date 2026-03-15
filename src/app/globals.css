@@ -116,6 +116,7 @@
     padding: 0 !important;
     margin: 0 !important;
     -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   main {
@@ -131,7 +132,6 @@
     border: 1px solid #eee !important;
     box-shadow: none !important;
     background: none !important;
-    ring: none !important;
   }
 
   .text-primary {
@@ -144,18 +144,49 @@
   }
 
   .dossier-header {
-    border-bottom: 2px solid black;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    border-bottom: 3px solid black;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  .dossier-header h1 {
+    font-size: 24pt !important;
+    margin: 0 !important;
+  }
+
   .timeline-dot {
-    border: 1px solid black !important;
+    border: 1.5pt solid black !important;
     background: white !important;
     color: black !important;
+    print-color-adjust: exact;
+  }
+
+  .bg-primary\/10 {
+    background-color: #f0f0f0 !important;
+    border: 0.5pt solid #ddd !important;
+  }
+
+  .text-primary {
+    color: #000 !important;
+    font-weight: 800 !important;
+    text-decoration: underline;
+  }
+
+  /* Watermark effect */
+  body::after {
+    content: 'CONFIDENCIAL - ANONPROTECT';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 80pt;
+    color: rgba(0, 0, 0, 0.05);
+    z-index: -1;
+    pointer-events: none;
+    white-space: nowrap;
   }
 }
 

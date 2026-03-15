@@ -5,8 +5,10 @@ import { useAction } from 'next-safe-action/hooks'
 import { loginAction } from '@/_actions/public/login.action'
 import { toast } from 'sonner'
 import { loginSchema } from '@/_schemas/auth'
+import { useTranslations } from 'next-intl'
 
 export function useLogin() {
+  const t = useTranslations('Common.errors')
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,7 +24,7 @@ export function useLogin() {
       } // Note: O redirecionamento de sucesso é tratado pelo NextAuth internamente na Action
     },
     onError: ({ error }) => {
-      toast.error(error.serverError || 'Erro ao realizar login')
+      toast.error(error.serverError || t('loginFailed'))
     },
   })
 

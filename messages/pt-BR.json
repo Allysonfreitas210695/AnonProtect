@@ -1,0 +1,217 @@
+{
+  "Common": {
+    "title": "AnonProtect",
+    "description": "Sistema de Denúncia Anônima",
+    "welcome": "Bem-vindo ao AnonProtect",
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "actions": "Ações",
+    "status": "Status",
+    "date": "Data",
+    "details": "Ver Detalhes",
+    "errors": {
+      "internal": "Erro interno do servidor",
+      "loginFailed": "Erro ao realizar login",
+      "sessionExpired": "Sessão expirada ou usuário não autenticado"
+    }
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "overview": "Visão geral do sistema de proteção",
+    "recentReports": "Denúncias Recentes",
+    "recentActivities": "Atividades Recentes",
+    "byDepartment": "Por Departamento",
+    "noReports": "Nenhuma denúncia registrada ainda.",
+    "noActivities": "Nenhuma atividade recente.",
+    "trackingCode": "Código",
+    "category": "Tipo"
+  },
+  "Success": {
+    "title": "Denúncia Enviada!",
+    "message": "Sua ocorrência foi registrada com sucesso sob total sigilo. Nossa equipe de segurança já iniciou o processamento.",
+    "trackingCodeLabel": "Identificador Exclusivo de Rastreio",
+    "actionNecessary": "AÇÃO NECESSÁRIA",
+    "securityWarning": "Salve este código agora. Por questões de segurança extrema, ele não será mostrado novamente e não pode ser recuperado. É sua única chave de comunicação conosco.",
+    "backToHome": "Voltar ao Início",
+    "trackNow": "Acompanhar Agora",
+    "securitySignature": "Assinado Digitalmente por AnonProtect Security",
+    "encryptionInfo": "Sua conexão está protegida por criptografia de ponta a ponta"
+  },
+  "Home": {
+    "title": "Canal de Denúncia Anônima",
+    "description": "Seu espaço seguro para reportar irregularidades, bullying ou assédio.",
+    "identitySafety": "Sua identidade é preservada em todos os níveis.",
+    "newReport": "Nova Denúncia",
+    "trackStatus": "Acompanhar Status",
+    "howItWorks": "Como funciona?",
+    "simpleProcess": "Processo simples e seguro em 3 passos",
+    "step1": {
+      "title": "Faça sua denúncia",
+      "description": "Preencha o formulário de forma anônima, sem necessidade de cadastro ou identificação pessoal."
+    },
+    "step2": {
+      "title": "Receba seu código",
+      "description": "Você receberá um código de acompanhamento único. Guarde-o em lugar seguro."
+    },
+    "step3": {
+      "title": "Acompanhe e interaja",
+      "description": "Verifique o progresso da sua denúncia e troque mensagens com a equipe responsável de forma anônima."
+    }
+  },
+  "Admin": {
+    "dashboard": "Dashboard",
+    "systemOverview": "Visão geral do sistema de proteção",
+    "recentReports": "Denúncias Recentes",
+    "code": "Código",
+    "type": "Tipo",
+    "date": "Data",
+    "status": "Status",
+    "actions": "Ações",
+    "noReports": "Nenhuma denúncia registrada ainda.",
+    "viewDetails": "Ver Detalhes",
+    "byDepartment": "Por Departamento",
+    "noDepartmentData": "Sem dados departamentais"
+  },
+  "Login": {
+    "title": "Área Administrativa",
+    "description": "Identifique-se para acessar o painel de gestão",
+    "email": "Email",
+    "password": "Senha",
+    "submit": "Entrar",
+    "submitting": "Entrando...",
+    "testCredentials": "Credenciais de teste:",
+    "forgotPassword": "Esqueceu sua senha?",
+    "noAccount": "Ainda não tem conta?",
+    "registerNow": "Cadastre-se"
+  },
+  "NewReport": {
+    "title": "Nova Denúncia",
+    "description": "Preencha o formulário abaixo de forma anônima e segura",
+    "occurrenceDetails": "Detalhes da Ocorrência",
+    "confidentialityNotice": "Todas as informações são confidenciais e seu anonimato é garantido",
+    "occurrenceType": "Tipo de Ocorrência",
+    "selectType": "Selecione o tipo...",
+    "noCategories": "Nenhuma categoria disponível",
+    "detailedDescription": "Descrição Detalhada",
+    "descriptionPlaceholder": "Descreva o ocorrido com o máximo de detalhes possível...",
+    "descriptionHint": "Quanto mais detalhes você fornecer, melhor poderemos investigar",
+    "evidenceOptional": "Evidências (Opcional)",
+    "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
+    "submit": "Enviar Denúncia",
+    "submitting": "Enviando..."
+  },
+  "Track": {
+    "title": "Acompanhar Denúncia",
+    "accessSecure": "Acesso Seguro",
+    "trackingCode": "Código de Acompanhamento",
+    "placeholder": "EX: AP-2025-XXXX",
+    "hint": "Informe o código de acompanhamento que você recebeu ao enviar a denúncia.",
+    "submit": "Acessar",
+    "submitting": "Acessando..."
+  },
+  "ReportDetails": {
+    "dossierTitle": "AnonProtect - Dossiê de Investigação",
+    "systemName": "Sistema de Denúncias Anônimas",
+    "confidential": "Confidencial",
+    "reportNumber": "Denúncia #{code}",
+    "downloadPdf": "Baixar PDF",
+    "lastUpdate": "Última Atualização",
+    "responsible": "Responsável",
+    "department": "Departamento",
+    "communicationTitle": "Comunicação com Denunciante"
+  },
+  "Status": {
+    "PENDING": "Pendente",
+    "IN_PROGRESS": "Em Análise",
+    "RESOLVED": "Resolvido",
+    "REJECTED": "Rejeitado",
+    "update": "Atualizar"
+  },
+  "Forward": {
+    "title": "Encaminhar Denúncia",
+    "description": "Envie esta denúncia para um departamento específico para análise.",
+    "department": "Departamento",
+    "selectDepartment": "Selecione o departamento",
+    "reason": "Justificativa / Observações",
+    "reasonPlaceholder": "Descreva por que está encaminhando esta denúncia...",
+    "cancel": "Cancelar",
+    "submit": "Encaminhar",
+    "success": "Denúncia encaminhada com sucesso",
+    "error": "Erro ao encaminhar denúncia",
+    "selectDeptError": "Selecione um departamento",
+    "reasonError": "Informe uma justificativa"
+  },
+  "Communication": {
+    "title": "Comunicação com Denunciante",
+    "placeholder": "Responder como Admin...",
+    "submit": "Enviar",
+    "submitting": "Enviando..."
+  },
+  "Evidence": {
+    "title": "Evidências",
+    "noEvidence": "Nenhuma evidência anexada ainda.",
+    "total": "Total",
+    "photos": "Fotos",
+    "videos": "Vídeos",
+    "documents": "Documentos",
+    "audios": "Áudios",
+    "others": "Outros",
+    "attachedEvidence": "Evidências Anexadas",
+    "download": "Baixar",
+    "unknownSize": "Tamanho desconhecido",
+    "PHOTO": "Foto",
+    "VIDEO": "Vídeo",
+    "AUDIO": "Áudio",
+    "DOCUMENT": "Documento",
+    "OTHER": "Outro",
+    "imageAlt": "Evidência: {name}"
+  },
+  "Timeline": {
+    "title": "Timeline de Atividades",
+    "noActivities": "Nenhuma atividade registrada ainda.",
+    "by": "Por: {name}",
+    "system": "Sistema",
+    "additionalData": "Dados Adicionais"
+  },
+  "Investigation": {
+    "title": "Notas de Investigação",
+    "addNotePlaceholder": "Adicione uma nota sobre a investigação...",
+    "addNoteSubmit": "Adicionar Nota",
+    "addingNote": "Adicionando...",
+    "noNotes": "Nenhuma nota adicionada ainda.",
+    "privateNoteHint": "Adicione notas privadas sobre a investigação.",
+    "removedAuthor": "Removido",
+    "editedAt": "Editado em {date}",
+    "deleteTitle": "Confirmar Exclusão",
+    "deleteDescription": "Tem certeza que deseja excluir esta nota? Esta ação não pode ser desfeita.",
+    "deleteCancel": "Cancelar",
+    "deleteConfirm": "Excluir",
+    "deleting": "Excluindo..."
+  },
+  "ReportCard": {
+    "title": "Denúncia #{code}",
+    "category": "Categoria",
+    "notInformed": "Não informada",
+    "creationDate": "Data de Criação",
+    "description": "Descrição da Ocorrência"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "reports": "Denúncias",
+    "settings": "Configurações",
+    "logout": "Sair"
+  },
+  "Navigation": {
+    "home": "Início",
+    "login": "Entrar",
+    "newReport": "Nova Denúncia",
+    "trackReport": "Acompanhar"
+  },
+  "LocaleSwitcher": {
+    "pt-BR": "Português",
+    "en": "English",
+    "label": "Mudar idioma"
+  }
+}

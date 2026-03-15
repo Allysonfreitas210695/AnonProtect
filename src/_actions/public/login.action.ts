@@ -5,6 +5,13 @@ import { loginSchema } from '@/_schemas/auth'
 import { signIn } from '@/_lib/auth'
 import { AuthError } from 'next-auth'
 
+/**
+ * Realiza a autenticação do usuário.
+ *
+ * @param {string} email - E-mail do usuário.
+ * @param {string} password - Senha do usuário.
+ * @returns {Promise<{ error: string } | void>} Retorna erro se falhar ou nada em caso de sucesso (redirect).
+ */
 export const loginAction = actionClient
   .schema(loginSchema)
   .action(async ({ parsedInput: { email, password } }) => {

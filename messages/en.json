@@ -1,0 +1,29 @@
+{
+  "Home": {
+    "title": "Welcome to AnonProtect",
+    "subtitle": "Safe and anonymous channel for reports",
+    "newReport": "Submit Report",
+    "trackReport": "Track Report",
+    "institutional": "Institutional",
+    "ethics": "Ethics Code",
+    "usage": "Usage Terms",
+    "privacy": "Privacy Policy"
+  },
+  "Login": {
+    "title": "Administrator Login",
+    "subtitle": "Access the investigation panel",
+    "email": "Email Address",
+    "password": "Password",
+    "submit": "Sign In",
+    "submitting": "Signing in...",
+    "errors": {
+      "invalid": "Invalid email or password",
+      "server": "Internal server error"
+    }
+  },
+  "LocaleSwitcher": {
+    "pt-BR": "Português",
+    "en": "English",
+    "label": "Change language"
+  }
+}

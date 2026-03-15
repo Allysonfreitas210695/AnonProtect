@@ -11,7 +11,7 @@ export class ActionError extends Error {
 export const actionClient = createSafeActionClient({
   handleServerError(e) {
     console.error('Action error:', e.message)
-    return 'Erro interno do servidor'
+    return e.message
   },
 })
 
@@ -20,6 +20,22 @@ export const authActionClient = actionClient.use(async ({ next }) => {
 
   if (!user) {
     throw new Error('Sessão expirada ou usuário não autenticado')
+  }
+
+  return next({ ctx: { user } })
+})
+
+export const adminActionClient = authActionClient.use(async ({ next, ctx: { user } }) => {
+  if (user.role !== 'ADMIN') {
+    throw new Error('Acesso negado: Requer privilégios de Administrador')
+  }
+
+  return next({ ctx: { user } })
+})
+
+export const supervisorActionClient = authActionClient.use(async ({ next, ctx: { user } }) => {
+  if (user.role !== 'SUPERVISOR' && user.role !== 'ADMIN') {
+    throw new Error('Acesso negado: Requer privilégios de Supervisor ou superior')
   }
 
   return next({ ctx: { user } })
