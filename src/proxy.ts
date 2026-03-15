@@ -20,6 +20,11 @@ export default async function proxy(request: NextRequest) {
   // Handle i18n routing first
   const response = intlMiddleware(request)
 
+  // If the i18n middleware wants to redirect (e.g., from / to /pt-BR), return it immediately
+  if (response.status !== 200 || response.headers.get('x-middleware-rewrite')) {
+    return response
+  }
+
   // Auth logic (integration with proxy logic)
   const session = await auth()
   const isLogged = !!session
