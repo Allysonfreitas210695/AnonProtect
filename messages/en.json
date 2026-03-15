@@ -1,25 +1,224 @@
 {
+  "Common": {
+    "title": "AnonProtect",
+    "description": "Anonymous Reporting System",
+    "welcome": "Welcome to AnonProtect",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "details": "View Details",
+    "errors": {
+      "internal": "Internal server error",
+      "loginFailed": "Error signing in",
+      "sessionExpired": "Session expired or user not authenticated"
+    }
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "overview": "Protection system overview",
+    "recentReports": "Recent Reports",
+    "recentActivities": "Recent Activities",
+    "byDepartment": "By Department",
+    "noReports": "No reports registered yet.",
+    "noActivities": "No recent activities.",
+    "trackingCode": "Code",
+    "category": "Type"
+  },
+  "Success": {
+    "title": "Report Submitted!",
+    "message": "Your occurrence has been successfully recorded under total secrecy. Our security team has already started processing it.",
+    "trackingCodeLabel": "Exclusive Tracking Identifier",
+    "actionNecessary": "ACTION NECESSARY",
+    "securityWarning": "Save this code now. For extreme security reasons, it will not be shown again and cannot be recovered. It is your only key for communication with us.",
+    "backToHome": "Back to Home",
+    "trackNow": "Track Now",
+    "securitySignature": "Digitally Signed by AnonProtect Security",
+    "encryptionInfo": "Your connection is protected by end-to-end encryption"
+  },
   "Home": {
-    "title": "Welcome to AnonProtect",
+    "title": "Anonymous Reporting Channel",
     "subtitle": "Safe and anonymous channel for reports",
-    "newReport": "Submit Report",
+    "description": "Your safe space to report irregularities, bullying, or harassment.",
+    "identitySafety": "Your identity is preserved at all levels.",
+    "newReport": "New Report",
     "trackReport": "Track Report",
+    "trackStatus": "Track Status",
+    "howItWorks": "How it works?",
+    "simpleProcess": "Simple and safe process in 3 steps",
+    "step1": {
+      "title": "Make your report",
+      "description": "Fill out the form anonymously, without the need for registration or personal identification."
+    },
+    "step2": {
+      "title": "Receive your code",
+      "description": "You will receive a unique tracking code. Keep it in a safe place."
+    },
+    "step3": {
+      "title": "Follow and interact",
+      "description": "Check the progress of your report and exchange messages with the responsible team anonymously."
+    },
     "institutional": "Institutional",
     "ethics": "Ethics Code",
     "usage": "Usage Terms",
     "privacy": "Privacy Policy"
   },
+  "Admin": {
+    "dashboard": "Dashboard",
+    "systemOverview": "Protection system overview",
+    "recentReports": "Recent Reports",
+    "code": "Code",
+    "type": "Type",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "noReports": "No reports registered yet.",
+    "viewDetails": "View Details",
+    "byDepartment": "By Department",
+    "noDepartmentData": "No department data"
+  },
   "Login": {
-    "title": "Administrator Login",
+    "title": "Administrative Area",
     "subtitle": "Access the investigation panel",
+    "description": "Identify yourself to access the management panel",
     "email": "Email Address",
     "password": "Password",
     "submit": "Sign In",
     "submitting": "Signing in...",
+    "testCredentials": "Test credentials:",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account yet?",
+    "registerNow": "Register now",
     "errors": {
       "invalid": "Invalid email or password",
       "server": "Internal server error"
     }
+  },
+  "NewReport": {
+    "title": "New Report",
+    "description": "Fill out the form below anonymously and securely",
+    "occurrenceDetails": "Occurrence Details",
+    "confidentialityNotice": "All information is confidential and your anonymity is guaranteed",
+    "occurrenceType": "Occurrence Type",
+    "selectType": "Select type...",
+    "noCategories": "No categories available",
+    "detailedDescription": "Detailed Description",
+    "descriptionPlaceholder": "Describe the occurrence with as much detail as possible...",
+    "descriptionHint": "The more detail you provide, the better we can investigate",
+    "evidenceOptional": "Evidence (Optional)",
+    "uploadComingSoon": "Upload functionality will be implemented soon",
+    "submit": "Submit Report",
+    "submitting": "Submitting..."
+  },
+  "Track": {
+    "title": "Track Report",
+    "accessSecure": "Secure Access",
+    "trackingCode": "Tracking Code",
+    "placeholder": "EX: AP-2025-XXXX",
+    "hint": "Enter the tracking code you received when submitting the report.",
+    "submit": "Access",
+    "submitting": "Accessing..."
+  },
+  "ReportDetails": {
+    "dossierTitle": "AnonProtect - Investigation Dossier",
+    "systemName": "Anonymous Reporting System",
+    "confidential": "Confidential",
+    "reportNumber": "Report #{code}",
+    "downloadPdf": "Download PDF",
+    "lastUpdate": "Last Update",
+    "responsible": "Responsible",
+    "department": "Department",
+    "communicationTitle": "Communication with Submitter"
+  },
+  "Status": {
+    "PENDING": "Pending",
+    "IN_PROGRESS": "In Analysis",
+    "RESOLVED": "Resolved",
+    "REJECTED": "Rejected",
+    "update": "Update"
+  },
+  "Forward": {
+    "title": "Forward Report",
+    "description": "Send this report to a specific department for analysis.",
+    "department": "Department",
+    "selectDepartment": "Select department",
+    "reason": "Justification / Observations",
+    "reasonPlaceholder": "Describe why you are forwarding this report...",
+    "cancel": "Cancel",
+    "submit": "Forward",
+    "success": "Report forwarded successfully",
+    "error": "Error forwarding report",
+    "selectDeptError": "Select a department",
+    "reasonError": "Provide a justification"
+  },
+  "Communication": {
+    "title": "Communication with Submitter",
+    "placeholder": "Reply as Admin...",
+    "submit": "Send",
+    "submitting": "Sending..."
+  },
+  "Evidence": {
+    "title": "Evidence",
+    "noEvidence": "No evidence attached yet.",
+    "total": "Total",
+    "photos": "Photos",
+    "videos": "Videos",
+    "documents": "Documents",
+    "audios": "Audios",
+    "others": "Others",
+    "attachedEvidence": "Attached Evidence",
+    "download": "Download",
+    "unknownSize": "Unknown size",
+    "PHOTO": "Photo",
+    "VIDEO": "Video",
+    "AUDIO": "Audio",
+    "DOCUMENT": "Document",
+    "OTHER": "Other",
+    "imageAlt": "Evidence: {name}"
+  },
+  "Timeline": {
+    "title": "Activity Timeline",
+    "noActivities": "No activities recorded yet.",
+    "by": "By: {name}",
+    "system": "System",
+    "additionalData": "Additional Data"
+  },
+  "Investigation": {
+    "title": "Investigation Notes",
+    "addNotePlaceholder": "Add a note about the investigation...",
+    "addNoteSubmit": "Add Note",
+    "addingNote": "Adding...",
+    "noNotes": "No notes added yet.",
+    "privateNoteHint": "Add private notes about the investigation.",
+    "removedAuthor": "Removed",
+    "editedAt": "Edited on {date}",
+    "deleteTitle": "Confirm Deletion",
+    "deleteDescription": "Are you sure you want to delete this note? This action cannot be undone.",
+    "deleteCancel": "Cancel",
+    "deleteConfirm": "Delete",
+    "deleting": "Deleting..."
+  },
+  "ReportCard": {
+    "title": "Report #{code}",
+    "category": "Category",
+    "notInformed": "Not informed",
+    "creationDate": "Creation Date",
+    "description": "Occurrence Description"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "reports": "Reports",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "Navigation": {
+    "home": "Home",
+    "login": "Sign In",
+    "newReport": "New Report",
+    "trackReport": "Track"
   },
   "LocaleSwitcher": {
     "pt-BR": "Português",
