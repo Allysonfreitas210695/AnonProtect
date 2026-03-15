@@ -3,7 +3,10 @@ import { prisma } from '@/_lib/prisma'
 export async function getReportByCode(code: string) {
   return await prisma.report.findUnique({
     where: { trackingCode: code },
-    include: { messages: { orderBy: { createdAt: 'asc' } } },
+    include: {
+      category: true,
+      messages: { orderBy: { createdAt: 'asc' } },
+    },
   })
 }
 

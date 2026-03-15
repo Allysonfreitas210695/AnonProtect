@@ -107,13 +107,14 @@ model VerificationToken {
 model Report {
   id                 String              @id @default(uuid())
   trackingCode       String              @unique @map("tracking_code")
-  type               String
   description        String
   status             ReportStatus        @default(PENDING)
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
   assignedToId       String?             @map("assigned_to_id")
   assignedTo         User?               @relation("AssignedReports", fields: [assignedToId], references: [id])
+  categoryId         String?             @map("category_id")
+  category           Category?           @relation(fields: [categoryId], references: [id])
   attachments        Attachment[]
   messages           Message[]
   investigationNotes InvestigationNote[]
@@ -159,6 +160,7 @@ model Category {
   updatedAt   DateTime @updatedAt @map("updated_at")
   defaultDepartmentId String? @map("default_department_id")
   defaultDepartment   Department? @relation(fields: [defaultDepartmentId], references: [id])
+  reports             Report[]
 
   @@map("categories")
 }

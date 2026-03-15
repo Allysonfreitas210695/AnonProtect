@@ -7,11 +7,6 @@ import { z } from 'zod'
 import { reportStatusSchema } from '@/_schemas/report'
 
 // ── Update Report Status ──────────────────────────────────────────────────────
-const updateStatusSchema = z.object({
-  reportId: z.string().uuid(),
-  status: z.enum(['PENDING', 'IN_PROGRESS', 'RESOLVED', 'REJECTED']),
-})
-
 export const updateReportStatusAction = authActionClient
   .schema(reportStatusSchema)
   .action(async ({ parsedInput: { reportId, status } }) => {
@@ -85,4 +80,3 @@ export const forwardReportAction = authActionClient
     revalidatePath(`/admin/report/${reportId}`)
     return { success: true, message: 'Denúncia encaminhada com sucesso' }
   })
-

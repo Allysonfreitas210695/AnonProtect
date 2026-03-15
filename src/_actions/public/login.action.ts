@@ -2,7 +2,7 @@
 
 import { actionClient } from '@/_utils/safe-action'
 import { loginSchema } from '@/_schemas/auth'
-import { signIn } from '@/auth'
+import { signIn } from '@/_lib/auth'
 import { AuthError } from 'next-auth'
 
 export const loginAction = actionClient
@@ -18,9 +18,13 @@ export const loginAction = actionClient
       if (error instanceof AuthError) {
         switch (error.type) {
           case 'CredentialsSignin':
-            return { error: 'Credenciais inválidas' }
+            return { error: 'O e-mail ou a senha inserida está incorreta.' }
+          case 'AccessDenied':
+            return { error: 'Acesso negado. Por favor, verifique suas permissões.' }
+          case 'OAuthSignInError':
+            return { error: 'Ocorreu um erro ao tentar entrar com o Google.' }
           default:
-            return { error: 'Algo deu errado' }
+            return { error: 'Ocorreu um erro inesperado na autenticação.' }
         }
       }
 

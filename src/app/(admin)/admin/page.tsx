@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Report } from '@/_generated/prisma'
+import { ReportWithCategory } from '@/_types/report'
 import { Button } from '@/_components/ui/button'
 import { StatusBadge } from '@/_components/shared/status-badge'
 import { Pagination } from '@/_components/shared/pagination'
@@ -12,7 +12,6 @@ import {
   TableRow,
 } from '@/_components/ui/table'
 import { getReportsPaginated } from '@/_data-access/admin/report.query'
-import { REPORT_TYPES } from '@/_lib/constants'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 
 import { StatsCards } from '@/_components/shared/stats-cards'
@@ -30,19 +29,15 @@ export default async function AdminDashboard({ searchParams }: Props) {
   const currentPage = Number(page) || 1
   const pageSize = 10
 
-  const [
-    { reports, totalPages },
-    quickStats,
-    fullStats
-  ] = await Promise.all([
+  const [{ reports, totalPages }, quickStats, fullStats] = await Promise.all([
     getReportsPaginated(currentPage, pageSize),
     getQuickStats(),
-    getReportStats()
+    getReportStats(),
   ])
 
   const statsWithTTR = {
     ...quickStats,
-    avgResolutionTime: fullStats.avgResolutionTime
+    avgResolutionTime: fullStats.avgResolutionTime,
   }
 
   return (
@@ -58,26 +53,26 @@ export default async function AdminDashboard({ searchParams }: Props) {
         <div className="lg:col-span-2">
           <AnalyticsChart data={fullStats.timelineData} />
         </div>
-        <Card className="flex flex-col border-none shadow-sm ring-1 ring-border">
+        <Card className="ring-border flex flex-col border-none shadow-sm ring-1">
           <CardHeader>
             <CardTitle className="text-lg font-bold">Por Departamento</CardTitle>
           </CardHeader>
           <CardContent className="flex-1">
             <div className="space-y-4">
               {fullStats.departmentStats.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-10">Sem dados departamentais</p>
+                <p className="text-muted-foreground py-10 text-center text-sm">
+                  Sem dados departamentais
+                </p>
               ) : (
                 fullStats.departmentStats.map((dept) => (
                   <div key={dept.departmentId} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="font-medium truncate max-w-[150px]">
-                        {dept.name}
-                      </span>
+                      <span className="max-w-[150px] truncate font-medium">{dept.name}</span>
                       <span className="text-muted-foreground">{dept.count}</span>
                     </div>
-                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-primary" 
+                    <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
+                      <div
+                        className="bg-primary h-full"
                         style={{ width: `${(dept.count / quickStats.total) * 100}%` }}
                       />
                     </div>
@@ -113,10 +108,14 @@ export default async function AdminDashboard({ searchParams }: Props) {
                   </TableCell>
                 </TableRow>
               ) : (
-                reports.map((report: Report) => (
+                reports.map((report: ReportWithCategory) => (
                   <TableRow key={report.id} className="hover:bg-muted/50 transition-colors">
-                    <TableCell className="font-mono font-bold text-primary">{report.trackingCode}</TableCell>
-                    <TableCell className="font-medium">{REPORT_TYPES[report.type] || report.type}</TableCell>
+                    <TableCell className="text-primary font-mono font-bold">
+                      {report.trackingCode}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {report.category?.name || 'Geral'}
+                    </TableCell>
                     <TableCell className="text-muted-foreground">
                       {new Date(report.createdAt).toLocaleDateString('pt-BR', {
                         day: '2-digit',
@@ -128,7 +127,12 @@ export default async function AdminDashboard({ searchParams }: Props) {
                       <StatusBadge status={report.status} />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary">
+                      <Button
+                        asChild
+                        variant="ghost"
+                        size="sm"
+                        className="hover:bg-primary/10 hover:text-primary"
+                      >
                         <Link href={`/admin/report/${report.id}`}>Ver Detalhes</Link>
                       </Button>
                     </TableCell>
@@ -139,13 +143,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
           </Table>
         </div>
 
-        <Pagination 
-          page={currentPage} 
-          totalPages={totalPages} 
-          baseUrl="/admin" 
-        />
+        <Pagination page={currentPage} totalPages={totalPages} baseUrl="/admin" />
       </div>
     </div>
   )
 }
-

@@ -6,7 +6,7 @@ import * as reportRepository from '@/_data-access/public/report.repository'
 
 export const submitReportAction = actionClient
   .schema(reportSchema)
-  .action(async ({ parsedInput: { type, description } }) => {
-    const report = await reportRepository.createReport({ type, description })
+  .action(async ({ parsedInput: { categoryId, description } }) => {
+    const report = await reportRepository.createReport({ categoryId, description })
     return { success: true, trackingCode: report.trackingCode }
   })

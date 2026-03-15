@@ -1,8 +1,9 @@
 import { Attachment, AttachmentCategory } from '@/_generated/prisma'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Badge } from '@/_components/ui/badge'
-import { FileText, Image, Video, Music, Download } from 'lucide-react'
+import { FileText, Image as ImageIcon, Video, Music, Download } from 'lucide-react'
 import { Button } from '@/_components/ui/button'
+import NextImage from 'next/image'
 
 interface EvidenceGalleryProps {
   attachments: Attachment[]
@@ -11,7 +12,7 @@ interface EvidenceGalleryProps {
 function getIconByCategory(category: AttachmentCategory) {
   switch (category) {
     case AttachmentCategory.PHOTO:
-      return <Image className="h-5 w-5" />
+      return <ImageIcon className="h-5 w-5" />
     case AttachmentCategory.VIDEO:
       return <Video className="h-5 w-5" />
     case AttachmentCategory.AUDIO:
@@ -188,11 +189,12 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
 
                 {/* Preview for images */}
                 {attachment.category === AttachmentCategory.PHOTO && (
-                  <div className="mt-3">
-                    <img
+                  <div className="relative mt-3 h-40 w-full overflow-hidden rounded-lg">
+                    <NextImage
                       src={attachment.url}
-                      alt={attachment.fileName}
-                      className="h-40 w-full rounded-lg object-cover"
+                      alt={`Evidência: ${attachment.fileName}`}
+                      fill
+                      className="object-cover"
                     />
                   </div>
                 )}

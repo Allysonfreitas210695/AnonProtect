@@ -1,13 +1,14 @@
 import { prisma } from '@/_lib/prisma'
 
-export async function createReport(data: { type: string; description: string }) {
-  const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase()
-  const trackingCode = `RPT-${randomPart}`
+export async function createReport(data: { categoryId: string; description: string }) {
+  const year = new Date().getFullYear()
+  const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase()
+  const trackingCode = `AP-${year}-${randomPart}`
 
   return await prisma.report.create({
     data: {
       trackingCode,
-      type: data.type,
+      categoryId: data.categoryId,
       description: data.description,
     },
   })

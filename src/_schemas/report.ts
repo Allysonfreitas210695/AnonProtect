@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ReportStatus } from '@/_generated/prisma'
 
 export const reportSchema = z.object({
-  type: z.string().min(1, 'Selecione um tipo de ocorrência'),
+  categoryId: z.string().uuid('Selecione uma categoria válida'),
   description: z.string().min(10, 'A descrição deve ter no mínimo 10 caracteres'),
 })
 

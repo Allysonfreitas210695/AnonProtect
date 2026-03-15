@@ -12,7 +12,7 @@ export function useNewReport() {
   const form = useForm<ReportInput>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
-      type: '',
+      categoryId: '',
       description: '',
     },
   })

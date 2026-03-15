@@ -32,9 +32,9 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const { form, onSubmit, isExecuting } = useNewReport()
 
   return (
-    <div className="mx-auto px-4 py-8 lg:py-12 max-w-2xl">
+    <div className="mx-auto max-w-2xl px-4 py-8 lg:py-12">
       <div className="mb-8 text-center">
-        <h1 className="mb-2 text-3xl font-bold lg:text-4xl bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+        <h1 className="from-primary to-primary/70 mb-2 bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent lg:text-4xl">
           Nova Denúncia
         </h1>
         <p className="text-muted-foreground text-sm lg:text-base">
@@ -54,7 +54,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
             <form onSubmit={onSubmit} className="space-y-6">
               <FormField
                 control={form.control}
-                name="type"
+                name="categoryId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Tipo de Ocorrência</FormLabel>
@@ -66,12 +66,12 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                       </FormControl>
                       <SelectContent>
                         {categories.length === 0 ? (
-                          <SelectItem value="OTHER" disabled>
+                          <SelectItem value="none" disabled>
                             Nenhuma categoria disponível
                           </SelectItem>
                         ) : (
                           categories.map((category) => (
-                            <SelectItem key={category.id} value={category.name}>
+                            <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>
                           ))
@@ -92,7 +92,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     <FormControl>
                       <Textarea
                         placeholder="Descreva o ocorrido com o máximo de detalhes possível..."
-                        className="min-h-[150px] lg:min-h-[200px] resize-none"
+                        className="min-h-[150px] resize-none lg:min-h-[200px]"
                         {...field}
                       />
                     </FormControl>
@@ -105,21 +105,24 @@ export default function NewReportForm({ categories }: { categories: Category[] }
               />
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">
-                  Evidências (Opcional)
-                </label>
-                <Input type="file" multiple disabled className="h-11 cursor-not-allowed opacity-60" />
+                <label className="text-sm font-medium">Evidências (Opcional)</label>
+                <Input
+                  type="file"
+                  multiple
+                  disabled
+                  className="h-11 cursor-not-allowed opacity-60"
+                />
                 <p className="text-muted-foreground text-[10px] lg:text-xs">
                   Funcionalidade de upload será implementada em breve
                 </p>
               </div>
 
               <div className="pt-4">
-                <Button 
-                  type="submit" 
-                  size="lg" 
-                  disabled={isExecuting} 
-                  className="w-full sm:w-auto sm:min-w-[200px] h-12 text-lg shadow-sm"
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isExecuting}
+                  className="h-12 w-full text-lg shadow-sm sm:w-auto sm:min-w-[200px]"
                 >
                   {isExecuting ? (
                     <>

@@ -4,9 +4,10 @@ export async function getReportById(id: string) {
   return prisma.report.findUnique({
     where: { id },
     include: {
+      category: true,
       messages: {
         orderBy: { createdAt: 'asc' },
-        take: 50, // Limit to initial 50 messages for scalability
+        take: 50,
       },
       assignedTo: true,
       assignedDepartment: true,
@@ -46,6 +47,7 @@ export async function getReportsPaginated(page: number = 1, pageSize: number = 1
       skip: (page - 1) * pageSize,
       take: pageSize,
       orderBy: { createdAt: 'desc' },
+      include: { category: true },
     }),
     prisma.report.count(),
   ])

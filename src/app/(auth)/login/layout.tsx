@@ -6,13 +6,13 @@ import { ThemeToggle } from '@/_components/shared/theme-toggle'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+      <header className="bg-background/80 sticky top-0 z-50 border-b backdrop-blur-sm">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Link href="/" className="transition-opacity hover:opacity-80">
               <Logo size={36} />
             </Link>
 
@@ -39,30 +39,33 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <main>{children}</main>
 
       {/* Footer */}
-      <footer className="mt-auto border-t bg-background/80 py-8 backdrop-blur-sm">
+      <footer className="bg-background/80 mt-auto border-t py-8 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 text-center md:grid-cols-3 md:text-left">
             <div>
               <h3 className="mb-2 font-semibold">Sobre</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Canal seguro e anônimo para denúncias de irregularidades.
               </p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold">Privacidade</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Suas informações são protegidas e seu anonimato é garantido.
               </p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold">Suporte</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Em caso de dúvidas, consulte nossa equipe administrativa.
               </p>
             </div>
           </div>
-          <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2024 Sistema de Denúncias Anônimas. Todos os direitos reservados.</p>
+          <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
+            <p>
+              © {new Date().getFullYear()} Sistema de Denúncias Anônimas. Todos os direitos
+              reservados.
+            </p>
           </div>
         </div>
       </footer>
