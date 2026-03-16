@@ -43,7 +43,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
         <p className="text-muted-foreground text-sm lg:text-base">{t('description')}</p>
       </div>
 
-      <Card className="border-border shadow-md">
+      <Card className="shadow-xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">{t('occurrenceDetails')}</CardTitle>
           <CardDescription>{t('confidentialityNotice')}</CardDescription>

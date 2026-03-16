@@ -18,11 +18,7 @@ export default function Home() {
       </div>
       <header className="max-w-3xl space-y-6 px-4 text-center">
         <div className="mb-4 flex justify-center">
-          <Logo
-            size={80}
-            showText={false}
-            className="bg-primary/10 ring-primary/20 rounded-2xl p-4 shadow-xl ring-1"
-          />
+          <Logo size={80} showText={false} className="bg-primary/10 rounded-2xl p-4 shadow-xl" />
         </div>
         <h1 className="from-primary to-primary/60 bg-linear-to-r bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
           {t('title')}
@@ -60,7 +56,7 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-3xl px-4">
-        <Card className="border-border/50 bg-card/50 shadow-xl backdrop-blur-sm">
+        <Card className="bg-card/50 shadow-2xl backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-primary flex items-center gap-2 text-2xl font-bold">
               <Shield className="h-6 w-6" />
@@ -104,7 +100,7 @@ export default function Home() {
         </Card>
       </div>
 
-      <footer className="bg-muted/20 mt-20 w-full border-t py-12">
+      <footer className="bg-muted/20 mt-20 w-full py-12">
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
             <div className="col-span-2 space-y-4">

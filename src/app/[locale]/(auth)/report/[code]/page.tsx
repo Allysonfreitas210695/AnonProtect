@@ -26,13 +26,13 @@ export default async function ReportStatusPage({ params }: { params: Promise<{ c
 
       <div className="space-y-4">
         <h2 className="text-2xl font-bold tracking-tight">Comunicação e Histórico</h2>
-        <Card className="border-border bg-card flex h-[600px] flex-col overflow-hidden shadow-md">
+        <Card className="bg-card flex h-[600px] flex-col overflow-hidden shadow-xl">
           <CardContent className="flex-1 overflow-hidden p-0">
             <div className="h-full overflow-y-auto p-4 lg:p-6">
               <MessageList messages={report.messages} currentUserType="USER" />
             </div>
           </CardContent>
-          <div className="bg-muted/30 border-t p-4 lg:p-6">
+          <div className="bg-muted/30 p-4 lg:p-6">
             <MessageForm reportId={report.id} code={code} />
           </div>
         </Card>

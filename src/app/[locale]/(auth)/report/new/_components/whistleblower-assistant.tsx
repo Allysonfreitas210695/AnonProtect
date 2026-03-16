@@ -67,7 +67,7 @@ export function WhistleblowerAssistant() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             className="mb-4 w-[350px] sm:w-[400px]"
           >
-            <Card className="border-border/50 bg-card/95 ring-primary/20 overflow-hidden shadow-2xl ring-1 backdrop-blur-xl">
+            <Card className="bg-card/95 overflow-hidden shadow-2xl backdrop-blur-xl">
               <CardHeader className="bg-primary text-primary-foreground flex flex-row items-center justify-between p-4">
                 <div className="flex items-center gap-2">
                   <div className="rounded-lg bg-white/20 p-1.5">
@@ -120,7 +120,7 @@ export function WhistleblowerAssistant() {
                           'max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm',
                           m.role === 'user'
                             ? 'bg-primary text-primary-foreground rounded-tr-none'
-                            : 'bg-muted text-foreground border-border/50 rounded-tl-none border'
+                            : 'bg-muted text-foreground rounded-tl-none backdrop-blur-sm'
                         )}
                       >
                         {m.text}
@@ -154,7 +154,7 @@ export function WhistleblowerAssistant() {
                   )}
                 </div>
 
-                <div className="bg-muted/30 border-t p-4">
+                <div className="bg-muted/30 p-4">
                   <div className="text-muted-foreground mb-2 flex items-center gap-2 px-1 text-[10px]">
                     <ShieldCheck className="text-success h-3 w-3" />
                     <span>{t('anonymityReady')}</span>
@@ -165,7 +165,7 @@ export function WhistleblowerAssistant() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                      className="bg-background/50 border-border/50 h-10"
+                      className="bg-background/50 h-10 border-none shadow-inner"
                     />
                     <Button
                       size="icon"

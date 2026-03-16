@@ -26,7 +26,7 @@ export default function ReportsLoading() {
         <div className="bg-muted/50 h-9 w-full max-w-2xl rounded-xl" />
       </div>
 
-      <Card className="ring-border overflow-hidden rounded-2xl border-none shadow-sm ring-1">
+      <Card className="overflow-hidden rounded-2xl border-none shadow-sm">
         <Table>
           <TableHeader className="bg-muted/40">
             <TableRow className="border-none">

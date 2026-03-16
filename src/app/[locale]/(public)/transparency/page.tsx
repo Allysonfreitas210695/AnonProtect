@@ -35,7 +35,7 @@ export default async function TransparencyPage() {
 
       {/* Main Stats Cards */}
       <div className="grid gap-8 md:grid-cols-2">
-        <Card className="border-border/50 bg-primary/5 ring-primary/20 shadow-2xl ring-1 transition-all hover:scale-[1.02]">
+        <Card className="bg-primary/5 shadow-2xl transition-all hover:scale-[1.02]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-primary text-sm font-bold tracking-wider uppercase">
               Total de Denúncias
@@ -50,7 +50,7 @@ export default async function TransparencyPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-border/50 bg-success/5 ring-success/20 shadow-2xl ring-1 transition-all hover:scale-[1.02]">
+        <Card className="bg-success/5 shadow-2xl transition-all hover:scale-[1.02]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-success text-sm font-bold tracking-wider uppercase">
               Casos Resolvidos
@@ -76,7 +76,7 @@ export default async function TransparencyPage() {
 
       {/* Trust & Architecture Deep Dive */}
       <div className="grid gap-10 md:grid-cols-3">
-        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+        <Card className="bg-card/40 shadow-xl backdrop-blur-md">
           <CardHeader className="pb-3 text-center">
             <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
               <Shield className="text-primary h-6 w-6" />
@@ -89,7 +89,7 @@ export default async function TransparencyPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+        <Card className="bg-card/40 shadow-xl backdrop-blur-md">
           <CardHeader className="pb-3 text-center">
             <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
               <EyeOff className="text-primary h-6 w-6" />
@@ -102,7 +102,7 @@ export default async function TransparencyPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+        <Card className="bg-card/40 shadow-xl backdrop-blur-md">
           <CardHeader className="pb-3 text-center">
             <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
               <ShieldCheck className="text-primary h-6 w-6" />

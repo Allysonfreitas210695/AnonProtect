@@ -54,8 +54,8 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
 
   return (
     <>
-      <Card className="bg-card/40 ring-border/50 flex h-[600px] flex-col overflow-hidden border-none shadow-xl ring-1 backdrop-blur-xl">
-        <CardHeader className="bg-muted/30 border-b px-6 py-4">
+      <Card className="bg-card/40 flex h-[600px] flex-col overflow-hidden shadow-2xl backdrop-blur-xl">
+        <CardHeader className="bg-muted/30 px-6 py-4">
           <CardTitle className="flex items-center gap-2 text-lg">
             <StickyNote className="text-primary h-5 w-5" />
             Comunicação Interna de Investigação
@@ -69,7 +69,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
           <div className="flex-1 space-y-6 overflow-y-auto p-4 lg:p-6">
             {notes.length === 0 ? (
               <div className="text-muted-foreground flex h-full flex-col items-center justify-center py-12 text-center">
-                <div className="bg-muted/50 ring-border/20 mb-4 rounded-full p-6 ring-1">
+                <div className="bg-muted/50 mb-4 rounded-full p-6 shadow-inner">
                   <StickyNote className="h-10 w-10 opacity-20" />
                 </div>
                 <p className="font-medium">{t('noNotes')}</p>
@@ -101,7 +101,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
                           'group relative rounded-2xl px-4 py-3 shadow-sm transition-all',
                           isCurrentUser
                             ? 'bg-primary text-primary-foreground rounded-tr-none'
-                            : 'bg-muted/50 text-foreground border-border/50 rounded-tl-none border backdrop-blur-sm'
+                            : 'bg-muted/50 text-foreground rounded-tl-none backdrop-blur-sm'
                         )}
                       >
                         <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -137,7 +137,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
           </div>
 
           {/* Add Note Form (Fixed at bottom) */}
-          <div className="bg-muted/30 border-t p-4 lg:p-6">
+          <div className="bg-muted/30 p-4 lg:p-6">
             <Form {...form}>
               <form onSubmit={onSubmitCreate} className="flex items-end gap-3">
                 <FormField

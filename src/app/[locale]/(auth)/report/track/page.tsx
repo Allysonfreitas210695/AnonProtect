@@ -16,7 +16,7 @@ export default async function TrackPage({
         {t('title')}
       </h1>
 
-      <Card className="border-border shadow-md">
+      <Card className="shadow-xl">
         <CardHeader>
           <CardTitle className="text-xl">{t('accessSecure')}</CardTitle>
         </CardHeader>

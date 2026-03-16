@@ -63,7 +63,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
 
       {/* Sidebar */}
       <aside
-        className={`border-border bg-card fixed inset-y-0 left-0 z-40 w-72 flex-col border-r transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
+        className={`bg-card fixed inset-y-0 left-0 z-40 w-72 flex-col transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
       >
         <div className="flex h-full flex-col p-6">
           {/* Logo & Header */}
@@ -108,8 +108,8 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
           </nav>
 
           {/* User Profile Section */}
-          <div className="border-border mt-auto flex flex-col gap-4 border-t pt-6">
-            <div className="border-border bg-accent/30 flex items-center gap-3 rounded-2xl border p-3">
+          <div className="mt-auto flex flex-col gap-4 pt-6">
+            <div className="bg-accent/30 flex items-center gap-3 rounded-2xl p-3 shadow-inner">
               <div className="ring-primary/20 text-primary-foreground bg-primary flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ring-2">
                 {user.name.charAt(0)}
               </div>

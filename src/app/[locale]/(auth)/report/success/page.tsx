@@ -20,7 +20,7 @@ export default async function SuccessPage({
       <div className="mb-8 flex justify-center">
         <div className="relative">
           <div className="bg-success/20 absolute inset-0 animate-ping rounded-full" />
-          <div className="bg-success/10 ring-success/30 relative rounded-full p-5 shadow-lg ring-1">
+          <div className="bg-success/10 relative rounded-full p-5 shadow-lg">
             <ShieldCheck className="text-success h-16 w-16" />
           </div>
         </div>
@@ -33,8 +33,8 @@ export default async function SuccessPage({
         {t('message')}
       </p>
 
-      <Card className="border-border/40 bg-card/40 ring-border/50 my-10 overflow-hidden shadow-2xl ring-1 backdrop-blur-md">
-        <div className="bg-primary/5 border-border/40 border-b py-3">
+      <Card className="bg-card/40 my-10 overflow-hidden shadow-2xl backdrop-blur-md">
+        <div className="bg-primary/5 py-3">
           <p className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">
             {t('trackingCodeLabel')}
           </p>
@@ -46,12 +46,12 @@ export default async function SuccessPage({
             </div>
           </div>
         </CardContent>
-        <div className="bg-muted/30 border-border/40 flex justify-center border-t py-4">
+        <div className="bg-muted/30 flex justify-center py-4">
           <p className="text-muted-foreground text-xs">{t('securitySignature')}</p>
         </div>
       </Card>
 
-      <Alert className="border-warning/20 bg-warning/5 mb-10 text-left shadow-sm">
+      <Alert className="bg-warning/5 mb-10 text-left shadow-lg">
         <AlertTitle className="text-warning mb-2 flex items-center gap-2 font-black">
           {t('actionNecessary')}
         </AlertTitle>

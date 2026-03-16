@@ -116,7 +116,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
         )}
       </AnimatePresence>
 
-      <div className="bg-card relative overflow-hidden rounded-2xl border-none shadow-sm transition-all hover:shadow-md">
+      <div className="bg-card relative overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader className="bg-muted/40">

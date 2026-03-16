@@ -84,8 +84,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
           Ocorreu um problema ao buscar os dados do servidor. Por favor, tente novamente em alguns
           instantes.
         </p>
-        <div className="bg-muted border-border w-full max-w-2xl overflow-hidden rounded-xl border">
-          <div className="bg-muted-foreground/10 border-border text-muted-foreground border-b px-4 py-2 text-xs font-semibold tracking-widest uppercase">
+        <div className="bg-muted w-full max-w-2xl overflow-hidden rounded-xl shadow-lg">
+          <div className="bg-muted-foreground/10 text-muted-foreground px-4 py-2 text-xs font-semibold tracking-widest uppercase">
             Detalhes do Erro
           </div>
           <pre className="text-foreground/80 max-w-full overflow-auto p-6 text-left font-mono text-xs">
@@ -142,7 +142,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
               </Button>
             </div>
 
-            <div className="bg-card relative overflow-hidden rounded-2xl border-none shadow-sm transition-all hover:shadow-md">
+            <div className="bg-card relative overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader className="bg-muted/40">
@@ -217,7 +217,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
         <div className="space-y-8">
           <GlobalActivityLog activities={activities} />
 
-          <Card className="border-border/50 bg-card/50 hover:bg-card overflow-hidden shadow-sm transition-all hover:shadow-md">
+          <Card className="bg-card/50 hover:bg-card overflow-hidden shadow-xl transition-all hover:shadow-2xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl font-bold tracking-tight">
                 {t('byDepartment')}
@@ -250,7 +250,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                               <span className="text-primary text-xs font-black">{percentage}%</span>
                             </div>
                           </div>
-                          <div className="bg-muted/50 ring-border/5 h-2.5 w-full overflow-hidden rounded-full border border-transparent ring-1">
+                          <div className="bg-muted/50 h-2.5 w-full overflow-hidden rounded-full border border-transparent">
                             <div
                               className="from-primary to-primary/60 group-hover:from-primary group-hover:to-primary h-full rounded-full bg-linear-to-r shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-1000"
                               style={{ width: `${percentage}%` }}

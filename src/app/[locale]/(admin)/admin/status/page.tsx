@@ -115,7 +115,7 @@ export default async function StatusPage() {
                   </div>
                 )}
 
-                <div className="text-muted-foreground bg-muted/20 border-border/40 mt-2 rounded-md border p-2 text-xs leading-relaxed italic">
+                <div className="text-muted-foreground bg-muted/20 mt-2 text-xs leading-relaxed italic">
                   {service.message || 'Sem informações adicionais.'}
                 </div>
               </div>
