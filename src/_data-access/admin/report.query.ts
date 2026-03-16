@@ -47,7 +47,17 @@ export async function getReportsPaginated(page: number = 1, pageSize: number = 1
       skip: (page - 1) * pageSize,
       take: pageSize,
       orderBy: { createdAt: 'desc' },
-      include: { category: true },
+      select: {
+        id: true,
+        trackingCode: true,
+        status: true,
+        createdAt: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+      },
     }),
     prisma.report.count(),
   ])

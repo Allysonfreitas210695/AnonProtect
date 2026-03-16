@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import { ReportWithCategory } from '@/_types/report'
 import { Button } from '@/_components/ui/button'
 import { StatusBadge } from '@/_components/shared/status-badge'
 import { Pagination } from '@/_components/shared/pagination'
@@ -36,7 +35,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
   const { page } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 10
-  let reports: ReportWithCategory[] = []
+  let reports: Awaited<ReturnType<typeof getReportsPaginated>>['reports'] = []
   let totalPages = 0
   let quickStats: Awaited<ReturnType<typeof getQuickStats>> = {
     total: 0,
@@ -119,7 +118,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    reports.map((report: ReportWithCategory) => (
+                    reports.map((report) => (
                       <TableRow key={report.id} className="hover:bg-muted/50 transition-colors">
                         <TableCell className="text-primary font-mono font-bold">
                           {report.trackingCode}
