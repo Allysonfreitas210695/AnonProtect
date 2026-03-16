@@ -62,12 +62,14 @@ export async function getReportsPaginated(page: number = 1, pageSize: number = 1
     prisma.report.count(),
   ])
 
+  const reportsCount = Number(total)
+
   return {
     reports,
-    total,
+    total: reportsCount,
     page,
     pageSize,
-    totalPages: Math.ceil(total / pageSize),
+    totalPages: Math.ceil(reportsCount / pageSize),
   }
 }
 

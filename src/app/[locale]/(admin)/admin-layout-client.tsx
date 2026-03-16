@@ -47,7 +47,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#050505] text-zinc-100">
+    <div className="bg-background text-foreground flex min-h-screen transition-colors duration-300">
       {/* Mobile Menu Toggle */}
       <Button
         variant="ghost"
@@ -60,18 +60,18 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-72 flex-col border-r border-zinc-900 bg-zinc-950 transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
+        className={`border-border bg-card fixed inset-y-0 left-0 z-40 w-72 flex-col border-r transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
       >
         <div className="flex h-full flex-col p-6">
           {/* Logo & Header */}
           <div className="mb-10 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)]">
-                <ShieldCheck className="h-6 w-6 text-white" />
+              <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <ShieldCheck className="text-primary-foreground h-6 w-6" />
               </div>
               <div className="flex flex-col">
-                <h1 className="text-xl font-bold tracking-tight text-white">AnonProtect</h1>
-                <span className="text-[10px] font-medium tracking-widest text-zinc-500 uppercase">
+                <h1 className="text-xl font-bold tracking-tight">AnonProtect</h1>
+                <span className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
                   Área Admin
                 </span>
               </div>
@@ -89,30 +89,30 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`group flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all duration-300 ${
+                  className={`group flex items-center gap-4 rounded-xl px-4 py-3 transition-all duration-300 ${
                     active
-                      ? 'bg-primary text-white shadow-[0_4px_20px_rgba(59,130,246,0.3)]'
-                      : 'text-zinc-400 hover:bg-zinc-900 hover:text-white'
+                      ? 'bg-primary text-primary-foreground shadow-primary/20 shadow-lg'
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                   } `}
                 >
                   <Icon
-                    className={`h-5 w-5 ${active ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}
+                    className={`h-5 w-5 ${active ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}
                   />
-                  <span className="font-semibold">{item.label}</span>
+                  <span className="text-sm font-semibold">{item.label}</span>
                 </Link>
               )
             })}
           </nav>
 
           {/* User Profile Section */}
-          <div className="mt-auto flex flex-col gap-4 border-t border-zinc-900 pt-6">
-            <div className="flex items-center gap-3 rounded-2xl border border-zinc-800/50 bg-zinc-900/50 p-3">
-              <div className="ring-primary/20 text-primary flex h-10 w-10 items-center justify-center rounded-full bg-zinc-800 text-sm font-bold ring-2">
+          <div className="border-border mt-auto flex flex-col gap-4 border-t pt-6">
+            <div className="border-border bg-accent/30 flex items-center gap-3 rounded-2xl border p-3">
+              <div className="ring-primary/20 text-primary-foreground bg-primary flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ring-2">
                 {user.name.charAt(0)}
               </div>
               <div className="flex-1 overflow-hidden">
-                <p className="truncate text-sm font-bold text-white">{user.name}</p>
-                <p className="text-[10px] font-medium tracking-widest text-zinc-500 uppercase">
+                <p className="truncate text-sm font-bold">{user.name}</p>
+                <p className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
                   {user.role}
                 </p>
               </div>
@@ -122,10 +122,10 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
             <form action={logoutAction}>
               <Button
                 variant="ghost"
-                className="h-12 w-full justify-start gap-4 rounded-xl text-zinc-400 hover:bg-red-500/10 hover:text-red-400"
+                className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive group h-10 w-full justify-start gap-3 rounded-xl"
                 type="submit"
               >
-                <LogOut className="h-5 w-5" />
+                <LogOut className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 <span className="text-sm font-semibold">Sair do Sistema</span>
               </Button>
             </form>
@@ -136,13 +136,13 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       {/* Overlay mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="bg-background/80 fixed inset-0 z-30 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Main Content */}
-      <main className="min-h-screen flex-1 bg-[#050505]">
+      <main className="bg-background/50 min-h-screen flex-1 transition-colors duration-300">
         <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-12">{children}</div>
       </main>
     </div>

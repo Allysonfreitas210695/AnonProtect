@@ -26,27 +26,28 @@ export const getReportStats = unstable_cache(
       `,
       ])
 
+    const totalCount = Number(total)
     const avgResolutionTime = calculateAvgResolutionTime(resolvedRaw)
 
     const deptMap = new Map(allDepts.map((d) => [d.id, d.name]))
 
     return {
-      total,
+      total: totalCount,
       statusStats: byStatus.map((s) => ({
         status: s.status,
-        count: s._count,
-        percentage: total > 0 ? Math.round((Number(s._count) / total) * 100) : 0,
+        count: Number(s._count),
+        percentage: totalCount > 0 ? Math.round((Number(s._count) / totalCount) * 100) : 0,
       })),
       categoryStats: byCategory.map((c) => ({
         category: c.categoryId || 'Outros',
-        count: c._count,
+        count: Number(c._count),
       })),
       departmentStats: byDeptRaw.map((d) => ({
         departmentId: d.assignedDepartmentId || 'unassigned',
         name: d.assignedDepartmentId
           ? deptMap.get(d.assignedDepartmentId) || 'Desconhecido'
           : 'Não Atribuído',
-        count: d._count,
+        count: Number(d._count),
       })),
       timelineData: timelineRaw.map((t) => ({
         date: t.date,
