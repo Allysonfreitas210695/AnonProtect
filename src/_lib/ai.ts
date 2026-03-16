@@ -20,7 +20,9 @@ export async function getChatCompletion(history: ChatMessage[], systemPrompt: st
     systemInstruction: systemPrompt,
     tools: [
       {
-        googleSearchRetrieval: {},
+        // @ts-expect-error - googleSearch is the modern name required by 2.5-flash,
+        // even if autocomplete/SDK types still show the legacy 'googleSearchRetrieval'
+        googleSearch: {},
       },
     ],
   })
@@ -77,7 +79,9 @@ export async function analyzeReport(
       model: 'gemini-2.5-flash',
       tools: [
         {
-          googleSearchRetrieval: {},
+          // @ts-expect-error - googleSearch is the modern name required by 2.5-flash,
+          // até que o SDK capture a mudança nos tipos.
+          googleSearch: {},
         },
       ],
     })
