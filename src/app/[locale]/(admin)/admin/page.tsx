@@ -118,7 +118,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    reports.map((report) => (
+                    reports.slice(0, 5).map((report) => (
                       <TableRow key={report.id} className="hover:bg-muted/50 transition-colors">
                         <TableCell className="text-primary font-mono font-bold">
                           {report.trackingCode}
@@ -148,7 +148,11 @@ export default async function AdminDashboard({ searchParams }: Props) {
                 </TableBody>
               </Table>
             </div>
-            <Pagination page={currentPage} totalPages={totalPages} baseUrl="/admin" />
+            <div className="flex justify-end pt-2">
+              <Button asChild variant="link" className="text-primary">
+                <Link href="/admin/report">Ver todos os relatos →</Link>
+              </Button>
+            </div>
           </div>
         </div>
 
