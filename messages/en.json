@@ -159,7 +159,11 @@
     "title": "Communication with Submitter",
     "placeholder": "Reply as Admin...",
     "submit": "Send",
-    "submitting": "Sending..."
+    "submitting": "Sending...",
+    "admin": "Administrator",
+    "user": "Submitter",
+    "noMessages": "No messages yet.",
+    "noMessagesUserHint": "You can send a message below."
   },
   "Evidence": {
     "title": "Evidence",
@@ -221,7 +225,8 @@
     "inProgress": "In Progress",
     "resolved": "Resolved",
     "avgResolutionTime": "Avg Resolution",
-    "realTime": "Updated in real time"
+    "realTime": "Updated in real time",
+    "units": "units"
   },
   "Navigation": {
     "home": "Home",

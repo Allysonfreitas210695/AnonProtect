@@ -58,22 +58,24 @@ export function StatsCards({ stats }: StatsCardsProps) {
       {items.map((item) => (
         <Card
           key={item.title}
-          className="group bg-card/50 ring-border hover:bg-card hover:ring-primary/20 relative overflow-hidden border-none shadow-sm ring-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
+          className="group bg-card/40 ring-border/50 hover:bg-card hover:ring-primary/30 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl"
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 p-5 pb-3">
-            <CardTitle className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+            <CardTitle className="text-muted-foreground group-hover:text-foreground text-[10px] font-black tracking-widest uppercase transition-colors">
               {item.title}
             </CardTitle>
             <div
-              className={`${item.bgColor} group-hover:bg-primary/20 rounded-xl p-2.5 transition-colors duration-300`}
+              className={`${item.bgColor} group-hover:bg-primary/20 rounded-2xl p-3 shadow-sm transition-all duration-500 group-hover:rotate-12`}
             >
-              <item.icon className={`h-4 w-4 ${item.color}`} />
+              <item.icon className={`h-4.5 w-4.5 transition-transform ${item.color}`} />
             </div>
           </CardHeader>
           <CardContent className="p-5 pt-0">
-            <div className="text-3xl font-extrabold tracking-tight">{item.value}</div>
+            <div className="text-4xl font-black tracking-tighter transition-all group-hover:translate-x-1">
+              {item.value}
+            </div>
           </CardContent>
-          <div className="bg-primary absolute bottom-0 left-0 h-1 w-0 transition-all duration-500 group-hover:w-full" />
+          <div className="from-primary absolute bottom-0 left-0 h-1.5 w-0 bg-linear-to-r to-transparent opacity-50 blur-[1px] transition-all duration-700 group-hover:w-full" />
         </Card>
       ))}
     </div>

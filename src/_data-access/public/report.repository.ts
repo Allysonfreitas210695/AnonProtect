@@ -14,6 +14,12 @@ export async function createReport(data: {
   const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase()
   const trackingCode = `AP-${year}-${randomPart}`
 
+  // Fetch category to get default department
+  const category = await prisma.category.findUnique({
+    where: { id: data.categoryId },
+    select: { defaultDepartmentId: true },
+  })
+
   return await prisma.report.create({
     data: {
       trackingCode,
@@ -25,6 +31,7 @@ export async function createReport(data: {
       district: data.district,
       postalCode: data.postalCode,
       priority: data.priority,
+      assignedDepartmentId: category?.defaultDepartmentId,
     },
   })
 }

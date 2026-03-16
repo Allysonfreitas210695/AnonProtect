@@ -245,7 +245,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                             </div>
                             <div className="flex items-center gap-2">
                               <span className="text-muted-foreground text-[10px] font-black uppercase">
-                                {dept.count} units
+                                {dept.count} {t('Stats.units')}
                               </span>
                               <span className="text-primary text-xs font-black">{percentage}%</span>
                             </div>

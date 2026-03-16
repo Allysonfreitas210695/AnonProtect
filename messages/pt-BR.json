@@ -148,7 +148,11 @@
     "title": "Comunicação com Denunciante",
     "placeholder": "Responder como Admin...",
     "submit": "Enviar",
-    "submitting": "Enviando..."
+    "submitting": "Enviando...",
+    "admin": "Administrador",
+    "user": "Denunciante",
+    "noMessages": "Nenhuma mensagem ainda.",
+    "noMessagesUserHint": "Você pode enviar uma mensagem abaixo."
   },
   "Evidence": {
     "title": "Evidências",
@@ -210,7 +214,8 @@
     "inProgress": "Em Andamento",
     "resolved": "Resolvidos",
     "avgResolutionTime": "Média Resolução",
-    "realTime": "Atualizado em tempo real"
+    "realTime": "Atualizado em tempo real",
+    "units": "unidades"
   },
   "Navigation": {
     "home": "Início",
