@@ -55,7 +55,7 @@ export const submitReportAction = actionClient
       const categoryNames = dbCategories.map((c) => c.name)
 
       // Análise de IA (opcional, não bloqueia em caso de erro)
-      const aiAnalysis = await analyzeReport(description, categoryNames)
+      const aiAnalysis = await analyzeReport(description, categoryNames, country)
 
       const report = await reportRepository.createReport({
         categoryId,

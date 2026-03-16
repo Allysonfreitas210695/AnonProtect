@@ -12,18 +12,19 @@ const chatSchema = z.object({
       parts: z.array(z.object({ text: z.string() })),
     })
   ),
+  locale: z.string(),
 })
 
 export const assistantChatAction = actionClient
   .schema(chatSchema)
-  .action(async ({ parsedInput: { history } }) => {
+  .action(async ({ parsedInput: { history, locale } }) => {
     try {
       const categories = await prisma.category.findMany({
         select: { name: true },
       })
       const categoryNames = categories.map((c) => c.name)
 
-      const systemPrompt = WHISTLEBLOWER_SYSTEM_PROMPT(categoryNames)
+      const systemPrompt = WHISTLEBLOWER_SYSTEM_PROMPT(categoryNames, locale)
       const response = await getChatCompletion(history as ChatMessage[], systemPrompt)
 
       return { success: true, response }

@@ -16,8 +16,12 @@ interface Message {
   text: string
 }
 
+import { useParams } from 'next/navigation'
+
 export function WhistleblowerAssistant() {
   const t = useTranslations('NewReport.assistant')
+  const params = useParams()
+  const locale = params.locale as string
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -50,7 +54,7 @@ export function WhistleblowerAssistant() {
     }))
     history.push({ role: 'user', parts: [{ text: userMessage }] })
 
-    execute({ history })
+    execute({ history, locale })
   }
 
   return (
