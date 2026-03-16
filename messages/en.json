@@ -68,6 +68,7 @@
   },
   "Admin": {
     "dashboard": "Dashboard",
+    "areaAdmin": "Administrative Area",
     "systemOverview": "Protection system overview",
     "recentReports": "Recent Reports",
     "code": "Code",
@@ -212,7 +213,15 @@
     "dashboard": "Dashboard",
     "reports": "Reports",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Sign Out"
+  },
+  "Stats": {
+    "total": "Total",
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "resolved": "Resolved",
+    "avgResolutionTime": "Avg Resolution",
+    "realTime": "Updated in real time"
   },
   "Navigation": {
     "home": "Home",

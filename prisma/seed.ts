@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { PrismaClient, UserRole } from '../src/_generated/prisma'
+import { PrismaClient, UserRole, ReportStatus } from '../src/_generated/prisma'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
@@ -102,6 +102,63 @@ async function main() {
       departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
     },
   })
+
+  // Step 4: Sample Reports
+  console.log('📝 Creating sample reports...')
+  const allCategories = await prisma.category.findMany()
+  const admin = await prisma.user.findUnique({ where: { email: adminEmail } })
+
+  const sampleReports = [
+    {
+      trackingCode: 'AP-2025-BR88',
+      description:
+        'Relato de comportamento inadequado persistente e exclusão sistemática por parte de membros da equipe.',
+      status: 'PENDING',
+      category: 'Bullying',
+    },
+    {
+      trackingCode: 'AP-2025-AM12',
+      description:
+        'Superior direto utilizando linguagem agressiva e ameaças veladas de demissão em reuniões abertas.',
+      status: 'IN_PROGRESS',
+      category: 'Assédio Moral',
+    },
+    {
+      trackingCode: 'AP-2025-RE45',
+      description: 'Suspeita de favorecimento em licitação interna no setor de compras.',
+      status: 'RESOLVED',
+      category: 'Corrupção/Suborno',
+    },
+    {
+      trackingCode: 'AP-2025-DX09',
+      description: 'Impedimento de promoção baseado em características protegidas por lei.',
+      status: 'PENDING',
+      category: 'Discriminação',
+    },
+    {
+      trackingCode: 'AP-2025-ST22',
+      description:
+        'Área de produção operando sem os equipamentos de proteção individual necessários.',
+      status: 'IN_PROGRESS',
+      category: 'Segurança do Trabalho',
+    },
+  ]
+
+  for (const r of sampleReports) {
+    const category = allCategories.find((c) => c.name === r.category)
+    await prisma.report.upsert({
+      where: { trackingCode: r.trackingCode },
+      update: {},
+      create: {
+        trackingCode: r.trackingCode,
+        description: r.description,
+        status: r.status as ReportStatus,
+        categoryId: category?.id,
+        assignedToId: r.status !== 'PENDING' ? admin?.id : null,
+        assignedDepartmentId: category?.defaultDepartmentId,
+      },
+    })
+  }
 
   console.log('✅ Seed completed successfully!')
 }

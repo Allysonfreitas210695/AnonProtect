@@ -62,6 +62,7 @@
   },
   "Admin": {
     "dashboard": "Dashboard",
+    "areaAdmin": "Área Administrativa",
     "systemOverview": "Visão geral do sistema de proteção",
     "recentReports": "Denúncias Recentes",
     "code": "Código",
@@ -201,7 +202,15 @@
     "dashboard": "Dashboard",
     "reports": "Denúncias",
     "settings": "Configurações",
-    "logout": "Sair"
+    "logout": "Sair do Sistema"
+  },
+  "Stats": {
+    "total": "Total",
+    "pending": "Pendentes",
+    "inProgress": "Em Andamento",
+    "resolved": "Resolvidos",
+    "avgResolutionTime": "Média Resolução",
+    "realTime": "Atualizado em tempo real"
   },
   "Navigation": {
     "home": "Início",

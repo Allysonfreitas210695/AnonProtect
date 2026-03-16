@@ -7,6 +7,7 @@ import { LayoutDashboard, FileText, Settings, LogOut, Menu, X, ShieldCheck } fro
 import { useState } from 'react'
 import { ThemeToggle } from '@/_components/shared/theme-toggle'
 import { LocaleSwitcher } from '@/_components/shared/locale-switcher'
+import { useTranslations } from 'next-intl'
 
 interface AdminLayoutClientProps {
   children: React.ReactNode
@@ -19,23 +20,25 @@ interface AdminLayoutClientProps {
 export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
+  const t = useTranslations('Sidebar')
+  const tAdmin = useTranslations('Admin')
 
   const navItems = [
     {
       href: '/admin',
-      label: 'Dashboard',
+      label: t('dashboard'),
       icon: LayoutDashboard,
     },
     {
       href: '/admin/report',
-      label: 'Denúncias',
+      label: t('reports'),
       icon: FileText,
     },
     ...(user.role === 'ADMIN'
       ? [
           {
             href: '/admin/settings',
-            label: 'Configurações',
+            label: t('settings'),
             icon: Settings,
           },
         ]
@@ -72,7 +75,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold tracking-tight">AnonProtect</h1>
                 <span className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
-                  Área Admin
+                  {tAdmin('areaAdmin')}
                 </span>
               </div>
             </div>
@@ -126,7 +129,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                 type="submit"
               >
                 <LogOut className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                <span className="text-sm font-semibold">Sair do Sistema</span>
+                <span className="text-sm font-semibold">{t('logout')}</span>
               </Button>
             </form>
           </div>

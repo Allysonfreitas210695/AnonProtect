@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { FileText, Clock, CheckCircle2, AlertCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface StatsCardsProps {
   stats: {
@@ -12,37 +13,39 @@ interface StatsCardsProps {
 }
 
 export function StatsCards({ stats }: StatsCardsProps) {
+  const t = useTranslations('Stats')
+
   const items = [
     {
-      title: 'Total',
+      title: t('total'),
       value: stats.total,
       icon: FileText,
       color: 'text-primary',
       bgColor: 'bg-primary/10',
     },
     {
-      title: 'Pendentes',
+      title: t('pending'),
       value: stats.pending,
       icon: Clock,
       color: 'text-warning',
       bgColor: 'bg-warning/10',
     },
     {
-      title: 'Em Andamento',
+      title: t('inProgress'),
       value: stats.inProgress,
       icon: AlertCircle,
       color: 'text-blue-500 dark:text-blue-400',
       bgColor: 'bg-blue-500/10 dark:bg-blue-400/10',
     },
     {
-      title: 'Resolvidos',
+      title: t('resolved'),
       value: stats.resolved,
       icon: CheckCircle2,
       color: 'text-success',
       bgColor: 'bg-success/10',
     },
     {
-      title: 'Média Resolução',
+      title: t('avgResolutionTime'),
       value: `${stats.avgResolutionTime ?? 0}h`,
       icon: Clock,
       color: 'text-muted-foreground',
