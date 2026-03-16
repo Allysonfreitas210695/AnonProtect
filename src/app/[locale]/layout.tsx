@@ -47,7 +47,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" richColors />
-            <main className="px-4 py-2">
+            <main>
               <PageTransition>{children}</PageTransition>
             </main>
           </ThemeProvider>
