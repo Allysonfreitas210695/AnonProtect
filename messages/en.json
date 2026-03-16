@@ -110,6 +110,7 @@
     "descriptionPlaceholder": "Describe the occurrence with as much detail as possible...",
     "descriptionHint": "The more detail you provide, the better we can investigate",
     "evidenceOptional": "Evidence (Optional)",
+    "uploadHint": "Upload photos, documents, or videos to help the investigation.",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
     "submitting": "Submitting...",

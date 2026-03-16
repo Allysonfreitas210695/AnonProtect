@@ -99,6 +99,7 @@
     "descriptionPlaceholder": "Descreva o ocorrido com o máximo de detalhes possível...",
     "descriptionHint": "Quanto mais detalhes você fornecer, melhor poderemos investigar",
     "evidenceOptional": "Evidências (Opcional)",
+    "uploadHint": "Envie fotos, documentos ou vídeos que ajudem na investigação.",
     "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
     "submit": "Enviar Denúncia",
     "submitting": "Enviando...",
