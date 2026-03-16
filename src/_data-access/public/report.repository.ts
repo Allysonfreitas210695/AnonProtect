@@ -9,6 +9,7 @@ export async function createReport(data: {
   district?: string
   postalCode?: string
   priority?: string
+  attachments?: { url: string; fileName: string; fileSize: number; type: string }[]
 }) {
   const year = new Date().getFullYear()
   const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase()
@@ -32,6 +33,16 @@ export async function createReport(data: {
       postalCode: data.postalCode,
       priority: data.priority,
       assignedDepartmentId: category?.defaultDepartmentId,
+      attachments: data.attachments
+        ? {
+            create: data.attachments.map((a) => ({
+              url: a.url,
+              fileName: a.fileName,
+              fileSize: a.fileSize,
+              type: a.type,
+            })),
+          }
+        : undefined,
     },
   })
 }

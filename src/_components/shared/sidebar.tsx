@@ -4,7 +4,16 @@ import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/_lib/utils'
-import { LayoutDashboard, FileText, Settings, LogOut, ShieldCheck, Menu, X } from 'lucide-react'
+import {
+  LayoutDashboard,
+  FileText,
+  BarChart3,
+  Settings,
+  LogOut,
+  ShieldCheck,
+  Menu,
+  X,
+} from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/_components/ui/button'
 import { logoutAction } from '@/_actions/public/logout.action'
@@ -16,8 +25,9 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const navigation = [
-    { name: t('dashboard'), href: '/admin', icon: LayoutDashboard },
-    { name: t('reports'), href: '/admin', icon: FileText },
+    { name: t('dashboard'), href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: t('reports'), href: '/admin/report', icon: FileText },
+    { name: t('analytics'), href: '/admin/analytics', icon: BarChart3 },
     { name: t('settings'), href: '/admin/settings', icon: Settings },
   ]
 

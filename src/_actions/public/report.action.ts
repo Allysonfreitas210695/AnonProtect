@@ -23,6 +23,7 @@ export const submitReportAction = actionClient
         district,
         postalCode,
         turnstileToken,
+        attachments,
       },
     }) => {
       // Turnstile Verification
@@ -65,6 +66,7 @@ export const submitReportAction = actionClient
         district,
         postalCode,
         priority: aiAnalysis?.priority || 'MEDIUM',
+        attachments,
       })
       return { success: true, trackingCode: report.trackingCode }
     }

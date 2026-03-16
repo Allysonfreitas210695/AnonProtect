@@ -205,6 +205,7 @@
   "Sidebar": {
     "dashboard": "Dashboard",
     "reports": "Denúncias",
+    "analytics": "Análise",
     "settings": "Configurações",
     "logout": "Sair do Sistema"
   },
@@ -227,5 +228,48 @@
     "pt-BR": "Português",
     "en": "English",
     "label": "Mudar idioma"
+  },
+  "Compliance": {
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Uso",
+    "lastUpdated": "Última atualização: {date}",
+    "back": "Voltar",
+    "privacy": {
+      "title": "Política de Privacidade",
+      "intro": "Sua privacidade é nossa prioridade máxima. Este documento explica como protegemos seus dados.",
+      "collection": "Coleta de Dados",
+      "collectionDesc": "Não coletamos endereços IP, geolocalização exata sem permissão ou metadados de dispositivos que possam identificá-lo.",
+      "usage": "Uso de Informações",
+      "usageDesc": "As informações fornecidas na denúncia são usadas exclusivamente para fins de investigação interna.",
+      "security": "Segurança Absoluta",
+      "securityDesc": "Utilizamos criptografia de nível militar para garantir que suas denúncias permaneçam anônimas."
+    },
+    "terms": {
+      "title": "Termos de Uso",
+      "intro": "Ao utilizar o AnonProtect, você concorda com as diretrizes de uso ético da plataforma.",
+      "responsibility": "Responsabilidade",
+      "responsibilityDesc": "O usuário é responsável pela veracidade das informações relatadas.",
+      "prohibitions": "Proibições",
+      "prohibitionsDesc": "É proibido o uso da plataforma para denúncias caluniosas ou trotes.",
+      "anonymity": "Garantia de Anonimato",
+      "anonymityDesc": "O sistema garante o não-rastreio da origem da denúncia pelo lado do servidor."
+    },
+    "transparency": {
+      "label": "Transparência",
+      "trustTitle": "Por que confiar no AnonProtect?",
+      "anonymityLayer": "Camada de Anonimato",
+      "anonymityLayerDesc": "Nossa arquitetura utiliza roteamento em camadas que impede que administradores vejam a origem da conexão.",
+      "zeroLogs": "Log Zero de IP",
+      "zeroLogsDesc": "Não mantemos registros de logs de acesso que contenham informações de rede dos usuários.",
+      "independentAudit": "Auditoria Independente",
+      "independentAuditDesc": "O código-fonte do motor de anonimato é revisado periodicamente para garantir a integridade."
+    }
+  },
+  "Footer": {
+    "rights": "© {year} AnonProtect. Todos os direitos reservados.",
+    "links": "Links Legais",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "transparency": "Transparência"
   }
 }

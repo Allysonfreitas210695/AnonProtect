@@ -9,12 +9,10 @@ import {
   SelectValue,
 } from '@/_components/ui/select'
 import { Calendar } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 
 export function DashboardDateFilter() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const t = useTranslations('Admin')
 
   const currentPeriod = searchParams.get('period') || '30d'
 

@@ -1,6 +1,6 @@
 import { getPublicStats } from '@/_data-access/public/transparency.query'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
-import { Shield, BarChart3, CheckCircle2 } from 'lucide-react'
+import { Shield, BarChart3, CheckCircle2, EyeOff, ShieldCheck } from 'lucide-react'
 import {
   PublicStatusChart,
   PublicCategoryChart,
@@ -73,6 +73,48 @@ export default async function TransparencyPage() {
       </div>
 
       <PublicTimelineChart data={stats.timelineStats} />
+
+      {/* Trust & Architecture Deep Dive */}
+      <div className="grid gap-10 md:grid-cols-3">
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader className="pb-3 text-center">
+            <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
+              <Shield className="text-primary h-6 w-6" />
+            </div>
+            <CardTitle className="text-base font-bold">Camada de Anonimato</CardTitle>
+          </CardHeader>
+          <CardContent className="text-muted-foreground text-center text-sm leading-relaxed">
+            Nossa arquitetura utiliza roteamento em camadas que impede que administradores vejam a
+            origem da conexão.
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader className="pb-3 text-center">
+            <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
+              <EyeOff className="text-primary h-6 w-6" />
+            </div>
+            <CardTitle className="text-base font-bold">Log Zero de IP</CardTitle>
+          </CardHeader>
+          <CardContent className="text-muted-foreground text-center text-sm leading-relaxed">
+            Não mantemos registros de logs de acesso que contenham informações de rede ou IPs dos
+            usuários.
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader className="pb-3 text-center">
+            <div className="bg-primary/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
+              <ShieldCheck className="text-primary h-6 w-6" />
+            </div>
+            <CardTitle className="text-base font-bold">Integridade Verificada</CardTitle>
+          </CardHeader>
+          <CardContent className="text-muted-foreground text-center text-sm leading-relaxed">
+            O motor de anonimato é revisado periodicamente para garantir que o sigilo da fonte
+            permaneça inviolável.
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Privacy Notice */}
       <Card className="bg-muted/30 border-none shadow-inner">

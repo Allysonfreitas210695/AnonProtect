@@ -10,6 +10,16 @@ export const reportSchema = z.object({
   district: z.string().optional(),
   postalCode: z.string().optional(),
   turnstileToken: z.string().optional(),
+  attachments: z
+    .array(
+      z.object({
+        url: z.string().url(),
+        fileName: z.string(),
+        fileSize: z.number(),
+        type: z.string(),
+      })
+    )
+    .optional(),
 })
 
 export const reportStatusSchema = z.object({

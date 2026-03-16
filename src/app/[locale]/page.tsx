@@ -103,6 +103,67 @@ export default function Home() {
           </CardContent>
         </Card>
       </div>
+
+      <footer className="bg-muted/20 mt-20 w-full border-t py-12">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="grid gap-8 md:grid-cols-4">
+            <div className="col-span-2 space-y-4">
+              <Logo size={40} className="opacity-80 grayscale transition-all hover:grayscale-0" />
+              <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
+                AnonProtect é a plataforma líder em denúncias anônimas corporativas e
+                institucionais. Garantimos total sigilo e proteção para quem reporta.
+              </p>
+            </div>
+            <div>
+              <h4 className="mb-4 text-xs font-black tracking-widest uppercase opacity-50">
+                Links Legais
+              </h4>
+              <ul className="space-y-3 text-sm font-medium">
+                <li>
+                  <Link
+                    href="/privacy-policy"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Privacidade
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms-of-service"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Termos
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 text-xs font-black tracking-widest uppercase opacity-50">
+                Confiança
+              </h4>
+              <ul className="space-y-3 text-sm font-medium">
+                <li>
+                  <Link
+                    href="/transparency"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Transparência
+                  </Link>
+                </li>
+                <li>
+                  <div className="text-primary flex items-center gap-2">
+                    <Shield className="h-4 w-4" /> <span>Hospedagem Blindada</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-muted-foreground mt-12 border-t pt-8 text-center text-xs font-medium opacity-50">
+            © {new Date().getFullYear()} AnonProtect Security Solutions. Todos os direitos
+            reservados.
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

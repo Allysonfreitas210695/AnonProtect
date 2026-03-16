@@ -29,7 +29,7 @@ export const registerAction = actionClient
       })
 
       return { success: true, message: 'Conta criada com sucesso! Faça login.' }
-    } catch (error) {
+    } catch {
       return { error: 'Erro ao criar conta' }
     }
   })

@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import { useReportStatus } from '@/_hooks/admin/use-report-status'
 import { Button } from '@/_components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '@/_components/ui/form'
-import { Loader2 } from 'lucide-react'
 import { ReportStatus } from '@/_generated/prisma'
 
 export function StatusUpdateForm({

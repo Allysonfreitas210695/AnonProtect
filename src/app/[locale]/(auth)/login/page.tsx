@@ -14,7 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/_components/ui/form'
-import { Loader2 } from 'lucide-react'
 import { Logo } from '@/_components/shared/logo'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
@@ -121,6 +120,20 @@ export default function LoginPage() {
               {t('noAccount')}{' '}
               <Link href="/register" className="text-primary font-semibold hover:underline">
                 {t('registerNow')}
+              </Link>
+            </div>
+            <div className="mt-4 flex gap-4 text-xs opacity-50">
+              <Link
+                href="/privacy-policy"
+                className="hover:text-primary underline transition-colors"
+              >
+                Privacidade
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="hover:text-primary underline transition-colors"
+              >
+                Termos de Uso
               </Link>
             </div>
           </div>

@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { Category } from '@/_generated/prisma'
 import { useNewReport } from '@/_hooks/public/use-new-report'
+import { useTheme } from 'next-themes'
+import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import {
   Form,
@@ -23,10 +25,12 @@ import {
 import { Textarea } from '@/_components/ui/textarea'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
-import { Loader2 } from 'lucide-react'
 import { Turnstile } from '@marsidev/react-turnstile'
+
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
+  const { theme } = useTheme()
+  const [files, setFiles] = useState<File[]>([])
   const { form, onSubmit, isExecuting } = useNewReport()
 
   return (
@@ -45,7 +49,13 @@ export default function NewReportForm({ categories }: { categories: Category[] }
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={onSubmit} className="space-y-6">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                onSubmit(files)
+              }}
+              className="space-y-6"
+            >
               <FormField
                 control={form.control}
                 name="categoryId"
@@ -101,11 +111,12 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 <Input
                   type="file"
                   multiple
-                  disabled
-                  className="h-11 cursor-not-allowed opacity-60"
+                  onChange={(e) => setFiles(Array.from(e.target.files || []))}
+                  className="h-11"
                 />
                 <p className="text-muted-foreground text-[10px] lg:text-xs">
-                  {t('uploadComingSoon')}
+                  {t('uploadHint') ||
+                    'Envie fotos, documentos ou vídeos que ajudem na investigação.'}
                 </p>
               </div>
 
@@ -114,7 +125,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   <Turnstile
                     siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
                     onSuccess={(token) => form.setValue('turnstileToken', token || '')}
-                    options={{ theme: 'light' }}
+                    options={{ theme: theme === 'dark' ? 'dark' : 'light' }}
                   />
                 </div>
               )}

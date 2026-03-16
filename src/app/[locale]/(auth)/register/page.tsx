@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/_components/ui/form'
-import { UserPlus, Loader2, ArrowLeft } from 'lucide-react'
+import { UserPlus, ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 
 export default function RegisterPage() {
@@ -106,6 +106,20 @@ export default function RegisterPage() {
               <ArrowLeft className="h-4 w-4" />
               Já tem uma conta? Faça login
             </Link>
+            <div className="mt-6 flex justify-center gap-4 text-xs opacity-50">
+              <Link
+                href="/privacy-policy"
+                className="hover:text-primary underline transition-colors"
+              >
+                Privacidade
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="hover:text-primary underline transition-colors"
+              >
+                Termos de Uso
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>

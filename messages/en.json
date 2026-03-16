@@ -216,6 +216,7 @@
   "Sidebar": {
     "dashboard": "Dashboard",
     "reports": "Reports",
+    "analytics": "Analytics",
     "settings": "Settings",
     "logout": "Sign Out"
   },
@@ -238,5 +239,48 @@
     "pt-BR": "Português",
     "en": "English",
     "label": "Change language"
+  },
+  "Compliance": {
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "lastUpdated": "Last updated: {date}",
+    "back": "Back",
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "Your privacy is our top priority. This document explains how we protect your data.",
+      "collection": "Data Collection",
+      "collectionDesc": "We do not collect IP addresses, exact geolocation without permission, or device metadata that could identify you.",
+      "usage": "Information Usage",
+      "usageDesc": "Information provided in the report is used exclusively for internal investigation purposes.",
+      "security": "Absolute Security",
+      "securityDesc": "We use military-grade encryption to ensure your reports remain anonymous."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "intro": "By using AnonProtect, you agree to the platform's ethical use guidelines.",
+      "responsibility": "Responsibility",
+      "responsibilityDesc": "The user is responsible for the veracity of the reported information.",
+      "prohibitions": "Prohibitions",
+      "prohibitionsDesc": "It is forbidden to use the platform for slanderous reports or pranks.",
+      "anonymity": "Anonymity Guarantee",
+      "anonymityDesc": "The system guarantees non-tracking of the report origin on the server side."
+    },
+    "transparency": {
+      "label": "Transparency",
+      "trustTitle": "Why trust AnonProtect?",
+      "anonymityLayer": "Anonymity Layer",
+      "anonymityLayerDesc": "Our architecture uses layered routing that prevents administrators from seeing the connection origin.",
+      "zeroLogs": "Zero IP Logs",
+      "zeroLogsDesc": "We do not keep access logs that contain network information from users.",
+      "independentAudit": "Independent Audit",
+      "independentAuditDesc": "The anonymity engine's source code is reviewed periodically to ensure integrity."
+    }
+  },
+  "Footer": {
+    "rights": "© {year} AnonProtect. All rights reserved.",
+    "links": "Legal Links",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "transparency": "Transparency"
   }
 }

@@ -68,7 +68,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
         } else {
           toast.error('Erro ao arquivar denúncias')
         }
-      } catch (error) {
+      } catch {
         toast.error('Erro de conexão')
       }
     })

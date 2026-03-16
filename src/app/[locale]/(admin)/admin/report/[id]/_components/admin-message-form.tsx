@@ -5,7 +5,6 @@ import { useAdminMessage } from '@/_hooks/admin/use-admin-message'
 import { Button } from '@/_components/ui/button'
 import { Input } from '@/_components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/_components/ui/form'
-import { Loader2 } from 'lucide-react'
 
 interface AdminMessageFormProps {
   reportId: string
