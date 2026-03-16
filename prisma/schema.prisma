@@ -17,6 +17,7 @@ enum ReportStatus {
   IN_PROGRESS
   RESOLVED
   REJECTED
+  ARCHIVED
 }
 
 enum AttachmentCategory {
@@ -109,6 +110,15 @@ model Report {
   trackingCode       String              @unique @map("tracking_code")
   description        String
   status             ReportStatus        @default(PENDING)
+  priority           String?             @default("MEDIUM")
+  
+  // Location
+  country            String?
+  state              String?
+  city               String?
+  district           String?
+  postalCode         String?             @map("postal_code")
+
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
   assignedToId       String?             @map("assigned_to_id")

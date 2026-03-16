@@ -14,6 +14,7 @@ export const REPORT_STATUS: Record<string, string> = {
   IN_PROGRESS: 'Em Análise',
   RESOLVED: 'Resolvido',
   REJECTED: 'Rejeitado',
+  ARCHIVED: 'Arquivado',
 }
 
 export const STATUS_COLORS: Record<
@@ -24,4 +25,5 @@ export const STATUS_COLORS: Record<
   IN_PROGRESS: 'info',
   RESOLVED: 'success',
   REJECTED: 'destructive',
+  ARCHIVED: 'secondary',
 }

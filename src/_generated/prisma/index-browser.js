@@ -163,6 +163,12 @@ exports.Prisma.ReportScalarFieldEnum = {
   trackingCode: 'trackingCode',
   description: 'description',
   status: 'status',
+  priority: 'priority',
+  country: 'country',
+  state: 'state',
+  city: 'city',
+  district: 'district',
+  postalCode: 'postalCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   assignedToId: 'assignedToId',
@@ -251,6 +257,7 @@ exports.ReportStatus = exports.$Enums.ReportStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   RESOLVED: 'RESOLVED',
   REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED',
 }
 
 exports.AttachmentCategory = exports.$Enums.AttachmentCategory = {

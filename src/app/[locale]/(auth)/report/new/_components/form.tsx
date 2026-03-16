@@ -24,6 +24,7 @@ import { Textarea } from '@/_components/ui/textarea'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
 import { Loader2 } from 'lucide-react'
+import { Turnstile } from '@marsidev/react-turnstile'
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
   const { form, onSubmit, isExecuting } = useNewReport()
@@ -107,6 +108,16 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   {t('uploadComingSoon')}
                 </p>
               </div>
+
+              {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                <div className="space-y-4">
+                  <Turnstile
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    onSuccess={(token) => form.setValue('turnstileToken', token || '')}
+                    options={{ theme: 'light' }}
+                  />
+                </div>
+              )}
 
               <div className="pt-4">
                 <Button

@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { PageTransition } from '@/_components/shared/page-transition'
+
 export default async function RootLayout({
   children,
   params,
@@ -45,7 +47,9 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" richColors />
-            <main className="px-4 py-2">{children}</main>
+            <main className="px-4 py-2">
+              <PageTransition>{children}</PageTransition>
+            </main>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

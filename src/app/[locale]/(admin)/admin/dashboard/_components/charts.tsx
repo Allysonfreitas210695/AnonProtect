@@ -173,3 +173,48 @@ export function TimelineChart({ data }: TimelineChartProps) {
     </Card>
   )
 }
+interface LocationChartProps {
+  title: string
+  description: string
+  data: Array<{ country?: string; city?: string; count: number }>
+}
+
+export function LocationChart({ title, description, data }: LocationChartProps) {
+  const chartData = data
+    .map((item) => ({
+      name: item.country || item.city || 'Desconhecido',
+      count: item.count,
+    }))
+    .sort((a, b) => b.count - a.count)
+
+  return (
+    <Card className="bg-card">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData} layout="vertical">
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="hsl(var(--muted-foreground))"
+              opacity={0.2}
+            />
+            <XAxis type="number" stroke="hsl(var(--foreground))" />
+            <YAxis dataKey="name" type="category" stroke="hsl(var(--foreground))" width={100} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
+              }}
+              itemStyle={{ color: 'hsl(var(--foreground))' }}
+            />
+            <Bar dataKey="count" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
+  )
+}

@@ -1,3 +1,4 @@
+import { ReportStatus } from '@prisma/client'
 import { prisma } from '@/_lib/prisma'
 
 export async function getReportById(id: string) {
@@ -44,10 +45,41 @@ export async function getReportById(id: string) {
 export async function getReportsPaginated(
   page: number = 1,
   pageSize: number = 10,
-  days: number | null = 30
+  days: number | null = 30,
+  search?: string,
+  status?: string,
+  categoryId?: string,
+  country?: string,
+  city?: string
 ) {
   const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
-  const where = startDate ? { createdAt: { gte: startDate } } : {}
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const where: any = {}
+
+  if (startDate) {
+    where.createdAt = { gte: startDate }
+  }
+
+  if (search) {
+    where.trackingCode = { contains: search, mode: 'insensitive' }
+  }
+
+  if (status) {
+    where.status = status as ReportStatus
+  }
+
+  if (categoryId) {
+    where.categoryId = categoryId
+  }
+
+  if (country) {
+    where.country = country
+  }
+
+  if (city) {
+    where.city = city
+  }
 
   const [reports, total] = await Promise.all([
     prisma.report.findMany({
@@ -60,6 +92,8 @@ export async function getReportsPaginated(
         trackingCode: true,
         status: true,
         createdAt: true,
+        country: true,
+        city: true,
         category: {
           select: {
             name: true,
@@ -89,6 +123,25 @@ export async function getAllReports() {
 
 export async function getAllCategories() {
   return await prisma.category.findMany({
+    where: { active: true },
     orderBy: { name: 'asc' },
   })
+}
+
+export async function getReportsLocations() {
+  const [countries, cities] = await Promise.all([
+    prisma.report.groupBy({
+      by: ['country'],
+      where: { country: { not: null } },
+    }),
+    prisma.report.groupBy({
+      by: ['city'],
+      where: { city: { not: null } },
+    }),
+  ])
+
+  return {
+    countries: countries.map((c) => c.country as string).filter(Boolean),
+    cities: cities.map((c) => c.city as string).filter(Boolean),
+  }
 }

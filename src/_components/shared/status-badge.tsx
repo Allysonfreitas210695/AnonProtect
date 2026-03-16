@@ -34,6 +34,11 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       className: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
       dotColor: 'bg-rose-500',
     },
+    [ReportStatus.ARCHIVED]: {
+      label: t('ARCHIVED'),
+      className: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20',
+      dotColor: 'bg-slate-500',
+    },
   }
 
   const config = statusConfig[status]

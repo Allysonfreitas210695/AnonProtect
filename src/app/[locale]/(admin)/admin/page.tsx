@@ -25,16 +25,17 @@ import { StatsCards } from '@/_components/shared/stats-cards'
 import { AnalyticsChart } from '@/_components/shared/analytics-chart'
 
 import { DashboardDateFilter } from '@/_components/shared/dashboard-date-filter'
+import { ReportSearchFilter } from '@/_components/shared/report-search-filter'
 
 export const dynamic = 'force-dynamic'
 
 interface Props {
-  searchParams: Promise<{ page?: string; period?: string }>
+  searchParams: Promise<{ page?: string; period?: string; search?: string }>
 }
 
 export default async function AdminDashboard({ searchParams }: Props) {
   const t = await getTranslations('Admin')
-  const { page, period } = await searchParams
+  const { page, period, search } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 10
 
@@ -50,26 +51,25 @@ export default async function AdminDashboard({ searchParams }: Props) {
             : 30
 
   let reports: Awaited<ReturnType<typeof getReportsPaginated>>['reports'] = []
-  let totalPages = 0
   let quickStats: Awaited<ReturnType<typeof getQuickStats>> = {
     total: 0,
     pending: 0,
     inProgress: 0,
     resolved: 0,
+    today: 0,
   }
   let fullStats: Awaited<ReturnType<typeof getReportStats>> | undefined
   let activities: Awaited<ReturnType<typeof getGlobalActivityLogs>> = []
 
   try {
     const [paginatedData, qs, fs, act] = await Promise.all([
-      getReportsPaginated(currentPage, pageSize, days),
+      getReportsPaginated(currentPage, pageSize, days, search),
       getQuickStats(days),
       getReportStats(days),
       getGlobalActivityLogs(8),
     ])
 
     reports = paginatedData.reports
-    totalPages = paginatedData.totalPages
     quickStats = qs
     fullStats = fs
     activities = act
@@ -127,8 +127,9 @@ export default async function AdminDashboard({ searchParams }: Props) {
           </div>
 
           <div className="space-y-6">
-            <div className="flex items-center justify-between px-2">
+            <div className="flex flex-col gap-4 px-2 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-2xl font-bold tracking-tight">{t('recentReports')}</h2>
+              <ReportSearchFilter />
               <Button
                 asChild
                 variant="ghost"

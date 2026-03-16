@@ -83,6 +83,7 @@ export namespace $Enums {
     IN_PROGRESS: 'IN_PROGRESS'
     RESOLVED: 'RESOLVED'
     REJECTED: 'REJECTED'
+    ARCHIVED: 'ARCHIVED'
   }
 
   export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
@@ -7309,6 +7310,12 @@ export namespace Prisma {
     trackingCode: string | null
     description: string | null
     status: $Enums.ReportStatus | null
+    priority: string | null
+    country: string | null
+    state: string | null
+    city: string | null
+    district: string | null
+    postalCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7321,6 +7328,12 @@ export namespace Prisma {
     trackingCode: string | null
     description: string | null
     status: $Enums.ReportStatus | null
+    priority: string | null
+    country: string | null
+    state: string | null
+    city: string | null
+    district: string | null
+    postalCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7333,6 +7346,12 @@ export namespace Prisma {
     trackingCode: number
     description: number
     status: number
+    priority: number
+    country: number
+    state: number
+    city: number
+    district: number
+    postalCode: number
     createdAt: number
     updatedAt: number
     assignedToId: number
@@ -7346,6 +7365,12 @@ export namespace Prisma {
     trackingCode?: true
     description?: true
     status?: true
+    priority?: true
+    country?: true
+    state?: true
+    city?: true
+    district?: true
+    postalCode?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7358,6 +7383,12 @@ export namespace Prisma {
     trackingCode?: true
     description?: true
     status?: true
+    priority?: true
+    country?: true
+    state?: true
+    city?: true
+    district?: true
+    postalCode?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7370,6 +7401,12 @@ export namespace Prisma {
     trackingCode?: true
     description?: true
     status?: true
+    priority?: true
+    country?: true
+    state?: true
+    city?: true
+    district?: true
+    postalCode?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7456,6 +7493,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status: $Enums.ReportStatus
+    priority: string | null
+    country: string | null
+    state: string | null
+    city: string | null
+    district: string | null
+    postalCode: string | null
     createdAt: Date
     updatedAt: Date
     assignedToId: string | null
@@ -7485,6 +7528,12 @@ export namespace Prisma {
         trackingCode?: boolean
         description?: boolean
         status?: boolean
+        priority?: boolean
+        country?: boolean
+        state?: boolean
+        city?: boolean
+        district?: boolean
+        postalCode?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         assignedToId?: boolean
@@ -7510,6 +7559,12 @@ export namespace Prisma {
       trackingCode?: boolean
       description?: boolean
       status?: boolean
+      priority?: boolean
+      country?: boolean
+      state?: boolean
+      city?: boolean
+      district?: boolean
+      postalCode?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7530,6 +7585,12 @@ export namespace Prisma {
       trackingCode?: boolean
       description?: boolean
       status?: boolean
+      priority?: boolean
+      country?: boolean
+      state?: boolean
+      city?: boolean
+      district?: boolean
+      postalCode?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7547,6 +7608,12 @@ export namespace Prisma {
     trackingCode?: boolean
     description?: boolean
     status?: boolean
+    priority?: boolean
+    country?: boolean
+    state?: boolean
+    city?: boolean
+    district?: boolean
+    postalCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignedToId?: boolean
@@ -7560,6 +7627,12 @@ export namespace Prisma {
       | 'trackingCode'
       | 'description'
       | 'status'
+      | 'priority'
+      | 'country'
+      | 'state'
+      | 'city'
+      | 'district'
+      | 'postalCode'
       | 'createdAt'
       | 'updatedAt'
       | 'assignedToId'
@@ -7609,6 +7682,12 @@ export namespace Prisma {
         trackingCode: string
         description: string
         status: $Enums.ReportStatus
+        priority: string | null
+        country: string | null
+        state: string | null
+        city: string | null
+        district: string | null
+        postalCode: string | null
         createdAt: Date
         updatedAt: Date
         assignedToId: string | null
@@ -8191,6 +8270,12 @@ export namespace Prisma {
     readonly trackingCode: FieldRef<'Report', 'String'>
     readonly description: FieldRef<'Report', 'String'>
     readonly status: FieldRef<'Report', 'ReportStatus'>
+    readonly priority: FieldRef<'Report', 'String'>
+    readonly country: FieldRef<'Report', 'String'>
+    readonly state: FieldRef<'Report', 'String'>
+    readonly city: FieldRef<'Report', 'String'>
+    readonly district: FieldRef<'Report', 'String'>
+    readonly postalCode: FieldRef<'Report', 'String'>
     readonly createdAt: FieldRef<'Report', 'DateTime'>
     readonly updatedAt: FieldRef<'Report', 'DateTime'>
     readonly assignedToId: FieldRef<'Report', 'String'>
@@ -16615,6 +16700,12 @@ export namespace Prisma {
     trackingCode: 'trackingCode'
     description: 'description'
     status: 'status'
+    priority: 'priority'
+    country: 'country'
+    state: 'state'
+    city: 'city'
+    district: 'district'
+    postalCode: 'postalCode'
     createdAt: 'createdAt'
     updatedAt: 'updatedAt'
     assignedToId: 'assignedToId'
@@ -17164,6 +17255,12 @@ export namespace Prisma {
     trackingCode?: StringFilter<'Report'> | string
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
+    priority?: StringNullableFilter<'Report'> | string | null
+    country?: StringNullableFilter<'Report'> | string | null
+    state?: StringNullableFilter<'Report'> | string | null
+    city?: StringNullableFilter<'Report'> | string | null
+    district?: StringNullableFilter<'Report'> | string | null
+    postalCode?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17183,6 +17280,12 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    priority?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    postalCode?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17206,6 +17309,12 @@ export namespace Prisma {
       NOT?: ReportWhereInput | ReportWhereInput[]
       description?: StringFilter<'Report'> | string
       status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
+      priority?: StringNullableFilter<'Report'> | string | null
+      country?: StringNullableFilter<'Report'> | string | null
+      state?: StringNullableFilter<'Report'> | string | null
+      city?: StringNullableFilter<'Report'> | string | null
+      district?: StringNullableFilter<'Report'> | string | null
+      postalCode?: StringNullableFilter<'Report'> | string | null
       createdAt?: DateTimeFilter<'Report'> | Date | string
       updatedAt?: DateTimeFilter<'Report'> | Date | string
       assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17227,6 +17336,12 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    priority?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    postalCode?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17245,6 +17360,12 @@ export namespace Prisma {
     trackingCode?: StringWithAggregatesFilter<'Report'> | string
     description?: StringWithAggregatesFilter<'Report'> | string
     status?: EnumReportStatusWithAggregatesFilter<'Report'> | $Enums.ReportStatus
+    priority?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    country?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    state?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    city?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    district?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    postalCode?: StringNullableWithAggregatesFilter<'Report'> | string | null
     createdAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     assignedToId?: StringNullableWithAggregatesFilter<'Report'> | string | null
@@ -17982,6 +18103,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -17998,6 +18125,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18014,6 +18147,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -18030,6 +18169,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18046,6 +18191,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18058,6 +18209,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18067,6 +18224,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18906,6 +19069,12 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    priority?: SortOrder
+    country?: SortOrder
+    state?: SortOrder
+    city?: SortOrder
+    district?: SortOrder
+    postalCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -18918,6 +19087,12 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    priority?: SortOrder
+    country?: SortOrder
+    state?: SortOrder
+    city?: SortOrder
+    district?: SortOrder
+    postalCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -18930,6 +19105,12 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    priority?: SortOrder
+    country?: SortOrder
+    state?: SortOrder
+    city?: SortOrder
+    district?: SortOrder
+    postalCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -20850,6 +21031,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     category?: CategoryCreateNestedOneWithoutReportsInput
@@ -20865,6 +21052,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -21051,6 +21244,12 @@ export namespace Prisma {
     trackingCode?: StringFilter<'Report'> | string
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
+    priority?: StringNullableFilter<'Report'> | string | null
+    country?: StringNullableFilter<'Report'> | string | null
+    state?: StringNullableFilter<'Report'> | string | null
+    city?: StringNullableFilter<'Report'> | string | null
+    district?: StringNullableFilter<'Report'> | string | null
+    postalCode?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -21754,6 +21953,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -21769,6 +21974,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -21800,6 +22011,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -21815,6 +22032,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21830,6 +22053,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -21845,6 +22074,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -21876,6 +22111,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -21891,6 +22132,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21934,6 +22181,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -21949,6 +22202,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22030,6 +22289,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -22045,6 +22310,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22132,6 +22403,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -22147,6 +22424,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22218,6 +22501,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -22233,6 +22522,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22305,6 +22600,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -22320,6 +22621,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22428,6 +22735,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutReportsInput
@@ -22443,6 +22756,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22626,6 +22945,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -22714,6 +23039,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneWithoutReportsNestedInput
@@ -22729,6 +23060,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22744,6 +23081,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22946,6 +23289,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22957,6 +23306,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -22972,6 +23327,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22987,6 +23348,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23011,6 +23378,12 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
+    priority?: string | null
+    country?: string | null
+    state?: string | null
+    city?: string | null
+    district?: string | null
+    postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23080,6 +23453,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
@@ -23095,6 +23474,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23110,6 +23495,12 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null

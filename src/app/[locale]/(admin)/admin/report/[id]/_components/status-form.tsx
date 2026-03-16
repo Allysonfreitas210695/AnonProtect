@@ -35,6 +35,7 @@ export function StatusUpdateForm({
                   <option value="IN_PROGRESS">{t('IN_PROGRESS')}</option>
                   <option value="RESOLVED">{t('RESOLVED')}</option>
                   <option value="REJECTED">{t('REJECTED')}</option>
+                  <option value="ARCHIVED">{t('ARCHIVED')}</option>
                 </select>
               </FormControl>
             </FormItem>

@@ -7,44 +7,63 @@ export const getReportStats = unstable_cache(
     const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
     const where = startDate ? { createdAt: { gte: startDate } } : {}
 
-    const [total, byStatus, byCategory, byDeptRaw, allDepts, resolvedRaw, timelineRaw] =
-      await Promise.all([
-        prisma.report.count({ where }),
-        prisma.report.groupBy({
-          by: ['status'],
-          where,
-          _count: true,
-        }),
-        prisma.report.groupBy({
-          by: ['categoryId'],
-          where,
-          _count: true,
-        }),
-        prisma.report.groupBy({
-          by: ['assignedDepartmentId'],
-          where,
-          _count: true,
-        }),
-        prisma.department.findMany({ select: { id: true, name: true } }),
-        prisma.report.findMany({
-          where: { ...where, status: 'RESOLVED' },
-          select: { createdAt: true, updatedAt: true },
-        }),
-        startDate
-          ? prisma.$queryRaw<{ date: string; count: bigint }[]>`
+    const [
+      total,
+      byStatus,
+      byCategory,
+      byDeptRaw,
+      allDepts,
+      resolvedRaw,
+      byCountry,
+      byCity,
+      timelineRaw,
+    ] = await Promise.all([
+      prisma.report.count({ where }),
+      prisma.report.groupBy({
+        by: ['status'],
+        where,
+        _count: true,
+      }),
+      prisma.report.groupBy({
+        by: ['categoryId'],
+        where,
+        _count: true,
+      }),
+      prisma.report.groupBy({
+        by: ['assignedDepartmentId'],
+        where,
+        _count: true,
+      }),
+      prisma.department.findMany({ select: { id: true, name: true } }),
+      prisma.report.findMany({
+        where: { ...where, status: 'RESOLVED' },
+        select: { createdAt: true, updatedAt: true },
+      }),
+      prisma.report.groupBy({
+        by: ['country'],
+        where,
+        _count: true,
+      }),
+      prisma.report.groupBy({
+        by: ['city'],
+        where,
+        _count: true,
+      }),
+      startDate
+        ? prisma.$queryRaw<{ date: string; count: bigint }[]>`
             SELECT TO_CHAR(created_at, 'DD/MM') as date, COUNT(*)::bigint as count
             FROM reports
             WHERE created_at >= ${startDate}
             GROUP BY TO_CHAR(created_at, 'DD/MM')
             ORDER BY MIN(created_at) ASC
           `
-          : prisma.$queryRaw<{ date: string; count: bigint }[]>`
+        : prisma.$queryRaw<{ date: string; count: bigint }[]>`
             SELECT TO_CHAR(created_at, 'MM/YY') as date, COUNT(*)::bigint as count
             FROM reports
             GROUP BY TO_CHAR(created_at, 'MM/YY')
             ORDER BY MIN(created_at) ASC
           `,
-      ])
+    ])
 
     const totalCount = Number(total)
     const avgResolutionTime = calculateAvgResolutionTime(resolvedRaw)
@@ -69,6 +88,14 @@ export const getReportStats = unstable_cache(
           : 'Não Atribuído',
         count: Number(d._count),
       })),
+      countryStats: byCountry.map((c) => ({
+        country: c.country || 'Desconhecido',
+        count: Number(c._count),
+      })),
+      cityStats: byCity.map((c) => ({
+        city: c.city || 'Desconhecido',
+        count: Number(c._count),
+      })),
       timelineData: timelineRaw.map((t) => ({
         date: t.date,
         count: Number(t.count),
@@ -84,11 +111,15 @@ export async function getQuickStats(days: number | null = 30) {
   const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
   const where = startDate ? { createdAt: { gte: startDate } } : {}
 
-  const [total, pending, inProgress, resolved] = await Promise.all([
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const [total, pending, inProgress, resolved, todayCount] = await Promise.all([
     prisma.report.count({ where }),
     prisma.report.count({ where: { ...where, status: 'PENDING' } }),
     prisma.report.count({ where: { ...where, status: 'IN_PROGRESS' } }),
     prisma.report.count({ where: { ...where, status: 'RESOLVED' } }),
+    prisma.report.count({ where: { createdAt: { gte: today } } }),
   ])
 
   return {
@@ -96,6 +127,7 @@ export async function getQuickStats(days: number | null = 30) {
     pending,
     inProgress,
     resolved,
+    today: todayCount,
   }
 }
 

@@ -1,6 +1,6 @@
 import { getReportStats, getQuickStats } from '@/_data-access/admin/stats.query'
 import { StatsCards } from './_components/stats'
-import { StatusChart, CategoryChart, TimelineChart } from './_components/charts'
+import { StatusChart, CategoryChart, TimelineChart, LocationChart } from './_components/charts'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,6 +19,19 @@ export default async function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2">
         <StatusChart data={reportStats.statusStats} />
         <CategoryChart data={reportStats.categoryStats} />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <LocationChart
+          title="Denúncias por País"
+          description="Distribuição geográfica global"
+          data={reportStats.countryStats}
+        />
+        <LocationChart
+          title="Denúncias por Cidade"
+          description="Distribuição regional"
+          data={reportStats.cityStats}
+        />
       </div>
 
       {reportStats.timelineData.length > 0 && <TimelineChart data={reportStats.timelineData} />}

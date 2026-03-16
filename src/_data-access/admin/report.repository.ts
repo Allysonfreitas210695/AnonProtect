@@ -40,7 +40,12 @@ export async function deleteInvestigationNote(noteId: string) {
   })
 }
 
-export async function forwardReport(reportId: string, departmentId: string, userId: string, description: string) {
+export async function forwardReport(
+  reportId: string,
+  departmentId: string,
+  userId: string,
+  description: string
+) {
   return await prisma.$transaction([
     prisma.report.update({
       where: { id: reportId },
@@ -58,3 +63,11 @@ export async function forwardReport(reportId: string, departmentId: string, user
   ])
 }
 
+export async function updateReportsStatus(ids: string[], status: ReportStatus) {
+  return await prisma.report.updateMany({
+    where: {
+      id: { in: ids },
+    },
+    data: { status },
+  })
+}

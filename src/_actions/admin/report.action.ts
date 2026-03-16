@@ -109,3 +109,16 @@ export const forwardReportAction = authActionClient
     revalidatePath(`/admin/report/${reportId}`)
     return { success: true, message: 'Denúncia encaminhada com sucesso' }
   })
+
+const batchStatusSchema = z.object({
+  reportIds: z.array(z.string().uuid()),
+  status: reportStatusSchema.shape.status,
+})
+
+export const batchUpdateReportStatusAction = authActionClient
+  .schema(batchStatusSchema)
+  .action(async ({ parsedInput: { reportIds, status } }) => {
+    await reportRepository.updateReportsStatus(reportIds, status)
+    revalidatePath('/admin/report')
+    return { success: true, message: `${reportIds.length} denúncias atualizadas com sucesso` }
+  })

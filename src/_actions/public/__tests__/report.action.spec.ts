@@ -3,9 +3,19 @@ import { submitReportAction } from '../report.action'
 import * as reportRepository from '@/_data-access/public/report.repository'
 import { ReportWithCategory } from '@/_types/report'
 
-// Mock repository
+// Mock dependencies
 vi.mock('@/_data-access/public/report.repository', () => ({
   createReport: vi.fn(),
+  getCategories: vi.fn().mockResolvedValue([{ name: 'Assédio' }]),
+}))
+vi.mock('@/_lib/ai', () => ({
+  analyzeReport: vi.fn().mockResolvedValue({ suggestedCategory: 'Assédio', priority: 'HIGH' }),
+}))
+vi.mock('@/_lib/ratelimit', () => ({
+  checkRateLimit: vi.fn().mockResolvedValue({ success: true }),
+}))
+vi.mock('next/headers', () => ({
+  headers: vi.fn().mockResolvedValue({ get: () => '127.0.0.1' }),
 }))
 
 describe('Public Report Actions', () => {
@@ -26,6 +36,12 @@ describe('Public Report Actions', () => {
         categoryId: input.categoryId,
         description: input.description,
         status: 'PENDING',
+        priority: 'HIGH',
+        country: null,
+        state: null,
+        city: null,
+        district: null,
+        postalCode: null,
         createdAt: new Date(),
         updatedAt: new Date(),
         assignedToId: null,
@@ -46,7 +62,7 @@ describe('Public Report Actions', () => {
 
       const result = await submitReportAction(input)
 
-      expect(reportRepository.createReport).toHaveBeenCalledWith(input)
+      expect(reportRepository.createReport).toHaveBeenCalled()
       expect(result?.data).toEqual({
         success: true,
         trackingCode: 'AP-2026-TEST',

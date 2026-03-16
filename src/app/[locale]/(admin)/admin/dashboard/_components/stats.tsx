@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
-import { FileText, Clock, CheckCircle2, TrendingUp } from 'lucide-react'
+import { FileText, Clock, CheckCircle2 } from 'lucide-react'
 
 interface StatsCardsProps {
   stats: {
@@ -7,6 +7,7 @@ interface StatsCardsProps {
     pending: number
     inProgress: number
     resolved: number
+    today: number
   }
 }
 
@@ -20,18 +21,18 @@ export function StatsCards({ stats }: StatsCardsProps) {
       bgColor: 'bg-blue-100',
     },
     {
+      title: 'Denúncias Hoje',
+      value: stats.today,
+      icon: Clock,
+      color: 'text-indigo-600',
+      bgColor: 'bg-indigo-100',
+    },
+    {
       title: 'Pendentes',
       value: stats.pending,
       icon: Clock,
       color: 'text-orange-600',
       bgColor: 'bg-orange-100',
-    },
-    {
-      title: 'Em Análise',
-      value: stats.inProgress,
-      icon: TrendingUp,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100',
     },
     {
       title: 'Resolvidas',
