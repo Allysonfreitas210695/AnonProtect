@@ -1,4 +1,4 @@
-import { ReportStatus } from '@prisma/client'
+import { ReportStatus } from '@/_generated/prisma'
 import { prisma } from '@/_lib/prisma'
 
 export async function getReportById(id: string) {
