@@ -6,37 +6,29 @@ Abaixo estão detalhadas as principais tabelas do banco de dados relacional (Pos
 
 ### 12.1.1 Tabela `reports` (Denúncias)
 
-| Campo          | Tipo            | Descrição                                   |
-| -------------- | --------------- | ------------------------------------------- |
-| id             | UUID (PK)       | Identificador interno único                 |
-| tracking_code  | String (Unique) | Código para rastreamento (ex: AP-2025-X8Y2) |
-| description    | Text            | Relato detalhado da ocorrência              |
-| status         | Enum            | PENDING, IN_PROGRESS, RESOLVED, REJECTED    |
-| category_id    | UUID (FK)       | Vínculo com a tabela de categorias          |
-| assigned_to_id | UUID (FK)       | Usuário gestor responsável                  |
-| created_at     | DateTime        | Data e hora da submissão                    |
+| Field         | Type            | Description                                        |
+| ------------- | --------------- | -------------------------------------------------- |
+| id            | UUID (PK)       | Identificador interno único                        |
+| tracking_code | String (Unique) | Código para rastreamento (ex: AP-2026-X8Y2)        |
+| description   | Text            | Relato detalhado da ocorrência                     |
+| status        | Enum            | PENDING, IN_PROGRESS, RESOLVED, REJECTED, ARCHIVED |
+| priority      | String          | LOW, MEDIUM, HIGH, CRITICAL                        |
+| country       | String          | País da ocorrência                                 |
+| city          | String          | Cidade da ocorrência                               |
+| category_id   | UUID (FK)       | Vínculo com a tabela de categorias                 |
+| created_at    | DateTime        | Data e hora da submissão                           |
 
-### 12.1.2 Tabela `users` (Usuários Gestores)
+### 12.1.2 Tabela `activity_logs` (Histórico de Auditoria)
 
-| Campo         | Tipo            | Descrição                            |
-| ------------- | --------------- | ------------------------------------ |
-| id            | UUID (PK)       | Identificador único                  |
-| email         | String (Unique) | E-mail de acesso                     |
-| password      | String (Hash)   | Senha criptografada (bcrypt)         |
-| role          | Enum            | ADMIN, SUPERVISOR                    |
-| department_id | UUID (FK)       | Vínculo com o departamento do gestor |
+Manutenção automática do rastro de ações administrativas.
 
-### 12.1.3 Tabela `categories` (Categorias)
-
-| Campo                 | Tipo            | Descrição                                |
-| --------------------- | --------------- | ---------------------------------------- |
-| id                    | UUID (PK)       | Identificador único                      |
-| name                  | String (Unique) | Nome (ex: Bullying, Assédio)             |
-| default_department_id | UUID (FK)       | Departamento para encaminhamento inicial |
+| Campo       | Tipo      | Descrição                                |
+| ----------- | --------- | ---------------------------------------- |
+| id          | UUID (PK) | Identificador único                      |
+| action      | Enum      | STATUS_CHANGED, DEPARTMENT_CHANGED, etc. |
+| description | Text      | Descrição legível da ação                |
 
 ## 12.2 Modelo Entidade-Relacionamento (ER)
-
-O modelo foi projetado para normalização e integridade. As chaves estrangeiras garantem que uma denúncia não fique sem categoria e que histórico de mensagens seja removido apenas se a denúncia for excluída (onDelete: Cascade).
 
 ```plantuml
 @startuml
@@ -44,38 +36,33 @@ entity "User" as user {
   *id : uuid <<PK>>
   --
   name : text
-  email : text <<unique>>
   role : enum
-  department_id : uuid <<FK>>
 }
 
 entity "Report" as report {
   *id : uuid <<PK>>
   --
   tracking_code : text <<unique>>
-  description : text
   status : enum
-  category_id : uuid <<FK>>
-  assigned_to_id : uuid <<FK>>
+  priority : text
+  location_data : dynamic
 }
 
 entity "Category" as category {
   *id : uuid <<PK>>
   --
   name : text
-  default_department_id : uuid <<FK>>
 }
 
-entity "Message" as message {
+entity "ActivityLog" as log {
   *id : uuid <<PK>>
   --
-  report_id : uuid <<FK>>
-  content : text
-  sender : enum
+  action : enum
+  description : text
 }
 
-report ||--o{ message
+report ||--o{ log
 category ||--o{ report
-user ||--o{ report
+user ||--o{ log
 @enduml
 ```

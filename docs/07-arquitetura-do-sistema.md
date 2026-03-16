@@ -14,7 +14,7 @@ Processa a lógica de negócio, autenticação e validação de dados. As **Serv
 
 ### 7.1.3 Camada de Dados (Prisma & PostgreSQL)
 
-Gerencia a persistência das informações. O Prisma atua como a interface de consulta, garantindo integridade referencial e tipagem forte em todas as operações.
+Gerencia a persistência das informações. O Prisma atua como a interface de consulta, garantindo integridade referencial e tipagem forte em todas as operações. O sistema também utiliza o **Upstash Redis** para gerenciamento de rate limit distribuído.
 
 ## 7.2 Diagrama de Arquitetura (PlantUML)
 
@@ -22,28 +22,33 @@ Gerencia a persistência das informações. O Prisma atua como a interface de co
 @startuml
 package "Client Side (Browser)" {
   [React Components]
-  [Tailwind CSS UI]
+  [Framer Motion Animations]
+  [Cloudflare Turnstile]
 }
 
 package "Next.js Server" {
   [App Router (Server Components)]
-  [Server Actions]
+  [Server Actions (safe-action)]
   [Auth.js Middleware]
 }
 
-database "PostgreSQL" {
-  [Prisma ORM]
-  [Database Tables]
+database "Persistence Layer" {
+  [PostgreSQL (Prisma)]
+  [Upstash Redis (Rate Limit)]
 }
 
 cloud "External Services" {
   [Google OAuth]
+  [Google Gemini AI]
+  [AWS S3 (Evidence)]
+  [AWS SES (Email)]
+  [ViaCEP API]
 }
 
 [React Components] --> [App Router]
 [App Router] --> [Server Actions]
-[Server Actions] --> [Prisma ORM]
-[Prisma ORM] --> [Database Tables]
+[Server Actions] --> [Persistence Layer]
+[Server Actions] --> [External Services]
 [Auth.js Middleware] <--> [Google OAuth]
 @enduml
 ```
