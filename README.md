@@ -53,16 +53,16 @@ GOOGLE_GENERATIVE_AI_API_KEY="sua_chave_gemini"
 
 ```env
 # Pegue em: https://dash.cloudflare.com/
-NEXT_PUBLIC_TURNSTILE_SITE_KEY="0x4AAAAAAACrwm5qQ8AHodhXQ"
-TURNSTILE_SECRET_KEY="0x4AAAAAAACrwm280FTbu2E4VZ0ig4azNwew"
+NEXT_PUBLIC_TURNSTILE_SITE_KEY="sua_site_key_aqui"
+TURNSTILE_SECRET_KEY="sua_secret_key_aqui"
 ```
 
 ### 5. Escalabilidade e Rate Limit (Upstash Redis)
 
 ```env
 # Pegue em: https://console.upstash.com/
-UPSTASH_REDIS_REST_URL="https://outgoing-snipe-73998.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="gQAAAAAAASEOAAIncDIxMmFjOTFkMjdhYzY0ZGQ3ODA3MmUwNGE3MWE4NmFmZXAyNzM5OTg"
+UPSTASH_REDIS_REST_URL="sua_url_redis_aqui"
+UPSTASH_REDIS_REST_TOKEN="seu_token_redis_aqui"
 ```
 
 ### 6. Armazenamento e E-mail (AWS)
