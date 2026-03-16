@@ -122,7 +122,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
-          <div className="bg-card/30 border-border/50 rounded-3xl border p-1">
+          <div className="bg-card/30 rounded-3xl border-none p-1">
             <AnalyticsChart data={fullStats.timelineData} />
           </div>
 
@@ -141,7 +141,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
               </Button>
             </div>
 
-            <div className="bg-card border-border/50 relative overflow-hidden rounded-2xl border shadow-sm transition-all hover:shadow-md">
+            <div className="bg-card relative overflow-hidden rounded-2xl border-none shadow-sm transition-all hover:shadow-md">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader className="bg-muted/40">
