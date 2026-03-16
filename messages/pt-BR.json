@@ -101,7 +101,16 @@
     "evidenceOptional": "Evidências (Opcional)",
     "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
     "submit": "Enviar Denúncia",
-    "submitting": "Enviando..."
+    "submitting": "Enviando...",
+    "assistant": {
+      "trigger": "Dúvidas sobre a categoria?",
+      "title": "Assistente AnonProtect",
+      "welcome": "Olá! Sou seu assistente de ética. Posso te ajudar a identificar qual categoria melhor descreve seu relato ou tirar dúvidas sobre o anonimato. Como posso ajudar hoje?",
+      "placeholder": "Descreva o ocorrido brevemente...",
+      "send": "Enviar",
+      "error": "Erro ao carregar resposta.",
+      "anonymityReady": "Garantimos seu anonimato total."
+    }
   },
   "Track": {
     "title": "Acompanhar Denúncia",

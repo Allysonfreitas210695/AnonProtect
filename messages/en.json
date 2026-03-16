@@ -112,7 +112,16 @@
     "evidenceOptional": "Evidence (Optional)",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "assistant": {
+      "trigger": "Questions about the category?",
+      "title": "AnonProtect Assistant",
+      "welcome": "Hello! I am your ethics assistant. I can help you identify which category best describes your report or answer questions about anonymity. How can I help today?",
+      "placeholder": "Describe the occurrence briefly...",
+      "send": "Send",
+      "error": "Error loading response.",
+      "anonymityReady": "We guarantee your total anonymity."
+    }
   },
   "Track": {
     "title": "Track Report",

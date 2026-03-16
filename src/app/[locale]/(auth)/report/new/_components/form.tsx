@@ -26,6 +26,7 @@ import { Textarea } from '@/_components/ui/textarea'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
 import { Turnstile } from '@marsidev/react-turnstile'
+import { WhistleblowerAssistant } from './whistleblower-assistant'
 
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
@@ -144,6 +145,8 @@ export default function NewReportForm({ categories }: { categories: Category[] }
           </Form>
         </CardContent>
       </Card>
+
+      <WhistleblowerAssistant />
     </div>
   )
 }
