@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { Button } from '@/_components/ui/button'
 import { StatusBadge } from '@/_components/shared/status-badge'
-import { Pagination } from '@/_components/shared/pagination'
 import {
   Table,
   TableBody,
@@ -13,6 +12,7 @@ import {
 } from '@/_components/ui/table'
 import { getReportsPaginated } from '@/_data-access/admin/report.query'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
+import { FileText, ShieldCheck } from 'lucide-react'
 
 import { GlobalActivityLog } from '@/_components/shared/global-activity-log'
 import { formatDate } from '@/_utils/formatters'
@@ -93,108 +93,159 @@ export default async function AdminDashboard({ searchParams }: Props) {
   }
 
   return (
-    <div className="space-y-8 pb-10">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('dashboard')}</h1>
-        <p className="text-muted-foreground mt-2">{t('systemOverview')}</p>
+    <div className="space-y-10 pb-10">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('dashboard')}</h1>
+          <p className="text-muted-foreground mt-1 text-sm">{t('systemOverview')}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="outline" size="sm" className="hidden sm:flex">
+            <Link href="/admin/report">{t('recentReports')}</Link>
+          </Button>
+        </div>
       </div>
 
       <StatsCards stats={statsWithTTR} />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
-          <AnalyticsChart data={fullStats.timelineData} />
+      <div className="grid gap-8 lg:grid-cols-3">
+        <div className="space-y-8 lg:col-span-2">
+          <div className="bg-card/30 border-border/50 rounded-3xl border p-1">
+            <AnalyticsChart data={fullStats.timelineData} />
+          </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold tracking-tight">{t('recentReports')}</h2>
+          <div className="space-y-6">
+            <div className="flex items-center justify-between px-2">
+              <h2 className="text-2xl font-bold tracking-tight">{t('recentReports')}</h2>
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-primary hover:bg-primary/10"
+              >
+                <Link href="/admin/report" className="flex items-center gap-1.5 font-semibold">
+                  Ver todos <span className="text-lg">→</span>
+                </Link>
+              </Button>
             </div>
-            <div className="bg-card overflow-hidden rounded-xl border shadow-sm transition-all hover:shadow-md">
-              <Table>
-                <TableHeader className="bg-muted/30">
-                  <TableRow>
-                    <TableHead className="w-[120px]">{t('code')}</TableHead>
-                    <TableHead>{t('type')}</TableHead>
-                    <TableHead>{t('date')}</TableHead>
-                    <TableHead>{t('status')}</TableHead>
-                    <TableHead className="text-right">{t('actions')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {reports.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-muted-foreground py-12 text-center">
-                        {t('noReports')}
-                      </TableCell>
+
+            <div className="bg-card border-border/50 relative overflow-hidden rounded-2xl border shadow-sm transition-all hover:shadow-md">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader className="bg-muted/40">
+                    <TableRow className="border-none hover:bg-transparent">
+                      <TableHead className="text-foreground/70 w-[140px] py-4 text-[10px] font-bold tracking-wider uppercase">
+                        {t('code')}
+                      </TableHead>
+                      <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
+                        {t('type')}
+                      </TableHead>
+                      <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
+                        {t('date')}
+                      </TableHead>
+                      <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
+                        {t('status')}
+                      </TableHead>
+                      <TableHead className="text-foreground/70 py-4 text-right text-[10px] font-bold tracking-wider uppercase">
+                        {t('actions')}
+                      </TableHead>
                     </TableRow>
-                  ) : (
-                    reports.slice(0, 5).map((report) => (
-                      <TableRow key={report.id} className="hover:bg-muted/50 transition-colors">
-                        <TableCell className="text-primary font-mono font-bold">
-                          {report.trackingCode}
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          {report.category?.name || 'Geral'}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {formatDate(report.createdAt)}
-                        </TableCell>
-                        <TableCell>
-                          <StatusBadge status={report.status} />
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            asChild
-                            variant="ghost"
-                            size="sm"
-                            className="hover:bg-primary/10 hover:text-primary"
-                          >
-                            <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
-                          </Button>
+                  </TableHeader>
+                  <TableBody>
+                    {reports.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={5} className="text-muted-foreground py-20 text-center">
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="bg-muted rounded-full p-4">
+                              <FileText className="h-8 w-8 opacity-20" />
+                            </div>
+                            <p className="font-medium">{t('noReports')}</p>
+                          </div>
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-            <div className="flex justify-end pt-2">
-              <Button asChild variant="link" className="text-primary">
-                <Link href="/admin/report">Ver todos os relatos →</Link>
-              </Button>
+                    ) : (
+                      reports.slice(0, 5).map((report) => (
+                        <TableRow
+                          key={report.id}
+                          className="group hover:bg-muted/40 border-border/40 transition-all"
+                        >
+                          <TableCell className="text-primary/90 py-4 font-mono text-sm font-black">
+                            {report.trackingCode}
+                          </TableCell>
+                          <TableCell className="py-4 text-sm font-semibold">
+                            {report.category?.name || 'Geral'}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground py-4 text-xs font-medium">
+                            {formatDate(report.createdAt)}
+                          </TableCell>
+                          <TableCell className="py-4">
+                            <StatusBadge status={report.status} />
+                          </TableCell>
+                          <TableCell className="py-4 text-right">
+                            <Button
+                              asChild
+                              variant="secondary"
+                              size="sm"
+                              className="hover:bg-primary hover:text-primary-foreground h-8 transform rounded-lg text-[11px] font-bold tracking-wide uppercase opacity-0 transition-all group-hover:opacity-100 active:scale-95"
+                            >
+                              <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           <GlobalActivityLog activities={activities} />
 
-          <Card className="ring-border flex flex-col border-none shadow-sm ring-1">
-            <CardHeader>
-              <CardTitle className="text-lg font-bold">{t('byDepartment')}</CardTitle>
+          <Card className="border-border/50 bg-card/50 hover:bg-card overflow-hidden shadow-sm transition-all hover:shadow-md">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl font-bold tracking-tight">
+                {t('byDepartment')}
+              </CardTitle>
             </CardHeader>
-            <CardContent className="flex-1">
-              <div className="space-y-4">
+            <CardContent>
+              <div className="space-y-6 pt-4">
                 {fullStats.departmentStats.length === 0 ? (
-                  <p className="text-muted-foreground py-10 text-center text-sm">
-                    {t('noDepartmentData')}
-                  </p>
+                  <div className="flex flex-col items-center gap-3 py-10 opacity-50">
+                    <ShieldCheck className="text-muted-foreground h-10 w-10" />
+                    <p className="text-sm font-medium">{t('noDepartmentData')}</p>
+                  </div>
                 ) : (
                   fullStats.departmentStats.map(
-                    (dept: { departmentId: string; name: string; count: number }) => (
-                      <div key={dept.departmentId} className="space-y-1">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="max-w-[150px] truncate font-medium">{dept.name}</span>
-                          <span className="text-muted-foreground">{dept.count}</span>
+                    (dept: { departmentId: string; name: string; count: number }) => {
+                      const percentage = Math.round((dept.count / quickStats.total) * 100)
+                      return (
+                        <div key={dept.departmentId} className="group space-y-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-primary h-1.5 w-1.5 rounded-full" />
+                              <span className="text-foreground/90 group-hover:text-primary text-sm font-bold tracking-tight transition-colors">
+                                {dept.name}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground text-[10px] font-black uppercase">
+                                {dept.count} units
+                              </span>
+                              <span className="text-primary text-xs font-black">{percentage}%</span>
+                            </div>
+                          </div>
+                          <div className="bg-muted/50 ring-border/5 h-2.5 w-full overflow-hidden rounded-full border border-transparent ring-1">
+                            <div
+                              className="from-primary to-primary/60 group-hover:from-primary group-hover:to-primary h-full rounded-full bg-linear-to-r shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-1000"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
                         </div>
-                        <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
-                          <div
-                            className="bg-primary h-full"
-                            style={{ width: `${(dept.count / quickStats.total) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                    )
+                      )
+                    }
                   )
                 )}
               </div>

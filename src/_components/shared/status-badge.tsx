@@ -16,26 +16,38 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   const statusConfig = {
     [ReportStatus.PENDING]: {
       label: t('PENDING'),
-      className: 'bg-warning/10 text-warning hover:bg-warning/20',
+      className: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
+      dotColor: 'bg-amber-500',
     },
     [ReportStatus.IN_PROGRESS]: {
       label: t('IN_PROGRESS'),
-      className: 'bg-primary/10 text-primary hover:bg-primary/20',
+      className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+      dotColor: 'bg-blue-500',
     },
     [ReportStatus.RESOLVED]: {
       label: t('RESOLVED'),
-      className: 'bg-success/10 text-success hover:bg-success/20',
+      className: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
+      dotColor: 'bg-emerald-500',
     },
     [ReportStatus.REJECTED]: {
       label: t('REJECTED'),
-      className: 'bg-destructive/10 text-destructive hover:bg-destructive/20',
+      className: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
+      dotColor: 'bg-rose-500',
     },
   }
 
   const config = statusConfig[status]
 
   return (
-    <Badge variant="outline" className={cn(config.className, 'border-none font-medium', className)}>
+    <Badge
+      variant="outline"
+      className={cn(
+        'flex w-fit items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wider uppercase',
+        config.className,
+        className
+      )}
+    >
+      <span className={cn('h-1.5 w-1.5 animate-pulse rounded-full', config.dotColor)} />
       {config.label}
     </Badge>
   )

@@ -1,15 +1,7 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/_components/ui/card"
-import { 
-  Bar, 
-  BarChart, 
-  ResponsiveContainer, 
-  XAxis, 
-  YAxis, 
-  Tooltip,
-  CartesianGrid
-} from "recharts"
+import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
 
 interface AnalyticsChartProps {
   data: {
@@ -20,43 +12,61 @@ interface AnalyticsChartProps {
 
 export function AnalyticsChart({ data }: AnalyticsChartProps) {
   return (
-    <Card className="col-span-4 border-none shadow-sm ring-1 ring-border">
-      <CardHeader>
-        <CardTitle className="text-base font-semibold">Volume de Denúncias (30 dias)</CardTitle>
+    <Card className="col-span-4 border-none bg-transparent shadow-none">
+      <CardHeader className="px-6 pb-2">
+        <CardTitle className="text-xl font-bold tracking-tight">
+          Volume de Denúncias (30 dias)
+        </CardTitle>
       </CardHeader>
-      <CardContent className="pl-2">
-        <div className="h-[250px] w-full">
+      <CardContent className="px-2">
+        <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-              <XAxis 
-                dataKey="date" 
-                stroke="hsl(var(--muted-foreground))" 
-                fontSize={12}
+            <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
+                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="hsl(var(--border))"
+                opacity={0.4}
+              />
+              <XAxis
+                dataKey="date"
+                stroke="hsl(var(--muted-foreground))"
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
+                dy={10}
               />
-              <YAxis 
-                stroke="hsl(var(--muted-foreground))" 
-                fontSize={12}
+              <YAxis
+                stroke="hsl(var(--muted-foreground))"
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `${value}`}
               />
-              <Tooltip 
-                cursor={{ fill: 'hsl(var(--muted)/0.5)' }}
-                contentStyle={{ 
-                  backgroundColor: 'hsl(var(--card))', 
+              <Tooltip
+                cursor={{ fill: 'hsl(var(--primary)/0.05)', radius: 8 }}
+                contentStyle={{
+                  backgroundColor: 'rgba(var(--card), 0.8)',
+                  backdropFilter: 'blur(8px)',
                   borderColor: 'hsl(var(--border))',
-                  borderRadius: 'var(--radius)',
-                  fontSize: '12px'
+                  borderRadius: '12px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
                 }}
               />
-              <Bar 
-                dataKey="count" 
-                fill="hsl(var(--primary))" 
-                radius={[4, 4, 0, 0]} 
-                barSize={20}
+              <Bar
+                dataKey="count"
+                fill="url(#barGradient)"
+                radius={[6, 6, 0, 0]}
+                barSize={24}
+                animationDuration={1500}
               />
             </BarChart>
           </ResponsiveContainer>
