@@ -11,19 +11,21 @@ const prisma = new PrismaClient({ adapter })
 async function main() {
   console.log('🌱 Starting robust seed process...')
 
-  // Step 0: Cleanup
-  console.log('🧹 Cleaning database...')
-  await prisma.activityLog.deleteMany()
-  await prisma.investigationNote.deleteMany()
-  await prisma.message.deleteMany()
-  await prisma.attachment.deleteMany()
-  await prisma.report.deleteMany()
-  await prisma.user.deleteMany()
-  await prisma.category.deleteMany()
-  await prisma.department.deleteMany()
+  const adminEmail = 'admin@admin.com'
+  const superEmail = 'supervisor@supervisor.com'
+
+  // Step 0: Cleanup only specific administrative users
+  console.log('🧹 Cleaning specific administrative users...')
+  await prisma.user.deleteMany({
+    where: {
+      email: {
+        in: [adminEmail, superEmail],
+      },
+    },
+  })
 
   // Step 1: Departments
-  console.log('🏢 Creating departments...')
+  console.log('🏢 Processing departments (upsert)...')
   const depts = [
     { name: 'RH', description: 'Recursos Humanos' },
     { name: 'Jurídico', description: 'Assuntos Legais' },
@@ -35,8 +37,10 @@ async function main() {
 
   const createdDepts = []
   for (const d of depts) {
-    const dept = await prisma.department.create({
-      data: d,
+    const dept = await prisma.department.upsert({
+      where: { name: d.name },
+      update: {},
+      create: d,
     })
     createdDepts.push(dept)
   }
@@ -44,7 +48,7 @@ async function main() {
   const compliance = createdDepts.find((d) => d.name === 'Compliance')
 
   // Step 2: Categories
-  console.log('📂 Creating categories...')
+  console.log('📂 Processing categories (upsert)...')
   const categories = [
     'Bullying',
     'Assédio Moral',
@@ -64,8 +68,10 @@ async function main() {
   ]
 
   for (const name of categories) {
-    await prisma.category.create({
-      data: {
+    await prisma.category.upsert({
+      where: { name },
+      update: {},
+      create: {
         name,
         description: `Relatos de ${name}`,
         defaultDepartmentId: compliance?.id,
@@ -75,26 +81,26 @@ async function main() {
 
   // Step 3: Users
   console.log('👥 Creating administrative users...')
-  // Hashed password for 'admin123' and 'super123' (bcrypt)
   const HASHED_PASSWORD = '$2a$10$wR.pD1Mv.W3m.L8M.u.e.eXF.mE.xU.jD.qW.zD.vS.yG'
 
-  await prisma.user.createMany({
-    data: [
-      {
-        email: 'admin@admin.com',
-        name: 'Administrador Global',
-        role: UserRole.ADMIN,
-        password: HASHED_PASSWORD,
-        departmentId: compliance?.id,
-      },
-      {
-        email: 'supervisor@supervisor.com',
-        name: 'Supervisor RH',
-        role: UserRole.SUPERVISOR,
-        password: HASHED_PASSWORD,
-        departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
-      },
-    ],
+  await prisma.user.create({
+    data: {
+      email: adminEmail,
+      name: 'Administrador Global',
+      role: UserRole.ADMIN,
+      password: HASHED_PASSWORD,
+      departmentId: compliance?.id,
+    },
+  })
+
+  await prisma.user.create({
+    data: {
+      email: superEmail,
+      name: 'Supervisor RH',
+      role: UserRole.SUPERVISOR,
+      password: HASHED_PASSWORD,
+      departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
+    },
   })
 
   console.log('✅ Seed completed successfully!')
