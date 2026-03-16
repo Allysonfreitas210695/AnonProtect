@@ -92,15 +92,8 @@ export default function RegisterPage() {
                 )}
               />
 
-              <Button type="submit" className="w-full" size="lg" disabled={isExecuting}>
-                {isExecuting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Criando conta...
-                  </>
-                ) : (
-                  'Cadastrar'
-                )}
+              <Button type="submit" className="w-full" size="lg" loading={isExecuting}>
+                {isExecuting ? 'Criando conta...' : 'Cadastrar'}
               </Button>
             </form>
           </Form>

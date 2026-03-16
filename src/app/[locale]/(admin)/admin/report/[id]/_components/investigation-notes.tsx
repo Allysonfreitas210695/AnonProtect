@@ -85,13 +85,9 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isCreating}>
-                {isCreating ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Plus className="mr-2 h-4 w-4" />
-                )}
-                {isCreating ? t('addingNote') : t('addNoteSubmit')}
+              <Button type="submit" className="w-full" loading={isCreating}>
+                {!isCreating && <Plus className="mr-2 h-4 w-4" />}
+                {t(isCreating ? 'addingNote' : 'addNoteSubmit')}
               </Button>
             </form>
           </Form>
@@ -108,7 +104,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
               {notes.map((note) => (
                 <div
                   key={note.id}
-                  className="hover:bg-muted/50 space-y-2 rounded-lg border p-4 transition-colors"
+                  className="bg-card/30 hover:bg-card/50 ring-border/50 space-y-2 rounded-lg p-4 shadow-sm ring-1 transition-all"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
@@ -124,10 +120,10 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
                         variant="ghost"
                         size="sm"
                         onClick={() => onClickDelete(note.id)}
-                        disabled={isDeleting}
+                        loading={isDeleting}
                         className="text-destructive hover:text-destructive"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        {!isDeleting && <Trash2 className="h-4 w-4" />}
                       </Button>
                     )}
                   </div>
@@ -159,9 +155,8 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
             >
               {t('deleteCancel')}
             </Button>
-            <Button variant="destructive" onClick={handleConfirmDelete} disabled={isDeleting}>
-              {isDeleting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {isDeleting ? t('deleting') : t('deleteConfirm')}
+            <Button variant="destructive" onClick={handleConfirmDelete} loading={isDeleting}>
+              {t(isDeleting ? 'deleting' : 'deleteConfirm')}
             </Button>
           </DialogFooter>
         </DialogContent>

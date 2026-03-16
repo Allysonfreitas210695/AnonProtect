@@ -36,8 +36,8 @@ export function AdminMessageForm({ reportId }: AdminMessageFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isExecuting}>
-          {isExecuting ? <Loader2 className="h-4 w-4 animate-spin" /> : t('submit')}
+        <Button type="submit" loading={isExecuting}>
+          {t('submit')}
         </Button>
       </form>
     </Form>

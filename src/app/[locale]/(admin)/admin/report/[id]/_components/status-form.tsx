@@ -41,8 +41,8 @@ export function StatusUpdateForm({
             </FormItem>
           )}
         />
-        <Button type="submit" variant="secondary" disabled={isExecuting}>
-          {isExecuting ? <Loader2 className="h-4 w-4 animate-spin" /> : t('update')}
+        <Button type="submit" variant="secondary" loading={isExecuting}>
+          {t('update')}
         </Button>
       </form>
     </Form>

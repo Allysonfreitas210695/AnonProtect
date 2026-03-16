@@ -70,15 +70,8 @@ export default function LoginPage() {
                 )}
               />
 
-              <Button type="submit" className="w-full" size="lg" disabled={isExecuting}>
-                {isExecuting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('submitting')}
-                  </>
-                ) : (
-                  t('submit')
-                )}
+              <Button type="submit" className="w-full" size="lg" loading={isExecuting}>
+                {t(isExecuting ? 'submitting' : 'submit')}
               </Button>
             </form>
           </Form>

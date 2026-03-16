@@ -123,17 +123,10 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 <Button
                   type="submit"
                   size="lg"
-                  disabled={isExecuting}
+                  loading={isExecuting}
                   className="h-12 w-full text-lg shadow-sm sm:w-auto sm:min-w-[200px]"
                 >
-                  {isExecuting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      {t('submitting')}
-                    </>
-                  ) : (
-                    t('submit')
-                  )}
+                  {t(isExecuting ? 'submitting' : 'submit')}
                 </Button>
               </div>
             </form>
