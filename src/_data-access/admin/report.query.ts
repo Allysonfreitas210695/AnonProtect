@@ -41,11 +41,19 @@ export async function getReportById(id: string) {
   })
 }
 
-export async function getReportsPaginated(page: number = 1, pageSize: number = 10) {
+export async function getReportsPaginated(
+  page: number = 1,
+  pageSize: number = 10,
+  days: number | null = 30
+) {
+  const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
+  const where = startDate ? { createdAt: { gte: startDate } } : {}
+
   const [reports, total] = await Promise.all([
     prisma.report.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
+      where,
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
@@ -59,7 +67,7 @@ export async function getReportsPaginated(page: number = 1, pageSize: number = 1
         },
       },
     }),
-    prisma.report.count(),
+    prisma.report.count({ where }),
   ])
 
   const reportsCount = Number(total)

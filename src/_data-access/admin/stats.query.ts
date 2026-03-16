@@ -3,27 +3,47 @@ import { unstable_cache } from 'next/cache'
 import { calculateAvgResolutionTime } from '@/_utils/compliance'
 
 export const getReportStats = unstable_cache(
-  async () => {
-    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  async (days: number | null = 30) => {
+    const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
+    const where = startDate ? { createdAt: { gte: startDate } } : {}
 
     const [total, byStatus, byCategory, byDeptRaw, allDepts, resolvedRaw, timelineRaw] =
       await Promise.all([
-        prisma.report.count(),
-        prisma.report.groupBy({ by: ['status'], _count: true }),
-        prisma.report.groupBy({ by: ['categoryId'], _count: true }),
-        prisma.report.groupBy({ by: ['assignedDepartmentId'], _count: true }),
+        prisma.report.count({ where }),
+        prisma.report.groupBy({
+          by: ['status'],
+          where,
+          _count: true,
+        }),
+        prisma.report.groupBy({
+          by: ['categoryId'],
+          where,
+          _count: true,
+        }),
+        prisma.report.groupBy({
+          by: ['assignedDepartmentId'],
+          where,
+          _count: true,
+        }),
         prisma.department.findMany({ select: { id: true, name: true } }),
         prisma.report.findMany({
-          where: { status: 'RESOLVED' },
+          where: { ...where, status: 'RESOLVED' },
           select: { createdAt: true, updatedAt: true },
         }),
-        prisma.$queryRaw<{ date: string; count: bigint }[]>`
-        SELECT TO_CHAR(created_at, 'DD/MM') as date, COUNT(*)::bigint as count
-        FROM reports
-        WHERE created_at >= ${thirtyDaysAgo}
-        GROUP BY TO_CHAR(created_at, 'DD/MM')
-        ORDER BY MIN(created_at) ASC
-      `,
+        startDate
+          ? prisma.$queryRaw<{ date: string; count: bigint }[]>`
+            SELECT TO_CHAR(created_at, 'DD/MM') as date, COUNT(*)::bigint as count
+            FROM reports
+            WHERE created_at >= ${startDate}
+            GROUP BY TO_CHAR(created_at, 'DD/MM')
+            ORDER BY MIN(created_at) ASC
+          `
+          : prisma.$queryRaw<{ date: string; count: bigint }[]>`
+            SELECT TO_CHAR(created_at, 'MM/YY') as date, COUNT(*)::bigint as count
+            FROM reports
+            GROUP BY TO_CHAR(created_at, 'MM/YY')
+            ORDER BY MIN(created_at) ASC
+          `,
       ])
 
     const totalCount = Number(total)
@@ -60,12 +80,15 @@ export const getReportStats = unstable_cache(
   { revalidate: 3600, tags: ['stats'] }
 )
 
-export async function getQuickStats() {
+export async function getQuickStats(days: number | null = 30) {
+  const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
+  const where = startDate ? { createdAt: { gte: startDate } } : {}
+
   const [total, pending, inProgress, resolved] = await Promise.all([
-    prisma.report.count(),
-    prisma.report.count({ where: { status: 'PENDING' } }),
-    prisma.report.count({ where: { status: 'IN_PROGRESS' } }),
-    prisma.report.count({ where: { status: 'RESOLVED' } }),
+    prisma.report.count({ where }),
+    prisma.report.count({ where: { ...where, status: 'PENDING' } }),
+    prisma.report.count({ where: { ...where, status: 'IN_PROGRESS' } }),
+    prisma.report.count({ where: { ...where, status: 'RESOLVED' } }),
   ])
 
   return {

@@ -24,17 +24,31 @@ import {
 import { StatsCards } from '@/_components/shared/stats-cards'
 import { AnalyticsChart } from '@/_components/shared/analytics-chart'
 
+import { DashboardDateFilter } from '@/_components/shared/dashboard-date-filter'
+
 export const dynamic = 'force-dynamic'
 
 interface Props {
-  searchParams: Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string; period?: string }>
 }
 
 export default async function AdminDashboard({ searchParams }: Props) {
   const t = await getTranslations('Admin')
-  const { page } = await searchParams
+  const { page, period } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 10
+
+  const days =
+    period === '7d'
+      ? 7
+      : period === '30d'
+        ? 30
+        : period === '90d'
+          ? 90
+          : period === 'all'
+            ? null
+            : 30
+
   let reports: Awaited<ReturnType<typeof getReportsPaginated>>['reports'] = []
   let totalPages = 0
   let quickStats: Awaited<ReturnType<typeof getQuickStats>> = {
@@ -48,9 +62,9 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
   try {
     const [paginatedData, qs, fs, act] = await Promise.all([
-      getReportsPaginated(currentPage, pageSize),
-      getQuickStats(),
-      getReportStats(),
+      getReportsPaginated(currentPage, pageSize, days),
+      getQuickStats(days),
+      getReportStats(days),
       getGlobalActivityLogs(8),
     ])
 
@@ -94,16 +108,14 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
   return (
     <div className="space-y-10 pb-10">
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 px-2 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('dashboard')}</h1>
-          <p className="text-muted-foreground mt-1 text-sm">{t('systemOverview')}</p>
+          <h1 className="text-foreground text-3xl font-extrabold tracking-tight lg:text-4xl">
+            {t('dashboard')}
+          </h1>
+          <p className="text-muted-foreground mt-1 text-sm font-medium">{t('systemOverview')}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="hidden sm:flex">
-            <Link href="/admin/report">{t('recentReports')}</Link>
-          </Button>
-        </div>
+        <DashboardDateFilter />
       </div>
 
       <StatsCards stats={statsWithTTR} />

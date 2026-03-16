@@ -14,16 +14,6 @@ async function main() {
   const adminEmail = 'admin@admin.com'
   const superEmail = 'supervisor@supervisor.com'
 
-  // Step 0: Cleanup only specific administrative users
-  console.log('🧹 Cleaning specific administrative users...')
-  await prisma.user.deleteMany({
-    where: {
-      email: {
-        in: [adminEmail, superEmail],
-      },
-    },
-  })
-
   // Step 1: Departments
   console.log('🏢 Processing departments (upsert)...')
   const depts = [
@@ -80,11 +70,18 @@ async function main() {
   }
 
   // Step 3: Users
-  console.log('👥 Creating administrative users...')
+  console.log('👥 Processing administrative users (upsert)...')
   const HASHED_PASSWORD = '$2a$10$wR.pD1Mv.W3m.L8M.u.e.eXF.mE.xU.jD.qW.zD.vS.yG'
 
-  await prisma.user.create({
-    data: {
+  const admin = await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: {
+      name: 'Administrador Global',
+      role: UserRole.ADMIN,
+      password: HASHED_PASSWORD,
+      departmentId: compliance?.id,
+    },
+    create: {
       email: adminEmail,
       name: 'Administrador Global',
       role: UserRole.ADMIN,
@@ -93,8 +90,15 @@ async function main() {
     },
   })
 
-  await prisma.user.create({
-    data: {
+  await prisma.user.upsert({
+    where: { email: superEmail },
+    update: {
+      name: 'Supervisor RH',
+      role: UserRole.SUPERVISOR,
+      password: HASHED_PASSWORD,
+      departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
+    },
+    create: {
       email: superEmail,
       name: 'Supervisor RH',
       role: UserRole.SUPERVISOR,
@@ -106,7 +110,6 @@ async function main() {
   // Step 4: Sample Reports
   console.log('📝 Creating sample reports...')
   const allCategories = await prisma.category.findMany()
-  const admin = await prisma.user.findUnique({ where: { email: adminEmail } })
 
   const sampleReports = [
     {
