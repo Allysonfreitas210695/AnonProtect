@@ -1,184 +1,101 @@
-# Sistema de Denúncias Anônimas
+# 🛡️ AnonProtect - Sistema de Denúncias Anônimas
 
-Sistema completo de denúncias anônimas com autenticação, dashboard administrativo e gerenciamento de categorias.
+Plataforma de alta performance para submissão e gestão de denúncias sob absoluto anonimato, integrada com Inteligência Artificial para triagem automática.
 
-## 🚀 Tecnologias
+## 🔗 Atalhos do Sistema (URLs)
 
-- **Framework**: Next.js 15+ (App Router)
-- **Database**: PostgreSQL via Prisma ORM v7
-- **Autenticação**: Auth.js (NextAuth v5) + bcryptjs
-- **Social Login**: Google OAuth
-- **UI**: Tailwind CSS + Shadcn UI
-- **Internacionalização**: next-intl
+### 🌍 Área Pública
 
-## 📁 Estrutura do Projeto
+- **Página Inicial**: `http://localhost:3000/pt-BR`
+- **Nova Denúncia**: `http://localhost:3000/pt-BR/report/new` (Protegida por Turnstile)
+- **Acompanhar Denúncia**: `http://localhost:3000/pt-BR/report/track`
+- **Portal da Transparência**: `http://localhost:3000/pt-BR/transparency` (Gráficos públicos)
 
-```
-├── app/                    # Rotas Next.js
-│   ├── admin/             # Área administrativa
-│   ├── login/             # Autenticação
-│   └── report/            # Área pública
-├── components/            # Componentes React
-│   ├── ui/               # Shadcn components
-│   ├── forms/            # Form components
-│   ├── charts/           # Chart components
-│   └── shared/           # Shared components
-├── lib/                   # Utilitários e lógica
-│   ├── actions/          # Server actions
-│   ├── schemas/          # Zod schemas
-│   ├── types/            # TypeScript types
-│   └── utils/            # Utilities
-└── prisma/               # Database schema e seed
-```
+### 🔐 Área Administrativa (Login necessário)
 
-## 🔧 Instalação
+- **Dashboard Principal**: `http://localhost:3000/pt-BR/admin/dashboard`
+- **Lista de Denúncias**: `http://localhost:3000/pt-BR/admin/report` (Ações em massa)
+- **Status do Sistema**: `http://localhost:3000/pt-BR/admin/status` (Monitoramento de APIs)
 
-```bash
-# 1. Instalar dependências
-npm install
+---
 
-# 2. Configurar variáveis de ambiente
-cp .env.example .env
+## ⚙️ Configuração das Variáveis de Ambiente (`.env`)
 
-# 3. Gerar cliente do Prisma
-npx prisma generate
+Crie um arquivo `.env` na raiz do projeto e preencha os seguintes campos:
 
-# 4. Configurar banco de dados
-npx prisma migrate dev
-
-# 5. Seed dos dados
-npx prisma db seed
-
-# 6. Iniciar
-npm run dev
-```
-
-## 🔐 Credenciais de Teste
-
-```
-Admin:
-  Email: admin@sistema.com
-  Senha: admin123
-
-Supervisor:
-  Email: supervisor@sistema.com
-  Senha: super123
-```
-
-## 📝 Funcionalidades
-
-### Área Pública
-
-- ✅ Submissão anônima de denúncias
-- ✅ Rastreamento por código
-- ✅ Chat anônimo com administração
-- ✅ Categorias dinâmicas
-
-### Área Administrativa
-
-- ✅ Dashboard com gráficos
-- ✅ Gerenciamento de denúncias
-- ✅ Atualização de status
-- ✅ Chat com denunciantes
-- ✅ Gerenciamento de categorias
-- ✅ Controle de acesso (Admin/Supervisor)
-
-## 🏗️ Arquitetura
-
-### Server Actions
-
-Todas as ações do servidor estão centralizadas em `lib/actions/`:
-
-- `reports.ts` - Criar e atualizar denúncias
-- `messages.ts` - Enviar mensagens
-- `categories.ts` - Gerenciar categorias
-
-### Schemas
-
-Validação com Zod em `lib/schemas/`:
-
-- `report.ts` - Validação de denúncias
-- `auth.ts` - Validação de autenticação
-- `category.ts` - Validação de categorias
-
-### Componentes Reutilizáveis
-
-- `MessageList` - Lista de mensagens (user/admin)
-- `ReportCard` - Card de denúncia
-- `StatusChart` - Gráfico de status
-- `CategoryChart` - Gráfico de categorias
-
-## 🧪 Testes
-
-```bash
-# Testar criação de denúncia
-curl -X POST http://localhost:3000/report/new
-
-# Testar login
-curl -X POST http://localhost:3000/login
-```
-
-## 📊 Dashboard
-
-O dashboard administrativo inclui:
-
-- Cards de estatísticas (Total, Pendentes, Em Análise, Resolvidas)
-- Gráfico de pizza (distribuição por status)
-- Gráfico de barras (denúncias por categoria)
-- Gráfico de linha (timeline dos últimos 30 dias)
-
-## 🔒 Segurança
-
-- Senhas hasheadas com bcrypt
-- Cookies HTTP-only
-- Validação de dados com Zod
-- Proteção de rotas admin
-- Sanitização de inputs
-
-## 🚀 Deploy
-
-### Vercel (Recomendado)
-
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
-
-### Variáveis de Ambiente
+### 1. Banco de Dados e Segurança
 
 ```env
-DATABASE_URL="file:./dev.db"
-NODE_ENV="production"
+# URL do Neon.tech ou PostgreSQL local
+DATABASE_URL="sua_url_aqui"
+
+# Chave para criptografia de cookies do Auth.js
+# Gere uma com: openssl rand -base64 32
+AUTH_SECRET="sua_chave_secreta"
+AUTH_URL="http://localhost:3000"
 ```
 
-## 📚 Documentação
+### 2. Autenticação Social (Google Cloud)
 
-- [Prisma Docs](https://www.prisma.io/docs)
-- [Next.js Docs](https://nextjs.org/docs)
-- [Shadcn UI](https://ui.shadcn.com)
-- [Recharts](https://recharts.org)
+```env
+GOOGLE_CLIENT_ID="seu_id_no_google_cloud"
+GOOGLE_CLIENT_SECRET="sua_secret_no_google_cloud"
+```
 
-## 🤝 Contribuindo
+### 3. Inteligência Artificial (Gemini)
 
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
+```env
+# Pegue em: https://aistudio.google.com/
+GOOGLE_GENERATIVE_AI_API_KEY="sua_chave_gemini"
+```
 
-## 📄 Licença
+### 4. Proteção contra Bots (Cloudflare Turnstile)
 
-Este projeto está sob a licença MIT.
+```env
+# Pegue em: https://dash.cloudflare.com/
+NEXT_PUBLIC_TURNSTILE_SITE_KEY="0x4AAAAAAACrwm5qQ8AHodhXQ"
+TURNSTILE_SECRET_KEY="0x4AAAAAAACrwm280FTbu2E4VZ0ig4azNwew"
+```
 
-## 👥 Autores
+### 5. Escalabilidade e Rate Limit (Upstash Redis)
 
-Desenvolvido como TCC - Sistema de Denúncias Anônimas
+```env
+# Pegue em: https://console.upstash.com/
+UPSTASH_REDIS_REST_URL="https://outgoing-snipe-73998.upstash.io"
+UPSTASH_REDIS_REST_TOKEN="gQAAAAAAASEOAAIncDIxMmFjOTFkMjdhYzY0ZGQ3ODA3MmUwNGE3MWE4NmFmZXAyNzM5OTg"
+```
 
-## 🙏 Agradecimentos
+### 6. Armazenamento e E-mail (AWS)
 
-- Shadcn UI pela biblioteca de componentes
-- Vercel pelo Next.js
-- Prisma pela ORM
+```env
+AWS_REGION="us-east-1"
+AWS_ACCESS_KEY_ID="sua_key_id"
+AWS_SECRET_ACCESS_KEY="sua_secret"
+AWS_S3_BUCKET="nome-do-seu-bucket"
+AWS_SES_FROM_EMAIL="seu-email-verificado"
+```
+
+---
+
+## 🚀 Como Iniciar
+
+1. `npm install`
+2. `npx prisma generate`
+3. `npx prisma migrate dev`
+4. `npm run dev`
+
+---
+
+## 🛠️ Credenciais Padrão (Seed)
+
+- **Admin**: `admin@sistema.com` / `admin123`
+- **Supervisor**: `supervisor@sistema.com` / `super123`
+
+---
+
+## 🌟 Diferenciais Técnicos
+
+- **Triagem por IA**: Classificação automática de denúncias via Gemini AI.
+- **Segurança Blindada**: Rate limiting por IP e proteção contra bots automática.
+- **Design Premium**: Interface totalmente responsiva com suporte nativo a Dark Mode e animações Framer Motion.
+- **Monitoramento**: Página de status para verificar se os serviços de terceiros estão online.
