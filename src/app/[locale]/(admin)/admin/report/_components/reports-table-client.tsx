@@ -66,13 +66,15 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
           toast.success(result.data.message)
           setSelectedIds([])
         } else {
-          toast.error('Erro ao arquivar denúncias')
+          toast.error(t('archiveError'))
         }
       } catch {
-        toast.error('Erro de conexão')
+        toast.error(t('connectionError'))
       }
     })
   }
+
+  const tC = useTranslations('Common')
 
   return (
     <div className="relative">
@@ -86,7 +88,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
             className="border-primary/20 bg-background/80 fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-full border px-6 py-3 shadow-2xl backdrop-blur-md"
           >
             <span className="text-foreground text-sm font-bold">
-              {selectedIds.length} {selectedIds.length === 1 ? 'selecionada' : 'selecionadas'}
+              {t('selectedCount', { count: selectedIds.length })}
             </span>
             <div className="bg-border h-4 w-px" />
             <Button
@@ -101,7 +103,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
               ) : (
                 <Archive className="h-3 w-3" />
               )}
-              {t('archiveSelected') || 'Arquivar'}
+              {t('archiveSelected')}
             </Button>
             <Button
               size="sm"
@@ -110,14 +112,15 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
               onClick={() => setSelectedIds([])}
               disabled={isPending}
             >
-              Cancelar
+              {tC('cancel')}
             </Button>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="bg-card relative overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
-        <div className="overflow-x-auto">
+        {/* Table View (Hidden on Mobile) */}
+        <div className="hidden overflow-x-auto lg:block">
           <Table>
             <TableHeader className="bg-muted/40">
               <TableRow className="border-none hover:bg-transparent">
@@ -135,7 +138,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                   {t('type')}
                 </TableHead>
                 <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
-                  Localização
+                  {t('location')}
                 </TableHead>
                 <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
                   {t('date')}
@@ -205,6 +208,70 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
               )}
             </TableBody>
           </Table>
+        </div>
+
+        {/* Mobile View (Cards) */}
+        <div className="flex flex-col gap-4 p-4 lg:hidden">
+          {reports.length === 0 ? (
+            <div className="text-muted-foreground py-10 text-center font-medium">
+              {t('noReports')}
+            </div>
+          ) : (
+            reports.map((report) => {
+              const isSelected = selectedIds.includes(report.id)
+              return (
+                <motion.div
+                  key={report.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className={`relative flex flex-col gap-3 rounded-xl border p-4 transition-all ${
+                    isSelected ? 'border-primary bg-primary/5 shadow-md' : 'bg-card'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={() => toggleOne(report.id)}
+                        aria-label={`Select ${report.trackingCode}`}
+                        className="mt-1"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-primary font-mono text-sm font-black">
+                          {report.trackingCode}
+                        </span>
+                        <span className="text-muted-foreground text-[10px] font-bold uppercase">
+                          {report.category?.name || 'Geral'}
+                        </span>
+                      </div>
+                    </div>
+                    <StatusBadge status={report.status} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground font-medium">{t('date')}</span>
+                      <span>{formatDate(report.createdAt)}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground font-medium">{t('location')}</span>
+                      <span className="truncate">
+                        {report.country
+                          ? `${report.country}${report.city ? `, ${report.city}` : ''}`
+                          : 'N/A'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 border-t pt-3">
+                    <Button asChild variant="secondary" size="sm" className="w-full text-xs font-bold uppercase transition-all active:scale-95">
+                      <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
+                    </Button>
+                  </div>
+                </motion.div>
+              )
+            })
+          )}
         </div>
       </div>
     </div>

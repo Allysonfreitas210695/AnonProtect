@@ -116,8 +116,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   className="h-11"
                 />
                 <p className="text-muted-foreground text-[10px] lg:text-xs">
-                  {t('uploadHint') ||
-                    'Envie fotos, documentos ou vídeos que ajudem na investigação.'}
+                  {t('uploadHint')}
                 </p>
               </div>
 

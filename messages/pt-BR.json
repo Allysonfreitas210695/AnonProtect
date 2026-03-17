@@ -84,6 +84,7 @@
     "status": "Status",
     "actions": "Ações",
     "noReports": "Nenhuma denúncia registrada ainda.",
+    "reportsSubtitle": "Gerenciamento detalhado de todas as denúncias",
     "viewDetails": "Ver Detalhes",
     "byDepartment": "Por Departamento",
     "noDepartmentData": "Sem dados departamentais",
@@ -91,19 +92,35 @@
     "archiveSelected": "Arquivar Selecionadas",
     "selectedCount": "{count} selecionada | {count} selecionadas",
     "archiveError": "Erro ao arquivar denúncias",
-    "connectionError": "Erro de conexão"
+    "connectionError": "Erro de conexão",
+    "Filters": {
+      "searchPlaceholder": "Pesquisar código...",
+      "statusPlaceholder": "Status",
+      "categoryPlaceholder": "Categoria",
+      "countryPlaceholder": "País",
+      "cityPlaceholder": "Cidade",
+      "allStatus": "Todos Status",
+      "allCategories": "Todas Categorias",
+      "allCountries": "Todos Países",
+      "allCities": "Todas Cidades",
+      "clear": "Limpar"
+    }
   },
   "Login": {
     "title": "Área Administrativa",
-    "description": "Identifique-se para acessar o painel de gestão",
-    "email": "Email",
+    "subtitle": "Entre com suas credenciais para gerenciar os relatos",
+    "email": "E-mail",
     "password": "Senha",
     "submit": "Entrar",
     "submitting": "Entrando...",
+    "or": "Ou",
+    "google": "Entrar com Google",
     "forgotPassword": "Esqueceu sua senha?",
-    "noAccount": "Ainda não tem conta?",
-    "registerNow": "Cadastre-se",
-    "google": "Entrar com Google"
+    "noAccount": "Não tem uma conta?",
+    "registerNow": "Cadastre-se agora",
+    "privacy": "Privacidade",
+    "terms": "Termos de Uso",
+    "errorTitle": "Erro de Autenticação"
   },
   "NewReport": {
     "title": "Nova Denúncia",
@@ -142,20 +159,34 @@
   },
   "ReportDetails": {
     "dossierTitle": "AnonProtect - Dossiê de Investigação",
+    "officialPrintHeader": "AnonProtect Security Solutions - Relatório Oficial de Investigação",
+    "confidentialNotice": "CONFIDENCIAL - USO INTERNO",
     "systemName": "Sistema de Denúncias Anônimas",
     "confidential": "Confidencial",
+    "back": "Voltar",
     "reportNumber": "Denúncia #{code}",
     "downloadPdf": "Baixar PDF",
+    "printReport": "Imprimir Relatório",
     "lastUpdate": "Última Atualização",
+    "submittedAt": "Relatório enviado em",
     "responsible": "Responsável",
     "department": "Departamento",
-    "communicationTitle": "Comunicação com Denunciante"
+    "communicationTitle": "Comunicação com Denunciante",
+    "evidence": "Evidências",
+    "activityTimeline": "Atividades",
+    "investigationNotes": "Notas de Investigação"
+  },
+  "Tracking": {
+    "title": "Acompanhamento de Denúncia",
+    "subtitle": "Veja abaixo o status e histórico da sua denúncia",
+    "history": "Comunicação e Histórico"
   },
   "Status": {
     "PENDING": "Pendente",
     "IN_PROGRESS": "Em Análise",
     "RESOLVED": "Resolvido",
     "REJECTED": "Rejeitado",
+    "ARCHIVED": "Arquivado",
     "update": "Atualizar"
   },
   "Forward": {
@@ -210,10 +241,11 @@
   },
   "Investigation": {
     "title": "Notas de Investigação",
-    "addNotePlaceholder": "Adicione uma nota sobre a investigação...",
+    "internalTitle": "Comunicação Interna de Investigação",
+    "you": "Você",
+    "noNotes": "Nenhuma nota de investigação ainda.",
     "addNoteSubmit": "Adicionar Nota",
     "addingNote": "Adicionando...",
-    "noNotes": "Nenhuma nota adicionada ainda.",
     "privateNoteHint": "Adicione notas privadas sobre a investigação.",
     "removedAuthor": "Removido",
     "editedAt": "Editado em {date}",

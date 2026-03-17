@@ -80,7 +80,7 @@ export default function LoginPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card text-muted-foreground px-2">Ou</span>
+              <span className="bg-card text-muted-foreground px-2">{t('or')}</span>
             </div>
           </div>
 
@@ -127,13 +127,13 @@ export default function LoginPage() {
                 href="/privacy-policy"
                 className="hover:text-primary underline transition-colors"
               >
-                Privacidade
+                {t('privacy')}
               </Link>
               <Link
                 href="/terms-of-service"
                 className="hover:text-primary underline transition-colors"
               >
-                Termos de Uso
+                {t('terms')}
               </Link>
             </div>
           </div>

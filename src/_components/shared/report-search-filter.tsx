@@ -4,8 +4,10 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Input } from '@/_components/ui/input'
 import { Search, X } from 'lucide-react'
 import { useEffect, useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function ReportSearchFilter() {
+  const t = useTranslations('Admin.Filters')
   const router = useRouter()
   const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
@@ -42,7 +44,7 @@ export function ReportSearchFilter() {
       <Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Pesquisar código..."
+        placeholder={t('searchPlaceholder')}
         className="bg-card/50 border-border/50 focus-visible:ring-primary/20 focus-visible:border-primary/50 h-10 w-full rounded-xl pr-10 pl-10 transition-all"
       />
       {value && (

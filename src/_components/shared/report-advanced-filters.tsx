@@ -11,6 +11,7 @@ import {
 import { X } from 'lucide-react'
 import { useTransition } from 'react'
 import { Button } from '@/_components/ui/button'
+import { useTranslations } from 'next-intl'
 
 interface Category {
   id: string
@@ -23,18 +24,15 @@ interface ReportAdvancedFiltersProps {
   cities: string[]
 }
 
-const REPORT_STATUS_LABELS: Record<string, string> = {
-  PENDING: 'Pendente',
-  IN_PROGRESS: 'Em Análise',
-  RESOLVED: 'Resolvida',
-  REJECTED: 'Rejeitada',
-}
+const REPORT_STATUS_KEYS = ['PENDING', 'IN_PROGRESS', 'RESOLVED', 'REJECTED'] as const
 
 export function ReportAdvancedFilters({
   categories,
   countries,
   cities,
 }: ReportAdvancedFiltersProps) {
+  const t = useTranslations('Admin.Filters')
+  const tS = useTranslations('Status')
   const router = useRouter()
   const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
@@ -81,13 +79,13 @@ export function ReportAdvancedFilters({
     <div className="flex flex-wrap items-center gap-2">
       <Select value={currentStatus} onValueChange={(v) => updateFilter('status', v)}>
         <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
-          <SelectValue placeholder="Status" />
+          <SelectValue placeholder={t('statusPlaceholder')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos Status</SelectItem>
-          {Object.entries(REPORT_STATUS_LABELS).map(([value, label]) => (
+          <SelectItem value="all">{t('allStatus')}</SelectItem>
+          {REPORT_STATUS_KEYS.map((value) => (
             <SelectItem key={value} value={value}>
-              {label}
+              {tS(value)}
             </SelectItem>
           ))}
         </SelectContent>
@@ -95,10 +93,10 @@ export function ReportAdvancedFilters({
 
       <Select value={currentCategory} onValueChange={(v) => updateFilter('category', v)}>
         <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
-          <SelectValue placeholder="Categoria" />
+          <SelectValue placeholder={t('categoryPlaceholder')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todas Categorias</SelectItem>
+          <SelectItem value="all">{t('allCategories')}</SelectItem>
           {categories.map((cat) => (
             <SelectItem key={cat.id} value={cat.id}>
               {cat.name}
@@ -110,10 +108,10 @@ export function ReportAdvancedFilters({
       {countries.length > 0 && (
         <Select value={currentCountry} onValueChange={(v) => updateFilter('country', v)}>
           <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
-            <SelectValue placeholder="País" />
+            <SelectValue placeholder={t('countryPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos Países</SelectItem>
+            <SelectItem value="all">{t('allCountries')}</SelectItem>
             {countries.map((country) => (
               <SelectItem key={country} value={country}>
                 {country}
@@ -126,10 +124,10 @@ export function ReportAdvancedFilters({
       {cities.length > 0 && (
         <Select value={currentCity} onValueChange={(v) => updateFilter('city', v)}>
           <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
-            <SelectValue placeholder="Cidade" />
+            <SelectValue placeholder={t('cityPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas Cidades</SelectItem>
+            <SelectItem value="all">{t('allCities')}</SelectItem>
             {cities.map((city) => (
               <SelectItem key={city} value={city}>
                 {city}
@@ -147,7 +145,7 @@ export function ReportAdvancedFilters({
           className="text-muted-foreground hover:text-foreground hover:bg-muted h-9 rounded-xl px-2 text-xs transition-all"
         >
           <X className="mr-1 h-3 w-3" />
-          Limpar
+          {t('clear')}
         </Button>
       )}
     </div>

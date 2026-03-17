@@ -58,7 +58,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
         <CardHeader className="bg-muted/30 px-6 py-4">
           <CardTitle className="flex items-center gap-2 text-lg">
             <StickyNote className="text-primary h-5 w-5" />
-            Comunicação Interna de Investigação
+            {t('internalTitle')}
             <Badge variant="secondary" className="bg-primary/10 text-primary ml-auto border-none">
               {notes.length}
             </Badge>
@@ -89,7 +89,7 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
                     >
                       <div className="mb-1 flex items-center gap-2 px-1">
                         <span className="text-[10px] font-bold tracking-wider uppercase opacity-50">
-                          {isCurrentUser ? 'Você' : (note.author.name ?? t('removedAuthor'))}
+                          {isCurrentUser ? t('you') : (note.author.name ?? t('removedAuthor'))}
                         </span>
                         <span className="text-[10px] opacity-40">
                           {formatCompactDateTime(note.createdAt)}

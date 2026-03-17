@@ -90,6 +90,7 @@
     "status": "Status",
     "actions": "Actions",
     "noReports": "No reports registered yet.",
+    "reportsSubtitle": "Detailed management of all reports",
     "viewDetails": "View Details",
     "byDepartment": "By Department",
     "noDepartmentData": "No department data",
@@ -97,20 +98,36 @@
     "archiveSelected": "Archive Selected",
     "selectedCount": "{count} selected | {count} selected",
     "archiveError": "Error archiving reports",
-    "connectionError": "Connection error"
+    "connectionError": "Connection error",
+    "Filters": {
+      "searchPlaceholder": "Search code...",
+      "statusPlaceholder": "Status",
+      "categoryPlaceholder": "Category",
+      "countryPlaceholder": "Country",
+      "cityPlaceholder": "City",
+      "allStatus": "All Status",
+      "allCategories": "All Categories",
+      "allCountries": "All Countries",
+      "allCities": "All Cities",
+      "clear": "Clear"
+    }
   },
   "Login": {
     "title": "Administrative Area",
-    "subtitle": "Access the investigation panel",
+    "subtitle": "Enter your credentials to manage reports",
     "description": "Identify yourself to access the management panel",
-    "email": "Email Address",
+    "email": "Email",
     "password": "Password",
     "submit": "Sign In",
-    "submitting": "Signing in...",
-    "forgotPassword": "Forgot your password?",
-    "noAccount": "Don't have an account yet?",
-    "registerNow": "Register now",
+    "submitting": "Signing In...",
+    "or": "Or",
     "google": "Sign in with Google",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register now",
+    "privacy": "Privacy",
+    "terms": "Terms of Use",
+    "errorTitle": "Authentication Error",
     "errors": {
       "invalid": "Invalid email or password",
       "server": "Internal server error"
@@ -153,20 +170,34 @@
   },
   "ReportDetails": {
     "dossierTitle": "AnonProtect - Investigation Dossier",
+    "officialPrintHeader": "AnonProtect Security Solutions - Official Investigation Report",
+    "confidentialNotice": "CONFIDENTIAL - INTERNAL USE",
     "systemName": "Anonymous Reporting System",
     "confidential": "Confidential",
+    "back": "Back",
     "reportNumber": "Report #{code}",
     "downloadPdf": "Download PDF",
+    "printReport": "Print Report",
     "lastUpdate": "Last Update",
+    "submittedAt": "Report submitted on",
     "responsible": "Responsible",
     "department": "Department",
-    "communicationTitle": "Communication with Submitter"
+    "communicationTitle": "Communication with Whistleblower",
+    "evidence": "Evidence",
+    "activityTimeline": "Activities",
+    "investigationNotes": "Investigation Notes"
+  },
+  "Tracking": {
+    "title": "Report Tracking",
+    "subtitle": "View your report's status and history below",
+    "history": "Communication & History"
   },
   "Status": {
     "PENDING": "Pending",
     "IN_PROGRESS": "In Analysis",
     "RESOLVED": "Resolved",
     "REJECTED": "Rejected",
+    "ARCHIVED": "Archived",
     "update": "Update"
   },
   "Forward": {
@@ -221,10 +252,12 @@
   },
   "Investigation": {
     "title": "Investigation Notes",
+    "internalTitle": "Internal Investigation Communication",
+    "you": "You",
     "addNotePlaceholder": "Add a note about the investigation...",
     "addNoteSubmit": "Add Note",
     "addingNote": "Adding...",
-    "noNotes": "No notes added yet.",
+    "noNotes": "No investigation notes yet.",
     "privateNoteHint": "Add private notes about the investigation.",
     "removedAuthor": "Removed",
     "editedAt": "Edited on {date}",

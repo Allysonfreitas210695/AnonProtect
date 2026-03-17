@@ -56,7 +56,7 @@ export default async function ReportsPage({ searchParams }: Props) {
             {t('recentReports')}
           </h1>
           <p className="text-muted-foreground mt-1 text-sm font-medium">
-            Gerenciamento detalhado de todas as denúncias
+            {t('reportsSubtitle')}
           </p>
         </div>
         <div className="flex flex-col items-center gap-3 sm:flex-row">
