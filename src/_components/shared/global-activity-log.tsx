@@ -8,6 +8,13 @@ import { formatCompactDateTime } from '@/_utils/formatters'
 import { useTranslations } from 'next-intl'
 import { getActivityIcon, getActivityColor } from '@/_utils/activity-helpers'
 
+interface GlobalActivityLogProps {
+  activities: (ActivityLog & {
+    report: { id: string; trackingCode: string }
+    user?: { name: string | null } | null
+  })[]
+}
+
 export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
   const t = useTranslations('Dashboard')
   const tT = useTranslations('Timeline')

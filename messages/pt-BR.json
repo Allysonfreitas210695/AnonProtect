@@ -181,6 +181,11 @@
     "subtitle": "Veja abaixo o status e histórico da sua denúncia",
     "history": "Comunicação e Histórico"
   },
+  "RateLimit": {
+    "title": "Muitas solicitações",
+    "description": "Você atingiu o limite de solicitações. Por favor, tente novamente em alguns instantes.",
+    "back": "Voltar para o Início"
+  },
   "Status": {
     "PENDING": "Pendente",
     "IN_PROGRESS": "Em Análise",

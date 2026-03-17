@@ -1,5 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
+import { headers } from 'next/headers'
+import { checkRateLimit } from '@/_lib/ratelimit'
+import { RateLimitError } from '@/_components/shared/rate-limit-error'
 import { TrackForm } from './_components/track-form'
 
 export default async function TrackPage({
@@ -7,6 +10,13 @@ export default async function TrackPage({
 }: {
   searchParams: Promise<{ code?: string }>
 }) {
+  const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1'
+  const { success } = await checkRateLimit(ip)
+
+  if (!success) {
+    return <RateLimitError />
+  }
+
   const t = await getTranslations('Track')
   const { code } = await searchParams
 

@@ -6,9 +6,20 @@ import { ReportCard } from '@/_components/shared/report-card'
 import { MessageForm } from './_components/message-form'
 import { getTranslations } from 'next-intl/server'
 
+import { headers } from 'next/headers'
+import { checkRateLimit } from '@/_lib/ratelimit'
+import { RateLimitError } from '@/_components/shared/rate-limit-error'
+
 export const dynamic = 'force-dynamic'
 
 export default async function ReportStatusPage({ params }: { params: Promise<{ code: string }> }) {
+  const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1'
+  const { success } = await checkRateLimit(ip)
+
+  if (!success) {
+    return <RateLimitError />
+  }
+
   const t = await getTranslations('Tracking')
   const { code } = await params
   const report = await getReportByCode(code)
