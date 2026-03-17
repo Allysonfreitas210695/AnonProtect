@@ -145,8 +145,10 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       )}
 
       {/* Main Content */}
-      <main className="bg-background/50 min-h-screen flex-1 transition-colors duration-300">
-        <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-12">{children}</div>
+      <main className="bg-background/50 min-h-screen w-full min-w-0 flex-1 overflow-x-hidden transition-colors duration-300">
+        <div className="mx-auto w-full max-w-[1600px] overflow-x-hidden px-4 py-6 sm:px-6 lg:px-12">
+          {children}
+        </div>
       </main>
     </div>
   )

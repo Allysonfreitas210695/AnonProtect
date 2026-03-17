@@ -17,7 +17,7 @@ const redis =
 export const reportRateLimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.slidingWindow(5, '1 h'),
+      limiter: Ratelimit.slidingWindow(30, '1 h'),
       analytics: true,
       prefix: 'anonprotect_ratelimit',
     })

@@ -2,6 +2,9 @@ import { prisma } from './prisma'
 import { s3Client, sesClient, BUCKET_NAME } from './aws'
 import { reportRateLimit } from './ratelimit'
 
+/**
+ * Interface que define o estado de um serviço do sistema.
+ */
 export interface ServiceStatus {
   name: string
   status: 'healthy' | 'degraded' | 'unavailable' | 'not_configured'
@@ -10,12 +13,28 @@ export interface ServiceStatus {
 }
 
 /**
+ * Auxiliar para padronizar a criação de status de serviços.
+ */
+function createStatus(
+  name: string,
+  condition: boolean,
+  healthyMessage: string,
+  error?: string
+): ServiceStatus {
+  if (!condition) {
+    return { name, status: 'not_configured', message: error || 'Configuração ausente' }
+  }
+  return { name, status: 'healthy', message: healthyMessage }
+}
+
+/**
  * Verifica a conectividade com todos os serviços externos configurados.
+ * Centraliza a saúde do sistema para o dashboard administrativo.
  */
 export async function getSystemStatus(): Promise<ServiceStatus[]> {
   const statuses: ServiceStatus[] = []
 
-  // 1. Database (Prisma)
+  // 1. Banco de Dados (PostgreSQL via Prisma)
   try {
     const start = Date.now()
     await prisma.$queryRaw`SELECT 1`
@@ -28,92 +47,67 @@ export async function getSystemStatus(): Promise<ServiceStatus[]> {
     statuses.push({
       name: 'Database (PostgreSQL)',
       status: 'unavailable',
-      message: error instanceof Error ? error.message : 'Unknown database error',
+      message: error instanceof Error ? error.message : 'Erro desconhecido no banco',
     })
   }
 
-  // 2. AI (Gemini)
-  const hasGemini = !!process.env.GOOGLE_GENERATIVE_AI_API_KEY
-  statuses.push({
-    name: 'AI Analysis (Gemini)',
-    status: hasGemini ? 'healthy' : 'not_configured',
-    message: hasGemini ? 'Service active' : 'API key missing',
-  })
+  // 2. Inteligência Artificial (Google Gemini)
+  statuses.push(
+    createStatus(
+      'AI Analysis (Gemini)',
+      !!process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+      'Serviço ativo',
+      'Chave API ausente'
+    )
+  )
 
-  // 3. Rate Limit (Upstash Redis)
+  // 3. Limite de Taxa (Upstash Redis)
   const hasUpstash = !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
   if (!hasUpstash) {
-    statuses.push({
-      name: 'Rate Limiting (Upstash)',
-      status: 'not_configured',
-      message: 'Redis credentials missing',
-    })
-  } else if (!reportRateLimit) {
-    statuses.push({
-      name: 'Rate Limiting (Upstash)',
-      status: 'degraded',
-      message: 'Client failed to initialize',
-    })
+    statuses.push(createStatus('Rate Limiting (Upstash)', false, '', 'Credenciais Redis ausentes'))
   } else {
     statuses.push({
       name: 'Rate Limiting (Upstash)',
-      status: 'healthy',
-      message: 'Service active',
+      status: reportRateLimit ? 'healthy' : 'degraded',
+      message: reportRateLimit ? 'Serviço ativo' : 'Falha ao inicializar cliente',
     })
   }
 
-  // 4. Storage (AWS S3)
+  // 4. Armazenamento de Arquivos (AWS S3)
   const hasAws = !!(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY)
   if (!hasAws) {
-    statuses.push({
-      name: 'Storage (AWS S3)',
-      status: 'not_configured',
-      message: 'AWS credentials missing',
-    })
-  } else if (!s3Client || !BUCKET_NAME) {
-    statuses.push({
-      name: 'Storage (AWS S3)',
-      status: 'degraded',
-      message: 'S3 client or bucket not configured',
-    })
+    statuses.push(createStatus('Storage (AWS S3)', false, '', 'Credenciais AWS ausentes'))
   } else {
     statuses.push({
       name: 'Storage (AWS S3)',
-      status: 'healthy',
-      message: `Connected to bucket: ${BUCKET_NAME}`,
+      status: s3Client && BUCKET_NAME ? 'healthy' : 'degraded',
+      message: BUCKET_NAME ? `Conectado ao bucket: ${BUCKET_NAME}` : 'Bucket não configurado',
     })
   }
 
-  // 5. Email (AWS SES)
+  // 5. Envio de E-mail (AWS SES)
   if (!hasAws) {
-    statuses.push({
-      name: 'Email (AWS SES)',
-      status: 'not_configured',
-      message: 'AWS credentials missing',
-    })
-  } else if (!sesClient) {
-    statuses.push({
-      name: 'Email (AWS SES)',
-      status: 'degraded',
-      message: 'SES client not configured',
-    })
+    statuses.push(createStatus('Email (AWS SES)', false, '', 'Credenciais AWS ausentes'))
   } else {
     statuses.push({
       name: 'Email (AWS SES)',
-      status: 'healthy',
-      message: 'Service active',
+      status: sesClient ? 'healthy' : 'degraded',
+      message: sesClient ? 'Serviço ativo' : 'SES não configurado',
     })
   }
 
-  // 6. Bot Protection (Turnstile)
+  // 6. Proteção contra Bots (Cloudflare Turnstile)
   const hasTurnstile = !!(
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && process.env.TURNSTILE_SECRET_KEY
   )
-  statuses.push({
-    name: 'Bot Protection (Turnstile)',
-    status: hasTurnstile ? 'healthy' : 'not_configured',
-    message: hasTurnstile ? 'Cloudflare Turnstile configured' : 'Site key or Secret key missing',
-  })
+  statuses.push(
+    createStatus(
+      'Bot Protection (Turnstile)',
+      hasTurnstile,
+      'Configurado corretamente',
+      'Chave do site ou segredo ausente'
+    )
+  )
 
   return statuses
 }

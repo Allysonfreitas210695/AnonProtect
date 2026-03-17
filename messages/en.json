@@ -8,6 +8,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "actions": "Actions",
+    "viewAll": "View all",
     "status": "Status",
     "date": "Date",
     "details": "View Details",
@@ -89,6 +90,16 @@
     "date": "Date",
     "status": "Status",
     "actions": "Actions",
+    "viewAll": "View all",
+    "tryAgain": "Try Again",
+    "errors": {
+      "load": "Error loading Dashboard",
+      "loadDescription": "There was a problem fetching data from the server. Please try again in a few moments.",
+      "details": "Error Details"
+    },
+    "Stats": {
+      "units": "units"
+    },
     "noReports": "No reports registered yet.",
     "reportsSubtitle": "Detailed management of all reports",
     "viewDetails": "View Details",
@@ -262,6 +273,7 @@
     "addNotePlaceholder": "Add a note about the investigation...",
     "addNoteSubmit": "Add Note",
     "addingNote": "Adding...",
+    "noMessages": "No messages yet.",
     "noNotes": "No investigation notes yet.",
     "privateNoteHint": "Add private notes about the investigation.",
     "removedAuthor": "Removed",
@@ -344,10 +356,25 @@
     }
   },
   "Footer": {
-    "rights": "© {year} AnonProtect. All rights reserved.",
+    "rights": "© {year} AnonProtect Security Solutions. All rights reserved.",
     "links": "Legal Links",
     "privacy": "Privacy",
     "terms": "Terms",
-    "transparency": "Transparency"
+    "transparency": "Transparency",
+    "trust": "Trust",
+    "shielded": "Shielded Hosting",
+    "description": "AnonProtect is the leading platform for corporate and institutional anonymous reporting. We guarantee total secrecy and protection for those who report."
+  },
+  "Logo": {
+    "tagline": "Anonymous Protection"
+  },
+  "ReportLayout": {
+    "about": "About",
+    "aboutDesc": "Safe and anonymous channel for reports of irregularities.",
+    "privacy": "Privacy",
+    "privacyDesc": "Your information is protected and your anonymity is guaranteed.",
+    "anonymity": "Anonymity",
+    "anonymityDesc": "We do not request identification. Only use the tracking code.",
+    "rights": "© {year} Anonymous Reporting System. All rights reserved."
   }
 }

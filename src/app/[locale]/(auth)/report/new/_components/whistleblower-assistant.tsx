@@ -65,9 +65,9 @@ export function WhistleblowerAssistant() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] sm:w-[400px]"
+            className="mb-4 w-[calc(100vw-3rem)] max-w-[400px] sm:w-[400px]"
           >
-            <Card className="bg-card/95 overflow-hidden shadow-2xl backdrop-blur-xl">
+            <Card className="bg-card/95 border-none shadow-2xl ring-1 ring-black/5 backdrop-blur-xl dark:ring-white/10">
               <CardHeader className="bg-primary text-primary-foreground flex flex-row items-center justify-between p-4">
                 <div className="flex items-center gap-2">
                   <div className="rounded-lg bg-white/20 p-1.5">

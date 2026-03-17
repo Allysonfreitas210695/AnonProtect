@@ -8,6 +8,7 @@
     "cancel": "Cancelar",
     "delete": "Excluir",
     "actions": "Ações",
+    "viewAll": "Ver todas",
     "status": "Status",
     "date": "Data",
     "details": "Ver Detalhes",
@@ -83,6 +84,16 @@
     "date": "Data",
     "status": "Status",
     "actions": "Ações",
+    "viewAll": "Ver todas",
+    "tryAgain": "Tentar Novamente",
+    "errors": {
+      "load": "Erro ao carregar Dashboard",
+      "loadDescription": "Ocorreu um problema ao buscar os dados do servidor. Por favor, tente novamente em alguns instantes.",
+      "details": "Detalhes do Erro"
+    },
+    "Stats": {
+      "units": "unidades"
+    },
     "noReports": "Nenhuma denúncia registrada ainda.",
     "reportsSubtitle": "Gerenciamento detalhado de todas as denúncias",
     "viewDetails": "Ver Detalhes",
@@ -332,10 +343,25 @@
     }
   },
   "Footer": {
-    "rights": "© {year} AnonProtect. Todos os direitos reservados.",
+    "rights": "© {year} AnonProtect Security Solutions. Todos os direitos reservados.",
     "links": "Links Legais",
     "privacy": "Privacidade",
     "terms": "Termos",
-    "transparency": "Transparência"
+    "transparency": "Transparência",
+    "trust": "Confiança",
+    "shielded": "Hospedagem Blindada",
+    "description": "AnonProtect é a plataforma líder em denúncias anônimas corporativas e institucionais. Garantimos total sigilo e proteção para quem reporta."
+  },
+  "Logo": {
+    "tagline": "Proteção Anônima"
+  },
+  "ReportLayout": {
+    "about": "Sobre",
+    "aboutDesc": "Canal seguro e anônimo para denúncias de irregularidades.",
+    "privacy": "Privacidade",
+    "privacyDesc": "Suas informações são protegidas e seu anonimato é garantido.",
+    "anonymity": "Anonimato",
+    "anonymityDesc": "Não solicitamos identificação. Use apenas o código de rastreamento.",
+    "rights": "© {year} Sistema de Denúncias Anônimas. Todos os direitos reservados."
   }
 }

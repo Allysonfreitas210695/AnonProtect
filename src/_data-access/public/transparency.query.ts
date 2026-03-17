@@ -1,10 +1,6 @@
 import { prisma } from '@/_lib/prisma'
 import { unstable_cache } from 'next/cache'
 
-/**
- * Busca estatísticas públicas agregadas para a página de transparência.
- * Os dados são cacheados por 1 hora para performance.
- */
 export const getPublicStats = unstable_cache(
   async () => {
     const [totalReports, resolvedReports, reportsByCategory, reportsByStatus, reportsByMonth] =
@@ -77,7 +73,7 @@ export const getPublicStats = unstable_cache(
         name,
         value,
       }))
-      .slice(-12) // Últimos 12 meses
+      .slice(-12)
 
     return {
       totalReports,

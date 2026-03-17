@@ -2,72 +2,33 @@
 
 import { actionClient } from '@/_utils/safe-action'
 import { reportSchema } from '@/_schemas/report'
-import * as reportRepository from '@/_data-access/public/report.repository'
-import { analyzeReport } from '@/_lib/ai'
+import { ReportService } from '@/_services/report.service'
 import { checkRateLimit } from '@/_lib/ratelimit'
 import { headers } from 'next/headers'
 
 /**
- * Registra uma nova denúncia de forma anônima.
+ * Server Action para registrar uma nova denúncia.
+ * Delega toda a lógica de negócio para o ReportService.
  */
 export const submitReportAction = actionClient
   .schema(reportSchema)
-  .action(
-    async ({
-      parsedInput: {
-        categoryId,
-        description,
-        country,
-        state,
-        city,
-        district,
-        postalCode,
-        turnstileToken,
-        attachments,
-      },
-    }) => {
-      // Turnstile Verification
-      if (process.env.TURNSTILE_SECRET_KEY && turnstileToken) {
-        const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: process.env.TURNSTILE_SECRET_KEY,
-            response: turnstileToken,
-          }),
-        })
-        const verifyData = await verifyRes.json()
-        if (!verifyData.success) {
-          throw new Error('Falha na verificação de captcha. Tente novamente.')
-        }
-      }
+  .action(async ({ parsedInput }) => {
+    // 1. Verificação de Rate Limit (Defesa em Profundidade além do Guard de UI)
+    const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1'
+    const { success } = await checkRateLimit(ip)
 
-      // Rate Limit
-      const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1'
-      const { success } = await checkRateLimit(ip)
-
-      if (!success) {
-        throw new Error('Limite de denúncias atingido. Tente novamente em 1 hora.')
-      }
-
-      // Busca categorias para análise de IA
-      const dbCategories = await reportRepository.getCategories()
-      const categoryNames = dbCategories.map((c) => c.name)
-
-      // Análise de IA (opcional, não bloqueia em caso de erro)
-      const aiAnalysis = await analyzeReport(description, categoryNames, country)
-
-      const report = await reportRepository.createReport({
-        categoryId,
-        description,
-        country,
-        state,
-        city,
-        district,
-        postalCode,
-        priority: aiAnalysis?.priority || 'MEDIUM',
-        attachments,
-      })
-      return { success: true, trackingCode: report.trackingCode }
+    if (!success) {
+      throw new Error('Limite de denúncias atingido. Tente novamente em 1 hora.')
     }
-  )
+
+    // 2. Verificação de Bot (Turnstile)
+    if (parsedInput.turnstileToken) {
+      const isHuman = await ReportService.verifyTurnstile(parsedInput.turnstileToken)
+      if (!isHuman) {
+        throw new Error('Falha na verificação de captcha. Tente novamente.')
+      }
+    }
+
+    // 3. Processamento via Service (IA, Código de Rastreio, Persistência)
+    return await ReportService.submitReport(parsedInput)
+  })

@@ -80,9 +80,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
         <div className="bg-destructive/10 rounded-full p-4">
           <h1 className="text-destructive text-2xl font-bold">{t('errors.load')}</h1>
         </div>
-        <p className="text-muted-foreground max-w-md">
-          {t('errors.loadDescription')}
-        </p>
+        <p className="text-muted-foreground max-w-md">{t('errors.loadDescription')}</p>
         <div className="bg-muted w-full max-w-2xl overflow-hidden rounded-xl shadow-lg">
           <div className="bg-muted-foreground/10 text-muted-foreground px-4 py-2 text-xs font-semibold tracking-widest uppercase">
             {t('errors.details')}
@@ -92,7 +90,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
           </pre>
         </div>
         <Button asChild variant="default" size="lg">
-          <Link href="/admin">{t('actions.tryAgain')}</Link>
+          <Link href="/admin">{t('tryAgain')}</Link>
         </Button>
       </div>
     )
@@ -127,18 +125,32 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-4 px-2 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-bold tracking-tight">{t('recentReports')}</h2>
-              <ReportSearchFilter />
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="text-primary hover:bg-primary/10"
-              >
-                <Link href="/admin/report" className="flex items-center gap-1.5 font-semibold">
-                  {t('actions.viewAll')} <span className="text-lg">→</span>
-                </Link>
-              </Button>
+              <div className="flex items-center gap-3">
+                <h2 className="text-2xl font-bold tracking-tight">{t('recentReports')}</h2>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary hover:bg-primary/10 hidden sm:flex"
+                >
+                  <Link href="/admin/report" className="flex items-center gap-1.5 font-semibold">
+                    {t('viewAll')} <span className="text-lg">→</span>
+                  </Link>
+                </Button>
+              </div>
+              <div className="flex flex-1 items-center gap-2 sm:max-w-xs">
+                <ReportSearchFilter />
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary hover:bg-primary/10 flex sm:hidden"
+                >
+                  <Link href="/admin/report" className="flex items-center gap-1.5 font-semibold">
+                    <span className="text-lg">→</span>
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             <div className="bg-card relative overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
@@ -146,7 +158,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                 <Table>
                   <TableHeader className="bg-muted/40">
                     <TableRow className="border-none hover:bg-transparent">
-                      <TableHead className="text-foreground/70 w-[140px] py-4 text-[10px] font-bold tracking-wider uppercase">
+                      <TableHead className="text-foreground/70 w-[80px] py-4 text-[10px] font-bold tracking-wider uppercase md:w-[120px] lg:w-[160px]">
                         {t('code')}
                       </TableHead>
                       <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
@@ -181,13 +193,13 @@ export default async function AdminDashboard({ searchParams }: Props) {
                           key={report.id}
                           className="group hover:bg-muted/40 border-border/40 transition-all"
                         >
-                          <TableCell className="text-primary/90 py-4 font-mono text-sm font-black">
+                          <TableCell className="text-primary/90 py-4 font-mono text-xs font-black whitespace-nowrap sm:text-sm">
                             {report.trackingCode}
                           </TableCell>
-                          <TableCell className="py-4 text-sm font-semibold">
+                          <TableCell className="max-w-[120px] truncate py-4 text-xs font-semibold sm:text-sm md:max-w-none">
                             {report.category?.name || 'Geral'}
                           </TableCell>
-                          <TableCell className="text-muted-foreground py-4 text-xs font-medium">
+                          <TableCell className="text-muted-foreground py-4 text-[10px] font-medium whitespace-nowrap sm:text-xs">
                             {formatDate(report.createdAt)}
                           </TableCell>
                           <TableCell className="py-4">
@@ -198,7 +210,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                               asChild
                               variant="secondary"
                               size="sm"
-                              className="hover:bg-primary hover:text-primary-foreground h-8 transform rounded-lg text-[11px] font-bold tracking-wide uppercase opacity-0 transition-all group-hover:opacity-100 active:scale-95"
+                              className="hover:bg-primary hover:text-primary-foreground h-8 transform rounded-lg text-[11px] font-bold tracking-wide uppercase transition-all active:scale-95 sm:opacity-0 sm:group-hover:opacity-100"
                             >
                               <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
                             </Button>
@@ -234,16 +246,16 @@ export default async function AdminDashboard({ searchParams }: Props) {
                     (dept: { departmentId: string; name: string; count: number }) => {
                       const percentage = Math.round((dept.count / quickStats.total) * 100)
                       return (
-                        <div key={dept.departmentId} className="group space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="bg-primary h-1.5 w-1.5 rounded-full" />
-                              <span className="text-foreground/90 group-hover:text-primary text-sm font-bold tracking-tight transition-colors">
+                        <div key={dept.departmentId} className="group min-w-0 space-y-2">
+                          <div className="flex items-center justify-between gap-2 overflow-hidden">
+                            <div className="flex min-w-0 items-center gap-2">
+                              <div className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
+                              <span className="text-foreground/90 group-hover:text-primary truncate text-sm font-bold tracking-tight transition-colors">
                                 {dept.name}
                               </span>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-muted-foreground text-[10px] font-black uppercase">
+                            <div className="flex shrink-0 items-center gap-2">
+                              <span className="text-muted-foreground text-[10px] font-black whitespace-nowrap uppercase">
                                 {dept.count} {t('Stats.units')}
                               </span>
                               <span className="text-primary text-xs font-black">{percentage}%</span>

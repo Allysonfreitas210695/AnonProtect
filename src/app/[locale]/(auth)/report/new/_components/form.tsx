@@ -35,7 +35,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const { form, onSubmit, isExecuting } = useNewReport()
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 lg:py-12">
+    <div className="mx-auto w-full max-w-2xl px-4 py-8 lg:py-12">
       <div className="mb-8 text-center">
         <h1 className="from-primary to-primary/70 mb-2 bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent lg:text-4xl">
           {t('title')}
@@ -113,15 +113,13 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   type="file"
                   multiple
                   onChange={(e) => setFiles(Array.from(e.target.files || []))}
-                  className="h-11"
+                  className="h-11 max-w-full overflow-hidden"
                 />
-                <p className="text-muted-foreground text-[10px] lg:text-xs">
-                  {t('uploadHint')}
-                </p>
+                <p className="text-muted-foreground text-[10px] lg:text-xs">{t('uploadHint')}</p>
               </div>
 
               {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-                <div className="space-y-4">
+                <div className="flex w-full justify-center overflow-x-auto py-2">
                   <Turnstile
                     siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
                     onSuccess={(token) => form.setValue('turnstileToken', token || '')}

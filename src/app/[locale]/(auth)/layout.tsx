@@ -1,6 +1,6 @@
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-background selection:bg-primary/30 relative min-h-screen transition-colors duration-500">
+    <div className="bg-background selection:bg-primary/30 relative min-h-screen overflow-x-hidden transition-colors duration-500">
       <div className="pointer-events-none fixed inset-0 -z-10 h-full w-full overflow-hidden">
         {/* Deep dark mode mesh effect */}
         <div className="absolute inset-0 hidden dark:block">
@@ -13,7 +13,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <div className="via-background absolute inset-0 block bg-linear-to-br from-blue-50/80 to-purple-50/80 dark:hidden" />
       </div>
 
-      <main className="relative z-10 flex min-h-screen flex-col">{children}</main>
+      <main className="relative z-10 flex min-h-screen flex-col overflow-x-hidden">{children}</main>
     </div>
   )
 }

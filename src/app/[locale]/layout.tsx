@@ -38,7 +38,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn('bg-background min-h-screen font-sans antialiased', inter.variable)}>
+      <body
+        className={cn(
+          'bg-background min-h-screen w-full overflow-x-hidden font-sans antialiased',
+          inter.variable
+        )}
+      >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
@@ -47,7 +52,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" richColors />
-            <main>
+            <main className="relative w-full overflow-x-hidden">
               <PageTransition>{children}</PageTransition>
             </main>
           </ThemeProvider>

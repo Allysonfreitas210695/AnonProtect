@@ -197,7 +197,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                           asChild
                           variant="secondary"
                           size="sm"
-                          className="hover:bg-primary hover:text-primary-foreground h-8 transform rounded-lg text-[11px] font-bold tracking-wide uppercase opacity-0 transition-all group-hover:opacity-100 active:scale-95"
+                          className="hover:bg-primary hover:text-primary-foreground h-8 transform rounded-lg text-[11px] font-bold tracking-wide uppercase transition-all active:scale-95 sm:opacity-0 sm:group-hover:opacity-100"
                         >
                           <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
                         </Button>
@@ -264,7 +264,12 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                   </div>
 
                   <div className="mt-2 border-t pt-3">
-                    <Button asChild variant="secondary" size="sm" className="w-full text-xs font-bold uppercase transition-all active:scale-95">
+                    <Button
+                      asChild
+                      variant="secondary"
+                      size="sm"
+                      className="w-full text-xs font-bold uppercase transition-all active:scale-95"
+                    >
                       <Link href={`/admin/report/${report.id}`}>{t('viewDetails')}</Link>
                     </Button>
                   </div>

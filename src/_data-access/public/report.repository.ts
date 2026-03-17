@@ -1,6 +1,7 @@
 import { prisma } from '@/_lib/prisma'
 
-export async function createReport(data: {
+export interface CreateReportData {
+  trackingCode: string
   categoryId: string
   description: string
   country?: string
@@ -9,21 +10,14 @@ export async function createReport(data: {
   district?: string
   postalCode?: string
   priority?: string
+  assignedDepartmentId?: string
   attachments?: { url: string; fileName: string; fileSize: number; type: string }[]
-}) {
-  const year = new Date().getFullYear()
-  const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase()
-  const trackingCode = `AP-${year}-${randomPart}`
+}
 
-  // Fetch category to get default department
-  const category = await prisma.category.findUnique({
-    where: { id: data.categoryId },
-    select: { defaultDepartmentId: true },
-  })
-
+export async function createReport(data: CreateReportData) {
   return await prisma.report.create({
     data: {
-      trackingCode,
+      trackingCode: data.trackingCode,
       categoryId: data.categoryId,
       description: data.description,
       country: data.country,
@@ -32,7 +26,7 @@ export async function createReport(data: {
       district: data.district,
       postalCode: data.postalCode,
       priority: data.priority,
-      assignedDepartmentId: category?.defaultDepartmentId,
+      assignedDepartmentId: data.assignedDepartmentId,
       attachments: data.attachments
         ? {
             create: data.attachments.map((a) => ({
@@ -50,7 +44,7 @@ export async function createReport(data: {
 export async function getCategories() {
   return await prisma.category.findMany({
     where: { active: true },
-    select: { name: true },
+    select: { id: true, name: true, defaultDepartmentId: true },
   })
 }
 
