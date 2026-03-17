@@ -5,27 +5,22 @@ import { ExternalLink } from 'lucide-react'
 import { cn } from '@/_lib/utils'
 import { formatCompactDateTime } from '@/_utils/formatters'
 
-interface GlobalActivityLogProps {
-  activities: (ActivityLog & {
-    user: { id: string; name: string | null } | null
-    report: { id: string; trackingCode: string }
-  })[]
-}
-
+import { useTranslations } from 'next-intl'
 import { getActivityIcon, getActivityColor } from '@/_utils/activity-helpers'
 
 export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
+  const t = useTranslations('Dashboard')
+  const tT = useTranslations('Timeline')
+
   return (
     <Card className="ring-border flex flex-col border-none shadow-sm ring-1">
       <CardHeader>
-        <CardTitle className="text-lg font-bold">Atividades Recentes</CardTitle>
+        <CardTitle className="text-lg font-bold">{t('recentActivities')}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1">
         <div className="space-y-6">
           {activities.length === 0 ? (
-            <p className="text-muted-foreground py-10 text-center text-sm">
-              Nenhuma atividade recente.
-            </p>
+            <p className="text-muted-foreground py-10 text-center text-sm">{t('noActivities')}</p>
           ) : (
             activities.map((activity) => (
               <div key={activity.id} className="relative flex gap-3">
@@ -53,7 +48,7 @@ export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
                       <ExternalLink className="h-2 w-2" />
                     </Link>
                     <span className="text-muted-foreground text-[10px]">
-                      • Por: {activity.user?.name ?? 'Sistema'}
+                      • {tT('by', { name: activity.user?.name ?? tT('system') })}
                     </span>
                   </div>
                 </div>

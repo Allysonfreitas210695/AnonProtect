@@ -78,22 +78,21 @@ export default async function AdminDashboard({ searchParams }: Props) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-6 px-4 text-center">
         <div className="bg-destructive/10 rounded-full p-4">
-          <h1 className="text-destructive text-2xl font-bold">Erro ao carregar Dashboard</h1>
+          <h1 className="text-destructive text-2xl font-bold">{t('errors.load')}</h1>
         </div>
         <p className="text-muted-foreground max-w-md">
-          Ocorreu um problema ao buscar os dados do servidor. Por favor, tente novamente em alguns
-          instantes.
+          {t('errors.loadDescription')}
         </p>
         <div className="bg-muted w-full max-w-2xl overflow-hidden rounded-xl shadow-lg">
           <div className="bg-muted-foreground/10 text-muted-foreground px-4 py-2 text-xs font-semibold tracking-widest uppercase">
-            Detalhes do Erro
+            {t('errors.details')}
           </div>
           <pre className="text-foreground/80 max-w-full overflow-auto p-6 text-left font-mono text-xs">
             {error instanceof Error ? error.message : String(error)}
           </pre>
         </div>
         <Button asChild variant="default" size="lg">
-          <Link href="/admin">Tentar Novamente</Link>
+          <Link href="/admin">{t('actions.tryAgain')}</Link>
         </Button>
       </div>
     )
@@ -137,7 +136,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                 className="text-primary hover:bg-primary/10"
               >
                 <Link href="/admin/report" className="flex items-center gap-1.5 font-semibold">
-                  Ver todos <span className="text-lg">→</span>
+                  {t('actions.viewAll')} <span className="text-lg">→</span>
                 </Link>
               </Button>
             </div>

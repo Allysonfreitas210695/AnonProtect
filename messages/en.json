@@ -26,7 +26,20 @@
     "noReports": "No reports registered yet.",
     "noActivities": "No recent activities.",
     "trackingCode": "Code",
-    "category": "Type"
+    "category": "Type",
+    "charts": {
+      "volumeTitle": "Report Volume",
+      "volumeDescription": "Last 30 days"
+    },
+    "errors": {
+      "load": "Error loading Dashboard",
+      "loadDescription": "There was a problem fetching data from the server. Please try again in a few moments.",
+      "details": "Error Details"
+    },
+    "actions": {
+      "tryAgain": "Try Again",
+      "viewAll": "View all"
+    }
   },
   "Success": {
     "title": "Report Submitted!",
@@ -79,7 +92,12 @@
     "noReports": "No reports registered yet.",
     "viewDetails": "View Details",
     "byDepartment": "By Department",
-    "noDepartmentData": "No department data"
+    "noDepartmentData": "No department data",
+    "location": "Location",
+    "archiveSelected": "Archive Selected",
+    "selectedCount": "{count} selected | {count} selected",
+    "archiveError": "Error archiving reports",
+    "connectionError": "Connection error"
   },
   "Login": {
     "title": "Administrative Area",
@@ -236,6 +254,7 @@
     "inProgress": "In Progress",
     "resolved": "Resolved",
     "avgResolutionTime": "Avg Resolution",
+    "avgResolutionValue": "{count} hours",
     "realTime": "Updated in real time",
     "units": "units"
   },

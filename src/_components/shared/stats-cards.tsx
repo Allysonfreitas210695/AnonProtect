@@ -46,7 +46,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
     },
     {
       title: t('avgResolutionTime'),
-      value: `${stats.avgResolutionTime ?? 0}h`,
+      value: t('avgResolutionValue', { count: stats.avgResolutionTime ?? 0 }),
       icon: Clock,
       color: 'text-muted-foreground',
       bgColor: 'bg-muted',
@@ -54,24 +54,24 @@ export function StatsCards({ stats }: StatsCardsProps) {
   ]
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       {items.map((item) => (
         <Card
           key={item.title}
           className="group bg-card/40 ring-border/50 hover:bg-card hover:ring-primary/30 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl"
         >
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-5 pb-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-2">
             <CardTitle className="text-muted-foreground group-hover:text-foreground text-[10px] font-black tracking-widest uppercase transition-colors">
               {item.title}
             </CardTitle>
             <div
-              className={`${item.bgColor} group-hover:bg-primary/20 rounded-2xl p-3 shadow-sm transition-all duration-500 group-hover:rotate-12`}
+              className={`${item.bgColor} group-hover:bg-primary/20 rounded-xl p-2.5 shadow-sm transition-all duration-500 group-hover:rotate-12`}
             >
-              <item.icon className={`h-4.5 w-4.5 transition-transform ${item.color}`} />
+              <item.icon className={`h-4 w-4 transition-transform ${item.color}`} />
             </div>
           </CardHeader>
-          <CardContent className="p-5 pt-0">
-            <div className="text-4xl font-black tracking-tighter transition-all group-hover:translate-x-1">
+          <CardContent className="p-4 pt-0">
+            <div className="text-3xl font-black tracking-tighter transition-all group-hover:translate-x-1 lg:text-4xl">
               {item.value}
             </div>
           </CardContent>

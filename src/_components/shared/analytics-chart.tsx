@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
+import { useTranslations } from 'next-intl'
 
 interface AnalyticsChartProps {
   data: {
@@ -11,12 +11,13 @@ interface AnalyticsChartProps {
 }
 
 export function AnalyticsChart({ data }: AnalyticsChartProps) {
+  const t = useTranslations('Dashboard.charts')
+
   return (
     <Card className="col-span-4 border-none bg-transparent shadow-none">
       <CardHeader className="px-6 pb-2">
-        <CardTitle className="text-xl font-bold tracking-tight">
-          Volume de Denúncias (30 dias)
-        </CardTitle>
+        <CardTitle className="text-xl font-bold tracking-tight">{t('volumeTitle')}</CardTitle>
+        <p className="text-muted-foreground text-sm">{t('volumeDescription')}</p>
       </CardHeader>
       <CardContent className="px-2">
         <div className="h-[300px] w-full">

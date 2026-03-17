@@ -26,7 +26,20 @@
     "noReports": "Nenhuma denúncia registrada ainda.",
     "noActivities": "Nenhuma atividade recente.",
     "trackingCode": "Código",
-    "category": "Tipo"
+    "category": "Tipo",
+    "charts": {
+      "volumeTitle": "Volume de Denúncias",
+      "volumeDescription": "Últimos 30 dias"
+    },
+    "errors": {
+      "load": "Erro ao carregar Dashboard",
+      "loadDescription": "Ocorreu um problema ao buscar os dados do servidor. Por favor, tente novamente em alguns instantes.",
+      "details": "Detalhes do Erro"
+    },
+    "actions": {
+      "tryAgain": "Tentar Novamente",
+      "viewAll": "Ver todos"
+    }
   },
   "Success": {
     "title": "Denúncia Enviada!",
@@ -73,7 +86,12 @@
     "noReports": "Nenhuma denúncia registrada ainda.",
     "viewDetails": "Ver Detalhes",
     "byDepartment": "Por Departamento",
-    "noDepartmentData": "Sem dados departamentais"
+    "noDepartmentData": "Sem dados departamentais",
+    "location": "Localização",
+    "archiveSelected": "Arquivar Selecionadas",
+    "selectedCount": "{count} selecionada | {count} selecionadas",
+    "archiveError": "Erro ao arquivar denúncias",
+    "connectionError": "Erro de conexão"
   },
   "Login": {
     "title": "Área Administrativa",
@@ -225,6 +243,7 @@
     "inProgress": "Em Andamento",
     "resolved": "Resolvidos",
     "avgResolutionTime": "Média Resolução",
+    "avgResolutionValue": "{count} horas",
     "realTime": "Atualizado em tempo real",
     "units": "unidades"
   },
