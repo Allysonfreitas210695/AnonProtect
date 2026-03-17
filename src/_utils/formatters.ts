@@ -1,6 +1,10 @@
 import { REPORT_STATUS, REPORT_TYPES } from '@/_lib/constants'
 
-export function formatDate(date: Date | string, options?: Intl.DateTimeFormatOptions): string {
+export function formatDate(
+  date: Date | string,
+  locale: string = 'pt-BR',
+  options?: Intl.DateTimeFormatOptions
+): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date
 
   const defaultOptions: Intl.DateTimeFormatOptions = {
@@ -10,7 +14,7 @@ export function formatDate(date: Date | string, options?: Intl.DateTimeFormatOpt
     ...options,
   }
 
-  return dateObj.toLocaleDateString('pt-BR', defaultOptions)
+  return dateObj.toLocaleDateString(locale, defaultOptions)
 }
 
 export function formatTime(date: Date | string): string {

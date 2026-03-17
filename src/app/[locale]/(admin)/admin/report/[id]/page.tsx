@@ -1,13 +1,11 @@
 import { getTranslations } from 'next-intl/server'
-import { formatCompactDateTime } from '@/_utils/formatters'
 import { getCurrentUser } from '@/_lib/auth'
 import { notFound } from 'next/navigation'
 import { StatusBadge } from '@/_components/shared/status-badge'
 import { Button } from '@/_components/ui/button'
-import { ArrowLeft, Shield, Building2, Printer } from 'lucide-react'
-import Link from 'next/link'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { ArrowLeft, Building2 } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
+import { formatCompactDateTime, formatDate } from '@/_utils/formatters'
 import { ForwardReportForm } from './_components/forward-form'
 import { StatusUpdateForm } from './_components/status-form'
 import { ReportCard } from '@/_components/shared/report-card'
@@ -59,11 +57,11 @@ export default async function AdminReportPage({ params }: Props) {
               asChild
               variant="outline"
               size="sm"
-              className="h-8 rounded-full border-none bg-muted/50 px-3 hover:bg-muted"
+              className="bg-muted/50 hover:bg-muted h-8 rounded-full border-none px-3"
             >
               <Link href="/admin/report">
-                <ArrowLeft className="mr-1 h-3.5 w-3.5 text-muted-foreground" />
-                <span className="text-xs font-bold uppercase tracking-wide">{t('back')}</span>
+                <ArrowLeft className="text-muted-foreground mr-1 h-3.5 w-3.5" />
+                <span className="text-xs font-bold tracking-wide uppercase">{t('back')}</span>
               </Link>
             </Button>
             <StatusBadge status={report.status} />
@@ -74,10 +72,7 @@ export default async function AdminReportPage({ params }: Props) {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="outline" size="sm" className="hidden sm:flex" onClick={() => window.print()}>
-            <Printer className="mr-2 h-4 w-4" />
-            {t('printReport')}
-          </Button>
+          <AdminPrintButton label={t('printReport')} />
           <ForwardReportForm reportId={report.id} departments={departments} />
           <StatusUpdateForm reportId={report.id} currentStatus={report.status} />
         </div>
@@ -89,20 +84,28 @@ export default async function AdminReportPage({ params }: Props) {
           <ReportCard report={report} showStatus={false}>
             <div className="grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-3">
               <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">{t('submittedAt')}</p>
+                <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                  {t('submittedAt')}
+                </p>
                 <p className="text-sm font-bold">
-                  {format(report.createdAt, 'PP', {
-                    locale: locale === 'pt-BR' ? ptBR : undefined,
+                  {formatDate(report.createdAt, locale, {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
                   })}
                 </p>
               </div>
               <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">{t('lastUpdate')}</p>
+                <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                  {t('lastUpdate')}
+                </p>
                 <p className="text-sm font-bold">{formatCompactDateTime(report.updatedAt)}</p>
               </div>
               {report.assignedDepartment && (
                 <div className="col-span-2 sm:col-span-1">
-                  <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">{t('department')}</p>
+                  <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+                    {t('department')}
+                  </p>
                   <div className="text-primary flex items-center gap-1 text-sm font-bold">
                     <Building2 className="h-3 w-3" />
                     {report.assignedDepartment.name}
@@ -134,9 +137,9 @@ export default async function AdminReportPage({ params }: Props) {
                 <div className="bg-primary h-6 w-1.5 rounded-full" />
                 <h2 className="text-xl font-black tracking-tight">{t('investigationNotes')}</h2>
               </div>
-              <InvestigationNotes 
-                reportId={report.id} 
-                notes={report.investigationNotes} 
+              <InvestigationNotes
+                reportId={report.id}
+                notes={report.investigationNotes}
                 currentUser={user}
               />
             </section>
@@ -149,7 +152,7 @@ export default async function AdminReportPage({ params }: Props) {
               <div className="bg-primary h-6 w-1.5 rounded-full" />
               <h2 className="text-xl font-black tracking-tight">{t('communicationTitle')}</h2>
             </div>
-            <Card className="flex h-[600px] flex-col overflow-hidden border-none shadow-xl ring-1 ring-border">
+            <Card className="ring-border flex h-[600px] flex-col overflow-hidden border-none shadow-xl ring-1">
               <CardContent className="flex-1 overflow-hidden p-0">
                 <div className="h-full overflow-y-auto p-4">
                   <MessageList messages={report.messages} currentUserType="ADMIN" />
