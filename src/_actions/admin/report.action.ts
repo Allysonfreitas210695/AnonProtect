@@ -1,117 +1,118 @@
 'use server'
 
-import { authActionClient, ActionError } from '@/_utils/safe-action'
-import { AdminReportService } from '@/_services/admin-report.service'
+import { supervisorActionClient, adminActionClient, ActionError } from '@/_shared/utils/safe-action'
+import * as adminData from '@/_modules/admin/admin.data'
 import { z } from 'zod'
 import { reportStatusSchema } from '@/_schemas/report'
 
-/**
- * Server Action para atualizar o status de uma denúncia.
- */
-export const updateReportStatusAction = authActionClient
+export const updateReportStatusAction = supervisorActionClient
   .schema(reportStatusSchema)
-  .action(async ({ parsedInput: { reportId, status } }) => {
+  .action(async ({ parsedInput: { reportId, status }, ctx: { user } }) => {
     try {
-      await AdminReportService.updateStatus(reportId, status)
+      await adminData.updateReportStatus(reportId, status, user.id)
       return { success: true, message: 'Status atualizado com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao atualizar status')
     }
   })
 
-/**
- * Server Action para enviar uma resposta oficial da administração.
- */
 const sendAdminReplySchema = z.object({
   reportId: z.string().uuid(),
   content: z.string().min(1, 'Mensagem não pode estar vazia'),
 })
 
-export const sendAdminReplyAction = authActionClient
+export const sendAdminReplyAction = supervisorActionClient
   .schema(sendAdminReplySchema)
-  .action(async ({ parsedInput: { reportId, content } }) => {
+  .action(async ({ parsedInput: { reportId, content }, ctx: { user } }) => {
     try {
-      await AdminReportService.replyToReport(reportId, content)
+      await adminData.createAdminReply(reportId, user.id, content)
       return { success: true, message: 'Mensagem enviada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao enviar resposta')
     }
   })
 
-/**
- * Server Action para adicionar uma nota técnica/investigação.
- */
 const createNoteSchema = z.object({
   reportId: z.string().uuid(),
   content: z.string().min(1, 'Conteúdo é obrigatório'),
 })
 
-export const createInvestigationNoteAction = authActionClient
+export const createInvestigationNoteAction = supervisorActionClient
   .schema(createNoteSchema)
   .action(async ({ parsedInput: { reportId, content }, ctx: { user } }) => {
     try {
-      await AdminReportService.addInvestigationNote(reportId, user.id, content)
+      await adminData.createInvestigationNote(reportId, user.id, content)
       return { success: true, message: 'Nota adicionada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao adicionar nota')
     }
   })
 
-/**
- * Server Action para excluir uma nota de investigação.
- */
 const deleteNoteSchema = z.object({
   noteId: z.string().uuid(),
+  reportId: z.string().uuid(),
 })
 
-export const deleteInvestigationNoteAction = authActionClient
+export const deleteInvestigationNoteAction = supervisorActionClient
   .schema(deleteNoteSchema)
-  .action(async ({ parsedInput: { noteId }, ctx: { user } }) => {
+  .action(async ({ parsedInput: { noteId, reportId }, ctx: { user } }) => {
     try {
-      await AdminReportService.deleteNote(noteId, user.id, user.role)
+      await adminData.deleteInvestigationNote(noteId, user.id, reportId)
       return { success: true, message: 'Nota excluída com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao excluir nota')
     }
   })
 
-/**
- * Server Action para encaminhar uma denúncia para um departamento específico.
- */
 const forwardReportSchema = z.object({
   reportId: z.string().uuid(),
   departmentId: z.string().uuid(),
   description: z.string().min(1, 'Justificativa é obrigatória'),
 })
 
-export const forwardReportAction = authActionClient
+export const forwardReportAction = supervisorActionClient
   .schema(forwardReportSchema)
   .action(async ({ parsedInput: { reportId, departmentId, description }, ctx: { user } }) => {
     try {
-      await AdminReportService.forwardReport(reportId, departmentId, user.id, description)
+      await adminData.forwardReport(reportId, departmentId, user.id, description)
       return { success: true, message: 'Denúncia encaminhada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao encaminhar denúncia')
     }
   })
 
-/**
- * Server Action para atualização de status em massa.
- */
 const batchStatusSchema = z.object({
   reportIds: z.array(z.string().uuid()),
   status: reportStatusSchema.shape.status,
 })
 
-export const batchUpdateReportStatusAction = authActionClient
+export const batchUpdateReportStatusAction = supervisorActionClient
   .schema(batchStatusSchema)
   .action(async ({ parsedInput: { reportIds, status } }) => {
     try {
-      await AdminReportService.batchUpdateStatus(reportIds, status)
+      await adminData.updateReportsStatus(reportIds, status)
       return { success: true, message: `${reportIds.length} denúncias atualizadas com sucesso` }
     } catch (error) {
       throw new ActionError(
         error instanceof Error ? error.message : 'Falha na atualização em massa'
       )
+    }
+  })
+
+const deleteReportSchema = z.object({
+  reportId: z.string().uuid(),
+})
+
+export const deleteReportAction = adminActionClient
+  .schema(deleteReportSchema)
+  .action(async ({ parsedInput: { reportId }, ctx: { user } }) => {
+    if (user.role !== 'ADMIN') {
+      throw new ActionError('Acesso negado: Somente administradores podem excluir denúncias')
+    }
+    try {
+      await adminData.softDeleteReport(reportId)
+      return { success: true, message: 'Denúncia excluída com sucesso' }
+    } catch (error) {
+      throw new ActionError(error instanceof Error ? error.message : 'Falha ao excluir denúncia')
     }
   })

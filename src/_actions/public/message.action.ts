@@ -1,7 +1,7 @@
 'use server'
 
-import { actionClient } from '@/_utils/safe-action'
-import * as reportRepository from '@/_data-access/public/report.repository'
+import { actionClient } from '@/_shared/utils/safe-action'
+import * as reportRepository from '@/_modules/report/report.data'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 

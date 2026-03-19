@@ -24,7 +24,6 @@ export function useInvestigationNotes(reportId: string) {
     },
   })
 
-  // Hook for Creating
   const { execute: executeCreate, isExecuting: isCreating } = useAction(
     createInvestigationNoteAction,
     {
@@ -42,7 +41,6 @@ export function useInvestigationNotes(reportId: string) {
     }
   )
 
-  // Hook for Deleting
   const { execute: executeDelete, isExecuting: isDeleting } = useAction(
     deleteInvestigationNoteAction,
     {
@@ -61,7 +59,6 @@ export function useInvestigationNotes(reportId: string) {
     }
   )
 
-  // Submit Handlers
   function onSubmitCreate(values: z.infer<typeof createNoteSchema>) {
     executeCreate({
       reportId,
@@ -76,7 +73,7 @@ export function useInvestigationNotes(reportId: string) {
 
   function handleConfirmDelete() {
     if (noteToDelete) {
-      executeDelete({ noteId: noteToDelete })
+      executeDelete({ noteId: noteToDelete, reportId })
     }
   }
 

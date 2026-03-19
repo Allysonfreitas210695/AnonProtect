@@ -1,8 +1,8 @@
 'use server'
 
-import { actionClient } from '@/_utils/safe-action'
+import { actionClient } from '@/_shared/utils/safe-action'
 import { registerSchema } from '@/_schemas/auth'
-import { prisma } from '@/_lib/prisma'
+import { prisma } from '@/_shared/lib/prisma'
 import { hash } from 'bcryptjs'
 
 export const registerAction = actionClient
@@ -24,7 +24,7 @@ export const registerAction = actionClient
           name,
           email,
           password: hashedPassword,
-          role: 'SUPERVISOR', // Default role
+          role: 'SUPERVISOR',
         },
       })
 

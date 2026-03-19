@@ -1,9 +1,9 @@
 'use server'
 
-import { actionClient } from '@/_utils/safe-action'
+import { actionClient } from '@/_shared/utils/safe-action'
 import { z } from 'zod'
-import { prisma } from '@/_lib/prisma'
-import { getChatCompletion, WHISTLEBLOWER_SYSTEM_PROMPT, ChatMessage } from '@/_lib/ai'
+import { prisma } from '@/_shared/lib/prisma'
+import { getChatCompletion, WHISTLEBLOWER_SYSTEM_PROMPT, ChatMessage } from '@/_shared/lib/ai'
 
 const chatSchema = z.object({
   history: z.array(

@@ -6,6 +6,34 @@ import { toast } from 'sonner'
 
 export function useS3Upload() {
   const [isUploading, setIsUploading] = useState(false)
+  
+  async function stripMetadata(file: File): Promise<File | Blob> {
+    if (!file.type.startsWith('image/')) return file
+    
+    return new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext('2d')
+        if (!ctx) {
+          resolve(file)
+          return
+        }
+        ctx.drawImage(img, 0, 0)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(new File([blob], file.name, { type: file.type }))
+          } else {
+            resolve(file)
+          }
+        }, file.type)
+      }
+      img.onerror = () => resolve(file)
+      img.src = URL.createObjectURL(file)
+    })
+  }
 
   async function uploadFiles(files: File[]) {
     setIsUploading(true)
@@ -13,7 +41,8 @@ export function useS3Upload() {
 
     try {
       for (const file of files) {
-        // 1. Get pre-signed URL
+        const cleanFile = await stripMetadata(file)
+        
         const result = await getPresignedUrlAction({
           fileName: file.name,
           fileType: file.type,
@@ -23,10 +52,9 @@ export function useS3Upload() {
           throw new Error('Falha ao gerar URL de upload')
         }
 
-        // 2. Upload to S3
         const response = await fetch(result.data.url, {
           method: 'PUT',
-          body: file,
+          body: cleanFile,
           headers: {
             'Content-Type': file.type,
           },
@@ -38,6 +66,7 @@ export function useS3Upload() {
 
         uploadedFiles.push({
           url: result.data.publicUrl,
+          key: result.data.key,
           fileName: file.name,
           fileSize: file.size,
           type: file.type,

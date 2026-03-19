@@ -2,8 +2,8 @@
 
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { s3Client, BUCKET_NAME } from '@/_lib/aws'
-import { actionClient } from '@/_utils/safe-action'
+import { s3Client, BUCKET_NAME } from '@/_shared/lib/aws'
+import { actionClient } from '@/_shared/utils/safe-action'
 import { z } from 'zod'
 
 const uploadSchema = z.object({

@@ -21,7 +21,7 @@ export function useLogin() {
     onSuccess: ({ data }) => {
       if (data?.error) {
         toast.error(data.error)
-      } // Note: O redirecionamento de sucesso é tratado pelo NextAuth internamente na Action
+      }
     },
     onError: ({ error }) => {
       toast.error(error.serverError || t('loginFailed'))
