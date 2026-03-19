@@ -20,7 +20,7 @@
   },
   "Dashboard": {
     "title": "Dashboard",
-    "overview": "Protection system overview",
+    "overview": "System protection overview",
     "recentReports": "Recent Reports",
     "recentActivities": "Recent Activities",
     "byDepartment": "By Department",
@@ -29,8 +29,32 @@
     "trackingCode": "Code",
     "category": "Type",
     "charts": {
-      "volumeTitle": "Report Volume",
-      "volumeDescription": "Last 30 days"
+      "volumeTitle": "Reports Volume",
+      "volumeDescription": "Last 30 days",
+      "statusTitle": "Reports by Status",
+      "statusDescription": "Current status distribution",
+      "categoryTitle": "Reports by Category",
+      "categoryDescription": "Most reported types",
+      "timelineTitle": "Reports Over Time",
+      "timelineDescription": "Temporal evolution",
+      "countryTitle": "Reports by Country",
+      "countryDescription": "Global geographic distribution",
+      "cityTitle": "Reports by City",
+      "cityDescription": "Regional distribution",
+      "unknown": "Unknown"
+    },
+    "stats": {
+      "total": "Total Reports",
+      "today": "Reports Today",
+      "pending": "Pending",
+      "resolved": "Resolved"
+    },
+    "filter": {
+      "placeholder": "Select period",
+      "last7Days": "Last 7 days",
+      "last30Days": "Last 30 days",
+      "last90Days": "Last 90 days",
+      "allTime": "All time"
     },
     "errors": {
       "load": "Error loading Dashboard",
@@ -74,11 +98,33 @@
     "step3": {
       "title": "Follow and interact",
       "description": "Check the progress of your report and exchange messages with the responsible team anonymously."
-    },
-    "institutional": "Institutional",
-    "ethics": "Ethics Code",
-    "usage": "Usage Terms",
-    "privacy": "Privacy Policy"
+    }
+  },
+  "HowItWorks": {
+    "title": "How AnonProtect works",
+    "subtitle": "Understand, in detail, the path of your report, how we guarantee anonymity, and where Artificial Intelligence comes into play.",
+    "ctaReport": "Submit a report now",
+    "ctaBackHome": "Back to home",
+    "step1Title": "1. Fully anonymous submission",
+    "step1Description": "You fill out the form without providing name, email, or any personal data. The system does not require registration and does not log IPs to identify the origin.",
+    "step2Title": "2. Secure code generation",
+    "step2Description": "At the end, you receive a unique tracking code. It is the only key to access your report and talk to the responsible team.",
+    "step3Title": "3. Triage with Artificial Intelligence",
+    "step3Description": "Our AI analyzes the text to suggest category and priority, helping the team organize the most critical cases without replacing human analysis.",
+    "anonymityTitle": "Anonymity protection layers",
+    "anonymityIntro": "AnonProtect is designed so that not even administrators or developers can trace the origin of the report.",
+    "anonymityItem1": "No identification field is required in the report form.",
+    "anonymityItem2": "We do not store IPs in a way that allows direct identification of the whistleblower.",
+    "anonymityItem3": "Messages exchanged are linked only to the tracking code.",
+    "aiUsageTitle": "How AI is used responsibly",
+    "aiUsageIntro": "AnonProtect's Artificial Intelligence is used to support the ethics and compliance team, never to make final decisions in isolation.",
+    "aiUsageItem1": "AI suggests categories and priorities based on the report description.",
+    "aiUsageItem2": "The responsible team reviews each case before any forwarding or closure.",
+    "aiUsageItem3": "AI responses are auditable and go through technical validations to avoid errors.",
+    "readyTitle": "Ready to submit your report securely?",
+    "readyDescription": "You remain 100% anonymous throughout the entire process. Use the channel responsibly and sincerely.",
+    "readyCtaNew": "Start a new report",
+    "readyCtaTrack": "Track a report"
   },
   "Admin": {
     "dashboard": "Dashboard",
@@ -123,6 +169,12 @@
       "clear": "Clear"
     }
   },
+  "AuditLog": {
+    "title": "Audit Log",
+    "description": "View the latest activities performed in the system, including status changes, forwardings, messages, and investigation notes.",
+    "recentActivitiesTitle": "Recent Activities",
+    "backToDashboard": "Back to Dashboard"
+  },
   "Login": {
     "title": "Administrative Area",
     "subtitle": "Enter your credentials to manage reports",
@@ -157,6 +209,15 @@
     "descriptionHint": "The more detail you provide, the better we can investigate",
     "evidenceOptional": "Evidence (Optional)",
     "uploadHint": "Upload photos, documents, or videos to help the investigation.",
+    "location": "Occurrence Location",
+    "postalCode": "Zip Code",
+    "postalCodePlaceholder": "00000-000",
+    "city": "City",
+    "state": "State",
+    "district": "District",
+    "country": "Country",
+    "fetchingAddress": "Fetching address...",
+    "invalidCep": "Invalid zip code or not found",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
     "submitting": "Submitting...",
@@ -186,9 +247,12 @@
     "systemName": "Anonymous Reporting System",
     "confidential": "Confidential",
     "back": "Back",
+    "backButton": "Back",
     "reportNumber": "Report #{code}",
     "downloadPdf": "Download PDF",
     "printReport": "Print Report",
+    "printButton": "Print",
+    "deriveButton": "Forward",
     "lastUpdate": "Last Update",
     "submittedAt": "Report submitted on",
     "responsible": "Responsible",
@@ -294,6 +358,7 @@
   "Sidebar": {
     "dashboard": "Dashboard",
     "reports": "Reports",
+    "profile": "My Profile",
     "analytics": "Analytics",
     "settings": "Settings",
     "logout": "Sign Out"
@@ -311,12 +376,53 @@
   "Navigation": {
     "home": "Home",
     "login": "Sign In",
+    "admin": "Administrative Area",
     "newReport": "New Report",
     "trackReport": "Track"
+  },
+  "Profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal information and security",
+    "personalInfo": "Personal Information",
+    "personalInfoDesc": "Update your name and email address",
+    "security": "Security",
+    "securityDesc": "Change your access password",
+    "name": "Full Name",
+    "email": "Email",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "saveChanges": "Save Changes",
+    "changePassword": "Change Password",
+    "success": "Profile updated successfully!",
+    "passwordSuccess": "Password changed successfully!",
+    "error": "Error updating profile",
+    "passwordError": "Error changing password",
+    "loginMethod": "Login Method",
+    "credentials": "Email and Password",
+    "socialProvider": "{provider} Account",
+    "authInfo": "Authentication Information",
+    "authInfoDesc": "See how you are connected to the system"
+  },
+  "Register": {
+    "title": "Create Account",
+    "subtitle": "Register to access the administrative area",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "submitRegistering": "Creating account...",
+    "submit": "Register",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "privacy": "Privacy",
+    "terms": "Terms of Use"
   },
   "LocaleSwitcher": {
     "pt-BR": "Português",
     "en": "English",
+    "es": "Spanish",
     "label": "Change language"
   },
   "Compliance": {

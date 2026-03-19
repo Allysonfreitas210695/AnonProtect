@@ -30,7 +30,31 @@
     "category": "Tipo",
     "charts": {
       "volumeTitle": "Volume de Denúncias",
-      "volumeDescription": "Últimos 30 dias"
+      "volumeDescription": "Últimos 30 dias",
+      "statusTitle": "Denúncias por Status",
+      "statusDescription": "Distribuição atual das denúncias",
+      "categoryTitle": "Denúncias por Categoria",
+      "categoryDescription": "Tipos mais reportados",
+      "timelineTitle": "Denúncias ao Longo do Tempo",
+      "timelineDescription": "Evolução temporal",
+      "countryTitle": "Denúncias por País",
+      "countryDescription": "Distribuição geográfica global",
+      "cityTitle": "Denúncias por Cidade",
+      "cityDescription": "Distribuição regional",
+      "unknown": "Desconhecido"
+    },
+    "stats": {
+      "total": "Total de Denúncias",
+      "today": "Denúncias Hoje",
+      "pending": "Pendentes",
+      "resolved": "Resolvidas"
+    },
+    "filter": {
+      "placeholder": "Selecionar período",
+      "last7Days": "Últimos 7 dias",
+      "last30Days": "Últimos 30 dias",
+      "last90Days": "Últimos 90 dias",
+      "allTime": "Todo o período"
     },
     "errors": {
       "load": "Erro ao carregar Dashboard",
@@ -51,7 +75,9 @@
     "backToHome": "Voltar ao Início",
     "trackNow": "Acompanhar Agora",
     "securitySignature": "Assinado Digitalmente por AnonProtect Security",
-    "encryptionInfo": "Sua conexão está protegida por criptografia de ponta a ponta"
+    "encryptionInfo": "Sua conexão está protegida por criptografia de ponta a ponta",
+    "aiAnalysisStatus": "Processamento Inteligente",
+    "aiAnalysisPending": "Nossa IA está classificando sua denúncia para o departamento correto. Isso pode levar alguns segundos."
   },
   "Home": {
     "title": "Canal de Denúncia Anônima",
@@ -73,6 +99,32 @@
       "title": "Acompanhe e interaja",
       "description": "Verifique o progresso da sua denúncia e troque mensagens com a equipe responsável de forma anônima."
     }
+  },
+  "HowItWorks": {
+    "title": "Como o AnonProtect funciona",
+    "subtitle": "Entenda, em detalhes, o caminho da sua denúncia, como garantimos o anonimato e onde a Inteligência Artificial entra no processo.",
+    "ctaReport": "Fazer uma denúncia agora",
+    "ctaBackHome": "Voltar ao início",
+    "step1Title": "1. Envio totalmente anônimo",
+    "step1Description": "Você preenche o formulário sem informar nome, e-mail ou qualquer dado pessoal. O sistema não exige cadastro e não registra IPs para identificar a origem.",
+    "step2Title": "2. Geração do código seguro",
+    "step2Description": "Ao finalizar, você recebe um código de acompanhamento único. Ele é a única chave para acessar sua denúncia e conversar com a equipe responsável.",
+    "step3Title": "3. Triagem com Inteligência Artificial",
+    "step3Description": "Nossa IA analisa o texto para sugerir categoria e prioridade, apoiando a equipe na organização dos casos mais críticos sem substituir a análise humana.",
+    "anonymityTitle": "Camadas de proteção ao anonimato",
+    "anonymityIntro": "O AnonProtect foi projetado para que nem mesmo administradores ou desenvolvedores consigam rastrear a origem da denúncia.",
+    "anonymityItem1": "Nenhum campo de identificação é obrigatório no formulário de denúncia.",
+    "anonymityItem2": "Não armazenamos IP de forma que permita a identificação direta do denunciante.",
+    "anonymityItem3": "As mensagens trocadas são vinculadas apenas ao código de acompanhamento.",
+    "aiUsageTitle": "Como a IA é usada de forma responsável",
+    "aiUsageIntro": "A Inteligência Artificial da AnonProtect serve para apoiar o time de ética e compliance, nunca para tomar decisões finais de forma isolada.",
+    "aiUsageItem1": "A IA sugere categorias e prioridades com base na descrição do relato.",
+    "aiUsageItem2": "A equipe responsável revisa cada caso antes de qualquer encaminhamento ou conclusão.",
+    "aiUsageItem3": "As respostas da IA são auditáveis e passam por validações técnicas para evitar erros.",
+    "readyTitle": "Pronto para fazer sua denúncia com segurança?",
+    "readyDescription": "Você continua 100% anônimo durante todo o processo. Use o canal com responsabilidade e sinceridade.",
+    "readyCtaNew": "Iniciar nova denúncia",
+    "readyCtaTrack": "Acompanhar denúncia"
   },
   "Admin": {
     "dashboard": "Dashboard",
@@ -117,6 +169,12 @@
       "clear": "Limpar"
     }
   },
+  "AuditLog": {
+    "title": "Registro de Auditoria",
+    "description": "Visualize as últimas atividades realizadas no sistema, incluindo alterações de status, encaminhamentos, mensagens e notas de investigação.",
+    "recentActivitiesTitle": "Atividades Recentes",
+    "backToDashboard": "Voltar para o Dashboard"
+  },
   "Login": {
     "title": "Área Administrativa",
     "subtitle": "Entre com suas credenciais para gerenciar os relatos",
@@ -146,9 +204,20 @@
     "descriptionHint": "Quanto mais detalhes você fornecer, melhor poderemos investigar",
     "evidenceOptional": "Evidências (Opcional)",
     "uploadHint": "Envie fotos, documentos ou vídeos que ajudem na investigação.",
+    "location": "Localização da Ocorrência",
+    "postalCode": "CEP",
+    "postalCodePlaceholder": "00000-000",
+    "city": "Cidade",
+    "state": "Estado",
+    "district": "Bairro",
+    "country": "País",
+    "fetchingAddress": "Buscando endereço...",
+    "invalidCep": "CEP inválido ou não encontrado",
     "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
     "submit": "Enviar Denúncia",
     "submitting": "Enviando...",
+    "acceptTerms": "Li e aceito os termos de privacidade e entendo que meus dados serão tratados conforme a LGPD.",
+    "acceptTermsError": "Você deve aceitar os termos para prosseguir.",
     "assistant": {
       "trigger": "Dúvidas sobre a categoria?",
       "title": "Assistente AnonProtect",
@@ -175,9 +244,12 @@
     "systemName": "Sistema de Denúncias Anônimas",
     "confidential": "Confidencial",
     "back": "Voltar",
+    "backButton": "Voltar",
     "reportNumber": "Denúncia #{code}",
     "downloadPdf": "Baixar PDF",
     "printReport": "Imprimir Relatório",
+    "printButton": "Imprimir",
+    "deriveButton": "Encaminhar",
     "lastUpdate": "Última Atualização",
     "submittedAt": "Relatório enviado em",
     "responsible": "Responsável",
@@ -259,9 +331,11 @@
     "title": "Notas de Investigação",
     "internalTitle": "Comunicação Interna de Investigação",
     "you": "Você",
-    "noNotes": "Nenhuma nota de investigação ainda.",
+    "addNotePlaceholder": "Adicione uma nota sobre a investigação...",
     "addNoteSubmit": "Adicionar Nota",
     "addingNote": "Adicionando...",
+    "noNotes": "Nenhuma nota de investigação ainda.",
+    "noMessages": "Nenhuma mensagem ainda.",
     "privateNoteHint": "Adicione notas privadas sobre a investigação.",
     "removedAuthor": "Removido",
     "editedAt": "Editado em {date}",
@@ -281,6 +355,7 @@
   "Sidebar": {
     "dashboard": "Dashboard",
     "reports": "Denúncias",
+    "profile": "Meu Perfil",
     "analytics": "Análise",
     "settings": "Configurações",
     "logout": "Sair do Sistema"
@@ -298,12 +373,53 @@
   "Navigation": {
     "home": "Início",
     "login": "Entrar",
+    "admin": "Área Administrativa",
     "newReport": "Nova Denúncia",
     "trackReport": "Acompanhar"
+  },
+  "Profile": {
+    "title": "Meu Perfil",
+    "subtitle": "Gerencie suas informações pessoais e segurança",
+    "personalInfo": "Informações Pessoais",
+    "personalInfoDesc": "Atualize seu nome e endereço de e-mail",
+    "security": "Segurança",
+    "securityDesc": "Altere sua senha de acesso",
+    "name": "Nome Completo",
+    "email": "E-mail",
+    "currentPassword": "Senha Atual",
+    "newPassword": "Nova Senha",
+    "confirmPassword": "Confirmar Nova Senha",
+    "saveChanges": "Salvar Alterações",
+    "changePassword": "Alterar Senha",
+    "success": "Perfil atualizado com sucesso!",
+    "passwordSuccess": "Senha alterada com sucesso!",
+    "error": "Erro ao atualizar perfil",
+    "passwordError": "Erro ao alterar senha",
+    "loginMethod": "Método de Acesso",
+    "credentials": "E-mail e Senha",
+    "socialProvider": "Conta {provider}",
+    "authInfo": "Informações de Autenticação",
+    "authInfoDesc": "Veja como você está conectado ao sistema"
+  },
+  "Register": {
+    "title": "Criar Conta",
+    "subtitle": "Cadastre-se para acessar a área administrativa",
+    "nameLabel": "Nome Completo",
+    "namePlaceholder": "Seu nome",
+    "emailLabel": "Email",
+    "emailPlaceholder": "seu@email.com",
+    "passwordLabel": "Senha",
+    "confirmPasswordLabel": "Confirmar Senha",
+    "submitRegistering": "Criando conta...",
+    "submit": "Cadastrar",
+    "alreadyHaveAccount": "Já tem uma conta? Faça login",
+    "privacy": "Privacidade",
+    "terms": "Termos de Uso"
   },
   "LocaleSwitcher": {
     "pt-BR": "Português",
     "en": "English",
+    "es": "Espanhol",
     "label": "Mudar idioma"
   },
   "Compliance": {

@@ -7,7 +7,7 @@ vi.mock('next/cache', () => ({
 }))
 
 // Mock repository
-vi.mock('../../_data-access/admin/category.repository', () => ({
+vi.mock('@/_modules/category/category.data', () => ({
   createCategory: vi.fn(),
   deleteCategory: vi.fn(),
   toggleCategory: vi.fn(),
@@ -16,7 +16,7 @@ vi.mock('../../_data-access/admin/category.repository', () => ({
 // Mutable mock for auth
 let mockUser: { id: string; role: string; name: string } | null = null
 
-vi.mock('../../_lib/auth', () => ({
+vi.mock('@/_shared/lib/auth', () => ({
   getCurrentUser: vi.fn(() => Promise.resolve(mockUser)),
 }))
 

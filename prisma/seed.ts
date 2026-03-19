@@ -111,54 +111,115 @@ async function main() {
   console.log('📝 Creating sample reports...')
   const allCategories = await prisma.category.findMany()
 
-  const sampleReports = [
+  // Step 4: Sample Reports
+  console.log('📝 Creating 25 sample reports with locations and dates...')
+
+  const locations = [
+    { city: 'São Paulo', state: 'SP', district: 'Centro', postalCode: '01001-000' },
+    { city: 'Rio de Janeiro', state: 'RJ', district: 'Copacabana', postalCode: '22020-001' },
+    { city: 'Belo Horizonte', state: 'MG', district: 'Savassi', postalCode: '30140-010' },
+    { city: 'Curitiba', state: 'PR', district: 'Batel', postalCode: '80420-000' },
+    { city: 'Porto Alegre', state: 'RS', district: 'Moinhos de Vento', postalCode: '90570-000' },
+    { city: 'Salvador', state: 'BA', district: 'Pelourinho', postalCode: '40026-280' },
+    { city: 'Brasília', state: 'DF', district: 'Asa Sul', postalCode: '70342-000' },
+    { city: 'Fortaleza', state: 'CE', district: 'Meireles', postalCode: '60160-230' },
+    { city: 'Manaus', state: 'AM', district: 'Adrianópolis', postalCode: '69057-000' },
+    { city: 'Recife', state: 'PE', district: 'Boa Viagem', postalCode: '51020-000' },
+  ]
+
+  const reportData = [
     {
-      trackingCode: 'AP-2025-BR88',
-      description:
-        'Relato de comportamento inadequado persistente e exclusão sistemática por parte de membros da equipe.',
-      status: 'PENDING',
       category: 'Bullying',
-    },
-    {
-      trackingCode: 'AP-2025-AM12',
-      description:
-        'Superior direto utilizando linguagem agressiva e ameaças veladas de demissão em reuniões abertas.',
-      status: 'IN_PROGRESS',
-      category: 'Assédio Moral',
-    },
-    {
-      trackingCode: 'AP-2025-RE45',
-      description: 'Suspeita de favorecimento em licitação interna no setor de compras.',
-      status: 'RESOLVED',
-      category: 'Corrupção/Suborno',
-    },
-    {
-      trackingCode: 'AP-2025-DX09',
-      description: 'Impedimento de promoção baseado em características protegidas por lei.',
       status: 'PENDING',
-      category: 'Discriminação',
+      desc: 'Relato de comportamento inadequado persistente na equipe de vendas.',
     },
     {
-      trackingCode: 'AP-2025-ST22',
-      description:
-        'Área de produção operando sem os equipamentos de proteção individual necessários.',
+      category: 'Assédio Moral',
       status: 'IN_PROGRESS',
+      desc: 'Superior direto utilizando linguagem agressiva em reuniões.',
+    },
+    {
+      category: 'Assédio Sexual',
+      status: 'PENDING',
+      desc: 'Comentários inapropriados recorrentes em ambiente comum.',
+    },
+    {
+      category: 'Discriminação',
+      status: 'PENDING',
+      desc: 'Impedimento de promoção baseado em critérios não profissionais.',
+    },
+    {
+      category: 'Corrupção/Suborno',
+      status: 'RESOLVED',
+      desc: 'Sugestão de facilitação em troca de benefícios em contrato.',
+    },
+    {
+      category: 'Fraude',
+      status: 'IN_PROGRESS',
+      desc: 'Irregularidade detectada em notas fiscais de reembolso.',
+    },
+    {
+      category: 'Roubo/Furto',
+      status: 'RESOLVED',
+      desc: 'Desaparecimento de equipamento eletrônico do depósito.',
+    },
+    {
+      category: 'Uso Indevido de Recursos',
+      status: 'PENDING',
+      desc: 'Utilização de veículos da empresa para fins particulares.',
+    },
+    {
       category: 'Segurança do Trabalho',
+      status: 'IN_PROGRESS',
+      desc: 'Operação sem EPCs adequados na linha de montagem.',
+    },
+    {
+      category: 'Conflito de Interesses',
+      status: 'PENDING',
+      desc: 'Sócio de fornecedor possui parentesco com gestor de compras.',
+    },
+    {
+      category: 'Vazamento de Dados',
+      status: 'RESOLVED',
+      desc: 'Exposição acidental de lista de clientes em drive público.',
+    },
+    {
+      category: 'Vandalismo',
+      status: 'REJECTED',
+      desc: 'Danos intencionais causados em mobiliário de escritório.',
     },
   ]
 
-  for (const r of sampleReports) {
-    const category = allCategories.find((c) => c.name === r.category)
+  // Generate 25 reports
+  for (let i = 1; i <= 25; i++) {
+    const dataIdx = i % reportData.length
+    const locIdx = i % locations.length
+    const status = i % 5 === 0 ? 'RESOLVED' : i % 3 === 0 ? 'IN_PROGRESS' : 'PENDING'
+    const trackingCode = `AP-2025-${i.toString().padStart(4, '0')}`
+
+    // Spread dates over the last 90 days
+    const createdAt = new Date()
+    createdAt.setDate(createdAt.getDate() - i * 3)
+
+    const category =
+      allCategories.find((c) => c.name === reportData[dataIdx].category) || allCategories[0]
+
     await prisma.report.upsert({
-      where: { trackingCode: r.trackingCode },
+      where: { trackingCode },
       update: {},
       create: {
-        trackingCode: r.trackingCode,
-        description: r.description,
-        status: r.status as ReportStatus,
-        categoryId: category?.id,
-        assignedToId: r.status !== 'PENDING' ? admin?.id : null,
-        assignedDepartmentId: category?.defaultDepartmentId,
+        trackingCode,
+        description: reportData[dataIdx].desc + ` (Relato ID: ${i})`,
+        status: status as ReportStatus,
+        categoryId: category.id,
+        country: 'Brasil',
+        city: locations[locIdx].city,
+        state: locations[locIdx].state,
+        district: locations[locIdx].district,
+        postalCode: locations[locIdx].postalCode,
+        createdAt,
+        assignedToId: status !== 'PENDING' ? admin?.id : null,
+        assignedDepartmentId: category.defaultDepartmentId,
       },
     })
   }
