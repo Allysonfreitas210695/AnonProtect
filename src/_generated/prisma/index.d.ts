@@ -113,6 +113,7 @@ export namespace $Enums {
     NOTE_ADDED: 'NOTE_ADDED'
     EVIDENCE_ADDED: 'EVIDENCE_ADDED'
     DEPARTMENT_CHANGED: 'DEPARTMENT_CHANGED'
+    AI_ANALYZED: 'AI_ANALYZED'
   }
 
   export type ActivityAction = (typeof ActivityAction)[keyof typeof ActivityAction]
@@ -2146,6 +2147,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     departmentId: string | null
+    country: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2160,6 +2162,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     departmentId: string | null
+    country: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2174,6 +2177,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     departmentId: number
+    country: number
     _all: number
   }
 
@@ -2189,6 +2193,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     departmentId?: true
+    country?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2203,6 +2208,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     departmentId?: true
+    country?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2217,6 +2223,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     departmentId?: true
+    country?: true
     _all?: true
   }
 
@@ -2304,6 +2311,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     departmentId: string | null
+    country: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2335,6 +2343,7 @@ export namespace Prisma {
         createdAt?: boolean
         updatedAt?: boolean
         departmentId?: boolean
+        country?: boolean
         accounts?: boolean | User$accountsArgs<ExtArgs>
         sessions?: boolean | User$sessionsArgs<ExtArgs>
         reports?: boolean | User$reportsArgs<ExtArgs>
@@ -2361,6 +2370,7 @@ export namespace Prisma {
       createdAt?: boolean
       updatedAt?: boolean
       departmentId?: boolean
+      country?: boolean
       department?: boolean | User$departmentArgs<ExtArgs>
     },
     ExtArgs['result']['user']
@@ -2381,6 +2391,7 @@ export namespace Prisma {
       createdAt?: boolean
       updatedAt?: boolean
       departmentId?: boolean
+      country?: boolean
       department?: boolean | User$departmentArgs<ExtArgs>
     },
     ExtArgs['result']['user']
@@ -2398,6 +2409,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     departmentId?: boolean
+    country?: boolean
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
@@ -2412,7 +2424,8 @@ export namespace Prisma {
       | 'active'
       | 'createdAt'
       | 'updatedAt'
-      | 'departmentId',
+      | 'departmentId'
+      | 'country',
       ExtArgs['result']['user']
     >
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2458,6 +2471,7 @@ export namespace Prisma {
         createdAt: Date
         updatedAt: Date
         departmentId: string | null
+        country: string | null
       },
       ExtArgs['result']['user']
     >
@@ -3023,6 +3037,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<'User', 'DateTime'>
     readonly updatedAt: FieldRef<'User', 'DateTime'>
     readonly departmentId: FieldRef<'User', 'String'>
+    readonly country: FieldRef<'User', 'String'>
   }
 
   // Custom InputTypes
@@ -7321,6 +7336,7 @@ export namespace Prisma {
     assignedToId: string | null
     categoryId: string | null
     assignedDepartmentId: string | null
+    deletedAt: Date | null
   }
 
   export type ReportMaxAggregateOutputType = {
@@ -7339,6 +7355,7 @@ export namespace Prisma {
     assignedToId: string | null
     categoryId: string | null
     assignedDepartmentId: string | null
+    deletedAt: Date | null
   }
 
   export type ReportCountAggregateOutputType = {
@@ -7357,6 +7374,7 @@ export namespace Prisma {
     assignedToId: number
     categoryId: number
     assignedDepartmentId: number
+    deletedAt: number
     _all: number
   }
 
@@ -7376,6 +7394,7 @@ export namespace Prisma {
     assignedToId?: true
     categoryId?: true
     assignedDepartmentId?: true
+    deletedAt?: true
   }
 
   export type ReportMaxAggregateInputType = {
@@ -7394,6 +7413,7 @@ export namespace Prisma {
     assignedToId?: true
     categoryId?: true
     assignedDepartmentId?: true
+    deletedAt?: true
   }
 
   export type ReportCountAggregateInputType = {
@@ -7412,6 +7432,7 @@ export namespace Prisma {
     assignedToId?: true
     categoryId?: true
     assignedDepartmentId?: true
+    deletedAt?: true
     _all?: true
   }
 
@@ -7504,6 +7525,7 @@ export namespace Prisma {
     assignedToId: string | null
     categoryId: string | null
     assignedDepartmentId: string | null
+    deletedAt: Date | null
     _count: ReportCountAggregateOutputType | null
     _min: ReportMinAggregateOutputType | null
     _max: ReportMaxAggregateOutputType | null
@@ -7539,6 +7561,7 @@ export namespace Prisma {
         assignedToId?: boolean
         categoryId?: boolean
         assignedDepartmentId?: boolean
+        deletedAt?: boolean
         assignedTo?: boolean | Report$assignedToArgs<ExtArgs>
         category?: boolean | Report$categoryArgs<ExtArgs>
         attachments?: boolean | Report$attachmentsArgs<ExtArgs>
@@ -7570,6 +7593,7 @@ export namespace Prisma {
       assignedToId?: boolean
       categoryId?: boolean
       assignedDepartmentId?: boolean
+      deletedAt?: boolean
       assignedTo?: boolean | Report$assignedToArgs<ExtArgs>
       category?: boolean | Report$categoryArgs<ExtArgs>
       assignedDepartment?: boolean | Report$assignedDepartmentArgs<ExtArgs>
@@ -7596,6 +7620,7 @@ export namespace Prisma {
       assignedToId?: boolean
       categoryId?: boolean
       assignedDepartmentId?: boolean
+      deletedAt?: boolean
       assignedTo?: boolean | Report$assignedToArgs<ExtArgs>
       category?: boolean | Report$categoryArgs<ExtArgs>
       assignedDepartment?: boolean | Report$assignedDepartmentArgs<ExtArgs>
@@ -7619,6 +7644,7 @@ export namespace Prisma {
     assignedToId?: boolean
     categoryId?: boolean
     assignedDepartmentId?: boolean
+    deletedAt?: boolean
   }
 
   export type ReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
@@ -7637,7 +7663,8 @@ export namespace Prisma {
       | 'updatedAt'
       | 'assignedToId'
       | 'categoryId'
-      | 'assignedDepartmentId',
+      | 'assignedDepartmentId'
+      | 'deletedAt',
       ExtArgs['result']['report']
     >
   export type ReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7693,6 +7720,7 @@ export namespace Prisma {
         assignedToId: string | null
         categoryId: string | null
         assignedDepartmentId: string | null
+        deletedAt: Date | null
       },
       ExtArgs['result']['report']
     >
@@ -8281,6 +8309,7 @@ export namespace Prisma {
     readonly assignedToId: FieldRef<'Report', 'String'>
     readonly categoryId: FieldRef<'Report', 'String'>
     readonly assignedDepartmentId: FieldRef<'Report', 'String'>
+    readonly deletedAt: FieldRef<'Report', 'DateTime'>
   }
 
   // Custom InputTypes
@@ -8912,6 +8941,7 @@ export namespace Prisma {
     id: string | null
     reportId: string | null
     url: string | null
+    key: string | null
     type: string | null
     category: $Enums.AttachmentCategory | null
     description: string | null
@@ -8924,6 +8954,7 @@ export namespace Prisma {
     id: string | null
     reportId: string | null
     url: string | null
+    key: string | null
     type: string | null
     category: $Enums.AttachmentCategory | null
     description: string | null
@@ -8936,6 +8967,7 @@ export namespace Prisma {
     id: number
     reportId: number
     url: number
+    key: number
     type: number
     category: number
     description: number
@@ -8957,6 +8989,7 @@ export namespace Prisma {
     id?: true
     reportId?: true
     url?: true
+    key?: true
     type?: true
     category?: true
     description?: true
@@ -8969,6 +9002,7 @@ export namespace Prisma {
     id?: true
     reportId?: true
     url?: true
+    key?: true
     type?: true
     category?: true
     description?: true
@@ -8981,6 +9015,7 @@ export namespace Prisma {
     id?: true
     reportId?: true
     url?: true
+    key?: true
     type?: true
     category?: true
     description?: true
@@ -9081,6 +9116,7 @@ export namespace Prisma {
     id: string
     reportId: string
     url: string
+    key: string
     type: string
     category: $Enums.AttachmentCategory
     description: string | null
@@ -9112,6 +9148,7 @@ export namespace Prisma {
         id?: boolean
         reportId?: boolean
         url?: boolean
+        key?: boolean
         type?: boolean
         category?: boolean
         description?: boolean
@@ -9130,6 +9167,7 @@ export namespace Prisma {
       id?: boolean
       reportId?: boolean
       url?: boolean
+      key?: boolean
       type?: boolean
       category?: boolean
       description?: boolean
@@ -9148,6 +9186,7 @@ export namespace Prisma {
       id?: boolean
       reportId?: boolean
       url?: boolean
+      key?: boolean
       type?: boolean
       category?: boolean
       description?: boolean
@@ -9163,6 +9202,7 @@ export namespace Prisma {
     id?: boolean
     reportId?: boolean
     url?: boolean
+    key?: boolean
     type?: boolean
     category?: boolean
     description?: boolean
@@ -9176,6 +9216,7 @@ export namespace Prisma {
       | 'id'
       | 'reportId'
       | 'url'
+      | 'key'
       | 'type'
       | 'category'
       | 'description'
@@ -9212,6 +9253,7 @@ export namespace Prisma {
         id: string
         reportId: string
         url: string
+        key: string
         type: string
         category: $Enums.AttachmentCategory
         description: string | null
@@ -9768,6 +9810,7 @@ export namespace Prisma {
     readonly id: FieldRef<'Attachment', 'String'>
     readonly reportId: FieldRef<'Attachment', 'String'>
     readonly url: FieldRef<'Attachment', 'String'>
+    readonly key: FieldRef<'Attachment', 'String'>
     readonly type: FieldRef<'Attachment', 'String'>
     readonly category: FieldRef<'Attachment', 'AttachmentCategory'>
     readonly description: FieldRef<'Attachment', 'String'>
@@ -16654,6 +16697,7 @@ export namespace Prisma {
     createdAt: 'createdAt'
     updatedAt: 'updatedAt'
     departmentId: 'departmentId'
+    country: 'country'
   }
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -16711,6 +16755,7 @@ export namespace Prisma {
     assignedToId: 'assignedToId'
     categoryId: 'categoryId'
     assignedDepartmentId: 'assignedDepartmentId'
+    deletedAt: 'deletedAt'
   }
 
   export type ReportScalarFieldEnum =
@@ -16720,6 +16765,7 @@ export namespace Prisma {
     id: 'id'
     reportId: 'reportId'
     url: 'url'
+    key: 'key'
     type: 'type'
     category: 'category'
     description: 'description'
@@ -16960,6 +17006,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<'User'> | Date | string
     updatedAt?: DateTimeFilter<'User'> | Date | string
     departmentId?: StringNullableFilter<'User'> | string | null
+    country?: StringNullableFilter<'User'> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     reports?: ReportListRelationFilter
@@ -16980,6 +17027,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentId?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     reports?: ReportOrderByRelationAggregateInput
@@ -17004,6 +17052,7 @@ export namespace Prisma {
       createdAt?: DateTimeFilter<'User'> | Date | string
       updatedAt?: DateTimeFilter<'User'> | Date | string
       departmentId?: StringNullableFilter<'User'> | string | null
+      country?: StringNullableFilter<'User'> | string | null
       accounts?: AccountListRelationFilter
       sessions?: SessionListRelationFilter
       reports?: ReportListRelationFilter
@@ -17026,6 +17075,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentId?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -17046,6 +17096,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<'User'> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<'User'> | Date | string
     departmentId?: StringNullableWithAggregatesFilter<'User'> | string | null
+    country?: StringNullableWithAggregatesFilter<'User'> | string | null
   }
 
   export type AccountWhereInput = {
@@ -17266,6 +17317,7 @@ export namespace Prisma {
     assignedToId?: StringNullableFilter<'Report'> | string | null
     categoryId?: StringNullableFilter<'Report'> | string | null
     assignedDepartmentId?: StringNullableFilter<'Report'> | string | null
+    deletedAt?: DateTimeNullableFilter<'Report'> | Date | string | null
     assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     attachments?: AttachmentListRelationFilter
@@ -17291,6 +17343,7 @@ export namespace Prisma {
     assignedToId?: SortOrderInput | SortOrder
     categoryId?: SortOrderInput | SortOrder
     assignedDepartmentId?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     assignedTo?: UserOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
     attachments?: AttachmentOrderByRelationAggregateInput
@@ -17320,6 +17373,7 @@ export namespace Prisma {
       assignedToId?: StringNullableFilter<'Report'> | string | null
       categoryId?: StringNullableFilter<'Report'> | string | null
       assignedDepartmentId?: StringNullableFilter<'Report'> | string | null
+      deletedAt?: DateTimeNullableFilter<'Report'> | Date | string | null
       assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
       category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
       attachments?: AttachmentListRelationFilter
@@ -17347,6 +17401,7 @@ export namespace Prisma {
     assignedToId?: SortOrderInput | SortOrder
     categoryId?: SortOrderInput | SortOrder
     assignedDepartmentId?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     _count?: ReportCountOrderByAggregateInput
     _max?: ReportMaxOrderByAggregateInput
     _min?: ReportMinOrderByAggregateInput
@@ -17371,6 +17426,7 @@ export namespace Prisma {
     assignedToId?: StringNullableWithAggregatesFilter<'Report'> | string | null
     categoryId?: StringNullableWithAggregatesFilter<'Report'> | string | null
     assignedDepartmentId?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    deletedAt?: DateTimeNullableWithAggregatesFilter<'Report'> | Date | string | null
   }
 
   export type AttachmentWhereInput = {
@@ -17380,6 +17436,7 @@ export namespace Prisma {
     id?: StringFilter<'Attachment'> | string
     reportId?: StringFilter<'Attachment'> | string
     url?: StringFilter<'Attachment'> | string
+    key?: StringFilter<'Attachment'> | string
     type?: StringFilter<'Attachment'> | string
     category?: EnumAttachmentCategoryFilter<'Attachment'> | $Enums.AttachmentCategory
     description?: StringNullableFilter<'Attachment'> | string | null
@@ -17393,6 +17450,7 @@ export namespace Prisma {
     id?: SortOrder
     reportId?: SortOrder
     url?: SortOrder
+    key?: SortOrder
     type?: SortOrder
     category?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -17410,6 +17468,7 @@ export namespace Prisma {
       NOT?: AttachmentWhereInput | AttachmentWhereInput[]
       reportId?: StringFilter<'Attachment'> | string
       url?: StringFilter<'Attachment'> | string
+      key?: StringFilter<'Attachment'> | string
       type?: StringFilter<'Attachment'> | string
       category?: EnumAttachmentCategoryFilter<'Attachment'> | $Enums.AttachmentCategory
       description?: StringNullableFilter<'Attachment'> | string | null
@@ -17425,6 +17484,7 @@ export namespace Prisma {
     id?: SortOrder
     reportId?: SortOrder
     url?: SortOrder
+    key?: SortOrder
     type?: SortOrder
     category?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -17445,6 +17505,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<'Attachment'> | string
     reportId?: StringWithAggregatesFilter<'Attachment'> | string
     url?: StringWithAggregatesFilter<'Attachment'> | string
+    key?: StringWithAggregatesFilter<'Attachment'> | string
     type?: StringWithAggregatesFilter<'Attachment'> | string
     category?: EnumAttachmentCategoryWithAggregatesFilter<'Attachment'> | $Enums.AttachmentCategory
     description?: StringNullableWithAggregatesFilter<'Attachment'> | string | null
@@ -17798,6 +17859,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
@@ -17818,6 +17880,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
@@ -17836,6 +17899,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
@@ -17856,6 +17920,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -17875,6 +17940,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -17888,6 +17954,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -17902,6 +17969,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateInput = {
@@ -18111,6 +18179,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
@@ -18136,6 +18205,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
@@ -18155,6 +18225,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
@@ -18180,6 +18251,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
@@ -18202,6 +18274,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
   }
 
   export type ReportUpdateManyMutationInput = {
@@ -18217,6 +18290,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ReportUncheckedUpdateManyInput = {
@@ -18235,11 +18309,13 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AttachmentCreateInput = {
     id?: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -18253,6 +18329,7 @@ export namespace Prisma {
     id?: string
     reportId: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -18264,6 +18341,7 @@ export namespace Prisma {
   export type AttachmentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18277,6 +18355,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     reportId?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18289,6 +18368,7 @@ export namespace Prisma {
     id?: string
     reportId: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -18300,6 +18380,7 @@ export namespace Prisma {
   export type AttachmentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18312,6 +18393,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     reportId?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18781,6 +18863,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentId?: SortOrder
+    country?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -18795,6 +18878,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentId?: SortOrder
+    country?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -18809,6 +18893,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentId?: SortOrder
+    country?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -19080,6 +19165,7 @@ export namespace Prisma {
     assignedToId?: SortOrder
     categoryId?: SortOrder
     assignedDepartmentId?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type ReportMaxOrderByAggregateInput = {
@@ -19098,6 +19184,7 @@ export namespace Prisma {
     assignedToId?: SortOrder
     categoryId?: SortOrder
     assignedDepartmentId?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type ReportMinOrderByAggregateInput = {
@@ -19116,6 +19203,7 @@ export namespace Prisma {
     assignedToId?: SortOrder
     categoryId?: SortOrder
     assignedDepartmentId?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type EnumReportStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -19144,6 +19232,7 @@ export namespace Prisma {
     id?: SortOrder
     reportId?: SortOrder
     url?: SortOrder
+    key?: SortOrder
     type?: SortOrder
     category?: SortOrder
     description?: SortOrder
@@ -19160,6 +19249,7 @@ export namespace Prisma {
     id?: SortOrder
     reportId?: SortOrder
     url?: SortOrder
+    key?: SortOrder
     type?: SortOrder
     category?: SortOrder
     description?: SortOrder
@@ -19172,6 +19262,7 @@ export namespace Prisma {
     id?: SortOrder
     reportId?: SortOrder
     url?: SortOrder
+    key?: SortOrder
     type?: SortOrder
     category?: SortOrder
     description?: SortOrder
@@ -21039,6 +21130,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
     messages?: MessageCreateNestedManyWithoutReportInput
@@ -21062,6 +21154,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
@@ -21255,6 +21348,7 @@ export namespace Prisma {
     assignedToId?: StringNullableFilter<'Report'> | string | null
     categoryId?: StringNullableFilter<'Report'> | string | null
     assignedDepartmentId?: StringNullableFilter<'Report'> | string | null
+    deletedAt?: DateTimeNullableFilter<'Report'> | Date | string | null
   }
 
   export type InvestigationNoteUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -21368,6 +21462,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
     investigationNotes?: InvestigationNoteCreateNestedManyWithoutAuthorInput
@@ -21387,6 +21482,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutAuthorInput
@@ -21420,6 +21516,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
     investigationNotes?: InvestigationNoteUpdateManyWithoutAuthorNestedInput
@@ -21439,6 +21536,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutAuthorNestedInput
@@ -21456,6 +21554,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
     investigationNotes?: InvestigationNoteCreateNestedManyWithoutAuthorInput
@@ -21475,6 +21574,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutAuthorInput
@@ -21508,6 +21608,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
     investigationNotes?: InvestigationNoteUpdateManyWithoutAuthorNestedInput
@@ -21527,6 +21628,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutAuthorNestedInput
@@ -21544,6 +21646,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     investigationNotes?: InvestigationNoteCreateNestedManyWithoutAuthorInput
@@ -21563,6 +21666,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutAuthorInput
@@ -21602,6 +21706,7 @@ export namespace Prisma {
   export type AttachmentCreateWithoutReportInput = {
     id?: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -21613,6 +21718,7 @@ export namespace Prisma {
   export type AttachmentUncheckedCreateWithoutReportInput = {
     id?: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -21759,6 +21865,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     investigationNotes?: InvestigationNoteUpdateManyWithoutAuthorNestedInput
@@ -21778,6 +21885,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutAuthorNestedInput
@@ -21838,6 +21946,7 @@ export namespace Prisma {
     id?: StringFilter<'Attachment'> | string
     reportId?: StringFilter<'Attachment'> | string
     url?: StringFilter<'Attachment'> | string
+    key?: StringFilter<'Attachment'> | string
     type?: StringFilter<'Attachment'> | string
     category?: EnumAttachmentCategoryFilter<'Attachment'> | $Enums.AttachmentCategory
     description?: StringNullableFilter<'Attachment'> | string | null
@@ -21961,6 +22070,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     messages?: MessageCreateNestedManyWithoutReportInput
@@ -21985,6 +22095,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutReportInput
@@ -22019,6 +22130,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     messages?: MessageUpdateManyWithoutReportNestedInput
@@ -22043,6 +22155,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutReportNestedInput
@@ -22061,6 +22174,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
@@ -22085,6 +22199,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutReportInput
@@ -22119,6 +22234,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
@@ -22143,6 +22259,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutReportNestedInput
@@ -22189,6 +22306,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
     messages?: MessageCreateNestedManyWithoutReportInput
@@ -22212,6 +22330,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     assignedToId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
@@ -22297,6 +22416,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
@@ -22321,6 +22441,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutReportInput
@@ -22345,6 +22466,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
@@ -22364,6 +22486,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
@@ -22411,6 +22534,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
@@ -22435,6 +22559,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutReportNestedInput
@@ -22471,6 +22596,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
@@ -22490,6 +22616,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -22509,6 +22636,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
@@ -22533,6 +22661,7 @@ export namespace Prisma {
     assignedToId?: string | null
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
@@ -22554,6 +22683,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
@@ -22573,6 +22703,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     departmentId?: string | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
@@ -22608,6 +22739,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
@@ -22632,6 +22764,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
@@ -22659,6 +22792,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
@@ -22678,6 +22812,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -22695,6 +22830,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     reports?: ReportCreateNestedManyWithoutAssignedToInput
@@ -22713,6 +22849,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     reports?: ReportUncheckedCreateNestedManyWithoutAssignedToInput
@@ -22743,6 +22880,7 @@ export namespace Prisma {
     postalCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     assignedTo?: UserCreateNestedOneWithoutReportsInput
     category?: CategoryCreateNestedOneWithoutReportsInput
     attachments?: AttachmentCreateNestedManyWithoutReportInput
@@ -22766,6 +22904,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     assignedToId?: string | null
     categoryId?: string | null
+    deletedAt?: Date | string | null
     attachments?: AttachmentUncheckedCreateNestedManyWithoutReportInput
     messages?: MessageUncheckedCreateNestedManyWithoutReportInput
     investigationNotes?: InvestigationNoteUncheckedCreateNestedManyWithoutReportInput
@@ -22849,6 +22988,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<'User'> | Date | string
     updatedAt?: DateTimeFilter<'User'> | Date | string
     departmentId?: StringNullableFilter<'User'> | string | null
+    country?: StringNullableFilter<'User'> | string | null
   }
 
   export type ReportUpsertWithWhereUniqueWithoutAssignedDepartmentInput = {
@@ -22955,6 +23095,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     categoryId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
   }
 
   export type InvestigationNoteCreateManyAuthorInput = {
@@ -23047,6 +23188,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
     messages?: MessageUpdateManyWithoutReportNestedInput
@@ -23070,6 +23212,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
@@ -23091,6 +23234,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type InvestigationNoteUpdateWithoutAuthorInput = {
@@ -23147,6 +23291,7 @@ export namespace Prisma {
   export type AttachmentCreateManyReportInput = {
     id?: string
     url: string
+    key: string
     type: string
     category?: $Enums.AttachmentCategory
     description?: string | null
@@ -23182,6 +23327,7 @@ export namespace Prisma {
   export type AttachmentUpdateWithoutReportInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23193,6 +23339,7 @@ export namespace Prisma {
   export type AttachmentUncheckedUpdateWithoutReportInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23204,6 +23351,7 @@ export namespace Prisma {
   export type AttachmentUncheckedUpdateManyWithoutReportInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     category?: EnumAttachmentCategoryFieldUpdateOperationsInput | $Enums.AttachmentCategory
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23299,6 +23447,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     assignedToId?: string | null
     assignedDepartmentId?: string | null
+    deletedAt?: Date | string | null
   }
 
   export type ReportUpdateWithoutCategoryInput = {
@@ -23314,6 +23463,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
     messages?: MessageUpdateManyWithoutReportNestedInput
@@ -23337,6 +23487,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
@@ -23358,6 +23509,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedDepartmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserCreateManyDepartmentInput = {
@@ -23371,6 +23523,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    country?: string | null
   }
 
   export type ReportCreateManyAssignedDepartmentInput = {
@@ -23388,6 +23541,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     assignedToId?: string | null
     categoryId?: string | null
+    deletedAt?: Date | string | null
   }
 
   export type CategoryCreateManyDefaultDepartmentInput = {
@@ -23410,6 +23564,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     reports?: ReportUpdateManyWithoutAssignedToNestedInput
@@ -23428,6 +23583,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     reports?: ReportUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -23446,6 +23602,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReportUpdateWithoutAssignedDepartmentInput = {
@@ -23461,6 +23618,7 @@ export namespace Prisma {
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignedTo?: UserUpdateOneWithoutReportsNestedInput
     category?: CategoryUpdateOneWithoutReportsNestedInput
     attachments?: AttachmentUpdateManyWithoutReportNestedInput
@@ -23484,6 +23642,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     attachments?: AttachmentUncheckedUpdateManyWithoutReportNestedInput
     messages?: MessageUncheckedUpdateManyWithoutReportNestedInput
     investigationNotes?: InvestigationNoteUncheckedUpdateManyWithoutReportNestedInput
@@ -23505,6 +23664,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type CategoryUpdateWithoutDefaultDepartmentInput = {

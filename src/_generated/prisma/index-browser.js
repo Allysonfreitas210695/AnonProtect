@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   departmentId: 'departmentId',
+  country: 'country',
 }
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -174,12 +175,14 @@ exports.Prisma.ReportScalarFieldEnum = {
   assignedToId: 'assignedToId',
   categoryId: 'categoryId',
   assignedDepartmentId: 'assignedDepartmentId',
+  deletedAt: 'deletedAt',
 }
 
 exports.Prisma.AttachmentScalarFieldEnum = {
   id: 'id',
   reportId: 'reportId',
   url: 'url',
+  key: 'key',
   type: 'type',
   category: 'category',
   description: 'description',
@@ -281,6 +284,7 @@ exports.ActivityAction = exports.$Enums.ActivityAction = {
   NOTE_ADDED: 'NOTE_ADDED',
   EVIDENCE_ADDED: 'EVIDENCE_ADDED',
   DEPARTMENT_CHANGED: 'DEPARTMENT_CHANGED',
+  AI_ANALYZED: 'AI_ANALYZED',
 }
 
 exports.Prisma.ModelName = {

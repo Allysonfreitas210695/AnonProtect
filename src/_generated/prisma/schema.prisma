@@ -41,6 +41,7 @@ enum ActivityAction {
   NOTE_ADDED
   EVIDENCE_ADDED
   DEPARTMENT_CHANGED
+  AI_ANALYZED
 }
 
 model User {
@@ -62,6 +63,7 @@ model User {
   activityLogs       ActivityLog[]       @relation("ActivityLogs")
   departmentId       String?             @map("department_id")
   department         Department?         @relation(fields: [departmentId], references: [id])
+  country            String?             @map("country")
 
   @@map("users")
 }
@@ -131,7 +133,11 @@ model Report {
   activityLogs         ActivityLog[]
   assignedDepartmentId String?             @map("assigned_department_id")
   assignedDepartment   Department?         @relation(fields: [assignedDepartmentId], references: [id])
+  deletedAt            DateTime?           @map("deleted_at")
 
+  @@index([status, createdAt])
+  @@index([trackingCode])
+  @@index([city])
   @@map("reports")
 }
 
@@ -139,6 +145,7 @@ model Attachment {
   id          String             @id @default(uuid())
   reportId    String             @map("report_id")
   url         String
+  key         String
   type        String
   category    AttachmentCategory @default(OTHER)
   description String?
