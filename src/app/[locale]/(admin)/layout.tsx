@@ -1,4 +1,4 @@
-import { getCurrentUser } from '@/_lib/auth'
+import { getCurrentUser } from '@/_shared/lib/auth'
 import { redirect } from 'next/navigation'
 import { AdminLayoutClient } from './admin-layout-client'
 

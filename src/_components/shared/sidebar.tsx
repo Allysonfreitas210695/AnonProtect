@@ -3,7 +3,7 @@
 import { Link } from '@/i18n/navigation'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 import {
   LayoutDashboard,
   FileText,

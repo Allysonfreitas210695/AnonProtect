@@ -2,11 +2,11 @@ import Link from 'next/link'
 import { ActivityLog } from '@/_generated/prisma'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { ExternalLink } from 'lucide-react'
-import { cn } from '@/_lib/utils'
-import { formatCompactDateTime } from '@/_utils/formatters'
+import { cn } from '@/_shared/lib/utils'
+import { formatCompactDateTime } from '@/_shared/utils/formatters'
 
 import { useTranslations } from 'next-intl'
-import { getActivityIcon, getActivityColor } from '@/_utils/activity-helpers'
+import { getActivityIcon, getActivityColor } from '@/_shared/utils/activity-helpers'
 
 interface GlobalActivityLogProps {
   activities: (ActivityLog & {
@@ -41,12 +41,12 @@ export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
                 </div>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm leading-none font-medium">{activity.description}</p>
+                    <p className="text-sm font-medium">{activity.description}</p>
                     <span className="text-muted-foreground shrink-0 text-[10px]">
                       {formatCompactDateTime(activity.createdAt)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <Link
                       href={`/admin/report/${activity.report.id}`}
                       className="text-primary flex items-center gap-1 text-[11px] font-bold hover:underline"

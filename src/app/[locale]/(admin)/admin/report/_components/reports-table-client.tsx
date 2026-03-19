@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@/_components/ui/table'
 import { Checkbox } from '@/_components/ui/checkbox'
-import { formatDate } from '@/_utils/formatters'
+import { formatDate } from '@/_shared/utils/formatters'
 import { ReportStatus } from '@/_generated/prisma'
 import { batchUpdateReportStatusAction } from '@/_actions/admin/report.action'
 import { toast } from 'sonner'
@@ -224,8 +224,10 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                   key={report.id}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className={`relative flex flex-col gap-3 rounded-xl border p-4 transition-all ${
-                    isSelected ? 'border-primary bg-primary/5 shadow-md' : 'bg-card'
+                  className={`relative flex flex-col gap-3 rounded-xl p-4 transition-all ${
+                    isSelected
+                      ? 'ring-primary/50 bg-primary/5 shadow-lg ring-2'
+                      : 'bg-card shadow-md'
                   }`}
                 >
                   <div className="flex items-start justify-between">

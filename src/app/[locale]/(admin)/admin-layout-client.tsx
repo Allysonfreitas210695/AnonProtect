@@ -3,7 +3,16 @@
 import { Button } from '@/_components/ui/button'
 import { Link, usePathname } from '@/i18n/navigation'
 import { logoutAction } from '@/_actions/public/logout.action'
-import { LayoutDashboard, FileText, Settings, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
+import {
+  LayoutDashboard,
+  FileText,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+  ShieldCheck,
+  User,
+} from 'lucide-react'
 import { useState } from 'react'
 import { ThemeToggle } from '@/_components/shared/theme-toggle'
 import { LocaleSwitcher } from '@/_components/shared/locale-switcher'
@@ -34,6 +43,11 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       label: t('reports'),
       icon: FileText,
     },
+    {
+      href: '/admin/profile',
+      label: t('profile'),
+      icon: User,
+    },
     ...(user.role === 'ADMIN'
       ? [
           {
@@ -51,25 +65,36 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
 
   return (
     <div className="bg-background text-foreground flex min-h-screen transition-colors duration-300">
-      {/* Mobile Menu Toggle */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="fixed top-4 left-4 z-50 lg:hidden"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-      </Button>
+      {/* Mobile Header Bar */}
+      <div className="bg-background/80 fixed top-0 right-0 left-0 z-30 flex h-16 items-center justify-between shadow-sm backdrop-blur-md lg:hidden print:hidden">
+        <div className="flex items-center gap-3">
+          {!sidebarOpen && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="text-primary h-6 w-6" />
+            <span className="font-bold">AnonProtect</span>
+          </div>
+        </div>
+        <LocaleSwitcher />
+      </div>
 
       {/* Sidebar */}
       <aside
-        className={`bg-card fixed inset-y-0 left-0 z-40 w-72 flex-col transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
+        className={`bg-card fixed inset-y-0 left-0 z-40 w-72 flex-col shadow-2xl transition-transform duration-300 ease-in-out lg:sticky lg:flex lg:translate-x-0 lg:shadow-xl print:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} `}
       >
-        <div className="flex h-full flex-col p-6">
+        <div className="scrollbar-none flex h-full flex-col overflow-y-auto p-6">
           {/* Logo & Header */}
           <div className="mb-10 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+              <div className="bg-primary shadow-primary/30 flex h-10 w-10 items-center justify-center rounded-xl shadow-lg">
                 <ShieldCheck className="text-primary-foreground h-6 w-6" />
               </div>
               <div className="flex flex-col">
@@ -79,7 +104,19 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                 </span>
               </div>
             </div>
-            <LocaleSwitcher />
+            <div className="flex items-center gap-2">
+              <LocaleSwitcher />
+              {sidebarOpen && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden"
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Navigation */}
@@ -109,8 +146,12 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
 
           {/* User Profile Section */}
           <div className="mt-auto flex flex-col gap-4 pt-6">
-            <div className="bg-accent/30 flex items-center gap-3 rounded-2xl p-3 shadow-inner">
-              <div className="ring-primary/20 text-primary-foreground bg-primary flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ring-2">
+            <Link
+              href="/admin/profile"
+              onClick={() => setSidebarOpen(false)}
+              className="bg-accent/30 hover:bg-accent/50 group flex items-center gap-3 rounded-2xl p-3 shadow-inner transition-colors"
+            >
+              <div className="ring-primary/20 text-primary-foreground bg-primary flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ring-2 transition-transform group-hover:scale-105">
                 {user.name.charAt(0)}
               </div>
               <div className="flex-1 overflow-hidden">
@@ -120,7 +161,7 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
                 </p>
               </div>
               <ThemeToggle />
-            </div>
+            </Link>
 
             <form action={logoutAction}>
               <Button
@@ -139,16 +180,14 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       {/* Overlay mobile */}
       {sidebarOpen && (
         <div
-          className="bg-background/80 fixed inset-0 z-30 backdrop-blur-sm lg:hidden"
+          className="bg-background/80 fixed inset-0 z-30 backdrop-blur-sm lg:hidden print:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Main Content */}
-      <main className="bg-background/50 min-h-screen w-full min-w-0 flex-1 overflow-x-hidden transition-colors duration-300">
-        <div className="mx-auto w-full max-w-[1600px] overflow-x-hidden px-4 py-6 sm:px-6 lg:px-12">
-          {children}
-        </div>
+      <main className="bg-background/50 min-h-screen w-full min-w-0 flex-1 pt-16 transition-colors duration-300 lg:overflow-x-hidden lg:pt-0 print:pt-0">
+        <div className="mx-auto w-full max-w-[1600px] px-2 py-6 sm:px-6 lg:px-12">{children}</div>
       </main>
     </div>
   )

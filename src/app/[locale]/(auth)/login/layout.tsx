@@ -3,30 +3,32 @@ import { Button } from '@/_components/ui/button'
 import { Home } from 'lucide-react'
 import { Logo } from '@/_components/shared/logo'
 import { ThemeToggle } from '@/_components/shared/theme-toggle'
+import { getTranslations } from 'next-intl/server'
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
+  const tNav = await getTranslations('Navigation')
+  const tFooter = await getTranslations('Footer')
+  const tReportLayout = await getTranslations('ReportLayout')
+
   return (
-    <div className="bg-background min-h-screen">
-      {/* Header */}
-      <header className="bg-background/80 sticky top-0 z-50 border-b backdrop-blur-sm">
+    <div className="bg-background flex min-h-screen flex-col">
+      <header className="bg-background/80 sticky top-0 z-50 shadow-md backdrop-blur-sm">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <Link href="/" className="transition-opacity hover:opacity-80">
               <Logo size={36} />
             </Link>
 
-            {/* Navigation */}
             <div className="flex items-center gap-3">
               <div className="hidden items-center gap-2 sm:flex">
                 <Button asChild variant="ghost" size="sm">
                   <Link href="/">
                     <Home className="mr-2 h-4 w-4" />
-                    Início
+                    {tNav('home')}
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="sm">
-                  <Link href="/login">Área Administrativa</Link>
+                  <Link href="/login">{tNav('admin')}</Link>
                 </Button>
               </div>
               <ThemeToggle />
@@ -36,36 +38,27 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       </header>
 
       {/* Content */}
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-background/80 mt-auto border-t py-8 backdrop-blur-sm">
+      <footer className="bg-background/80 mt-auto py-8 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 text-center md:grid-cols-3 md:text-left">
             <div>
-              <h3 className="mb-2 font-semibold">Sobre</h3>
-              <p className="text-muted-foreground text-sm">
-                Canal seguro e anônimo para denúncias de irregularidades.
-              </p>
+              <h3 className="mb-2 font-semibold">{tReportLayout('about')}</h3>
+              <p className="text-muted-foreground text-sm">{tReportLayout('aboutDesc')}</p>
             </div>
             <div>
-              <h3 className="mb-2 font-semibold">Privacidade</h3>
-              <p className="text-muted-foreground text-sm">
-                Suas informações são protegidas e seu anonimato é garantido.
-              </p>
+              <h3 className="mb-2 font-semibold">{tReportLayout('privacy')}</h3>
+              <p className="text-muted-foreground text-sm">{tReportLayout('privacyDesc')}</p>
             </div>
             <div>
-              <h3 className="mb-2 font-semibold">Suporte</h3>
-              <p className="text-muted-foreground text-sm">
-                Em caso de dúvidas, consulte nossa equipe administrativa.
-              </p>
+              <h3 className="mb-2 font-semibold">{tFooter('trust')}</h3>
+              <p className="text-muted-foreground text-sm">{tReportLayout('anonymityDesc')}</p>
             </div>
           </div>
           <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
-            <p>
-              © {new Date().getFullYear()} Sistema de Denúncias Anônimas. Todos os direitos
-              reservados.
-            </p>
+            <p>{tFooter('rights', { year: new Date().getFullYear() })}</p>
           </div>
         </div>
       </footer>

@@ -16,7 +16,7 @@ import {
   Line,
 } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
-import { REPORT_STATUS } from '@/_lib/constants'
+import { REPORT_STATUS } from '@/_constants'
 
 const COLORS = [
   'hsl(var(--primary))',

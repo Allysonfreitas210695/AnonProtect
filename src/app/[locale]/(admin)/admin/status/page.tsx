@@ -1,4 +1,4 @@
-import { getSystemStatus } from '@/_lib/system-status'
+import { getSystemStatus } from '@/_actions/admin/system-status'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Badge } from '@/_components/ui/badge'
 import {
@@ -82,7 +82,7 @@ export default async function StatusPage() {
         {statuses.map((service) => (
           <Card
             key={service.name}
-            className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md"
+            className="overflow-hidden border-none shadow-md transition-all hover:shadow-lg"
           >
             <CardHeader className="bg-muted/30 flex flex-row items-center justify-between space-y-0 pb-2">
               <div className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export default async function StatusPage() {
         ))}
       </div>
 
-      <Card className="from-primary/5 border-none bg-linear-to-br to-transparent shadow-sm">
+      <Card className="from-primary/5 border-none bg-linear-to-br to-transparent shadow-md">
         <CardHeader>
           <CardTitle className="text-lg">Informações Adicionais</CardTitle>
           <CardDescription>

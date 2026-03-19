@@ -49,11 +49,9 @@ export function AdminAnalyticsDashboard({ stats }: AdminAnalyticsDashboardProps)
             <CardTitle className="text-3xl font-black">{stats.avgResolutionTime} dias</CardTitle>
           </CardHeader>
         </Card>
-        {/* Adicionar mais metrics se necessário */}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {/* Timeline Chart */}
         <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-xl">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Evolução de Denúncias</CardTitle>
@@ -109,14 +107,13 @@ export function AdminAnalyticsDashboard({ stats }: AdminAnalyticsDashboardProps)
           </CardContent>
         </Card>
 
-        {/* Status Distribution */}
         <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-xl">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Distribuição por Status</CardTitle>
             <CardDescription>Proporção atual de denúncias</CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center justify-center">
-            <div className="h-[300px] w-full">
+          <CardContent className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-4">
+            <div className="h-[250px] w-full max-w-[250px] sm:h-[300px] sm:max-w-none">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -145,14 +142,16 @@ export function AdminAnalyticsDashboard({ stats }: AdminAnalyticsDashboardProps)
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="ml-4 space-y-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:ml-4 md:flex md:flex-col md:space-y-2">
               {stats.statusStats.map((s, i) => (
                 <div key={s.status} className="flex items-center gap-2 text-xs font-medium">
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: COLORS[i % COLORS.length] }}
-                  />
-                  <span>
+                  <style>{`
+                    .status-dot-${i} {
+                      background-color: ${COLORS[i % COLORS.length]};
+                    }
+                  `}</style>
+                  <div className={`status-dot-${i} h-3 w-3 shrink-0 rounded-full`} />
+                  <span className="truncate">
                     {s.status}: {s.count} ({s.percentage}%)
                   </span>
                 </div>

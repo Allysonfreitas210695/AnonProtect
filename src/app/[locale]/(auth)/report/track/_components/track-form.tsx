@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Button } from '@/_components/ui/button'
 import { Input } from '@/_components/ui/input'
 import { Label } from '@/_components/ui/label'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 import { useTrackReport } from '@/_hooks/public/use-track-report'
 
 interface TrackFormProps {

@@ -49,7 +49,7 @@ export function ReportAdvancedFilters({
     } else {
       params.set(key, value)
     }
-    params.delete('page') // Reset pagination
+    params.delete('page')
 
     startTransition(() => {
       router.push(`?${params.toString()}`, { scroll: false })
@@ -58,11 +58,8 @@ export function ReportAdvancedFilters({
 
   const clearFilters = () => {
     const params = new URLSearchParams(searchParams.toString())
-    params.delete('status')
-    params.delete('category')
-    params.delete('country')
-    params.delete('city')
-    params.delete('page')
+    const keysToRemove = ['status', 'category', 'country', 'city', 'page']
+    keysToRemove.forEach((key) => params.delete(key))
 
     startTransition(() => {
       router.push(`?${params.toString()}`, { scroll: false })
@@ -76,9 +73,9 @@ export function ReportAdvancedFilters({
     currentCity !== 'all'
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
       <Select value={currentStatus} onValueChange={(v) => updateFilter('status', v)}>
-        <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
+        <SelectTrigger className="bg-card/50 h-9 w-full rounded-xl border-none text-xs shadow-sm sm:w-[140px]">
           <SelectValue placeholder={t('statusPlaceholder')} />
         </SelectTrigger>
         <SelectContent>
@@ -92,7 +89,7 @@ export function ReportAdvancedFilters({
       </Select>
 
       <Select value={currentCategory} onValueChange={(v) => updateFilter('category', v)}>
-        <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
+        <SelectTrigger className="bg-card/50 h-9 w-full rounded-xl border-none text-xs shadow-sm sm:w-[140px]">
           <SelectValue placeholder={t('categoryPlaceholder')} />
         </SelectTrigger>
         <SelectContent>
@@ -107,7 +104,7 @@ export function ReportAdvancedFilters({
 
       {countries.length > 0 && (
         <Select value={currentCountry} onValueChange={(v) => updateFilter('country', v)}>
-          <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
+          <SelectTrigger className="bg-card/50 h-9 w-full rounded-xl border-none text-xs shadow-sm sm:w-[140px]">
             <SelectValue placeholder={t('countryPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
@@ -123,7 +120,7 @@ export function ReportAdvancedFilters({
 
       {cities.length > 0 && (
         <Select value={currentCity} onValueChange={(v) => updateFilter('city', v)}>
-          <SelectTrigger className="bg-card/50 border-border/50 h-9 w-[140px] rounded-xl text-xs">
+          <SelectTrigger className="bg-card/50 h-9 w-full rounded-xl border-none text-xs shadow-sm sm:w-[140px]">
             <SelectValue placeholder={t('cityPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
@@ -142,7 +139,7 @@ export function ReportAdvancedFilters({
           variant="ghost"
           size="sm"
           onClick={clearFilters}
-          className="text-muted-foreground hover:text-foreground hover:bg-muted h-9 rounded-xl px-2 text-xs transition-all"
+          className="text-muted-foreground hover:text-foreground hover:bg-muted col-span-2 h-9 rounded-xl px-2 text-xs transition-all sm:col-auto"
         >
           <X className="mr-1 h-3 w-3" />
           {t('clear')}

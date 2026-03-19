@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Badge } from '@/_components/ui/badge'
-import { getAllCategories } from '@/_data-access/admin/report.query'
 import { CategoryForm } from './_components/category-form'
 import { CategoryActions } from './_components/category-actions'
+import { getAllCategories } from '@/_modules/category/category.query'
 
 export const dynamic = 'force-dynamic'
 
@@ -42,11 +42,11 @@ export default async function SettingsPage() {
                 {categories.map((category) => (
                   <div
                     key={category.id}
-                    className="hover:bg-muted/50 flex items-center justify-between rounded-lg border p-4 transition-colors"
+                    className="bg-card hover:bg-muted/50 flex flex-col gap-4 rounded-lg p-4 shadow-md transition-colors sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-semibold">{category.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="truncate font-semibold">{category.name}</h3>
                         <Badge variant={category.active ? 'default' : 'secondary'}>
                           {category.active ? 'Ativa' : 'Inativa'}
                         </Badge>
@@ -55,11 +55,13 @@ export default async function SettingsPage() {
                         <p className="text-muted-foreground mt-1 text-sm">{category.description}</p>
                       )}
                     </div>
-                    <CategoryActions
-                      id={category.id}
-                      active={category.active}
-                      name={category.name}
-                    />
+                    <div className="flex shrink-0 justify-end">
+                      <CategoryActions
+                        id={category.id}
+                        active={category.active}
+                        name={category.name}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

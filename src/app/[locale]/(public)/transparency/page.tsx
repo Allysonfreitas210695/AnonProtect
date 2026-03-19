@@ -1,4 +1,3 @@
-import { getPublicStats } from '@/_data-access/public/transparency.query'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Shield, BarChart3, CheckCircle2, EyeOff, ShieldCheck } from 'lucide-react'
 import {
@@ -8,16 +7,16 @@ import {
 } from './_components/transparency-charts'
 import { Link } from '@/i18n/navigation'
 import { Button } from '@/_components/ui/button'
+import { getPublicStats } from '@/_modules/report/report.query'
 
 export const dynamic = 'force-dynamic'
-export const revalidate = 3600 // Cache por 1 hora
+export const revalidate = 3600
 
 export default async function TransparencyPage() {
   const stats = await getPublicStats()
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 px-4 py-12 lg:py-20">
-      {/* Header */}
       <div className="space-y-4 text-center">
         <h1 className="from-primary to-primary/70 bg-linear-to-r bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
           Transparência
@@ -33,7 +32,6 @@ export default async function TransparencyPage() {
         </div>
       </div>
 
-      {/* Main Stats Cards */}
       <div className="grid gap-8 md:grid-cols-2">
         <Card className="bg-primary/5 shadow-2xl transition-all hover:scale-[1.02]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -66,7 +64,6 @@ export default async function TransparencyPage() {
         </Card>
       </div>
 
-      {/* Charts Grid */}
       <div className="grid gap-10 md:grid-cols-2">
         <PublicStatusChart data={stats.statusStats} />
         <PublicCategoryChart data={stats.categoryStats} />
@@ -74,7 +71,6 @@ export default async function TransparencyPage() {
 
       <PublicTimelineChart data={stats.timelineStats} />
 
-      {/* Trust & Architecture Deep Dive */}
       <div className="grid gap-10 md:grid-cols-3">
         <Card className="bg-card/40 shadow-xl backdrop-blur-md">
           <CardHeader className="pb-3 text-center">
@@ -116,7 +112,6 @@ export default async function TransparencyPage() {
         </Card>
       </div>
 
-      {/* Privacy Notice */}
       <Card className="bg-muted/30 border-none shadow-inner">
         <CardContent className="flex flex-col items-center gap-4 py-8 text-center sm:flex-row sm:text-left">
           <div className="bg-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full">

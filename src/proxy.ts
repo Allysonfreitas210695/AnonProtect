@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware'
 import { locales } from './i18n/request'
-import { auth } from '@/_lib/auth'
+import { auth } from '@/_shared/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 const intlMiddleware = createMiddleware({
@@ -39,7 +39,11 @@ export default async function proxy(request: NextRequest) {
     strippedPathname.startsWith('/register') ||
     strippedPathname.startsWith('/forgot-password') ||
     strippedPathname.startsWith('/reset-password') ||
-    strippedPathname.startsWith('/report')
+    strippedPathname.startsWith('/report') ||
+    strippedPathname.startsWith('/how-it-works') ||
+    strippedPathname.startsWith('/transparency') ||
+    strippedPathname.startsWith('/privacy-policy') ||
+    strippedPathname.startsWith('/terms-of-service')
 
   if (isPublicRoute) {
     if (

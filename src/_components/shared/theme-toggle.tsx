@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/_components/ui/dropdown-menu'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
@@ -51,8 +51,8 @@ export function ThemeToggle() {
             key={t.name}
             onClick={() => setTheme(t.name)}
             className={cn(
-              "flex items-center justify-between cursor-pointer",
-              theme === t.name && "bg-accent font-medium text-accent-foreground"
+              'flex cursor-pointer items-center justify-between',
+              theme === t.name && 'bg-accent text-accent-foreground font-medium'
             )}
           >
             <div className="flex items-center gap-2">

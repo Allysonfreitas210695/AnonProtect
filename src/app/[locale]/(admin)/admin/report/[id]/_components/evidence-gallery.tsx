@@ -148,11 +148,16 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
                         {t(attachment.category)}
                       </Badge>
                     </div>
-                    <p className="truncate text-sm font-medium" title={attachment.fileName}>
+                    <p
+                      className="truncate text-sm font-medium print:text-black"
+                      title={attachment.fileName}
+                    >
                       {attachment.fileName}
                     </p>
                     {attachment.description && (
-                      <p className="text-muted-foreground mt-1 text-xs">{attachment.description}</p>
+                      <p className="text-muted-foreground mt-1 text-xs print:text-black">
+                        {attachment.description}
+                      </p>
                     )}
                     <div className="mt-2 flex items-center justify-between">
                       <p className="text-muted-foreground text-xs">

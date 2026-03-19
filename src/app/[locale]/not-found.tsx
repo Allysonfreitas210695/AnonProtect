@@ -4,18 +4,18 @@ import { Shield, Home, Search } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <div className="mx-auto max-w-2xl px-4 text-center">
         {/* Logo */}
         <div className="mb-8 flex justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-2xl">
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-purple-600 text-white shadow-2xl">
             <Shield className="h-12 w-12" />
           </div>
         </div>
 
         {/* 404 Text */}
         <div className="mb-6">
-          <h1 className="mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-9xl font-bold text-transparent">
+          <h1 className="mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-9xl font-bold text-transparent">
             404
           </h1>
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white">

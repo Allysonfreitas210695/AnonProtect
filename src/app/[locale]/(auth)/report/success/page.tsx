@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { Button } from '@/_components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/_components/ui/alert'
 import { Card, CardContent } from '@/_components/ui/card'
-import { ShieldCheck, Home, Search } from 'lucide-react'
+import { ShieldCheck, Home, Search, Sparkles } from 'lucide-react'
 
 export default async function SuccessPage({
   searchParams,
@@ -51,7 +51,7 @@ export default async function SuccessPage({
         </div>
       </Card>
 
-      <Alert className="bg-warning/5 mb-10 text-left shadow-lg">
+      <Alert className="bg-warning/5 mb-6 text-left shadow-lg">
         <AlertTitle className="text-warning mb-2 flex items-center gap-2 font-black">
           {t('actionNecessary')}
         </AlertTitle>
@@ -59,6 +59,21 @@ export default async function SuccessPage({
           {t('securityWarning')}
         </AlertDescription>
       </Alert>
+
+      {/* Background AI Analysis Status */}
+      <div className="bg-primary/5 mb-10 overflow-hidden rounded-2xl border border-dashed p-6 text-left">
+        <div className="flex items-start gap-4">
+          <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+            <Sparkles className="text-primary h-5 w-5 animate-pulse" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-sm font-bold tracking-tight uppercase">{t('aiAnalysisStatus')}</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed font-medium">
+              {t('aiAnalysisPending')}
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="flex flex-col justify-center gap-4 sm:flex-row">
         <Button asChild variant="outline" size="lg" className="h-12 px-8 font-bold">

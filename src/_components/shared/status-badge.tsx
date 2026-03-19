@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { Badge } from '@/_components/ui/badge'
 import { ReportStatus } from '@/_generated/prisma'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 
 interface StatusBadgeProps {
   status: ReportStatus

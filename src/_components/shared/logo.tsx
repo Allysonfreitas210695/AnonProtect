@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 import { useTranslations } from 'next-intl'
 
 interface LogoProps {

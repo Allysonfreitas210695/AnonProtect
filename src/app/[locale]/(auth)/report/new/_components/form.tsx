@@ -4,8 +4,9 @@ import { useTranslations } from 'next-intl'
 import { Category } from '@/_generated/prisma'
 import { useNewReport } from '@/_hooks/public/use-new-report'
 import { useTheme } from 'next-themes'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
+import { MapPin } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -25,14 +26,30 @@ import {
 import { Textarea } from '@/_components/ui/textarea'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
+import { Checkbox } from '@/_components/ui/checkbox'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { WhistleblowerAssistant } from './whistleblower-assistant'
+import { formatCEP } from '@/_shared/utils/formatters'
 
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
   const { theme } = useTheme()
   const [files, setFiles] = useState<File[]>([])
-  const { form, onSubmit, isExecuting } = useNewReport()
+  const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup } = useNewReport()
+
+  const selectedCountry = form.watch('country')
+  const isBrazil = selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
+  const postalCode = form.watch('postalCode')
+
+  useEffect(() => {
+    if (isBrazil && postalCode?.replace(/\D/g, '').length === 8) {
+      const formatted = formatCEP(postalCode)
+      if (formatted !== postalCode) {
+        form.setValue('postalCode', formatted)
+      }
+      handleCepLookup(postalCode)
+    }
+  }, [postalCode, isBrazil, handleCepLookup, form])
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-8 lg:py-12">
@@ -88,6 +105,106 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 )}
               />
 
+              <div className="bg-muted/20 ring-border/50 space-y-4 rounded-xl pt-4 pb-4 ring-1">
+                <div className="flex items-center gap-2 px-4">
+                  <MapPin className="text-primary h-4 w-4" />
+                  <span className="text-sm font-bold tracking-wider uppercase opacity-70">
+                    {t('location')}
+                  </span>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="country"
+                    render={({ field }) => (
+                      <FormItem className="px-4">
+                        <FormLabel>{t('country')}</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder={t('selectCountry') || 'Selecione o país'} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Brasil">Brasil</SelectItem>
+                            <SelectItem value="Outro">Outro / International</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="postalCode"
+                    render={({ field }) => (
+                      <FormItem className="px-4">
+                        <FormLabel>{t('postalCode')}</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            onChange={(e) => {
+                              const formatted = formatCEP(e.target.value)
+                              field.onChange(formatted)
+                            }}
+                            placeholder={t('postalCodePlaceholder')}
+                            className="h-11"
+                            maxLength={9}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid gap-4 px-4 sm:grid-cols-3">
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem className="sm:col-span-1">
+                        <FormLabel>{t('city')}</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('state')}</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="district"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('district')}</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="bg-border/50 h-px opacity-50 transition-opacity" />
+
               <FormField
                 control={form.control}
                 name="description"
@@ -128,6 +245,22 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 </div>
               )}
 
+              <FormField
+                control={form.control}
+                name="acceptTerms"
+                render={({ field }) => (
+                  <FormItem className="bg-muted/10 ring-border/50 flex flex-row items-start space-y-0 space-x-3 rounded-xl p-4 ring-1">
+                    <FormControl>
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>{t('acceptTerms')}</FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
               <div className="pt-4">
                 <Button
                   type="submit"
@@ -135,7 +268,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   loading={isExecuting}
                   className="h-12 w-full text-lg shadow-sm sm:w-auto sm:min-w-[200px]"
                 >
-                  {t(isExecuting ? 'submitting' : 'submit')}
+                  {isUploading ? t('uploading') : isSubmitting ? t('analyzing') : t('submit')}
                 </Button>
               </div>
             </form>

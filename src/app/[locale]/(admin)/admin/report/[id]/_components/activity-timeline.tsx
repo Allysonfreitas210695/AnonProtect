@@ -3,9 +3,9 @@
 import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Badge } from '@/_components/ui/badge'
-import { cn } from '@/_lib/utils'
-import { getActivityColor, getActivityIcon } from '@/_utils/activity-helpers'
-import { formatCompactDateTime } from '@/_utils/formatters'
+import { cn } from '@/_shared/lib/utils'
+import { getActivityColor, getActivityIcon } from '@/_shared/utils/activity-helpers'
+import { formatCompactDateTime } from '@/_shared/utils/formatters'
 import { ActivityLog } from '@/_generated/prisma'
 
 interface ActivityTimelineProps {
@@ -54,7 +54,7 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
               {/* Content */}
               <div className="flex-1 pt-0.5">
                 <div className="mb-1 flex items-start justify-between gap-2">
-                  <p className="text-sm font-medium">{activity.description}</p>
+                  <p className="text-sm font-medium print:text-black">{activity.description}</p>
                   <Badge variant="outline" className="shrink-0 text-xs">
                     {formatCompactDateTime(activity.createdAt)}
                   </Badge>
@@ -76,8 +76,12 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
                     <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[11px]">
                       {Object.entries(JSON.parse(activity.metadata)).map(([key, value]) => (
                         <div key={key} className="flex flex-col">
-                          <span className="text-muted-foreground font-medium">{key}</span>
-                          <span className="truncate font-mono">{String(value)}</span>
+                          <span className="text-muted-foreground font-medium print:text-black">
+                            {key}
+                          </span>
+                          <span className="truncate font-mono print:text-black">
+                            {String(value)}
+                          </span>
                         </div>
                       ))}
                     </div>

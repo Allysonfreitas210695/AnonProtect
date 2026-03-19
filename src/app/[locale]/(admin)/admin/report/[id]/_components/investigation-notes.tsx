@@ -17,8 +17,8 @@ import {
 } from '@/_components/ui/dialog'
 import { useInvestigationNotes } from '@/_hooks/admin/use-investigation-notes'
 import { StickyNote, Trash2, Plus } from 'lucide-react'
-import { formatCompactDateTime } from '@/_utils/formatters'
-import { cn } from '@/_lib/utils'
+import { formatCompactDateTime } from '@/_shared/utils/formatters'
+import { cn } from '@/_shared/lib/utils'
 
 interface AuthUser {
   id: string
@@ -54,8 +54,8 @@ export function InvestigationNotes({ reportId, notes, currentUser }: Investigati
 
   return (
     <>
-      <Card className="bg-card/40 flex h-[600px] flex-col overflow-hidden shadow-2xl backdrop-blur-xl">
-        <CardHeader className="bg-muted/30 px-6 py-4">
+      <Card className="bg-card/40 flex h-[600px] flex-col overflow-hidden shadow-2xl backdrop-blur-xl print:h-auto print:overflow-visible">
+        <CardHeader className="bg-muted/30 px-6 py-4 print:border-b print:bg-white">
           <CardTitle className="flex items-center gap-2 text-lg">
             <StickyNote className="text-primary h-5 w-5" />
             {t('internalTitle')}

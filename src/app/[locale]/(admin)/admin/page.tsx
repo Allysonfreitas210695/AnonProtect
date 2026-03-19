@@ -10,22 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/_components/ui/table'
-import { getReportsPaginated } from '@/_data-access/admin/report.query'
+import { getReportsPaginated } from '@/_modules/admin/admin.query'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { FileText, ShieldCheck } from 'lucide-react'
 
 import { GlobalActivityLog } from '@/_components/shared/global-activity-log'
-import { formatDate } from '@/_utils/formatters'
-import {
-  getGlobalActivityLogs,
-  getQuickStats,
-  getReportStats,
-} from '@/_data-access/admin/stats.query'
+import { formatDate } from '@/_shared/utils/formatters'
+import { getGlobalActivityLogs, getQuickStats, getReportStats } from '@/_modules/admin/admin.query'
 import { StatsCards } from '@/_components/shared/stats-cards'
 import { AnalyticsChart } from '@/_components/shared/analytics-chart'
 
 import { DashboardDateFilter } from '@/_components/shared/dashboard-date-filter'
 import { ReportSearchFilter } from '@/_components/shared/report-search-filter'
+import { getCurrentUser } from '@/_shared/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,9 +32,12 @@ interface Props {
 
 export default async function AdminDashboard({ searchParams }: Props) {
   const t = await getTranslations('Admin')
+  const user = await getCurrentUser()
   const { page, period, search } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 10
+
+  const filterCountry = user?.role === 'SUPERVISOR' ? user.country : undefined
 
   const days =
     period === '7d'
@@ -63,10 +63,20 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
   try {
     const [paginatedData, qs, fs, act] = await Promise.all([
-      getReportsPaginated(currentPage, pageSize, days, search),
-      getQuickStats(days),
-      getReportStats(days),
-      getGlobalActivityLogs(8),
+      getReportsPaginated(
+        currentPage,
+        pageSize,
+        days,
+        search,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        filterCountry || undefined
+      ),
+      getQuickStats(days, filterCountry || undefined),
+      getReportStats(days, filterCountry || undefined),
+      getGlobalActivityLogs(8, filterCountry || undefined),
     ])
 
     reports = paginatedData.reports
@@ -117,8 +127,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
       <StatsCards stats={statsWithTTR} />
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        <div className="space-y-8 lg:col-span-2">
+      <div className="grid w-full gap-8 lg:grid-cols-3">
+        <div className="min-w-0 space-y-8 lg:col-span-2">
           <div className="bg-card/30 rounded-3xl border-none p-1">
             <AnalyticsChart data={fullStats.timelineData} />
           </div>
@@ -153,12 +163,12 @@ export default async function AdminDashboard({ searchParams }: Props) {
               </div>
             </div>
 
-            <div className="bg-card relative overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
-              <div className="overflow-x-auto">
-                <Table>
+            <div className="bg-card relative w-full overflow-hidden rounded-2xl shadow-xl transition-all hover:shadow-2xl">
+              <div className="scrollbar-auto overflow-x-auto">
+                <Table className="min-w-[700px] lg:min-w-full">
                   <TableHeader className="bg-muted/40">
                     <TableRow className="border-none hover:bg-transparent">
-                      <TableHead className="text-foreground/70 w-[80px] py-4 text-[10px] font-bold tracking-wider uppercase md:w-[120px] lg:w-[160px]">
+                      <TableHead className="text-foreground/70 w-[70px] py-4 text-[10px] font-bold tracking-wider uppercase md:w-[120px] lg:w-[160px]">
                         {t('code')}
                       </TableHead>
                       <TableHead className="text-foreground/70 py-4 text-[10px] font-bold tracking-wider uppercase">
@@ -193,13 +203,13 @@ export default async function AdminDashboard({ searchParams }: Props) {
                           key={report.id}
                           className="group hover:bg-muted/40 border-border/40 transition-all"
                         >
-                          <TableCell className="text-primary/90 py-4 font-mono text-xs font-black whitespace-nowrap sm:text-sm">
+                          <TableCell className="text-primary/90 py-4 font-mono text-xs font-black sm:text-sm">
                             {report.trackingCode}
                           </TableCell>
                           <TableCell className="max-w-[120px] truncate py-4 text-xs font-semibold sm:text-sm md:max-w-none">
                             {report.category?.name || 'Geral'}
                           </TableCell>
-                          <TableCell className="text-muted-foreground py-4 text-[10px] font-medium whitespace-nowrap sm:text-xs">
+                          <TableCell className="text-muted-foreground py-4 text-[10px] font-medium sm:text-xs">
                             {formatDate(report.createdAt)}
                           </TableCell>
                           <TableCell className="py-4">
@@ -225,7 +235,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
           </div>
         </div>
 
-        <div className="space-y-8">
+        <div className="min-w-0 space-y-8">
           <GlobalActivityLog activities={activities} />
 
           <Card className="bg-card/50 hover:bg-card overflow-hidden shadow-xl transition-all hover:shadow-2xl">
@@ -246,7 +256,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                     (dept: { departmentId: string; name: string; count: number }) => {
                       const percentage = Math.round((dept.count / quickStats.total) * 100)
                       return (
-                        <div key={dept.departmentId} className="group min-w-0 space-y-2">
+                        <div key={dept.departmentId} className="group w-full min-w-0 space-y-2">
                           <div className="flex items-center justify-between gap-2 overflow-hidden">
                             <div className="flex min-w-0 items-center gap-2">
                               <div className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
@@ -254,17 +264,21 @@ export default async function AdminDashboard({ searchParams }: Props) {
                                 {dept.name}
                               </span>
                             </div>
-                            <div className="flex shrink-0 items-center gap-2">
-                              <span className="text-muted-foreground text-[10px] font-black whitespace-nowrap uppercase">
+                            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                              <span className="text-muted-foreground text-[10px] font-black uppercase">
                                 {dept.count} {t('Stats.units')}
                               </span>
                               <span className="text-primary text-xs font-black">{percentage}%</span>
                             </div>
                           </div>
                           <div className="bg-muted/50 h-2.5 w-full overflow-hidden rounded-full border border-transparent">
+                            <style>{`
+                              .progress-bar-${dept.departmentId} {
+                                width: ${percentage}%;
+                              }
+                            `}</style>
                             <div
-                              className="from-primary to-primary/60 group-hover:from-primary group-hover:to-primary h-full rounded-full bg-linear-to-r shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-1000"
-                              style={{ width: `${percentage}%` }}
+                              className={`progress-bar-${dept.departmentId} from-primary to-primary/60 group-hover:from-primary group-hover:to-primary h-full rounded-full bg-linear-to-r shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-1000`}
                             />
                           </div>
                         </div>

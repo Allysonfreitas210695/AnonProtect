@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 import { Toaster } from 'sonner'
 import { ThemeProvider } from '@/_components/shared/theme-provider'
 import { NextIntlClientProvider } from 'next-intl'
@@ -14,9 +14,24 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 export const metadata: Metadata = {
   title: 'AnonProtect - Sistema de Denúncia Anônima',
   description: 'Canal seguro e anônimo para denúncias de irregularidades.',
+  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.png',
+    apple: '/logo.png',
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'AnonProtect',
+  },
+}
+
+export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 import { PageTransition } from '@/_components/shared/page-transition'
@@ -40,7 +55,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body
         className={cn(
-          'bg-background min-h-screen w-full overflow-x-hidden font-sans antialiased',
+          'bg-background scrollbar-none min-h-screen w-full overflow-x-hidden font-sans antialiased',
           inter.variable
         )}
       >

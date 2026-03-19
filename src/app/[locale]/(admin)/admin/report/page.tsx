@@ -1,15 +1,13 @@
 import { getTranslations } from 'next-intl/server'
 import { Pagination } from '@/_components/shared/pagination'
-import {
-  getReportsPaginated,
-  getAllCategories,
-  getReportsLocations,
-} from '@/_data-access/admin/report.query'
+import { getReportsPaginated, getReportsLocations } from '@/_modules/admin/admin.query'
+import { getAllCategories } from '@/_modules/category/category.query'
 import { ReportsTableClient } from './_components/reports-table-client'
 
 import { DashboardDateFilter } from '@/_components/shared/dashboard-date-filter'
 import { ReportSearchFilter } from '@/_components/shared/report-search-filter'
 import { ReportAdvancedFilters } from '@/_components/shared/report-advanced-filters'
+import { getCurrentUser } from '@/_shared/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,9 +25,12 @@ interface Props {
 
 export default async function ReportsPage({ searchParams }: Props) {
   const t = await getTranslations('Admin')
+  const user = await getCurrentUser()
   const { page, period, search, status, category, country, city } = await searchParams
   const currentPage = Number(page) || 1
   const pageSize = 15
+
+  const filterCountry = user?.role === 'SUPERVISOR' ? user.country : undefined
 
   const days =
     period === '7d'
@@ -43,9 +44,19 @@ export default async function ReportsPage({ searchParams }: Props) {
             : 30
 
   const [{ reports, totalPages }, dbCategories, { countries, cities }] = await Promise.all([
-    getReportsPaginated(currentPage, pageSize, days, search, status, category, country, city),
+    getReportsPaginated(
+      currentPage,
+      pageSize,
+      days,
+      search,
+      status,
+      category,
+      country,
+      city,
+      filterCountry || undefined
+    ),
     getAllCategories(),
-    getReportsLocations(),
+    getReportsLocations(filterCountry || undefined),
   ])
 
   return (
@@ -55,9 +66,7 @@ export default async function ReportsPage({ searchParams }: Props) {
           <h1 className="text-foreground text-3xl font-extrabold tracking-tight lg:text-4xl">
             {t('recentReports')}
           </h1>
-          <p className="text-muted-foreground mt-1 text-sm font-medium">
-            {t('reportsSubtitle')}
-          </p>
+          <p className="text-muted-foreground mt-1 text-sm font-medium">{t('reportsSubtitle')}</p>
         </div>
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <ReportSearchFilter />

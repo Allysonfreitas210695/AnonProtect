@@ -86,6 +86,12 @@
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
   }
   body {
     background-color: hsl(var(--background));
@@ -95,109 +101,153 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  *::-webkit-scrollbar {
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  * {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+
+  .scrollbar-auto {
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+  }
+  .scrollbar-auto::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+    width: 4px;
+  }
+  .scrollbar-auto::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 10px;
   }
 }
 
 @media print {
-  .no-print,
-  button,
-  nav,
-  aside,
-  header,
-  .fixed,
-  [role='button'],
-  .sidebar-container {
-    display: none !important;
+  @page {
+    margin: 1.5cm;
+    size: A4;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    color: black !important;
+    -webkit-text-fill-color: black !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   body {
     background: white !important;
     color: black !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
     padding: 0 !important;
     margin: 0 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 
-  main {
-    padding: 1.5cm !important;
-    margin: 0 !important;
-    width: 100% !important;
-  }
-
-  .bg-card,
-  .border,
-  .shadow-sm,
-  .ring-1 {
-    border: 1px solid #eee !important;
-    box-shadow: none !important;
-    background: none !important;
-  }
-
-  .text-primary {
-    color: #000 !important;
-    font-weight: 700 !important;
-  }
-
-  .print-only {
-    display: block !important;
-  }
-
-  .dossier-header {
-    border-bottom: 3px solid black;
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .dossier-header h1 {
-    font-size: 24pt !important;
-    margin: 0 !important;
-  }
-
-  .timeline-dot {
-    border: 1.5pt solid black !important;
-    background: white !important;
-    color: black !important;
-    print-color-adjust: exact;
-  }
-
-  .bg-primary\/10 {
-    background-color: #f0f0f0 !important;
-    border: 0.5pt solid #ddd !important;
-  }
-
-  .text-primary {
-    color: #000 !important;
-    font-weight: 800 !important;
-    text-decoration: underline;
-  }
-
-  /* Watermark effect */
+  /* Watermark effect - Subtle and centered */
   body::after {
     content: 'CONFIDENCIAL - ANONPROTECT';
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-45deg);
-    font-size: 80pt;
-    color: rgba(0, 0, 0, 0.05);
-    z-index: -1;
+    font-size: 50pt;
+    color: rgba(0, 0, 0, 0.02) !important;
+    z-index: -100;
     pointer-events: none;
     white-space: nowrap;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Reset Layout for Print */
+  main,
+  .mx-auto,
+  section,
+  article {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Force grid sections to stack */
+  [class*='grid-cols-'],
+  [class*='sm:grid-cols-'],
+  [class*='lg:grid-cols-'] {
+    display: block !important;
+  }
+
+  /* Specific Resets */
+  .overflow-hidden,
+  .overflow-y-auto,
+  [class*='h-\['],
+  .h-full {
+    height: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Component Visibility */
+  .bg-card,
+  .card,
+  .bg-white,
+  .bg-muted\/30,
+  .bg-accent,
+  .ring-1 {
+    background-color: white !important;
+    border: 1px solid #eee !important;
+    box-shadow: none !important;
+    margin-bottom: 2rem !important;
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    page-break-inside: avoid;
+  }
+
+  /* Timeline & Headers */
+  .dossier-header {
+    border-bottom: 3pt solid black !important;
+    margin-bottom: 1.5cm !important;
+    padding-bottom: 0.5cm !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  /* Hide everything else */
+  .print\:hidden,
+  button,
+  nav,
+  aside,
+  header:not(.print\:block),
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 }
 
 .print-only {
   display: none;
+}
+@media print {
+  .print-only {
+    display: block !important;
+  }
 }

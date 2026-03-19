@@ -58,7 +58,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       {items.map((item) => (
         <Card
           key={item.title}
-          className="group bg-card/40 ring-border/50 hover:bg-card hover:ring-primary/30 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl"
+          className="group bg-card relative overflow-hidden border-none shadow-md transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl"
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-2">
             <CardTitle className="text-muted-foreground group-hover:text-foreground text-[10px] font-black tracking-widest uppercase transition-colors">

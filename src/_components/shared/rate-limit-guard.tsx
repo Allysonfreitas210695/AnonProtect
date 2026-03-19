@@ -1,5 +1,5 @@
 import { headers } from 'next/headers'
-import { checkRateLimit } from '@/_lib/ratelimit'
+import { checkRateLimit } from '@/_shared/lib/ratelimit'
 import { RateLimitError } from './rate-limit-error'
 import { ReactNode } from 'react'
 

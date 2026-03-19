@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation'
 import { Card, CardContent } from '@/_components/ui/card'
-import { getReportByCode } from '@/_data-access/public/report.query'
 import { MessageList } from '@/_components/shared/message-list'
 import { ReportCard } from '@/_components/shared/report-card'
 import { MessageForm } from './_components/message-form'
 import { getTranslations } from 'next-intl/server'
 import { RateLimitGuard } from '@/_components/shared/rate-limit-guard'
+import { getReportByCode } from '@/_modules/report/report.query'
 
 export const dynamic = 'force-dynamic'
 

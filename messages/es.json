@@ -1,0 +1,486 @@
+{
+  "Common": {
+    "title": "AnonProtect",
+    "description": "Sistema de Denuncias Anónimas",
+    "welcome": "Bienvenido a AnonProtect",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "actions": "Acciones",
+    "viewAll": "Ver todas",
+    "status": "Estado",
+    "date": "Fecha",
+    "details": "Ver Detalles",
+    "errors": {
+      "internal": "Error interno del servidor",
+      "loginFailed": "Error al iniciar sesión",
+      "sessionExpired": "Sesión expirada o usuario no autenticado"
+    }
+  },
+  "Dashboard": {
+    "title": "Panel de Control",
+    "overview": "Visión general del sistema de protección",
+    "recentReports": "Denuncias Recientes",
+    "recentActivities": "Actividades Recientes",
+    "byDepartment": "Por Departamento",
+    "noReports": "Aún no hay denuncias registradas.",
+    "noActivities": "No hay actividades recientes.",
+    "trackingCode": "Código",
+    "category": "Tipo",
+    "charts": {
+      "volumeTitle": "Volumen de Denuncias",
+      "volumeDescription": "Últimos 30 días",
+      "statusTitle": "Denuncias por Estado",
+      "statusDescription": "Distribución actual de estados",
+      "categoryTitle": "Denuncias por Categoría",
+      "categoryDescription": "Tipos más reportados",
+      "timelineTitle": "Denuncias a lo Largo del Tiempo",
+      "timelineDescription": "Evolución temporal",
+      "countryTitle": "Denuncias por País",
+      "countryDescription": "Distribución geográfica global",
+      "cityTitle": "Denuncias por Ciudad",
+      "cityDescription": "Distribución regional",
+      "unknown": "Desconocido"
+    },
+    "stats": {
+      "total": "Total de Denuncias",
+      "today": "Denuncias Hoy",
+      "pending": "Pendientes",
+      "resolved": "Resueltas"
+    },
+    "filter": {
+      "placeholder": "Seleccionar período",
+      "last7Days": "Últimos 7 días",
+      "last30Days": "Últimos 30 días",
+      "last90Days": "Últimos 90 días",
+      "allTime": "Todo el período"
+    },
+    "errors": {
+      "load": "Error al cargar el Panel de Control",
+      "loadDescription": "Hubo un problema al obtener los datos del servidor. Por favor, inténtelo de nuevo en unos momentos.",
+      "details": "Detalles del Error"
+    },
+    "actions": {
+      "tryAgain": "Intentar de Nuevo",
+      "viewAll": "Ver todos"
+    }
+  },
+  "Success": {
+    "title": "¡Denuncia Enviada!",
+    "message": "Su denuncia ha sido registrada con éxito bajo total confidencialidad. Nuestro equipo de seguridad ya ha iniciado el procesamiento.",
+    "trackingCodeLabel": "Identificador Exclusivo de Seguimiento",
+    "actionNecessary": "ACCIÓN NECESARIA",
+    "securityWarning": "Guarde este código ahora. Por razones de seguridad extrema, no se mostrará nuevamente y no puede recuperarse. Es su única clave de comunicación con nosotros.",
+    "backToHome": "Volver al Inicio",
+    "trackNow": "Seguir Ahora",
+    "securitySignature": "Firmado Digitalmente por AnonProtect Security",
+    "encryptionInfo": "Su conexión está protegida con cifrado de extremo a extremo"
+  },
+  "Home": {
+    "title": "Canal de Denuncias Anónimas",
+    "subtitle": "Canal seguro y anónimo para denuncias",
+    "description": "Su espacio seguro para reportar irregularidades, acoso o bullying.",
+    "identitySafety": "Su identidad se preserva en todos los niveles.",
+    "newReport": "Nueva Denuncia",
+    "trackReport": "Seguir Denuncia",
+    "trackStatus": "Seguir Estado",
+    "howItWorks": "¿Cómo funciona?",
+    "simpleProcess": "Proceso simple y seguro en 3 pasos",
+    "step1": {
+      "title": "Realice su denuncia",
+      "description": "Complete el formulario de forma anónima, sin necesidad de registro ni datos personales."
+    },
+    "step2": {
+      "title": "Reciba su código",
+      "description": "Recibirá un código de seguimiento único. Guárdelo en un lugar seguro."
+    },
+    "step3": {
+      "title": "Siga e interactúe",
+      "description": "Verifique el progreso de su denuncia e intercambie mensajes con el equipo responsable de forma anónima."
+    }
+  },
+  "HowItWorks": {
+    "title": "Cómo funciona AnonProtect",
+    "subtitle": "Entienda en detalle el camino de su denuncia, cómo garantizamos el anonimato y dónde entra la Inteligencia Artificial en el proceso.",
+    "ctaReport": "Realizar una denuncia ahora",
+    "ctaBackHome": "Volver al inicio",
+    "step1Title": "1. Envío totalmente anónimo",
+    "step1Description": "Usted completa el formulario sin informar nombre, correo electrónico ni ningún dato personal. El sistema no exige registro y no registra IPs para identificar el origen.",
+    "step2Title": "2. Generación del código seguro",
+    "step2Description": "Al finalizar, recibe un código de seguimiento único. Es la única llave para acceder a su denuncia y comunicarse con el equipo responsable.",
+    "step3Title": "3. Clasificación con Inteligencia Artificial",
+    "step3Description": "Nuestra IA analiza el texto para sugerir categoría y prioridad, ayudando al equipo a organizar los casos más críticos sin sustituir el análisis humano.",
+    "anonymityTitle": "Capas de protección del anonimato",
+    "anonymityIntro": "AnonProtect fue diseñado para que ni los administradores ni los desarrolladores puedan rastrear el origen de la denuncia.",
+    "anonymityItem1": "Ningún campo de identificación es obligatorio en el formulario de denuncia.",
+    "anonymityItem2": "No almacenamos IPs de forma que permitan la identificación directa del denunciante.",
+    "anonymityItem3": "Los mensajes se vinculan únicamente al código de seguimiento.",
+    "aiUsageTitle": "Cómo se usa la IA de forma responsable",
+    "aiUsageIntro": "La Inteligencia Artificial de AnonProtect sirve para apoyar al equipo de ética y cumplimiento, nunca para tomar decisiones finales de forma aislada.",
+    "aiUsageItem1": "La IA sugiere categorías y prioridades con base en la descripción del relato.",
+    "aiUsageItem2": "El equipo responsable revisa cada caso antes de cualquier derivación o cierre.",
+    "aiUsageItem3": "Las respuestas de la IA son auditables y pasan por validaciones técnicas para evitar errores.",
+    "readyTitle": "¿Listo para realizar su denuncia con seguridad?",
+    "readyDescription": "Usted permanece 100% anónimo durante todo el proceso. Use el canal con responsabilidad y sinceridad.",
+    "readyCtaNew": "Iniciar nueva denuncia",
+    "readyCtaTrack": "Seguir denuncia"
+  },
+  "Admin": {
+    "dashboard": "Panel",
+    "areaAdmin": "Área Administrativa",
+    "systemOverview": "Visión general del sistema de protección",
+    "recentReports": "Denuncias Recientes",
+    "code": "Código",
+    "type": "Tipo",
+    "date": "Fecha",
+    "status": "Estado",
+    "actions": "Acciones",
+    "viewAll": "Ver todas",
+    "tryAgain": "Intentar de Nuevo",
+    "errors": {
+      "load": "Error al cargar el Panel",
+      "loadDescription": "Hubo un problema al obtener los datos del servidor. Por favor, inténtelo de nuevo en unos instantes.",
+      "details": "Detalles del Error"
+    },
+    "Stats": {
+      "units": "unidades"
+    },
+    "noReports": "Aún no hay denuncias registradas.",
+    "reportsSubtitle": "Gestión detallada de todas las denuncias",
+    "viewDetails": "Ver Detalles",
+    "byDepartment": "Por Departamento",
+    "noDepartmentData": "Sin datos por departamento",
+    "location": "Ubicación",
+    "archiveSelected": "Archivar Seleccionadas",
+    "selectedCount": "{count} seleccionada | {count} seleccionadas",
+    "archiveError": "Error al archivar denuncias",
+    "connectionError": "Error de conexión",
+    "Filters": {
+      "searchPlaceholder": "Buscar código...",
+      "statusPlaceholder": "Estado",
+      "categoryPlaceholder": "Categoría",
+      "countryPlaceholder": "País",
+      "cityPlaceholder": "Ciudad",
+      "allStatus": "Todos los Estados",
+      "allCategories": "Todas las Categorías",
+      "allCountries": "Todos los Países",
+      "allCities": "Todas las Ciudades",
+      "clear": "Limpiar"
+    }
+  },
+  "AuditLog": {
+    "title": "Registro de Auditoría",
+    "description": "Vea las últimas actividades realizadas en el sistema, incluyendo cambios de estado, derivaciones, mensajes y notas de investigación.",
+    "recentActivitiesTitle": "Actividades Recientes",
+    "backToDashboard": "Volver al Panel"
+  },
+  "Login": {
+    "title": "Área Administrativa",
+    "subtitle": "Ingrese sus credenciales para gestionar las denuncias",
+    "description": "Identifíquese para acceder al panel de gestión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "submit": "Entrar",
+    "submitting": "Entrando...",
+    "or": "O",
+    "google": "Entrar con Google",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "noAccount": "¿No tiene una cuenta?",
+    "registerNow": "Regístrese ahora",
+    "privacy": "Privacidad",
+    "terms": "Términos de Uso",
+    "errorTitle": "Error de Autenticación",
+    "errors": {
+      "invalid": "Correo o contraseña inválidos",
+      "server": "Error interno del servidor"
+    }
+  },
+  "NewReport": {
+    "title": "Nueva Denuncia",
+    "description": "Complete el formulario abajo de forma anónima y segura",
+    "occurrenceDetails": "Detalles del Hecho",
+    "confidentialityNotice": "Toda la información es confidencial y su anonimato está garantizado",
+    "occurrenceType": "Tipo de Hecho",
+    "selectType": "Seleccione el tipo...",
+    "noCategories": "No hay categorías disponibles",
+    "detailedDescription": "Descripción Detallada",
+    "descriptionPlaceholder": "Describa lo ocurrido con el mayor detalle posible...",
+    "descriptionHint": "Cuantos más detalles proporcione, mejor podremos investigar",
+    "evidenceOptional": "Evidencias (Opcional)",
+    "uploadHint": "Envíe fotos, documentos o videos que ayuden en la investigación.",
+    "location": "Lugar del Hecho",
+    "postalCode": "Código Postal",
+    "postalCodePlaceholder": "00000-000",
+    "city": "Ciudad",
+    "state": "Estado / Provincia",
+    "district": "Barrio",
+    "country": "País",
+    "fetchingAddress": "Buscando dirección...",
+    "invalidCep": "Código postal inválido o no encontrado",
+    "uploadComingSoon": "La funcionalidad de carga será implementada pronto",
+    "submit": "Enviar Denuncia",
+    "submitting": "Enviando...",
+    "assistant": {
+      "trigger": "¿Dudas sobre la categoría?",
+      "title": "Asistente AnonProtect",
+      "welcome": "¡Hola! Soy su asistente de ética. Puedo ayudarle a identificar qué categoría describe mejor su denuncia o aclarar dudas sobre el anonimato. ¿Cómo puedo ayudarle hoy?",
+      "placeholder": "Describa brevemente lo ocurrido...",
+      "send": "Enviar",
+      "error": "Error al cargar la respuesta.",
+      "anonymityReady": "Garantizamos su anonimato total."
+    }
+  },
+  "Track": {
+    "title": "Seguir Denuncia",
+    "accessSecure": "Acceso Seguro",
+    "trackingCode": "Código de Seguimiento",
+    "placeholder": "Ej: AP-2025-XXXX",
+    "hint": "Informe el código de seguimiento que recibió al enviar la denuncia.",
+    "submit": "Acceder",
+    "submitting": "Accediendo..."
+  },
+  "ReportDetails": {
+    "dossierTitle": "AnonProtect - Dossier de Investigación",
+    "officialPrintHeader": "AnonProtect Security Solutions - Informe Oficial de Investigación",
+    "confidentialNotice": "CONFIDENCIAL - USO INTERNO",
+    "systemName": "Sistema de Denuncias Anónimas",
+    "confidential": "Confidencial",
+    "back": "Volver",
+    "backButton": "Volver",
+    "reportNumber": "Denuncia #{code}",
+    "downloadPdf": "Descargar PDF",
+    "printReport": "Imprimir Informe",
+    "printButton": "Imprimir",
+    "deriveButton": "Remitir",
+    "lastUpdate": "Última Actualización",
+    "submittedAt": "Denuncia enviada en",
+    "responsible": "Responsable",
+    "department": "Departamento",
+    "communicationTitle": "Comunicación con Denunciante",
+    "evidence": "Evidencias",
+    "activityTimeline": "Actividades",
+    "investigationNotes": "Notas de Investigación"
+  },
+  "Tracking": {
+    "title": "Seguimiento de Denuncia",
+    "subtitle": "Vea abajo el estado e historial de su denuncia",
+    "history": "Comunicación e Historial"
+  },
+  "RateLimit": {
+    "title": "Demasiadas solicitudes",
+    "description": "Ha alcanzado el límite de solicitudes. Por favor, inténtelo nuevamente en unos instantes.",
+    "back": "Volver al Inicio"
+  },
+  "Status": {
+    "PENDING": "Pendiente",
+    "IN_PROGRESS": "En Análisis",
+    "RESOLVED": "Resuelto",
+    "REJECTED": "Rechazado",
+    "ARCHIVED": "Archivado",
+    "update": "Actualizar"
+  },
+  "Forward": {
+    "title": "Derivar Denuncia",
+    "description": "Envíe esta denuncia a un departamento específico para análisis.",
+    "department": "Departamento",
+    "selectDepartment": "Seleccione el departamento",
+    "reason": "Justificación / Observaciones",
+    "reasonPlaceholder": "Describa por qué está derivando esta denuncia...",
+    "cancel": "Cancelar",
+    "submit": "Derivar",
+    "success": "Denuncia derivada con éxito",
+    "error": "Error al derivar denuncia",
+    "selectDeptError": "Seleccione un departamento",
+    "reasonError": "Informe una justificación"
+  },
+  "Communication": {
+    "title": "Comunicación con Denunciante",
+    "placeholder": "Responder como Admin...",
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "admin": "Administrador",
+    "user": "Denunciante",
+    "noMessages": "Aún no hay mensajes.",
+    "noMessagesUserHint": "Puede enviar un mensaje abajo."
+  },
+  "Evidence": {
+    "title": "Evidencias",
+    "noEvidence": "Aún no hay evidencias adjuntas.",
+    "total": "Total",
+    "photos": "Fotos",
+    "videos": "Videos",
+    "documents": "Documentos",
+    "audios": "Audios",
+    "others": "Otros",
+    "attachedEvidence": "Evidencias Adjuntas",
+    "download": "Descargar",
+    "unknownSize": "Tamaño desconocido",
+    "PHOTO": "Foto",
+    "VIDEO": "Video",
+    "AUDIO": "Audio",
+    "DOCUMENT": "Documento",
+    "OTHER": "Otro",
+    "imageAlt": "Evidencia: {name}"
+  },
+  "Timeline": {
+    "title": "Línea de Tiempo de Actividades",
+    "noActivities": "Aún no hay actividades registradas.",
+    "by": "Por: {name}",
+    "system": "Sistema",
+    "additionalData": "Datos Adicionales"
+  },
+  "Investigation": {
+    "title": "Notas de Investigación",
+    "internalTitle": "Comunicación Interna de Investigación",
+    "you": "Usted",
+    "addNotePlaceholder": "Agregue una nota sobre la investigación...",
+    "addNoteSubmit": "Agregar Nota",
+    "addingNote": "Agregando...",
+    "noMessages": "Aún no hay mensajes.",
+    "noNotes": "Aún no hay notas de investigación.",
+    "privateNoteHint": "Agregue notas privadas sobre la investigación.",
+    "removedAuthor": "Eliminado",
+    "editedAt": "Editado el {date}",
+    "deleteTitle": "Confirmar Eliminación",
+    "deleteDescription": "¿Está seguro de que desea eliminar esta nota? Esta acción no puede deshacerse.",
+    "deleteCancel": "Cancelar",
+    "deleteConfirm": "Eliminar",
+    "deleting": "Eliminando..."
+  },
+  "ReportCard": {
+    "title": "Denuncia #{code}",
+    "category": "Categoría",
+    "notInformed": "No informada",
+    "creationDate": "Fecha de Creación",
+    "description": "Descripción del Hecho"
+  },
+  "Sidebar": {
+    "dashboard": "Panel",
+    "reports": "Denuncias",
+    "profile": "Mi Perfil",
+    "analytics": "Análisis",
+    "settings": "Configuraciones",
+    "logout": "Salir del Sistema"
+  },
+  "Stats": {
+    "total": "Total",
+    "pending": "Pendientes",
+    "inProgress": "En Progreso",
+    "resolved": "Resueltas",
+    "avgResolutionTime": "Tiempo Medio de Resolución",
+    "avgResolutionValue": "{count} horas",
+    "realTime": "Actualizado en tiempo real",
+    "units": "unidades"
+  },
+  "Navigation": {
+    "home": "Inicio",
+    "login": "Entrar",
+    "admin": "Área Administrativa",
+    "newReport": "Nueva Denuncia",
+    "trackReport": "Seguir"
+  },
+  "Profile": {
+    "title": "Mi Perfil",
+    "subtitle": "Gestione su información personal y seguridad",
+    "personalInfo": "Información Personal",
+    "personalInfoDesc": "Actualice su nombre y dirección de correo electrónico",
+    "security": "Seguridad",
+    "securityDesc": "Cambie su contraseña de acceso",
+    "name": "Nombre Completo",
+    "email": "Correo electrónico",
+    "currentPassword": "Contraseña Actual",
+    "newPassword": "Nueva Contraseña",
+    "confirmPassword": "Confirmar Nueva Contraseña",
+    "saveChanges": "Guardar Cambios",
+    "changePassword": "Cambiar Contraseña",
+    "success": "¡Perfil actualizado con éxito!",
+    "passwordSuccess": "¡Contraseña cambiada con éxito!",
+    "error": "Error al actualizar el perfil",
+    "passwordError": "Error al cambiar la contraseña",
+    "loginMethod": "Método de Acceso",
+    "credentials": "Correo y Contraseña",
+    "socialProvider": "Cuenta de {provider}",
+    "authInfo": "Información de Autenticación",
+    "authInfoDesc": "Vea cómo está conectado al sistema"
+  },
+  "Register": {
+    "title": "Crear Cuenta",
+    "subtitle": "Regístrese para acceder al área administrativa",
+    "nameLabel": "Nombre Completo",
+    "namePlaceholder": "Su nombre",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "su@correo.com",
+    "passwordLabel": "Contraseña",
+    "confirmPasswordLabel": "Confirmar Contraseña",
+    "submitRegistering": "Creando cuenta...",
+    "submit": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tiene una cuenta? Inicie sesión",
+    "privacy": "Privacidad",
+    "terms": "Términos de Uso"
+  },
+  "LocaleSwitcher": {
+    "pt-BR": "Portugués",
+    "en": "English",
+    "es": "Español",
+    "label": "Cambiar idioma"
+  },
+  "Compliance": {
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Uso",
+    "lastUpdated": "Última actualización: {date}",
+    "back": "Volver",
+    "privacy": {
+      "title": "Política de Privacidad",
+      "intro": "Su privacidad es nuestra máxima prioridad. Este documento explica cómo protegemos sus datos.",
+      "collection": "Recopilación de Datos",
+      "collectionDesc": "No recopilamos direcciones IP, geolocalización exacta sin permiso ni metadatos de dispositivos que puedan identificarle.",
+      "usage": "Uso de la Información",
+      "usageDesc": "La información proporcionada en la denuncia se utiliza exclusivamente para fines de investigación interna.",
+      "security": "Seguridad Absoluta",
+      "securityDesc": "Utilizamos cifrado de nivel militar para garantizar que sus denuncias permanezcan anónimas."
+    },
+    "terms": {
+      "title": "Términos de Uso",
+      "intro": "Al utilizar AnonProtect, usted acepta las directrices de uso ético de la plataforma.",
+      "responsibility": "Responsabilidad",
+      "responsibilityDesc": "El usuario es responsable de la veracidad de la información reportada.",
+      "prohibitions": "Prohibiciones",
+      "prohibitionsDesc": "Está prohibido usar la plataforma para denuncias calumniosas o bromas.",
+      "anonymity": "Garantía de Anonimato",
+      "anonymityDesc": "El sistema garantiza que no se rastree el origen de la denuncia por el lado del servidor."
+    },
+    "transparency": {
+      "label": "Transparencia",
+      "trustTitle": "¿Por qué confiar en AnonProtect?",
+      "anonymityLayer": "Capa de Anonimato",
+      "anonymityLayerDesc": "Nuestra arquitectura utiliza enrutamiento por capas que impide que los administradores vean el origen de la conexión.",
+      "zeroLogs": "Cero Logs de IP",
+      "zeroLogsDesc": "No mantenemos registros de acceso que contengan información de red de los usuarios.",
+      "independentAudit": "Auditoría Independiente",
+      "independentAuditDesc": "El código fuente del motor de anonimato se revisa periódicamente para garantizar su integridad."
+    }
+  },
+  "Footer": {
+    "rights": "© {year} AnonProtect Security Solutions. Todos los derechos reservados.",
+    "links": "Enlaces Legales",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "transparency": "Transparencia",
+    "trust": "Confianza",
+    "shielded": "Alojamiento Blindado",
+    "description": "AnonProtect es la plataforma líder en denuncias anónimas corporativas e institucionales. Garantizamos total confidencialidad y protección para quienes reportan."
+  },
+  "Logo": {
+    "tagline": "Protección Anónima"
+  },
+  "ReportLayout": {
+    "about": "Acerca de",
+    "aboutDesc": "Canal seguro y anónimo para denuncias de irregularidades.",
+    "privacy": "Privacidad",
+    "privacyDesc": "Su información está protegida y su anonimato está garantizado.",
+    "anonymity": "Anonimato",
+    "anonymityDesc": "No solicitamos identificación. Use solo el código de seguimiento.",
+    "rights": "© {year} Sistema de Denuncias Anónimas. Todos los derechos reservados."
+  }
+}

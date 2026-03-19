@@ -23,7 +23,7 @@ export function AnalyticsChart({ data }: AnalyticsChartProps) {
       <CardContent className="px-2">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+            <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
@@ -67,7 +67,7 @@ export function AnalyticsChart({ data }: AnalyticsChartProps) {
                 dataKey="count"
                 fill="url(#barGradient)"
                 radius={[6, 6, 0, 0]}
-                barSize={24}
+                barSize={18}
                 animationDuration={1500}
               />
             </BarChart>

@@ -15,9 +15,11 @@ import {
 } from '@/_components/ui/form'
 import { UserPlus, ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function RegisterPage() {
   const { form, onSubmit, isExecuting } = useRegister()
+  const t = useTranslations('Register')
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
@@ -27,10 +29,8 @@ export default function RegisterPage() {
             <UserPlus className="text-primary h-16 w-16" />
           </div>
           <div>
-            <CardTitle className="text-3xl">Criar Conta</CardTitle>
-            <CardDescription className="mt-2 text-base">
-              Cadastre-se para acessar a área administrativa
-            </CardDescription>
+            <CardTitle className="text-3xl">{t('title')}</CardTitle>
+            <CardDescription className="mt-2 text-base">{t('subtitle')}</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -41,9 +41,9 @@ export default function RegisterPage() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nome Completo</FormLabel>
+                    <FormLabel>{t('nameLabel')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Seu nome" {...field} />
+                      <Input placeholder={t('namePlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -55,9 +55,9 @@ export default function RegisterPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t('emailLabel')}</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="seu@email.com" {...field} />
+                      <Input type="email" placeholder={t('emailPlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -69,7 +69,7 @@ export default function RegisterPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Senha</FormLabel>
+                    <FormLabel>{t('passwordLabel')}</FormLabel>
                     <FormControl>
                       <PasswordInput placeholder="••••••••" {...field} />
                     </FormControl>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirmar Senha</FormLabel>
+                    <FormLabel>{t('confirmPasswordLabel')}</FormLabel>
                     <FormControl>
                       <PasswordInput placeholder="••••••••" {...field} />
                     </FormControl>
@@ -93,7 +93,7 @@ export default function RegisterPage() {
               />
 
               <Button type="submit" className="w-full" size="lg" loading={isExecuting}>
-                {isExecuting ? 'Criando conta...' : 'Cadastrar'}
+                {isExecuting ? t('submitRegistering') : t('submit')}
               </Button>
             </form>
           </Form>
@@ -104,20 +104,20 @@ export default function RegisterPage() {
               className="text-muted-foreground hover:text-primary flex items-center justify-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Já tem uma conta? Faça login
+              {t('alreadyHaveAccount')}
             </Link>
             <div className="mt-6 flex justify-center gap-4 text-xs opacity-50">
               <Link
                 href="/privacy-policy"
                 className="hover:text-primary underline transition-colors"
               >
-                Privacidade
+                {t('privacy')}
               </Link>
               <Link
                 href="/terms-of-service"
                 className="hover:text-primary underline transition-colors"
               >
-                Termos de Uso
+                {t('terms')}
               </Link>
             </div>
           </div>

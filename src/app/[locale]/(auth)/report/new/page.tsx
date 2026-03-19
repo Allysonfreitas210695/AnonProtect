@@ -1,4 +1,4 @@
-import { getActiveCategories } from '@/_data-access/public/report.query'
+import { getActiveCategories } from '@/_modules/report/report.query'
 import NewReportForm from './_components/form'
 import { RateLimitGuard } from '@/_components/shared/rate-limit-guard'
 

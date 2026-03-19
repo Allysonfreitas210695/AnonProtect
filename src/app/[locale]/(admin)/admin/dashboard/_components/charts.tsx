@@ -16,7 +16,9 @@ import {
   Line,
 } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
-import { REPORT_STATUS, REPORT_TYPES } from '@/_lib/constants'
+import { REPORT_TYPES } from '@/_constants'
+
+import { useTranslations } from 'next-intl'
 
 const STATUS_COLORS = {
   PENDING: 'hsl(var(--warning))',
@@ -30,8 +32,11 @@ interface StatusChartProps {
 }
 
 export function StatusChart({ data }: StatusChartProps) {
+  const t = useTranslations('Dashboard.charts')
+  const tStatus = useTranslations('Status')
+
   const chartData = data.map((item) => ({
-    name: REPORT_STATUS[item.status] || item.status,
+    name: tStatus(item.status as string) || item.status,
     value: item.count,
     percentage: item.percentage,
   }))
@@ -39,8 +44,8 @@ export function StatusChart({ data }: StatusChartProps) {
   return (
     <Card className="bg-card">
       <CardHeader>
-        <CardTitle>Denúncias por Status</CardTitle>
-        <CardDescription>Distribuição atual das denúncias</CardDescription>
+        <CardTitle>{t('statusTitle')}</CardTitle>
+        <CardDescription>{t('statusDescription')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
@@ -85,6 +90,8 @@ interface CategoryChartProps {
 }
 
 export function CategoryChart({ data }: CategoryChartProps) {
+  const t = useTranslations('Dashboard.charts')
+
   const chartData = data
     .map((item) => ({
       name: REPORT_TYPES[item.category] || item.category,
@@ -95,8 +102,8 @@ export function CategoryChart({ data }: CategoryChartProps) {
   return (
     <Card className="bg-card">
       <CardHeader>
-        <CardTitle>Denúncias por Categoria</CardTitle>
-        <CardDescription>Tipos mais reportados</CardDescription>
+        <CardTitle>{t('categoryTitle')}</CardTitle>
+        <CardDescription>{t('categoryDescription')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
@@ -105,6 +112,13 @@ export function CategoryChart({ data }: CategoryChartProps) {
               strokeDasharray="3 3"
               stroke="hsl(var(--muted-foreground))"
               opacity={0.2}
+            />
+            <XAxis
+              dataKey="name"
+              angle={-45}
+              textAnchor="end"
+              height={100}
+              stroke="hsl(var(--foreground))"
             />
             <XAxis
               dataKey="name"
@@ -135,11 +149,13 @@ interface TimelineChartProps {
 }
 
 export function TimelineChart({ data }: TimelineChartProps) {
+  const t = useTranslations('Dashboard.charts')
+
   return (
     <Card className="bg-card">
       <CardHeader>
-        <CardTitle>Denúncias ao Longo do Tempo</CardTitle>
-        <CardDescription>Últimos 30 dias</CardDescription>
+        <CardTitle>{t('timelineTitle')}</CardTitle>
+        <CardDescription>{t('timelineDescription')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
@@ -180,9 +196,11 @@ interface LocationChartProps {
 }
 
 export function LocationChart({ title, description, data }: LocationChartProps) {
+  const t = useTranslations('Dashboard.charts')
+
   const chartData = data
     .map((item) => ({
-      name: item.country || item.city || 'Desconhecido',
+      name: item.country || item.city || t('unknown'),
       count: item.count,
     }))
     .sort((a, b) => b.count - a.count)

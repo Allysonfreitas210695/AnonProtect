@@ -8,8 +8,10 @@ import { Button } from '@/_components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { Input } from '@/_components/ui/input'
 import { Bot, X, Send, User, Sparkles, ShieldCheck } from 'lucide-react'
-import { cn } from '@/_lib/utils'
+import { cn } from '@/_shared/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   role: 'user' | 'model'
@@ -123,7 +125,13 @@ export function WhistleblowerAssistant() {
                             : 'bg-muted text-foreground rounded-tl-none backdrop-blur-sm'
                         )}
                       >
-                        {m.text}
+                        {m.role === 'model' ? (
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          m.text
+                        )}
                       </div>
                     </div>
                   ))}

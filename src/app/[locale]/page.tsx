@@ -53,6 +53,17 @@ export default function Home() {
             {t('trackStatus')}
           </Link>
         </Button>
+        <Button
+          asChild
+          variant="ghost"
+          size="lg"
+          className="hover:bg-primary/5 h-14 px-8 text-lg transition-all hover:-translate-y-1"
+        >
+          <Link href="/how-it-works">
+            <Shield className="text-primary mr-2 h-5 w-5" />
+            {t('howItWorks')}
+          </Link>
+        </Button>
       </div>
 
       <div className="w-full max-w-3xl px-4">
@@ -100,7 +111,7 @@ export default function Home() {
         </Card>
       </div>
 
-      <footer className="bg-muted/20 mt-20 w-full overflow-hidden py-12">
+      <footer className="bg-muted/20 mt-20 w-full overflow-hidden py-12 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
             <div className="col-span-2 space-y-4">
@@ -128,6 +139,14 @@ export default function Home() {
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     {useTranslations('Footer')('terms')}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/how-it-works"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {useTranslations('HowItWorks')('title')}
                   </Link>
                 </li>
               </ul>
