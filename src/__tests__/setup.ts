@@ -2,6 +2,16 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
 
+// Mock pino
+vi.mock('pino', () => ({
+  default: vi.fn(() => ({
+    info: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+  })),
+}))
+
 // Mock 'server-only'
 vi.mock('server-only', () => ({}))
 
