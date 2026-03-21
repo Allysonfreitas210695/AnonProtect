@@ -1,6 +1,7 @@
 import { getReportStats, getQuickStats } from '@/_modules/admin/admin.query'
 import { StatsCards } from './_components/stats'
 import { StatusChart, CategoryChart, TimelineChart, LocationChart } from './_components/charts'
+import { ComplianceGuard } from './_components/compliance-guard'
 import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
@@ -19,6 +20,8 @@ export default async function DashboardPage() {
       </div>
 
       <StatsCards stats={quickStats} />
+
+      <ComplianceGuard />
 
       <div className="grid gap-6 md:grid-cols-2">
         <StatusChart data={reportStats.statusStats} />

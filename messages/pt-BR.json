@@ -64,6 +64,36 @@
     "actions": {
       "tryAgain": "Tentar Novamente",
       "viewAll": "Ver todos"
+    },
+    "compliance": {
+      "title": "Guardião de Conformidade",
+      "description": "Monitoramento em tempo real de padrões LGPD & GDPR",
+      "lgpd": "LGPD (Brasil - Lei 13.709)",
+      "gdpr": "GDPR (Europa - UE 2016/679)",
+      "active": "Ativo",
+      "verified": "Verificado",
+      "measures": {
+        "encryption": {
+          "title": "Criptografia AES-256-GCM",
+          "desc": "Dados sensíveis protegidos em repouso conforme Art. 46 da LGPD."
+        },
+        "redaction": {
+          "title": "Minimização de Dados (IA)",
+          "desc": "Redação automática de PII para cumprir o princípio da necessidade."
+        },
+        "audit": {
+          "title": "Auditoria de Acesso",
+          "desc": "Rastreabilidade total de visualizações por administradores."
+        },
+        "anonymization": {
+          "title": "Anonimização de Ponta",
+          "desc": "Processamento seguro seguindo o Recital 26 da GDPR."
+        },
+        "integrity": {
+          "title": "Integridade de Dados",
+          "desc": "Garantia de não-violação e proteção contra DoS."
+        }
+      }
     }
   },
   "Success": {
