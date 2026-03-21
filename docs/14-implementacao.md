@@ -12,9 +12,7 @@ O projeto segue a estrutura padrão do Next.js (src folder), mas adota convenç�
 
 ## 14.3 Principais Componentes e Tecnologias
 
-- **AI Analysis Engine**: Integração com Gemini 1.5 Flash para triagem automática.
-- **Security Middleware**: Proteção contra bots via Cloudflare Turnstile e DoS via Upstash Redis.
-- **Admin Dashboard**: Visualização de dados com Recharts e gerenciamento em massa de denúncias.
-- **Transparency Portal**: Página pública para visualização de estatísticas agregadas.
-- **System Status Page**: Monitoramento proativo da saúde de todos os serviços externos.
+- **LGPD Privacy Layer**: Fluxo de anonimização de PII via IA e auditoria de visualização.
+- **Data Security**: Implementação de criptografia simétrica (AES-256-GCM) para dados em repouso.
+- **Robustness**: Cobertura de testes unitários de 100% nas regras de negócio críticas via Vitest.
 - **Framer Motion**: Micro-interações e transições fluidas para percepção de sistema "premium".

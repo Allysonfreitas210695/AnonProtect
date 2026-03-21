@@ -2,7 +2,7 @@
 
 ## 16.1 Considerações Finais
 
-O desenvolvimento do sistema **AnonProtect** atingiu seu objetivo primordial de fornecer uma plataforma segura, anônima e funcional para o reporte de irregularidades. A integração de tecnologias modernas como **Next.js**, **Auth.js** e **Prisma** permitiu a construção de um sistema que equilibra a complexidade técnica de segurança com uma interface de usuário simples e intuitiva.
+O desenvolvimento do sistema **AnonProtect** atingiu seu objetivo primordial de fornecer uma plataforma segura, anônima e funcional para o reporte de irregularidades. A implementação bem-sucedida de mecanismos de **conformidade com a LGPD**, como a redação automática de PII via IA e auditoria de visualização, eleva o projeto a um patamar de prontidão para uso em ambientes corporativos e governamentais reais.
 
 ## 16.2 Contribuições do Projeto
 

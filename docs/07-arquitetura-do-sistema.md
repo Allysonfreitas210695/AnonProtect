@@ -53,6 +53,22 @@ cloud "External Services" {
 @enduml
 ```
 
-## 7.3 Infraestrutura e Fluxo de Dados
+## 7.3 Segurança e Privacidade (LGPD)
+
+O sistema foi projetado seguindo os princípios de _Privacy by Design_:
+
+### 7.3.1 Criptografia em Repouso
+
+Todas as descrições de denúncias são criptografadas utilizando o algoritmo **AES-256-GCM** antes de serem persistidas no banco de dados. Isso garante que, mesmo em caso de vazamento da base de dados, o conteúdo permanece ilegível sem a `ENCRYPTION_KEY`.
+
+### 7.3.2 Camada de Anonimização (PII Redaction)
+
+Utiliza-se Inteligência Artificial (Gemini) para detectar e redigir automaticamente Informações de Identificação Pessoal (PII) como nomes, e-mails, CPFs e telefones, gerando uma versão segura para visualização padrão.
+
+### 7.3.3 Auditoria Ética
+
+Cada acesso a dados sensíveis por administradores gera um log de auditoria impermutável (`VIEWED`), garantindo transparência e responsabilidade no tratamento dos dados.
+
+## 7.4 Infraestrutura e Fluxo de Dados
 
 O fluxo de uma denúncia inicia-se na camada de cliente, é validado por um schema **Zod** no servidor, processado pela Server Action correspondente e persistido via Prisma. A resposta retorna apenas o código de rastreio, mantendo o estado da aplicação limpo e seguro.
