@@ -64,6 +64,40 @@
     "actions": {
       "tryAgain": "Intentar de Nuevo",
       "viewAll": "Ver todos"
+    },
+    "compliance": {
+      "title": "Guardián de Cumplimiento",
+      "description": "Monitoreo en tiempo real de estándares LGPD & GDPR",
+      "lgpd": "LGPD (Brasil - Lei 13.709)",
+      "gdpr": "GDPR (Europa - UE 2016/679)",
+      "active": "Activo",
+      "verified": "Verificado",
+      "measures": {
+        "encryption": {
+          "title": "Cifrado AES-256-GCM",
+          "desc": "Datos sensibles protegidos en reposo según Art. 46 de la LGPD."
+        },
+        "redaction": {
+          "title": "Minimización de Datos (IA)",
+          "desc": "Redacción automática de PII para cumplir el principio de necesidad."
+        },
+        "audit": {
+          "title": "Auditoría de Acceso",
+          "desc": "Trazabilidad total de visualizaciones por administradores."
+        },
+        "anonymization": {
+          "title": "Anonimización Avanzada",
+          "desc": "Procesamiento seguro siguiendo el Recital 26 de la GDPR."
+        },
+        "integrity": {
+          "title": "Integridad de Datos",
+          "desc": "Garantía de no violación y protección contra DoS."
+        },
+        "retention": {
+          "title": "Gestión de Retención",
+          "desc": "Monitoreo automático del ciclo de vida de los datos (Art. 15 de la LGPD)."
+        }
+      }
     }
   },
   "Success": {
@@ -216,11 +250,20 @@
     "state": "Estado / Provincia",
     "district": "Barrio",
     "country": "País",
+    "selectCountry": "Seleccione el país",
+    "selectCountryError": "Seleccione el país de la ocurrencia",
     "fetchingAddress": "Buscando dirección...",
     "invalidCep": "Código postal inválido o no encontrado",
+    "postalCodeInternational": "Código Postal / Zip Code",
+    "postalCodePlaceholderInternational": "Ingrese el código postal",
+    "optional": "(Opcional)",
     "uploadComingSoon": "La funcionalidad de carga será implementada pronto",
     "submit": "Enviar Denuncia",
     "submitting": "Enviando...",
+    "acceptTerms": "He leído y acepto los términos de privacidad y entiendo que mis datos serán tratados según la LGPD/GDPR.",
+    "acceptTermsError": "Debe aceptar los términos para continuar.",
+    "acceptAi": "Autorizo el procesamiento de mi denuncia por Inteligencia Artificial para fines de clasificación y anonimización de datos.",
+    "acceptAiError": "Debe autorizar el procesamiento por IA para continuar.",
     "assistant": {
       "trigger": "¿Dudas sobre la categoría?",
       "title": "Asistente AnonProtect",
@@ -402,7 +445,18 @@
     "credentials": "Correo y Contraseña",
     "socialProvider": "Cuenta de {provider}",
     "authInfo": "Información de Autenticación",
-    "authInfoDesc": "Vea cómo está conectado al sistema"
+    "authInfoDesc": "Vea cómo está conectado al sistema",
+    "privacy": "Privacidad y Derechos",
+    "privacyDesc": "Gestione sus derechos como titular de datos (LGPD)",
+    "privacyNotice": "Como titular de datos, usted tiene el derecho al acceso, portabilidad y al olvido.",
+    "exportData": "Exportar Mis Datos (Art. 18, V)",
+    "rightToBeForgotten": "Derecho al Olvido (Art. 18, IV)",
+    "anonymizeDesc": "Esta acción eliminará permanentemente su nombre, correo electrónico y contraseña del sistema. Sus registros en los logs de auditoría serán anonimizados para preservar la integridad histórica. Esta acción es irreversible.",
+    "anonymizeTitle": "Confirmar Anonimización",
+    "anonymizeConfirm": "Sí, Anonimizar y Salir",
+    "anonymizeCancel": "Cancelar",
+    "anonymizeButton": "Anonimizar mi cuenta",
+    "successAnonymized": "Su cuenta ha sido anonimizada según lo solicitado. Se cerrará su sesión."
   },
   "Register": {
     "title": "Crear Cuenta",

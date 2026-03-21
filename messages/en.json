@@ -64,6 +64,40 @@
     "actions": {
       "tryAgain": "Try Again",
       "viewAll": "View all"
+    },
+    "compliance": {
+      "title": "Compliance Guardian",
+      "description": "Real-time monitoring of LGPD & GDPR standards",
+      "lgpd": "LGPD (Brazil - Law 13.709)",
+      "gdpr": "GDPR (Europe - EU 2016/679)",
+      "active": "Active",
+      "verified": "Verified",
+      "measures": {
+        "encryption": {
+          "title": "AES-256-GCM Encryption",
+          "desc": "Sensitive data protected at rest per LGPD Art. 46."
+        },
+        "redaction": {
+          "title": "Data Minimization (AI)",
+          "desc": "Automatic PII redaction to meet the necessity principle."
+        },
+        "audit": {
+          "title": "Access Auditing",
+          "desc": "Full traceability of views by administrators."
+        },
+        "anonymization": {
+          "title": "Advanced Anonymization",
+          "desc": "Secure processing following GDPR Recital 26."
+        },
+        "integrity": {
+          "title": "Data Integrity",
+          "desc": "Guarantee of non-violation and protection against DoS."
+        },
+        "retention": {
+          "title": "Retention Management",
+          "desc": "Automatic monitoring of data lifecycle (LGPD Art. 15)."
+        }
+      }
     }
   },
   "Success": {
@@ -216,11 +250,20 @@
     "state": "State",
     "district": "District",
     "country": "Country",
+    "selectCountry": "Select country",
+    "selectCountryError": "Select the occurrence country",
     "fetchingAddress": "Fetching address...",
     "invalidCep": "Invalid zip code or not found",
+    "postalCodeInternational": "Postal Code / Zip Code",
+    "postalCodePlaceholderInternational": "Enter postal code",
+    "optional": "(Optional)",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
     "submitting": "Submitting...",
+    "acceptTerms": "I have read and accept the privacy terms and I understand that my data will be treated according to LGPD/GDPR.",
+    "acceptTermsError": "You must accept the terms to proceed.",
+    "acceptAi": "I authorize the processing of my report by Artificial Intelligence for classification and data anonymization purposes.",
+    "acceptAiError": "You must authorize AI processing to proceed.",
     "assistant": {
       "trigger": "Questions about the category?",
       "title": "AnonProtect Assistant",
@@ -402,7 +445,18 @@
     "credentials": "Email and Password",
     "socialProvider": "{provider} Account",
     "authInfo": "Authentication Information",
-    "authInfoDesc": "See how you are connected to the system"
+    "authInfoDesc": "See how you are connected to the system",
+    "privacy": "Privacy and Rights",
+    "privacyDesc": "Manage your LGPD data subject rights",
+    "privacyNotice": "As a data subject, you have the right to access, portability, and to be forgotten.",
+    "exportData": "Export My Data (Art. 18, V)",
+    "rightToBeForgotten": "Right to be Forgotten (Art. 18, IV)",
+    "anonymizeDesc": "This action will permanently remove your name, email, and password from the system. Your audit log records will be anonymized to preserve historical integrity. This action is irreversible.",
+    "anonymizeTitle": "Confirm Anonymization",
+    "anonymizeConfirm": "Yes, Anonymize and Sign Out",
+    "anonymizeCancel": "Cancel",
+    "anonymizeButton": "Anonymize my account",
+    "successAnonymized": "Your account has been anonymized as requested. You will be signed out."
   },
   "Register": {
     "title": "Create Account",

@@ -248,6 +248,8 @@
     "state": "Estado",
     "district": "Bairro",
     "country": "País",
+    "selectCountry": "Selecione o país",
+    "selectCountryError": "Selecione o país da ocorrência",
     "fetchingAddress": "Buscando endereço...",
     "invalidCep": "CEP inválido ou não encontrado",
     "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
