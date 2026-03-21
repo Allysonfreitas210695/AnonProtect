@@ -4,9 +4,10 @@ import { getTranslations } from 'next-intl/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import { ProfileForm } from './_components/profile-form'
 import { PasswordForm } from './_components/password-form'
+import { ExportDataButton } from './_components/export-button'
 import { prisma } from '@/_shared/lib/prisma'
 import { Badge } from '@/_components/ui/badge'
-import { KeyRound, ShieldCheck } from 'lucide-react'
+import { KeyRound, ShieldCheck, FileJson } from 'lucide-react'
 
 export default async function ProfilePage() {
   const user = await getCurrentUser()
@@ -77,15 +78,35 @@ export default async function ProfilePage() {
           </Card>
         </div>
 
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle>{t('security')}</CardTitle>
-            <CardDescription>{t('securityDesc')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <PasswordForm />
-          </CardContent>
-        </Card>
+        <div className="space-y-6">
+          <Card className="h-fit">
+            <CardHeader>
+              <CardTitle>{t('security')}</CardTitle>
+              <CardDescription>{t('securityDesc')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PasswordForm />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-primary/5 border-primary/20 h-fit">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <div className="bg-primary/10 rounded-lg p-2">
+                  <FileJson className="text-primary h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle>{t('privacy')}</CardTitle>
+                  <CardDescription>{t('privacyDesc')}</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground text-xs leading-relaxed">{t('privacyNotice')}</p>
+              <ExportDataButton />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

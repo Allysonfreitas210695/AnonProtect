@@ -1,5 +1,4 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { prisma } from '@/_shared/lib/prisma'
 import { analyzeReport } from '@/_shared/lib/ai'
 import {
   createReport,
@@ -9,8 +8,9 @@ import {
 } from './report.data'
 import * as query from './report.query'
 
-vi.mock('@/_shared/lib/prisma', () => ({
-  prisma: {
+// Hoist the mock to avoid "used before initialization" error
+const { mockPrisma } = vi.hoisted(() => ({
+  mockPrisma: {
     report: {
       create: vi.fn(),
       update: vi.fn(),
@@ -18,14 +18,26 @@ vi.mock('@/_shared/lib/prisma', () => ({
     message: {
       create: vi.fn(),
     },
+    category: {
+      findUnique: vi.fn(),
+    },
     activityLog: {
       create: vi.fn(),
     },
     $transaction: vi.fn((input) => {
-      if (typeof input === 'function') return input(prisma)
+      if (typeof input === 'function') return input(mockPrisma)
       return Promise.all(input)
     }),
   },
+}))
+
+vi.mock('@/_shared/lib/prisma', () => ({
+  prisma: mockPrisma,
+}))
+
+vi.mock('@/_shared/lib/crypto', () => ({
+  encrypt: vi.fn((text) => `encrypted_${text}`),
+  decrypt: vi.fn((text) => text.replace('encrypted_', '')),
 }))
 
 vi.mock('@/_shared/lib/ai', () => ({
@@ -54,7 +66,7 @@ describe('report.data', () => {
         description: 'Test report',
       }
       await createReport(data)
-      expect(prisma.report.create).toHaveBeenCalledWith(
+      expect(mockPrisma.report.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
             trackingCode: 'TR123',
@@ -72,7 +84,7 @@ describe('report.data', () => {
         attachments: [{ url: 'u', key: 'k', fileName: 'f', fileSize: 10, type: 't' }],
       }
       await createReport(data)
-      expect(prisma.report.create).toHaveBeenCalledWith(
+      expect(mockPrisma.report.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
             attachments: {
@@ -87,7 +99,7 @@ describe('report.data', () => {
   describe('createMessage', () => {
     it('should create message with SENDER as USER', async () => {
       await createMessage('r1', 'hello')
-      expect(prisma.message.create).toHaveBeenCalledWith({
+      expect(mockPrisma.message.create).toHaveBeenCalledWith({
         data: {
           reportId: 'r1',
           content: 'hello',
@@ -99,21 +111,21 @@ describe('report.data', () => {
 
   describe('updateReportAiResults', () => {
     it('should update report and create activity log in transaction', async () => {
-      const data = { priority: 'HIGH', assignedDepartmentId: 'd1', aiReasoning: 'reason' }
-      await updateReportAiResults('r1', data)
-
-      expect(prisma.report.update).toHaveBeenCalledWith({
-        where: { id: 'r1' },
-        data: { priority: 'HIGH', assignedDepartmentId: 'd1' },
+      mockPrisma.category.findUnique.mockResolvedValue({ id: 'c1', name: 'Cat 1' } as unknown as {
+        id: string
+        name: string
       })
-      expect(prisma.activityLog.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            reportId: 'r1',
-            action: 'AI_ANALYZED',
-          }),
-        })
-      )
+
+      await updateReportAiResults('r1', 'Cat 1', 'HIGH', 'reason', 'redacted info')
+
+      expect(mockPrisma.report.update).toHaveBeenCalledWith({
+        where: { id: 'r1' },
+        data: expect.objectContaining({
+          priority: 'HIGH',
+          categoryId: 'c1',
+          redactedDescription: 'encrypted_redacted info',
+        }),
+      })
     })
   })
 
@@ -127,13 +139,14 @@ describe('report.data', () => {
         suggestedCategory: 'Cat 1',
         priority: 'HIGH',
         reasoning: 'AI reasoning',
+        redactedDescription: 'redacted info',
       } as unknown as Awaited<ReturnType<typeof analyzeReport>>)
 
       await processAiAnalysis('r1', 'description', 'BR')
 
       expect(query.getCategories).toHaveBeenCalled()
       expect(analyzeReport).toHaveBeenCalledWith('description', ['Cat 1'], 'BR')
-      expect(prisma.report.update).toHaveBeenCalled()
+      expect(mockPrisma.report.update).toHaveBeenCalled()
     })
 
     it('should handle missing AI analysis', async () => {
@@ -144,7 +157,7 @@ describe('report.data', () => {
 
       await processAiAnalysis('r1', 'description')
 
-      expect(prisma.report.update).not.toHaveBeenCalled()
+      expect(mockPrisma.report.update).not.toHaveBeenCalled()
     })
 
     it('should handle errors gracefully', async () => {

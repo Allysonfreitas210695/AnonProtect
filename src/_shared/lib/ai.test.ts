@@ -47,6 +47,7 @@ describe('AI Library (Modules)', () => {
               suggestedCategory: 'Fraude',
               priority: 'HIGH',
               reasoning: 'Detailed reasoning',
+              redactedDescription: 'Texto anonimizado [DADOS SENSÍVEis]',
             }),
         }),
       }

@@ -429,7 +429,10 @@
     "credentials": "E-mail e Senha",
     "socialProvider": "Conta {provider}",
     "authInfo": "Informações de Autenticação",
-    "authInfoDesc": "Veja como você está conectado ao sistema"
+    "authInfoDesc": "Veja como você está conectado ao sistema",
+    "privacy": "Privacidade e Dados",
+    "privacyDesc": "Gerencie seus direitos de titular LGPD",
+    "privacyNotice": "Você tem o direito de acessar e exportar seus dados pessoais a qualquer momento. O arquivo gerado contém suas informações de perfil, contas vinculadas e histórico de segurança."
   },
   "Register": {
     "title": "Criar Conta",
