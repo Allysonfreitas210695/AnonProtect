@@ -109,3 +109,14 @@ export async function updateReportsStatus(ids: string[], status: ReportStatus) {
     data: { status },
   })
 }
+
+export async function logReportView(reportId: string, userId: string) {
+  return await prisma.activityLog.create({
+    data: {
+      reportId,
+      userId,
+      action: 'VIEWED',
+      description: 'Administrador visualizou os detalhes da denúncia',
+    },
+  })
+}

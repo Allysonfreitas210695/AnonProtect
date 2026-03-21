@@ -175,6 +175,7 @@ exports.Prisma.ReportScalarFieldEnum = {
   assignedToId: 'assignedToId',
   categoryId: 'categoryId',
   assignedDepartmentId: 'assignedDepartmentId',
+  redactedDescription: 'redactedDescription',
   deletedAt: 'deletedAt',
 }
 
@@ -285,6 +286,7 @@ exports.ActivityAction = exports.$Enums.ActivityAction = {
   EVIDENCE_ADDED: 'EVIDENCE_ADDED',
   DEPARTMENT_CHANGED: 'DEPARTMENT_CHANGED',
   AI_ANALYZED: 'AI_ANALYZED',
+  VIEWED: 'VIEWED',
 }
 
 exports.Prisma.ModelName = {

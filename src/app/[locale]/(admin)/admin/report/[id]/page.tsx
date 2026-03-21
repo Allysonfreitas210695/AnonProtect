@@ -17,6 +17,7 @@ import { AdminMessageForm } from './_components/admin-message-form'
 import { AdminPrintButton } from './_components/admin-print-button'
 import { Logo } from '@/_components/shared/logo'
 import { getReportById } from '@/_modules/admin/admin.query'
+import { logReportView } from '@/_modules/admin/admin.data'
 import { getAllDepartments } from '@/_modules/department/department.query'
 
 interface Props {
@@ -36,6 +37,9 @@ export default async function AdminReportPage({ params }: Props) {
   if (!report) {
     notFound()
   }
+
+  // LGPD: Log audit trail for viewing sensitive data
+  await logReportView(report.id, user.id)
 
   return (
     <div className="space-y-8 px-2 pb-10 lg:px-0">

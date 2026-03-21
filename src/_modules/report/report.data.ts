@@ -2,6 +2,7 @@ import { prisma } from '@/_shared/lib/prisma'
 import { analyzeReport } from '@/_shared/lib/ai'
 import { logger } from '@/_shared/lib/logger'
 import { getCategories } from './report.query'
+import { encrypt } from '@/_shared/lib/crypto'
 
 export interface CreateReportData {
   trackingCode: string
@@ -62,26 +63,31 @@ export async function createMessage(reportId: string, content: string) {
 }
 
 export async function updateReportAiResults(
-  reportId: string,
-  data: { priority: string; assignedDepartmentId?: string; aiReasoning?: string }
+  id: string,
+  categoryName: string,
+  priority: string,
+  reasoning: string,
+  redactedDescription: string
 ) {
-  return await prisma.$transaction([
-    prisma.report.update({
-      where: { id: reportId },
-      data: {
-        priority: data.priority,
-        assignedDepartmentId: data.assignedDepartmentId,
+  const category = await prisma.category.findUnique({
+    where: { name: categoryName },
+  })
+
+  return await prisma.report.update({
+    where: { id },
+    data: {
+      categoryId: category?.id,
+      priority,
+      redactedDescription: encrypt(redactedDescription),
+      activityLogs: {
+        create: {
+          action: 'AI_ANALYZED',
+          description: `Análise automática concluída. Categoria sugerida: ${categoryName}, Prioridade: ${priority}`,
+          metadata: JSON.stringify({ reasoning }),
+        },
       },
-    }),
-    prisma.activityLog.create({
-      data: {
-        reportId,
-        action: 'AI_ANALYZED',
-        description: 'Denúncia analisada automaticamente pela Inteligência Artificial',
-        metadata: data.aiReasoning ? JSON.stringify({ reasoning: data.aiReasoning }) : undefined,
-      },
-    }),
-  ])
+    },
+  })
 }
 
 export async function processAiAnalysis(reportId: string, description: string, country?: string) {
@@ -102,13 +108,13 @@ export async function processAiAnalysis(reportId: string, description: string, c
         'IA concluiu análise do relato'
       )
 
-      const currentCategory = categories.find((c) => c.name === aiAnalysis.suggestedCategory)
-
-      await updateReportAiResults(reportId, {
-        priority: aiAnalysis.priority,
-        assignedDepartmentId: currentCategory?.defaultDepartmentId || undefined,
-        aiReasoning: aiAnalysis.reasoning,
-      })
+      await updateReportAiResults(
+        reportId,
+        aiAnalysis.suggestedCategory,
+        aiAnalysis.priority,
+        aiAnalysis.reasoning,
+        aiAnalysis.redactedDescription
+      )
     }
   } catch (error) {
     logger.error({ reportId, error }, 'Falha no processamento de IA em background')

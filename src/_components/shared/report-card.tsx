@@ -1,8 +1,12 @@
+'use client'
+
 import { useTranslations } from 'next-intl'
 import { ReportWithCategory } from '@/_schemas/report'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { formatDate } from '@/_shared/utils/formatters'
 import { StatusBadge } from '@/_components/shared/status-badge'
+import { ShieldCheck, Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
 
 interface ReportCardProps {
   report: ReportWithCategory
@@ -20,6 +24,14 @@ export function ReportCard({
   children,
 }: ReportCardProps) {
   const t = useTranslations('ReportCard')
+  const [showOriginal, setShowOriginal] = useState(false)
+
+  const hasRedaction = !!(report as unknown as { redactedDescription?: string | null })
+    .redactedDescription
+  const displayDescription = showOriginal
+    ? report.description
+    : (report as unknown as { redactedDescription?: string | null }).redactedDescription ||
+      report.description
 
   return (
     <Card className="bg-card/40 ring-border/50 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-300 hover:shadow-lg print:bg-white print:shadow-none print:ring-0">
@@ -60,11 +72,37 @@ export function ReportCard({
         </div>
 
         <div className="bg-muted/30 ring-border/30 hover:bg-muted/40 relative overflow-hidden rounded-2xl p-6 ring-1 transition-all print:bg-white print:p-0 print:ring-0">
-          <p className="text-muted-foreground mb-3 text-[10px] font-black tracking-widest uppercase print:text-black">
-            {t('description')}
-          </p>
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-muted-foreground text-[10px] font-black tracking-widest uppercase print:text-black">
+              {t('description')}
+            </p>
+            {hasRedaction && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-600 ring-1 ring-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-400">
+                  <ShieldCheck className="h-3 w-3" />
+                  PROJETADO PELA LGPD
+                </div>
+                <button
+                  onClick={() => setShowOriginal(!showOriginal)}
+                  className="text-muted-foreground hover:text-primary flex items-center gap-1 text-[10px] font-bold uppercase transition-colors print:hidden"
+                >
+                  {showOriginal ? (
+                    <>
+                      <EyeOff className="h-3 w-3" />
+                      Ocultar Originais
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="h-3 w-3" />
+                      Ver Originais
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
           <p className="text-foreground/90 text-md leading-relaxed font-medium whitespace-pre-wrap print:text-black">
-            {report.description}
+            {displayDescription}
           </p>
           <div className="bg-primary/20 absolute top-0 left-0 h-full w-1 opacity-50 print:hidden" />
         </div>

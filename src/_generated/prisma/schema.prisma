@@ -42,6 +42,7 @@ enum ActivityAction {
   EVIDENCE_ADDED
   DEPARTMENT_CHANGED
   AI_ANALYZED
+  VIEWED
 }
 
 model User {
@@ -133,6 +134,7 @@ model Report {
   activityLogs         ActivityLog[]
   assignedDepartmentId String?             @map("assigned_department_id")
   assignedDepartment   Department?         @relation(fields: [assignedDepartmentId], references: [id])
+  redactedDescription  String?             @map("redacted_description")
   deletedAt            DateTime?           @map("deleted_at")
 
   @@index([status, createdAt])

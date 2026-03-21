@@ -60,15 +60,26 @@ export async function getReportById(id: string) {
   )
 
   let decryptedDescription = report.description
+  let decryptedRedactedDescription = report.redactedDescription
+
   try {
     decryptedDescription = decrypt(report.description)
   } catch (e) {
     console.error('Failed to decrypt report description', e)
   }
 
+  try {
+    if (report.redactedDescription) {
+      decryptedRedactedDescription = decrypt(report.redactedDescription)
+    }
+  } catch (e) {
+    console.error('Failed to decrypt redacted report description', e)
+  }
+
   return {
     ...report,
     description: decryptedDescription,
+    redactedDescription: decryptedRedactedDescription,
     attachments: attachmentsWithSignedUrls,
   }
 }

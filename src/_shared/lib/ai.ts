@@ -66,6 +66,7 @@ export interface ReportAnalysis {
   suggestedCategory: string
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
   reasoning: string
+  redactedDescription: string
 }
 
 export async function analyzeReport(
@@ -98,12 +99,14 @@ export async function analyzeReport(
       1. Use o Google Search para pesquisar a gravidade legal deste tipo de relato especificamente em: ${country}.
       2. Baseie sua prioridade (LOW/MEDIUM/HIGH/CRITICAL) no risco jurídico local e impacto humano.
       3. O campo "reasoning" deve incluir uma breve menção a leis ou regulamentos relevantes encontrados em ${country}.
+      4. EXTREMAMENTE IMPORTANTE (LGPD): Identifique qualquer Informação Pessoal Identificável (PII) na descrição, como NOMES PRÓPRIOS, E-MAILS, CPFs, TELEFONES ou ENDEREÇOS ESPECÍFICOS e substitua-os por [DADO PROTEGIDO] no campo "redactedDescription". O restante do texto deve ser mantido exatamente igual.
 
       Responda APENAS em formato JSON puro, sem blocos de código markdown ou texto explicativo fora do JSON. O JSON deve seguir RIGOROSAMENTE esta estrutura:
       {
         "suggestedCategory": "nome exato de uma das categorias fornecidas",
         "priority": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
-        "reasoning": "explicação técnica detalhada em português, citando leis ou normas de conformidade se aplicável"
+        "reasoning": "explicação técnica detalhada em português, citando leis ou normas de conformidade se aplicável",
+        "redactedDescription": "versão da descrição original com dados sensíveis (nomes, cpfs, etc) substituídos por [DADO PROTEGIDO]"
       }
     `
 
