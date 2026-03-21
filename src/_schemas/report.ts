@@ -25,6 +25,9 @@ export const reportSchema = z.object({
   acceptTerms: z.boolean().refine((val) => val === true, {
     message: 'Você deve aceitar os termos de privacidade para continuar',
   }),
+  acceptAi: z.boolean().refine((val) => val === true, {
+    message: 'Você deve autorizar o processamento por IA para continuar',
+  }),
 })
 
 export const reportStatusSchema = z.object({

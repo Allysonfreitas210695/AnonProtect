@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, CheckCircle2, Lock, EyeOff, Activity, Globe } from 'lucide-react'
+import { ShieldCheck, CheckCircle2, Lock, EyeOff, Activity, Globe, Clock } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/_components/ui/card'
 import { useTranslations } from 'next-intl'
 
@@ -45,6 +45,13 @@ export function ComplianceGuard() {
       status: t('verified'),
       icon: <ShieldCheck className="h-4 w-4 text-blue-500" />,
       description: t('measures.integrity.desc'),
+    },
+    {
+      id: 'retention',
+      title: t('measures.retention.title'),
+      status: t('active'),
+      icon: <Clock className="h-4 w-4 text-blue-500" />,
+      description: t('measures.retention.desc'),
     },
   ]
 

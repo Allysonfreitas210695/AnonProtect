@@ -264,21 +264,39 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 </div>
               )}
 
-              <FormField
-                control={form.control}
-                name="acceptTerms"
-                render={({ field }) => (
-                  <FormItem className="bg-muted/10 ring-border/50 flex flex-row items-start space-y-0 space-x-3 rounded-xl p-4 ring-1">
-                    <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>{t('acceptTerms')}</FormLabel>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="acceptTerms"
+                  render={({ field }) => (
+                    <FormItem className="bg-muted/10 ring-border/50 flex flex-row items-start space-y-0 space-x-3 rounded-xl p-4 ring-1">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>{t('acceptTerms')}</FormLabel>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="acceptAi"
+                  render={({ field }) => (
+                    <FormItem className="bg-muted/10 ring-border/50 flex flex-row items-start space-y-0 space-x-3 rounded-xl p-4 ring-1">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>{t('acceptAi')}</FormLabel>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <div className="pt-4">
                 <Button

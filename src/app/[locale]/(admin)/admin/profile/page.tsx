@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_co
 import { ProfileForm } from './_components/profile-form'
 import { PasswordForm } from './_components/password-form'
 import { ExportDataButton } from './_components/export-button'
+import { AnonymizeButton } from './_components/anonymize-button'
 import { prisma } from '@/_shared/lib/prisma'
 import { Badge } from '@/_components/ui/badge'
-import { KeyRound, ShieldCheck, FileJson } from 'lucide-react'
+import { KeyRound, ShieldCheck, FileJson, Fingerprint } from 'lucide-react'
 
 export default async function ProfilePage() {
   const user = await getCurrentUser()
@@ -93,7 +94,7 @@ export default async function ProfilePage() {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <div className="bg-primary/10 rounded-lg p-2">
-                  <FileJson className="text-primary h-5 w-5" />
+                  <Fingerprint className="text-primary h-5 w-5" />
                 </div>
                 <div>
                   <CardTitle>{t('privacy')}</CardTitle>
@@ -101,9 +102,12 @@ export default async function ProfilePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               <p className="text-muted-foreground text-xs leading-relaxed">{t('privacyNotice')}</p>
-              <ExportDataButton />
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <ExportDataButton />
+                <AnonymizeButton />
+              </div>
             </CardContent>
           </Card>
         </div>

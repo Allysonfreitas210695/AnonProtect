@@ -92,6 +92,10 @@
         "integrity": {
           "title": "Integridade de Dados",
           "desc": "Garantia de não-violação e proteção contra DoS."
+        },
+        "retention": {
+          "title": "Gestão de Retenção",
+          "desc": "Monitoramento automático do ciclo de vida dos dados (Art. 15 da LGPD)."
         }
       }
     }
@@ -251,6 +255,8 @@
     "submitting": "Enviando...",
     "acceptTerms": "Li e aceito os termos de privacidade e entendo que meus dados serão tratados conforme a LGPD.",
     "acceptTermsError": "Você deve aceitar os termos para prosseguir.",
+    "acceptAi": "Autorizo o processamento da minha denúncia por Inteligência Artificial para fins de classificação e anonimização de dados.",
+    "acceptAiError": "Você deve autorizar o processamento por IA para prosseguir.",
     "assistant": {
       "trigger": "Dúvidas sobre a categoria?",
       "title": "Assistente AnonProtect",
@@ -433,9 +439,17 @@
     "socialProvider": "Conta {provider}",
     "authInfo": "Informações de Autenticação",
     "authInfoDesc": "Veja como você está conectado ao sistema",
-    "privacy": "Privacidade e Dados",
+    "privacy": "Privacidade e Direitos",
     "privacyDesc": "Gerencie seus direitos de titular LGPD",
-    "privacyNotice": "Você tem o direito de acessar e exportar seus dados pessoais a qualquer momento. O arquivo gerado contém suas informações de perfil, contas vinculadas e histórico de segurança."
+    "privacyNotice": "Como titular de dados, você tem o direito ao acesso, portabilidade e ao esquecimento.",
+    "exportData": "Exportar Meus Dados (Art. 18, V)",
+    "rightToBeForgotten": "Direito ao Esquecimento (Art. 18, IV)",
+    "anonymizeDesc": "Esta ação irá remover permanentemente seu nome, e-mail e senha do sistema. Seus registros em logs de auditoria serão anonimizados para preservar a integridade histórica. Esta ação é irreversível.",
+    "anonymizeTitle": "Confirmar Anonimização",
+    "anonymizeConfirm": "Sim, Anônimo e Sair",
+    "anonymizeCancel": "Cancelar",
+    "anonymizeButton": "Anonimizar minha conta",
+    "successAnonymized": "Sua conta foi anonimizada conforme solicitado. Você será desconectado."
   },
   "Register": {
     "title": "Criar Conta",
@@ -463,6 +477,11 @@
     "termsOfService": "Termos de Uso",
     "lastUpdated": "Última atualização: {date}",
     "back": "Voltar",
+    "retention": "Retenção de Dados",
+    "retentionDesc": "Controle de tempo de guarda de informações sensíveis.",
+    "oldReports": "Relatos Antigos (+1 ano)",
+    "retentionHint": "A LGPD exige que dados não sejam mantidos além do necessário para a finalidade original.",
+    "bulkArchive": "Arquivar Tudo",
     "privacy": {
       "title": "Política de Privacidade",
       "intro": "Sua privacidade é nossa prioridade máxima. Este documento explica como protegemos seus dados.",
