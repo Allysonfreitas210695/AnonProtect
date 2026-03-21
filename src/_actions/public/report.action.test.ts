@@ -54,6 +54,7 @@ describe('Public Report Actions', () => {
         description: 'Test description long enough',
         turnstileToken: 'invalid',
         acceptTerms: true,
+        acceptAi: true,
         country: 'Brasil',
       })
 
@@ -75,6 +76,7 @@ describe('Public Report Actions', () => {
         description: 'Valid test description of sufficient length',
         turnstileToken: 'valid-token',
         acceptTerms: true,
+        acceptAi: true,
         country: 'Brasil',
       })
 
