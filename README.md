@@ -29,9 +29,10 @@ Crie um arquivo `.env` na raiz do projeto e preencha os seguintes campos:
 # URL do Neon.tech ou PostgreSQL local
 DATABASE_URL="sua_url_aqui"
 
-# Chave para criptografia de cookies do Auth.js
-# Gere uma com: openssl rand -base64 32
+# Chave para criptografia de cookies do Auth.js e dados sensíveis (AES-256-GCM)
+# Gere uma com: openssl rand -hex 32
 AUTH_SECRET="sua_chave_secreta"
+ENCRYPTION_KEY="sua_chave_hex_de_64_caracteres"
 AUTH_URL="http://localhost:3000"
 ```
 
@@ -84,6 +85,14 @@ AWS_SES_FROM_EMAIL="seu-email-verificado"
 3. `npx prisma migrate dev`
 4. `npm run dev`
 
+### ✅ Testes Automatizados
+
+Para rodar a suíte de testes unitários (Vitest):
+
+```bash
+npm test
+```
+
 ---
 
 ## 🛠️ Credenciais Padrão (Seed)
@@ -95,7 +104,8 @@ AWS_SES_FROM_EMAIL="seu-email-verificado"
 
 ## 🌟 Diferenciais Técnicos
 
-- **Triagem por IA**: Classificação automática de denúncias via Gemini AI.
-- **Segurança Blindada**: Rate limiting por IP e proteção contra bots automática.
-- **Design Premium**: Interface totalmente responsiva com suporte nativo a Dark Mode e animações Framer Motion.
-- **Monitoramento**: Página de status para verificar se os serviços de terceiros estão online.
+- **Triagem por IA**: Classificação automática de denúncias via Gemini AI (Google).
+- **Conformidade LGPD**: Anonimização automática de dados sensíveis (PII) via IA e trilha de auditoria completa (`Activity Logs`).
+- **Segurança Blindada**: Criptografia de ponta a ponta (**AES-256-GCM**), rate limiting por IP e proteção contra bots automática.
+- **Design Premium**: Interface totalmente responsiva construída com Tailwind CSS, Framer Motion e suporte nativo a Dark Mode.
+- **Monitoramento**: Painel de status administrativo para verificar a saúde das APIs e conectividade do banco de dados.
