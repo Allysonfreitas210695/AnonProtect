@@ -141,17 +141,27 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     name="postalCode"
                     render={({ field }) => (
                       <FormItem className="px-4">
-                        <FormLabel>{t('postalCode')}</FormLabel>
+                        <FormLabel>
+                          {isBrazil ? t('postalCode') : t('postalCodeInternational')}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             onChange={(e) => {
-                              const formatted = formatCEP(e.target.value)
-                              field.onChange(formatted)
+                              const val = e.target.value
+                              if (isBrazil) {
+                                field.onChange(formatCEP(val))
+                              } else {
+                                field.onChange(val)
+                              }
                             }}
-                            placeholder={t('postalCodePlaceholder')}
+                            placeholder={
+                              isBrazil
+                                ? t('postalCodePlaceholder')
+                                : t('postalCodePlaceholderInternational')
+                            }
                             className="h-11"
-                            maxLength={9}
+                            maxLength={isBrazil ? 9 : 20}
                           />
                         </FormControl>
                         <FormMessage />
@@ -166,7 +176,10 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     name="city"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-1">
-                        <FormLabel>{t('city')}</FormLabel>
+                        <FormLabel>
+                          {t('city')}{' '}
+                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
                         </FormControl>
@@ -179,7 +192,10 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     name="state"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('state')}</FormLabel>
+                        <FormLabel>
+                          {t('state')}{' '}
+                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
                         </FormControl>
@@ -192,7 +208,10 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     name="district"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('district')}</FormLabel>
+                        <FormLabel>
+                          {t('district')}{' '}
+                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
                         </FormControl>

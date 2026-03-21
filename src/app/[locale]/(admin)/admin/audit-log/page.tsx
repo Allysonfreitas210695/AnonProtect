@@ -4,10 +4,18 @@ import { GlobalActivityLog } from '@/_components/shared/global-activity-log'
 import { getGlobalActivityLogs as getAuditLogs } from '@/_modules/admin/admin.query'
 import { Button } from '@/_components/ui/button'
 import { Link } from '@/i18n/navigation'
+import { getCurrentUser } from '@/_shared/lib/auth'
+import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AuditLogPage() {
+  const user = await getCurrentUser()
+
+  if (user?.role !== 'ADMIN') {
+    redirect('/admin')
+  }
+
   const t = await getTranslations('AuditLog')
   const activities = await getAuditLogs(100)
 

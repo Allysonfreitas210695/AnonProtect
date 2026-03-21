@@ -3,10 +3,18 @@ import { Badge } from '@/_components/ui/badge'
 import { CategoryForm } from './_components/category-form'
 import { CategoryActions } from './_components/category-actions'
 import { getAllCategories } from '@/_modules/category/category.query'
+import { getCurrentUser } from '@/_shared/lib/auth'
+import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
 export default async function SettingsPage() {
+  const user = await getCurrentUser()
+
+  if (user?.role !== 'ADMIN') {
+    redirect('/admin')
+  }
+
   const categories = await getAllCategories()
 
   return (

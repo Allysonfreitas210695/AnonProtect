@@ -69,6 +69,19 @@ Utiliza-se Inteligência Artificial (Gemini) para detectar e redigir automaticam
 
 Cada acesso a dados sensíveis por administradores gera um log de auditoria impermutável (`VIEWED`), garantindo transparência e responsabilidade no tratamento dos dados.
 
-## 7.4 Infraestrutura e Fluxo de Dados
+## 7.4 Internacionalização e UX Global
 
-O fluxo de uma denúncia inicia-se na camada de cliente, é validado por um schema **Zod** no servidor, processado pela Server Action correspondente e persistido via Prisma. A resposta retorna apenas o código de rastreio, mantendo o estado da aplicação limpo e seguro.
+O sistema utiliza o **next-intl** para suportar múltiplos idiomas (PT-BR e EN). A interface é adaptativa: o formulário de denúncia ajusta rótulos e placeholders (ex: CEP para Postal Code) dinamicamente com base no país selecionado, garantindo uma experiência fluida para usuários internacionais e conformidade com padrões globais de endereçamento.
+
+## 7.5 Controle de Acesso e Governança (RBAC & SoD)
+
+O sistema implementa o modelo de **Controle de Acesso Baseado em Funções (RBAC)** e o princípio de **Separação de Deveres (SoD)** para garantir que cada usuário tenha acesso apenas ao necessário para sua função.
+
+### 7.5.1 Hierarquia de Papéis (User Roles)
+
+1.  **ADMIN**: Possui privilégios totais sobre a infraestrutura do sistema. É responsável pela gestão de categorias e configurações globais. Possui acesso exclusivo ao **Registro de Auditoria**, garantindo que a fiscalização do sistema seja feita por um nível de alta governança.
+2.  **SUPERVISOR**: Focado na investigação operacional. Pode gerenciar denúncias e interagir com denunciantes. Por segurança, é impedido de acessar logs de auditoria e configurações críticas, evitando conflitos de interesse e vazamento de metadados.
+
+### 7.5.2 Aplicação do Princípio do Menor Privilégio
+
+As restrições são aplicadas na camada de servidor (**Server-side RBAC**), onde cada página sensível valida o papel do usuário logado antes da renderização. Tentativas de acesso não autorizado a áreas como `/admin/audit-log` ou `/admin/settings` resultam em redirecionamento imediato, reforçando a segurança do ecossistema.
