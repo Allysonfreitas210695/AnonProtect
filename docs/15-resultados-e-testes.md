@@ -21,9 +21,10 @@ Foi implementada uma suíte de testes robusta para garantir a confiabilidade das
 
 - **Módulo de Denúncias**: Cobertura total das funções de criação, processamento de IA e consultas.
 - **Status do Sistema**: Verificação proativa de conectividade com serviços externos (AWS, Google, Redis).
-- **Módulo Administrativo**: Testes de transações atômicas e auditoria.
+- **Módulo Administrativo**: Testes de transações atômicas, auditoria e controle de acesso (RBAC/SoD).
+- **Internacionalização**: Validação de sincronia de chaves i18n entre idiomas.
 
-**Resultado**: 100% de aprovação (13/13 testes) com tempo de execução inferior a 4 segundos.
+**Resultado**: 100% de aprovação (130/130 testes) cobrindo todos os fluxos críticos do sistema.
 
 ## 15.3 Desempenho e Segurança
 

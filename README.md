@@ -105,7 +105,9 @@ npm test
 ## 🌟 Diferenciais Técnicos
 
 - **Triagem por IA**: Classificação automática de denúncias via Gemini AI (Google).
-- **Conformidade LGPD**: Anonimização automática de dados sensíveis (PII) via IA e trilha de auditoria completa (`Activity Logs`).
-- **Segurança Blindada**: Criptografia de ponta a ponta (**AES-256-GCM**), rate limiting por IP e proteção contra bots automática.
-- **Design Premium**: Interface totalmente responsiva construída com Tailwind CSS, Framer Motion e suporte nativo a Dark Mode.
-- **Monitoramento**: Painel de status administrativo para verificar a saúde das APIs e conectividade do banco de dados.
+- **Conformidade LGPD Avançada**: Implementação do **Direito ao Esquecimento** (Anonimização de Perfil - Art. 18), **Consentimento Granular** para processamento de IA (Art. 8) e **Gestão de Retenção** (Art. 15).
+- **Segurança e Governança**: Controle de Acesso Baseado em Funções (**RBAC**) com Separação de Deveres (**SoD**), impedindo que supervisores acessem logs de auditoria.
+- **Internacionalização Completa**: Suporte nativo e sincronizado para **Português (Brasil)**, **Inglês** e **Espanhol**, com formulários adaptativos.
+- **Segurança Blindada**: Criptografia de ponta a ponta (**AES-256-GCM**), rate limiting por IP e proteção contra bots (Cloudflare Turnstile).
+- **Design Premium**: Interface construída com Tailwind CSS, Framer Motion e suporte nativo a Dark Mode.
+- **Monitoramento**: Painel de status administrativo para saúde das APIs e conectividade.

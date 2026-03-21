@@ -17,3 +17,5 @@ Este projeto justifica-se tecnicamente pela aplicação de padrões modernos de 
 - **Tipagem Estrita (TypeScript)**: Redução de bugs em tempo de execução e melhoria da manutenibilidade do código.
 - **Internacionalização (next-intl)**: Preparação do sistema para contextos globais, aumentando sua abrangência e acessibilidade.
 - **Escalabilidade (PostgreSQL & Prisma)**: Estrutura de dados preparada para volumes crescentes de informações mantendo a consistência.
+- **Conformidade Nativa (LGPD/GDPR)**: Implementação de Privacy by Design com anonimização e portabilidade de dados.
+- **Inteligência Artificial (Google Gemini)**: Triagem automatizada e redução de ruído informacional através de modelos de linguagem de grande escala (LLM).

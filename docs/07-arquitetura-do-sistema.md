@@ -65,11 +65,25 @@ Todas as descrições de denúncias são criptografadas utilizando o algoritmo *
 
 Utiliza-se Inteligência Artificial (Gemini) para detectar e redigir automaticamente Informações de Identificação Pessoal (PII) como nomes, e-mails, CPFs e telefones, gerando uma versão segura para visualização padrão.
 
-### 7.3.3 Auditoria Ética
+### 7.2.4 Governança e Transparência (LGPD/GDPR)
 
-Cada acesso a dados sensíveis por administradores gera um log de auditoria impermutável (`VIEWED`), garantindo transparência e responsabilidade no tratamento dos dados.
+O sistema implementa o conceito de **Privacy by Design**, garantindo:
 
-## 7.4 Internacionalização e UX Global
+- **Separação de Deveres (SoD)**: Papéis distintos (Supervisor vs Admin) para evitar conflitos de interesse e acesso indevido a dados de auditoria.
+- **Direito ao Esquecimento**: Funcionalidade de anonimização que remove dados identificáveis mantendo a integridade estatística.
+- **Consentimento Granular**: Checkboxes independentes para termos de uso e processamento por IA, conforme Art. 8 da LGPD.
+
+### 7.2.5 Suporte Multidioma (I18n)
+
+Arquitetura baseada em `next-intl` com sincronização rigorosa entre Português, Inglês e Espanhol, permitindo a internacionalização de:
+
+- Conteúdo estático e dinâmico.
+- Mensagens de erro e validação.
+- Labels adaptativos de formulário (ex: CEP vs Postal Code).
+
+## 7.3 Fluxo de Dados
+
+cionalização e UX Global
 
 O sistema utiliza o **next-intl** para suportar múltiplos idiomas (PT-BR e EN). A interface é adaptativa: o formulário de denúncia ajusta rótulos e placeholders (ex: CEP para Postal Code) dinamicamente com base no país selecionado, garantindo uma experiência fluida para usuários internacionais e conformidade com padrões globais de endereçamento.
 

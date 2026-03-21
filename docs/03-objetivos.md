@@ -15,3 +15,6 @@ Para alcançar o objetivo geral, foram definidos os seguintes objetivos específ
 - **Estabelecer um canal de comunicação bidirecional anonimizado**: Implementar um sistema de chat dentro da denúncia, onde gestores e denunciantes podem trocar mensagens sem que a identidade do denunciante seja revelada.
 - **Utilizar autenticação moderna para gestores**: Integrar o **Auth.js** com suporte a provedores sociais (Google) e credenciais seguras para o acesso administrativo.
 - **Garantir a persistência e integridade dos dados**: Utilizar o ORM **Prisma** com **PostgreSQL** para gerenciar o modelo de dados de forma escalável e segura.
+- **Implementar Governança LGPD**: Assegurar o Direito ao Esquecimento, Portabilidade e Gestão de Retenção de dados conforme a Lei 13.709/2018.
+- **Integrar Inteligência Artificial**: Utilizar modelos generativos (Gemini) para triagem automática de denúncias e proteção de PII (Redação).
+- **Prover Suporte Multidioma**: Garantir que o sistema seja acessível em escala global (PT-BR, EN, ES) com UX adaptativa.

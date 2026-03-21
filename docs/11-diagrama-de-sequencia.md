@@ -12,16 +12,18 @@ participant "Server Action (createReport)" as Action
 participant "Prisma ORM" as Prisma
 database "PostgreSQL" as DB
 
-Denunciante -> UI: Preenche Formulário e Envia
-UI -> Action: Executa Ação de Servidor (Payload)
-Action -> Action: Valida Dados (Zod Schema)
-Action -> Action: Gera Código Único (AP-YYYY-XXXX)
+Denunciante -> UI: Preenche Formulário (com consentimento IA) e Envia
+UI -> Action: Executa Ação de Servidor (Payload + TurnstileToken)
+Action -> Action: Valida Dados (Zod Schema: acceptAi, acceptTerms)
+Action -> Action: Verifica Turnstile (Cloudflare API)
+Action -> Action: Gera Código Único e Criptografa Relato (AES)
 Action -> Prisma: report.create(data)
 Prisma -> DB: INSERT INTO reports
 DB --> Prisma: OK (ID)
 Prisma --> Action: Report Object
+Action -> Action: triggerAiAnalysis(reportId)
 Action --> UI: Retorna trackingCode
-UI -> Denunciante: Exibe Código de Sucesso
+UI -> Denunciante: Exibe Código de Sucesso e Instruções
 @enduml
 ```
 

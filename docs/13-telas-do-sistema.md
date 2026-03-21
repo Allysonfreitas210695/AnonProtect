@@ -20,26 +20,25 @@ Após o envio, o sistema exibe o **Identificador Exclusivo de Rastreio**. Esta t
 
 ## 13.2 Área Administrativa (Restrita)
 
-### 13.2.1 Dashboard
+### 13.2.1 Dashboard de Conformidade
 
-Visão analítica contendo:
+Visão analítica e de governança contendo:
 
 - **Cards de Resumo**: Total de denúncias, pendentes, em análise e resolvidas.
-- **Gráficos**: Distribuição de ocorrências por categoria e timeline de atividades recentes.
+- **Métricas de Conformidade**: Monitoramento em tempo real de criptografia AES-256, redação de PII por IA, e gestão de retenção de dados (Art. 15 LGPD).
+- **Gráficos**: Distribuição geográfica global e por categoria de ocorrência.
 
-### 13.2.2 Lista de Denúncias
+### 13.2.2 Perfil e Direitos do Titular
 
-Tabela com filtros por status e departamento, permitindo ao gestor identificar rapidamente casos prioritários.
+Página dedicada à gestão de conta do administrador, incluindo:
 
-### 13.2.3 Dossiê de Investigação (Detalhes)
+- **Exportação de Dados (Portabilidade)**: Botão para download de todos os dados do usuário em JSON (Art. 18, V).
+- **Direito ao Esquecimento (Anonimização)**: Interface de confirmação para remover permanentemente a identidade do usuário, preservando a integridade estatística (Art. 18, IV).
 
-A tela mais complexa do sistema, contendo:
+## 13.3 Internacionalização e Acessibilidade
 
-- Timeline de eventos (logs).
-- Notas internas privadas para investigação.
-- Interface de chat para comunicação com o denunciante.
-- Botões de ação para alterar status ou encaminhar departamento.
+O sistema conta com um seletor de idiomas dinâmico (PT-BR, EN, ES) que adapta não apenas os textos, mas também os formatos de campos (ex: máscaras de CEP/Postal Code) e as validações de erro em tempo real.
 
-## 13.3 Fluxo do Usuário
+## 13.4 Fluxo do Usuário
 
-O fluxo foi projetado para minimizar o número de cliques. O denunciante completa o processo em 2 passos, enquanto o administrador possui um painel de controle centralizado para gerenciar todo o ciclo de vida da denúncia.
+O fluxo foi projetado para minimizar o número de cliques. O denunciante completa o processo em 2 passos (incluindo o consentimento granular obrigatório), enquanto o administrador possui um painel de controle centralizado para gerenciar todo o ciclo de vida da denúncia sob as regras da LGPD.

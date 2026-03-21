@@ -23,3 +23,11 @@ A segurança do acesso administrativo é garantida pelo **Auth.js**, uma soluç�
 ## 5.6 Design System e Tailwind CSS 4
 
 Para a interface, foi selecionado o **Tailwind CSS 4**, um framework utilitário que permite a criação de designs customizados e responsivos diretamente no HTML/JSX. Complementarmente, o uso de componentes do **Shadcn UI** garante acessibilidade e consistência visual premium em todo o dashboard.
+
+## 5.7 Inteligência Artificial e Processamento de Linguagem Natural (NLP)
+
+O sistema integra modelos de linguagem de grande escala (LLMs) através do **Google Gemini**. A utilização de NLP permite a triagem automatizada, classificação de categorias, determinação de prioridade e a técnica de **Redação de PII (Personally Identifiable Information)**, garantindo que dados sensíveis sejam protegidos de forma proativa antes da visualização humana.
+
+## 5.8 Legislação de Proteção de Dados (LGPD e GDPR)
+
+O AnonProtect é fundamentado nos princípios da **Lei Geral de Proteção de Dados (Lei 13.709/2018)**. A arquitetura contempla os direitos do titular (Art. 18), incluindo o Direito ao Esquecimento e Portabilidade, além de implementar o **Privacy by Design**, onde a privacidade é uma característica intrínseca do desenvolvimento do software, e não um complemento posterior.
