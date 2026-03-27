@@ -14,7 +14,6 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 export const metadata: Metadata = {
   title: 'AnonProtect - Sistema de Denúncia Anônima',
   description: 'Canal seguro e anônimo para denúncias de irregularidades.',
-  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.png',
     apple: '/logo.png',
