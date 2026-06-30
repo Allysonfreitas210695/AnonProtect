@@ -51,9 +51,8 @@ export default async function ReportsPage({ searchParams }: Props) {
       search,
       status,
       category,
-      country,
-      city,
-      filterCountry || undefined
+      filterCountry || country || undefined,
+      city
     ),
     getAllCategories(),
     getReportsLocations(filterCountry || undefined),
