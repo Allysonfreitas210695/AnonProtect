@@ -36,6 +36,10 @@ export const submitReportAction = actionClient
       throw new Error('Limite de denúncias atingido. Tente novamente em 1 hora.')
     }
 
+    if (!parsedInput.turnstileToken && process.env.TURNSTILE_SECRET_KEY) {
+      throw new Error('Falha na verificação de captcha. Tente novamente.')
+    }
+
     if (parsedInput.turnstileToken) {
       const isHuman = await verifyTurnstile(parsedInput.turnstileToken)
       if (!isHuman) {
