@@ -30,8 +30,8 @@ export default async function proxy(request: NextRequest) {
   const isLogged = !!session
 
   // Stripped pathname for easier matching
-  const localeMatch = pathname.match(/^\/(pt-BR|en)(\/|$)/)
-  const strippedPathname = localeMatch ? pathname.replace(/^\/(pt-BR|en)/, '') || '/' : pathname
+  const localeMatch = pathname.match(/^\/(pt-BR|en|es)(\/|$)/)
+  const strippedPathname = localeMatch ? pathname.replace(/^\/(pt-BR|en|es)/, '') || '/' : pathname
 
   // Bloquear /register permanentemente
   if (strippedPathname.startsWith('/register')) {
