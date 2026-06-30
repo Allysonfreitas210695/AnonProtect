@@ -1,7 +1,0 @@
-# Regras do Projeto
-
-- Sempre utilize o servidor MCP `context7` para buscar documentações, boas práticas e informações de bibliotecas antes de implementar mudanças complexas de UI ou novas funcionalidades.
-- Ao usar o `context7`, priorize sempre a documentação mais recente para evitar o uso de APIs depreciadas.
-- Garanta que todos os componentes de UI sejam responsivos e tratem corretamente o overflow de conteúdo (utilize truncation, line-clamp e evite scroll horizontal ou interno desnecessário).
-- Mantenha sempre um padrão de código limpo, organizado e seguindo boas práticas como Clean Code e SOLID.
-- Todas as respostas, comentários e documentações devem ser feitas obrigatoriamente em português.
