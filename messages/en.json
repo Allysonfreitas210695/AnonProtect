@@ -502,7 +502,15 @@
       "prohibitions": "Prohibitions",
       "prohibitionsDesc": "It is forbidden to use the platform for slanderous reports or pranks.",
       "anonymity": "Anonymity Guarantee",
-      "anonymityDesc": "The system guarantees non-tracking of the report origin on the server side."
+      "anonymityDesc": "The system guarantees non-tracking of the report origin on the server side.",
+      "object": "Purpose and Scope",
+      "objectDesc": "AnonProtect is an academic anonymous reporting platform developed as a Final Undergraduate Thesis. Its purpose is to facilitate the secure registration of reports, preserving the whistleblower's identity and ensuring case tracking through a unique tracking code.",
+      "lgpd": "Privacy and Compliance (LGPD)",
+      "lgpdDesc": "AnonProtect follows the principles of Brazil's General Data Protection Law (Lei nº 13.709/2018). Report descriptions are encrypted with AES-256-GCM before storage, personally identifiable information is replaced with [PROTECTED DATA] during automated analysis, and whistleblower anonymity is preserved throughout the entire process.",
+      "limitation": "Limitation of Liability",
+      "limitationDesc": "The AnonProtect platform is made available for academic and research purposes. The developers are not responsible for decisions made based on the information recorded, nor for any damages resulting from misuse of the platform. The content of reports is the sole responsibility of the person submitting them.",
+      "contact": "Contact",
+      "contactDesc": "For questions, data deletion requests, or privacy-related matters, please contact through the official channels of the educational institution responsible for the project. All requests will be handled in accordance with applicable data protection law."
     },
     "transparency": {
       "label": "Transparency",

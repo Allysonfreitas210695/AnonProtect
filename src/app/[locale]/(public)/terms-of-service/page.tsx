@@ -1,6 +1,15 @@
 import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
-import { Scale, AlertTriangle, ShieldCheck, ScrollText } from 'lucide-react'
+import {
+  Scale,
+  AlertTriangle,
+  ShieldCheck,
+  ScrollText,
+  FileText,
+  Lock,
+  Info,
+  Mail,
+} from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { Button } from '@/_components/ui/button'
 
@@ -52,6 +61,54 @@ export default function TermsOfServicePage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground leading-relaxed">{t('anonymityDesc')}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <FileText className="text-primary h-5 w-5" />
+              {t('object')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed">{t('objectDesc')}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <Lock className="text-primary h-5 w-5" />
+              {t('lgpd')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed">{t('lgpdDesc')}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <Info className="text-primary h-5 w-5" />
+              {t('limitation')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed">{t('limitationDesc')}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 ring-border/50 border-none shadow-xl ring-1 backdrop-blur-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <Mail className="text-primary h-5 w-5" />
+              {t('contact')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground leading-relaxed">{t('contactDesc')}</p>
           </CardContent>
         </Card>
       </div>

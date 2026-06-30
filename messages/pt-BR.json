@@ -502,7 +502,15 @@
       "prohibitions": "Proibições",
       "prohibitionsDesc": "É proibido o uso da plataforma para denúncias caluniosas ou trotes.",
       "anonymity": "Garantia de Anonimato",
-      "anonymityDesc": "O sistema garante o não-rastreio da origem da denúncia pelo lado do servidor."
+      "anonymityDesc": "O sistema garante o não-rastreio da origem da denúncia pelo lado do servidor.",
+      "object": "Objeto e Propósito",
+      "objectDesc": "O AnonProtect é uma plataforma acadêmica de denúncias anônimas desenvolvida como Trabalho de Conclusão de Curso. Seu objetivo é facilitar o registro de relatos de forma segura, preservando a identidade do denunciante e garantindo o acompanhamento do caso por meio de código de rastreamento.",
+      "lgpd": "Privacidade e Conformidade (LGPD)",
+      "lgpdDesc": "O AnonProtect segue os princípios da Lei Geral de Proteção de Dados (Lei nº 13.709/2018). As descrições das denúncias são criptografadas com AES-256-GCM antes do armazenamento, informações pessoais identificáveis são substituídas por [DADO PROTEGIDO] na análise automatizada, e o anonimato do denunciante é preservado em todas as etapas do processo.",
+      "limitation": "Limitação de Responsabilidade",
+      "limitationDesc": "A plataforma AnonProtect é disponibilizada para fins acadêmicos e de pesquisa. Os responsáveis pelo desenvolvimento não se responsabilizam por decisões tomadas com base nas informações registradas, nem por eventuais danos decorrentes do uso indevido da plataforma. O conteúdo das denúncias é de exclusiva responsabilidade do denunciante.",
+      "contact": "Contato",
+      "contactDesc": "Para dúvidas, solicitações de exclusão de dados ou questões relacionadas à privacidade, entre em contato por meio dos canais oficiais da instituição de ensino responsável pelo projeto. Todas as solicitações serão analisadas em conformidade com a LGPD."
     },
     "transparency": {
       "label": "Transparência",
