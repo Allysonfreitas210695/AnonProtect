@@ -1,6 +1,16 @@
 import { describe, expect, it, vi } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
-import { softDeleteReport, updateReportStatus, forwardReport } from './admin.data'
+import {
+  softDeleteReport,
+  updateReportStatus,
+  forwardReport,
+  createAdminReply,
+  createInvestigationNote,
+} from './admin.data'
+
+vi.mock('@/_shared/lib/crypto', () => ({
+  encrypt: vi.fn((text: string) => `encrypted_${text}`),
+}))
 
 vi.mock('@/_shared/lib/prisma', () => ({
   prisma: {
@@ -82,6 +92,33 @@ describe('admin.data', () => {
         },
       })
       expect(prisma.activityLog.create).toHaveBeenCalled()
+    })
+  })
+
+  describe('createAdminReply', () => {
+    it('should encrypt content before persisting', async () => {
+      await createAdminReply('r1', 'u1', 'admin message')
+      expect(prisma.message.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            content: 'encrypted_admin message',
+            sender: 'ADMIN',
+          }),
+        })
+      )
+    })
+  })
+
+  describe('createInvestigationNote', () => {
+    it('should encrypt content before persisting', async () => {
+      await createInvestigationNote('r1', 'u1', 'investigation note')
+      expect(prisma.investigationNote.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            content: 'encrypted_investigation note',
+          }),
+        })
+      )
     })
   })
 })

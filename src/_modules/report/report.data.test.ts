@@ -102,7 +102,7 @@ describe('report.data', () => {
       expect(mockPrisma.message.create).toHaveBeenCalledWith({
         data: {
           reportId: 'r1',
-          content: 'hello',
+          content: 'encrypted_hello',
           sender: 'USER',
         },
       })

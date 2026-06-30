@@ -31,6 +31,8 @@ describe('admin.query', () => {
         id,
         description: 'cipher-text',
         attachments: [{ key: 'k1', url: 'orig-url' }],
+        messages: [],
+        investigationNotes: [],
       }
       vi.mocked(prisma.report.findUnique).mockResolvedValue(
         mockReport as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>

@@ -68,6 +68,7 @@ describe('report.query', () => {
       const mockReport = {
         trackingCode: 'TR123',
         description: 'cipher-text',
+        messages: [],
       }
       vi.mocked(prisma.report.findUnique).mockResolvedValue(
         mockReport as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>
@@ -84,6 +85,7 @@ describe('report.query', () => {
     it('should handle decryption failure gracefully', async () => {
       vi.mocked(prisma.report.findUnique).mockResolvedValue({
         description: 'bad',
+        messages: [],
       } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
       vi.mocked(decrypt).mockImplementation(() => {
         throw new Error('Decrypt failed')
