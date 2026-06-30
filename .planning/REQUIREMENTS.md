@@ -16,8 +16,8 @@
 
 - [ ] **SEC-01**: Auto-registro público cria apenas contas `SUPERVISOR` mediante convite de um `ADMIN` — registro direto como SUPERVISOR sem autorização é bloqueado
 - [ ] **SEC-02**: `sendMessageAction` valida que o `code` de rastreamento fornecido pertence ao `reportId` antes de criar a mensagem
-- [ ] **SEC-03**: `Message.content` é criptografado com AES-256-GCM antes de ser persistido no banco de dados
-- [ ] **SEC-04**: `InvestigationNote.content` é criptografado com AES-256-GCM antes de ser persistido no banco de dados
+- [x] **SEC-03**: `Message.content` é criptografado com AES-256-GCM antes de ser persistido no banco de dados
+- [x] **SEC-04**: `InvestigationNote.content` é criptografado com AES-256-GCM antes de ser persistido no banco de dados
 - [ ] **SEC-05**: `verifyTurnstile()` rejeita requisições quando `TURNSTILE_SECRET_KEY` está ausente, em vez de retornar `true` silenciosamente
 - [ ] **SEC-06**: Rate limiting usa apenas o primeiro IP de `x-forwarded-for` (antes do primeiro `,`) como chave de limitação
 
@@ -89,8 +89,8 @@
 | BUG-04    | Phase 1 | Complete |
 | SEC-01    | Phase 2 | Pending  |
 | SEC-02    | Phase 2 | Pending  |
-| SEC-03    | Phase 2 | Pending  |
-| SEC-04    | Phase 2 | Pending  |
+| SEC-03    | Phase 2 | Complete |
+| SEC-04    | Phase 2 | Complete |
 | SEC-05    | Phase 2 | Pending  |
 | SEC-06    | Phase 2 | Pending  |
 | CHAT-01   | Phase 3 | Pending  |

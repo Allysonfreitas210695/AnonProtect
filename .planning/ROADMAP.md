@@ -53,7 +53,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 3. `Message.content` and `InvestigationNote.content` are stored encrypted (AES-256-GCM) in the database
 4. Omitting `TURNSTILE_SECRET_KEY` causes Turnstile verification to fail, not pass silently
 5. Rate limiting keys on only the first IP in `x-forwarded-for`, not the full comma-separated string
-   **Plans:** 2/2 plans complete
+   **Plans:** 3/3 plans complete
 
 ### Phase 3: Chat
 
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase                    | Plans Complete | Status      | Completed  |
 | ------------------------ | -------------- | ----------- | ---------- |
 | 1. Bug Fixes             | 2/2            | Complete    | 2026-06-30 |
-| 2. Security Hardening    | 2/2            | Complete    | 2026-06-30 |
+| 2. Security Hardening    | 3/3            | Complete    | 2026-06-30 |
 | 3. Chat                  | 0/TBD          | Not started | -          |
 | 4. Password Recovery     | 0/TBD          | Not started | -          |
 | 5. Performance & Quality | 0/TBD          | Not started | -          |
