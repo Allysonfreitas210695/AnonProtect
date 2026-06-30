@@ -70,9 +70,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
         search,
         undefined,
         undefined,
-        undefined,
-        undefined,
-        filterCountry || undefined
+        filterCountry || undefined,
+        undefined
       ),
       getQuickStats(days, filterCountry || undefined),
       getReportStats(days, filterCountry || undefined),

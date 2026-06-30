@@ -502,7 +502,15 @@
       "prohibitions": "Prohibiciones",
       "prohibitionsDesc": "Está prohibido usar la plataforma para denuncias calumniosas o bromas.",
       "anonymity": "Garantía de Anonimato",
-      "anonymityDesc": "El sistema garantiza que no se rastree el origen de la denuncia por el lado del servidor."
+      "anonymityDesc": "El sistema garantiza que no se rastree el origen de la denuncia por el lado del servidor.",
+      "object": "Objeto y Propósito",
+      "objectDesc": "AnonProtect es una plataforma académica de denuncias anónimas desarrollada como Trabajo de Conclusión de Carrera. Su objetivo es facilitar el registro seguro de informes, preservando la identidad del denunciante y garantizando el seguimiento del caso mediante un código de rastreo único.",
+      "lgpd": "Privacidad y Cumplimiento (LGPD)",
+      "lgpdDesc": "AnonProtect sigue los principios de la Ley General de Protección de Datos de Brasil (Ley nº 13.709/2018). Las descripciones de los informes se cifran con AES-256-GCM antes de su almacenamiento, la información de identificación personal se reemplaza con [DATO PROTEGIDO] en el análisis automatizado, y el anonimato del denunciante se preserva en todo momento.",
+      "limitation": "Limitación de Responsabilidad",
+      "limitationDesc": "La plataforma AnonProtect se pone a disposición con fines académicos y de investigación. Los responsables del desarrollo no se hacen responsables de las decisiones tomadas en base a la información registrada, ni de los daños derivados del uso indebido de la plataforma. El contenido de los informes es responsabilidad exclusiva del denunciante.",
+      "contact": "Contacto",
+      "contactDesc": "Para consultas, solicitudes de eliminación de datos o cuestiones relacionadas con la privacidad, comuníquese a través de los canales oficiales de la institución educativa responsable del proyecto. Todas las solicitudes serán tramitadas de acuerdo con la legislación de protección de datos aplicable."
     },
     "transparency": {
       "label": "Transparencia",

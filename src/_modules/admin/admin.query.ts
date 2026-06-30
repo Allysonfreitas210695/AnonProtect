@@ -92,8 +92,7 @@ export async function getReportsPaginated(
   status?: string,
   categoryId?: string,
   country?: string,
-  city?: string,
-  filterCountry?: string
+  city?: string
 ) {
   const startDate = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : null
   const where: Prisma.ReportWhereInput = { deletedAt: null }
@@ -104,7 +103,6 @@ export async function getReportsPaginated(
   if (categoryId) where.categoryId = categoryId
   if (country) where.country = country
   if (city) where.city = city
-  if (filterCountry) where.country = filterCountry
 
   const [reports, total] = await Promise.all([
     prisma.report.findMany({
