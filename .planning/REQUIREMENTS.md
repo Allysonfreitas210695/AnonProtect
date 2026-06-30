@@ -7,10 +7,10 @@
 
 ### Bugs Críticos
 
-- [ ] **BUG-01**: Validador de código de rastreamento aceita os formatos gerados pela aplicação (`AP-YYYY-XXXX`)
-- [ ] **BUG-02**: Parâmetro `country` em `getReportsPaginated()` não é sobrescrito silenciosamente por `filterCountry`
-- [ ] **BUG-03**: Página `/terms-of-service` existe e não retorna 404
-- [ ] **BUG-04**: `deleteReportAction` não possui verificação de role duplicada com o client `adminActionClient`
+- [x] **BUG-01**: Validador de código de rastreamento aceita os formatos gerados pela aplicação (`AP-YYYY-XXXX`)
+- [x] **BUG-02**: Parâmetro `country` em `getReportsPaginated()` não é sobrescrito silenciosamente por `filterCountry`
+- [x] **BUG-03**: Página `/terms-of-service` existe e não retorna 404
+- [x] **BUG-04**: `deleteReportAction` não possui verificação de role duplicada com o client `adminActionClient`
 
 ### Segurança
 
@@ -81,35 +81,35 @@
 
 ## Traceability
 
-| Requisito | Fase    | Status  |
-| --------- | ------- | ------- |
-| BUG-01    | Phase 1 | Pending |
-| BUG-02    | Phase 1 | Pending |
-| BUG-03    | Phase 1 | Pending |
-| BUG-04    | Phase 1 | Pending |
-| SEC-01    | Phase 2 | Pending |
-| SEC-02    | Phase 2 | Pending |
-| SEC-03    | Phase 2 | Pending |
-| SEC-04    | Phase 2 | Pending |
-| SEC-05    | Phase 2 | Pending |
-| SEC-06    | Phase 2 | Pending |
-| CHAT-01   | Phase 3 | Pending |
-| CHAT-02   | Phase 3 | Pending |
-| CHAT-03   | Phase 3 | Pending |
-| CHAT-04   | Phase 3 | Pending |
-| CHAT-05   | Phase 3 | Pending |
-| CHAT-06   | Phase 3 | Pending |
-| CHAT-07   | Phase 3 | Pending |
-| AUTH-01   | Phase 4 | Pending |
-| AUTH-02   | Phase 4 | Pending |
-| AUTH-03   | Phase 4 | Pending |
-| AUTH-04   | Phase 4 | Pending |
-| PERF-01   | Phase 5 | Pending |
-| PERF-02   | Phase 5 | Pending |
-| QUAL-01   | Phase 5 | Pending |
-| QUAL-02   | Phase 5 | Pending |
-| QUAL-03   | Phase 5 | Pending |
-| QUAL-04   | Phase 5 | Pending |
+| Requisito | Fase    | Status   |
+| --------- | ------- | -------- |
+| BUG-01    | Phase 1 | Complete |
+| BUG-02    | Phase 1 | Complete |
+| BUG-03    | Phase 1 | Complete |
+| BUG-04    | Phase 1 | Complete |
+| SEC-01    | Phase 2 | Pending  |
+| SEC-02    | Phase 2 | Pending  |
+| SEC-03    | Phase 2 | Pending  |
+| SEC-04    | Phase 2 | Pending  |
+| SEC-05    | Phase 2 | Pending  |
+| SEC-06    | Phase 2 | Pending  |
+| CHAT-01   | Phase 3 | Pending  |
+| CHAT-02   | Phase 3 | Pending  |
+| CHAT-03   | Phase 3 | Pending  |
+| CHAT-04   | Phase 3 | Pending  |
+| CHAT-05   | Phase 3 | Pending  |
+| CHAT-06   | Phase 3 | Pending  |
+| CHAT-07   | Phase 3 | Pending  |
+| AUTH-01   | Phase 4 | Pending  |
+| AUTH-02   | Phase 4 | Pending  |
+| AUTH-03   | Phase 4 | Pending  |
+| AUTH-04   | Phase 4 | Pending  |
+| PERF-01   | Phase 5 | Pending  |
+| PERF-02   | Phase 5 | Pending  |
+| QUAL-01   | Phase 5 | Pending  |
+| QUAL-02   | Phase 5 | Pending  |
+| QUAL-03   | Phase 5 | Pending  |
+| QUAL-04   | Phase 5 | Pending  |
 
 **Cobertura:**
 
