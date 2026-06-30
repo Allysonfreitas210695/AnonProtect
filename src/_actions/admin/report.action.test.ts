@@ -40,10 +40,36 @@ vi.mock('@/_shared/utils/safe-action', () => {
     }),
   }
 
+  const adminMockAction =
+    (
+      fn: (args: {
+        parsedInput: unknown
+        ctx: { user: { id: string; role: string } }
+      }) => Promise<unknown>
+    ) =>
+    async (input: unknown) => {
+      if (!mockUser) return { serverError: 'Sessão expirada ou usuário não autenticado' }
+      if (mockUser.role !== 'ADMIN')
+        return { serverError: 'Acesso negado: Requer privilégios de Administrador' }
+      try {
+        const result = await fn({ parsedInput: input, ctx: { user: mockUser } })
+        return { data: result }
+      } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : 'Unknown error'
+        return { serverError: message }
+      }
+    }
+
+  const adminClientMock = {
+    schema: () => ({
+      action: adminMockAction,
+    }),
+  }
+
   return {
     authActionClient: clientMock,
     supervisorActionClient: clientMock,
-    adminActionClient: clientMock,
+    adminActionClient: adminClientMock,
     ActionError: class extends Error {},
   }
 })
@@ -59,9 +85,7 @@ describe('Admin Report Actions', () => {
 
       const result = await deleteReportAction({ reportId: '00000000-0000-0000-0000-000000000000' })
 
-      expect(result.serverError).toBe(
-        'Acesso negado: Somente administradores podem excluir denúncias'
-      )
+      expect(result.serverError).toBe('Acesso negado: Requer privilégios de Administrador')
       expect(adminData.softDeleteReport).not.toHaveBeenCalled()
     })
 
