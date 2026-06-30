@@ -4,7 +4,7 @@ export function isValidEmail(email: string): boolean {
 }
 
 export function isValidTrackingCode(code: string): boolean {
-  const codeRegex = /^RPT-[A-Z0-9]{6}$/i
+  const codeRegex = /^AP-\d{4}-[A-Z0-9]{4}$/
   return codeRegex.test(code)
 }
 
