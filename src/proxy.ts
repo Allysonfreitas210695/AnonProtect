@@ -33,10 +33,15 @@ export default async function proxy(request: NextRequest) {
   const localeMatch = pathname.match(/^\/(pt-BR|en)(\/|$)/)
   const strippedPathname = localeMatch ? pathname.replace(/^\/(pt-BR|en)/, '') || '/' : pathname
 
+  // Bloquear /register permanentemente
+  if (strippedPathname.startsWith('/register')) {
+    const locale = localeMatch ? localeMatch[1] : 'pt-BR'
+    return NextResponse.redirect(new URL(`/${locale}/login`, request.nextUrl))
+  }
+
   const isPublicRoute =
     strippedPathname === '/' ||
     strippedPathname.startsWith('/login') ||
-    strippedPathname.startsWith('/register') ||
     strippedPathname.startsWith('/forgot-password') ||
     strippedPathname.startsWith('/reset-password') ||
     strippedPathname.startsWith('/report') ||
@@ -46,10 +51,7 @@ export default async function proxy(request: NextRequest) {
     strippedPathname.startsWith('/terms-of-service')
 
   if (isPublicRoute) {
-    if (
-      isLogged &&
-      (strippedPathname.startsWith('/login') || strippedPathname.startsWith('/register'))
-    ) {
+    if (isLogged && strippedPathname.startsWith('/login')) {
       const locale = localeMatch ? localeMatch[1] : 'pt-BR'
       return NextResponse.redirect(new URL(`/${locale}/admin`, request.nextUrl))
     }
