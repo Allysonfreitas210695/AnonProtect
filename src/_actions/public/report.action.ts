@@ -29,7 +29,11 @@ async function verifyTurnstile(token: string) {
 export const submitReportAction = actionClient
   .schema(reportSchema)
   .action(async ({ parsedInput }) => {
-    const ip = ((await headers()).get('x-forwarded-for') || '127.0.0.1').split(',')[0].trim()
+    const hdrs = await headers()
+    const ip =
+      hdrs.get('cf-connecting-ip') ||
+      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
+      '127.0.0.1'
     const { success: rateLimitOk } = await checkRateLimit(ip)
 
     if (!rateLimitOk) {
