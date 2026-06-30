@@ -1,4 +1,4 @@
-'server-only'
+import 'server-only'
 
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
