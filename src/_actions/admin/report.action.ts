@@ -105,10 +105,7 @@ const deleteReportSchema = z.object({
 
 export const deleteReportAction = adminActionClient
   .schema(deleteReportSchema)
-  .action(async ({ parsedInput: { reportId }, ctx: { user } }) => {
-    if (user.role !== 'ADMIN') {
-      throw new ActionError('Acesso negado: Somente administradores podem excluir denúncias')
-    }
+  .action(async ({ parsedInput: { reportId } }) => {
     try {
       await adminData.softDeleteReport(reportId)
       return { success: true, message: 'Denúncia excluída com sucesso' }

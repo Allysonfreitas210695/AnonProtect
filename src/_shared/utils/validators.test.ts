@@ -19,16 +19,18 @@ describe('validators', () => {
   })
 
   describe('isValidTrackingCode', () => {
-    it('should return true for valid tracking codes', () => {
-      expect(isValidTrackingCode('RPT-ABC123')).toBe(true)
-      expect(isValidTrackingCode('rpt-xyz789')).toBe(true)
+    it('should return true for valid AP tracking codes', () => {
+      expect(isValidTrackingCode('AP-2024-AB12')).toBe(true)
+      expect(isValidTrackingCode('AP-2026-XY9Z')).toBe(true)
+      expect(isValidTrackingCode('AP-2099-ZZZZ')).toBe(true)
+      expect(isValidTrackingCode('AP-2024-XXXX')).toBe(true)
     })
 
     it('should return false for invalid tracking codes', () => {
-      expect(isValidTrackingCode('AP-2024-XXXX')).toBe(false) // This is the new format, but validator expect RPT-
-      expect(isValidTrackingCode('RPT-ABC12')).toBe(false)
-      expect(isValidTrackingCode('RPT-ABC1234')).toBe(false)
-      expect(isValidTrackingCode('ABC123')).toBe(false)
+      expect(isValidTrackingCode('RPT-ABC123')).toBe(false)
+      expect(isValidTrackingCode('AP-2024-ABC')).toBe(false)
+      expect(isValidTrackingCode('AP-24-ABCD')).toBe(false)
+      expect(isValidTrackingCode('ap-2024-AB12')).toBe(false)
       expect(isValidTrackingCode('')).toBe(false)
     })
   })
