@@ -76,11 +76,33 @@ export async function getReportById(id: string) {
     console.error('Failed to decrypt redacted report description', e)
   }
 
+  const decryptedMessages = report.messages.map((msg) => {
+    let content = msg.content
+    try {
+      content = decrypt(msg.content)
+    } catch {
+      // fallback for legacy plaintext data
+    }
+    return { ...msg, content }
+  })
+
+  const decryptedInvestigationNotes = report.investigationNotes.map((note) => {
+    let content = note.content
+    try {
+      content = decrypt(note.content)
+    } catch {
+      // fallback for legacy plaintext data
+    }
+    return { ...note, content }
+  })
+
   return {
     ...report,
     description: decryptedDescription,
     redactedDescription: decryptedRedactedDescription,
     attachments: attachmentsWithSignedUrls,
+    messages: decryptedMessages,
+    investigationNotes: decryptedInvestigationNotes,
   }
 }
 
@@ -154,9 +176,17 @@ export async function getReportsLocations(filterCountry?: string) {
 }
 
 export async function getInvestigationNoteById(id: string) {
-  return await prisma.investigationNote.findUnique({
+  const note = await prisma.investigationNote.findUnique({
     where: { id },
   })
+  if (!note) return null
+  let content = note.content
+  try {
+    content = decrypt(note.content)
+  } catch {
+    // fallback for legacy plaintext data
+  }
+  return { ...note, content }
 }
 
 export async function getQuickStats(days: number | null = 30, filterCountry?: string) {
