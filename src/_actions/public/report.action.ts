@@ -11,7 +11,7 @@ import { logger } from '@/_shared/lib/logger'
 import { generateTrackingCode } from '@/_shared/utils/tracking'
 
 async function verifyTurnstile(token: string) {
-  if (!process.env.TURNSTILE_SECRET_KEY) return true
+  if (!process.env.TURNSTILE_SECRET_KEY) return false
 
   const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
@@ -29,7 +29,7 @@ async function verifyTurnstile(token: string) {
 export const submitReportAction = actionClient
   .schema(reportSchema)
   .action(async ({ parsedInput }) => {
-    const ip = (await headers()).get('x-forwarded-for') || '127.0.0.1'
+    const ip = ((await headers()).get('x-forwarded-for') || '127.0.0.1').split(',')[0].trim()
     const { success: rateLimitOk } = await checkRateLimit(ip)
 
     if (!rateLimitOk) {
