@@ -56,7 +56,7 @@ export async function createMessage(reportId: string, content: string) {
   return await prisma.message.create({
     data: {
       reportId,
-      content,
+      content: encrypt(content),
       sender: 'USER',
     },
   })

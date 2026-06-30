@@ -1,5 +1,6 @@
 import { ReportStatus } from '@/_generated/prisma'
 import { prisma } from '@/_shared/lib/prisma'
+import { encrypt } from '@/_shared/lib/crypto'
 
 export async function softDeleteReport(id: string) {
   return await prisma.report.update({
@@ -33,7 +34,7 @@ export async function createAdminReply(reportId: string, authorId: string, conte
     prisma.message.create({
       data: {
         reportId,
-        content,
+        content: encrypt(content),
         sender: 'ADMIN',
       },
     }),
@@ -51,7 +52,7 @@ export async function createAdminReply(reportId: string, authorId: string, conte
 export async function createInvestigationNote(reportId: string, authorId: string, content: string) {
   return await prisma.$transaction([
     prisma.investigationNote.create({
-      data: { reportId, userId: authorId, content },
+      data: { reportId, userId: authorId, content: encrypt(content) },
     }),
     prisma.activityLog.create({
       data: {
