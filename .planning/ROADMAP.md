@@ -13,7 +13,7 @@ Brownfield TCC project with an existing, working foundation. Five phases close k
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Bug Fixes** - Eliminate known defects in the tracking code validator, country filter, missing page, and redundant role check
+- [x] **Phase 1: Bug Fixes** - Eliminate known defects in the tracking code validator, country filter, missing page, and redundant role check (completed 2026-06-30)
 - [ ] **Phase 2: Security Hardening** - Close all known security gaps before the system handles real data
 - [ ] **Phase 3: Chat** - Complete the full bidirectional chat UI and email notification for whistleblower ↔ admin communication
 - [ ] **Phase 4: Password Recovery** - Activate AWS SES to deliver secure, time-limited password reset links to admins
@@ -33,12 +33,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 2. Admin can filter reports by country and the filter is not silently overridden by `filterCountry`
 3. `/terms-of-service` page renders without a 404 during the registration flow
 4. `deleteReportAction` contains no redundant role check alongside `adminActionClient` enforcement
-   **Plans:** 2 plans
+   **Plans:** 2/2 plans complete
    **UI hint:** yes
    Plans:
 
-- [ ] 01-01-PLAN.md — Corrige validador de tracking code (BUG-01) e remove role check redundante em deleteReportAction (BUG-04)
-- [ ] 01-02-PLAN.md — Consolida filtro de país em getReportsPaginated (BUG-02) e expande página ToS com i18n nos 3 idiomas (BUG-03)
+- [x] 01-01-PLAN.md — Corrige validador de tracking code (BUG-01) e remove role check redundante em deleteReportAction (BUG-04)
+- [x] 01-02-PLAN.md — Consolida filtro de país em getReportsPaginated (BUG-02) e expande página ToS com i18n nos 3 idiomas (BUG-03)
 
 ### Phase 2: Security Hardening
 
@@ -107,10 +107,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Execution Order:**
 Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
-| Phase                    | Plans Complete | Status      | Completed |
-| ------------------------ | -------------- | ----------- | --------- |
-| 1. Bug Fixes             | 0/2            | Not started | -         |
-| 2. Security Hardening    | 0/TBD          | Not started | -         |
-| 3. Chat                  | 0/TBD          | Not started | -         |
-| 4. Password Recovery     | 0/TBD          | Not started | -         |
-| 5. Performance & Quality | 0/TBD          | Not started | -         |
+| Phase                    | Plans Complete | Status      | Completed  |
+| ------------------------ | -------------- | ----------- | ---------- |
+| 1. Bug Fixes             | 2/2            | Complete    | 2026-06-30 |
+| 2. Security Hardening    | 0/TBD          | Not started | -          |
+| 3. Chat                  | 0/TBD          | Not started | -          |
+| 4. Password Recovery     | 0/TBD          | Not started | -          |
+| 5. Performance & Quality | 0/TBD          | Not started | -          |
