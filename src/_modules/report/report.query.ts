@@ -35,9 +35,20 @@ export async function getReportByCode(code: string) {
     console.warn('Failed to decrypt report description for public tracking', e)
   }
 
+  const decryptedMessages = report.messages.map((msg) => {
+    let content = msg.content
+    try {
+      content = decrypt(msg.content)
+    } catch {
+      // fallback for legacy plaintext data
+    }
+    return { ...msg, content }
+  })
+
   return {
     ...report,
     description: decryptedDescription,
+    messages: decryptedMessages,
   }
 }
 
