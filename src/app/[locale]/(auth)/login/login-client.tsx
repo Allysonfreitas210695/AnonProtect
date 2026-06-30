@@ -116,12 +116,6 @@ export function LoginClient() {
             >
               {t('forgotPassword')}
             </Link>
-            <div className="text-muted-foreground">
-              {t('noAccount')}{' '}
-              <Link href="/register" className="text-primary font-semibold hover:underline">
-                {t('registerNow')}
-              </Link>
-            </div>
             <div className="mt-4 flex gap-4 text-xs opacity-50">
               <Link
                 href="/privacy-policy"
