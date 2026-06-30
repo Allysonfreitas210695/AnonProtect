@@ -2,7 +2,7 @@
 phase: 02-security-hardening
 verified: 2026-06-30T18:30:00Z
 status: gaps_found
-score: 3/5 must-haves verified
+score: 4/5 must-haves verified
 gaps:
   - truth: 'Message.content e InvestigationNote.content são armazenados criptografados (AES-256-GCM) no banco de dados'
     status: failed
@@ -22,15 +22,9 @@ gaps:
       - 'decrypt em loop sobre messages em report.query.ts (seguir padrão de Report.description já existente)'
       - 'decrypt em loop sobre investigationNotes em admin.query.ts'
       - 'Plano dedicado SEC-03/SEC-04 — os dois planos desta fase não cobriram esses requirements'
-  - truth: 'Rate limiting usa apenas o primeiro IP de x-forwarded-for como chave de limitação'
-    status: failed
-    reason: "SC especifica 'primeiro IP em x-forwarded-for'. A implementação real usa cf-connecting-ip como prioridade e .split(',').at(-1) (ÚLTIMO IP) como fallback — commit c71b10e alterou intencionalmente o algoritmo pós-plano. O SUMMARY declarou falsamente que split(',')[0].trim() estava na linha 32."
-    artifacts:
-      - path: 'src/_actions/public/report.action.ts'
-        issue: "Linhas 34-35: usa hdrs.get('cf-connecting-ip') || (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() — rightmost XFF, não first"
-    missing:
-      - 'Atualizar o ROADMAP SC #5 para refletir a implementação real (cf-connecting-ip + rightmost XFF), OU'
-      - "Reverter para split(',')[0].trim() conforme SC — porém a implementação atual é defensivamente superior em ambiente Cloudflare"
+  - truth: 'Rate limiting usa IP Cloudflare-aware (CF-Connecting-IP primeiro, rightmost XFF como fallback) como chave de limitação'
+    status: passed
+    reason: 'Implementação confirmada pelo usuário como correta: CF-Connecting-IP + rightmost XFF é defensivamente superior ao simples primeiro XFF em ambiente Cloudflare. ROADMAP SC atualizado para refletir a implementação real.'
 ---
 
 # Phase 02: Security Hardening — Verification Report
