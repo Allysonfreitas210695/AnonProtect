@@ -35,8 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 4. `deleteReportAction` contains no redundant role check alongside `adminActionClient` enforcement
    **Plans:** 2 plans
    **UI hint:** yes
-
-Plans:
+   Plans:
 
 - [ ] 01-01-PLAN.md — Corrige validador de tracking code (BUG-01) e remove role check redundante em deleteReportAction (BUG-04)
 - [ ] 01-02-PLAN.md — Consolida filtro de país em getReportsPaginated (BUG-02) e expande página ToS com i18n nos 3 idiomas (BUG-03)
