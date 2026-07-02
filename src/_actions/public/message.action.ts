@@ -5,8 +5,12 @@ import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
 import { sendEmail } from '@/_shared/lib/aws'
 import { logger } from '@/_shared/lib/logger'
+import { checkMessageRateLimit } from '@/_shared/lib/ratelimit'
+import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+
+const MAX_MESSAGES_PER_REPORT = 1000
 
 const sendMessageSchema = z.object({
   reportId: z.uuid(),
@@ -17,6 +21,17 @@ const sendMessageSchema = z.object({
 export const sendMessageAction = actionClient
   .schema(sendMessageSchema)
   .action(async ({ parsedInput: { reportId, code, content } }) => {
+    const hdrs = await headers()
+    const ip =
+      hdrs.get('cf-connecting-ip') ||
+      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
+      '127.0.0.1'
+    const { success: rateLimitOk } = await checkMessageRateLimit(ip)
+
+    if (!rateLimitOk) {
+      throw new ActionError('Muitas mensagens enviadas. Tente novamente em instantes.')
+    }
+
     const report = await prisma.report.findUnique({
       where: { id: reportId },
       select: { trackingCode: true, assignedTo: { select: { email: true } } },
@@ -24,6 +39,12 @@ export const sendMessageAction = actionClient
 
     if (!report || report.trackingCode !== code) {
       throw new ActionError('Acesso negado')
+    }
+
+    // WR-02: cap write-side growth to bound the uncapped admin read (admin.query.ts, D-01)
+    const messageCount = await prisma.message.count({ where: { reportId } })
+    if (messageCount >= MAX_MESSAGES_PER_REPORT) {
+      throw new ActionError('Limite de mensagens deste relatório atingido.')
     }
 
     await reportRepository.createMessage(reportId, content)
