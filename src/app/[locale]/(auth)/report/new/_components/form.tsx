@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Category } from '@/_generated/prisma'
 import { useNewReport } from '@/_hooks/public/use-new-report'
 import { useTheme } from 'next-themes'
@@ -34,12 +34,21 @@ import { formatCEP } from '@/_shared/utils/formatters'
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
   const { theme } = useTheme()
+  const locale = useLocale()
+  const isLockedToBrazil = locale === 'pt-BR'
   const [files, setFiles] = useState<File[]>([])
   const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup } = useNewReport()
 
   const selectedCountry = form.watch('country')
   const isBrazil = selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
   const postalCode = form.watch('postalCode')
+
+  // Se a locale for pt-BR, pré-seleciona Brasil e bloqueia o select
+  useEffect(() => {
+    if (isLockedToBrazil) {
+      form.setValue('country', 'Brasil')
+    }
+  }, [isLockedToBrazil, form])
 
   useEffect(() => {
     if (isBrazil && postalCode?.replace(/\D/g, '').length === 8) {
@@ -119,10 +128,21 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                     name="country"
                     render={({ field }) => (
                       <FormItem className="px-4">
-                        <FormLabel>{t('country')}</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                        <FormLabel className="flex items-center gap-1.5">
+                          {t('country')}
+                          {isLockedToBrazil && (
+                            <span className="text-primary bg-primary/10 rounded px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
+                              🔒 pt-BR
+                            </span>
+                          )}
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          disabled={isLockedToBrazil}
+                        >
                           <FormControl>
-                            <SelectTrigger className="h-11">
+                            <SelectTrigger className="h-11" disabled={isLockedToBrazil}>
                               <SelectValue placeholder={t('selectCountry') || 'Selecione o país'} />
                             </SelectTrigger>
                           </FormControl>
