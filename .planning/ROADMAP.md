@@ -68,13 +68,13 @@ Decimal phases appear between their surrounding integers in numeric order.
 3. Admin/supervisor can read the full message thread and send a reply from the report detail page
 4. Threads with more than 50 messages paginate correctly — no hard cap truncation
 5. Admin receives an email (via AWS SES) when the whistleblower sends a new message
-   **Plans:** 3 plans
+   **Plans:** 2/3 plans executed
    **UI hint:** yes
    Plans:
 
-- [ ] 03-01-PLAN.md — Adiciona helper sendEmail (SES SendEmailCommand) com degradação graciosa em aws.ts (CHAT-07)
+- [x] 03-01-PLAN.md — Adiciona helper sendEmail (SES SendEmailCommand) com degradação graciosa em aws.ts (CHAT-07)
 - [ ] 03-02-PLAN.md — Conecta notificação por email em sendMessageAction e introduz NEXT_PUBLIC_APP_URL (CHAT-07, CHAT-01/02/03)
-- [ ] 03-03-PLAN.md — Remove cap take:50 em getReportById para thread completa no admin (CHAT-04/05/06)
+- [x] 03-03-PLAN.md — Remove cap take:50 em getReportById para thread completa no admin (CHAT-04/05/06)
 
 ### Phase 4: Password Recovery
 
@@ -115,6 +115,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | ------------------------ | -------------- | ----------- | ---------- |
 | 1. Bug Fixes             | 2/2            | Complete    | 2026-06-30 |
 | 2. Security Hardening    | 3/3            | Complete    | 2026-06-30 |
-| 3. Chat                  | 0/3            | Not started | -          |
+| 3. Chat                  | 2/3            | In Progress |            |
 | 4. Password Recovery     | 0/TBD          | Not started | -          |
 | 5. Performance & Quality | 0/TBD          | Not started | -          |
