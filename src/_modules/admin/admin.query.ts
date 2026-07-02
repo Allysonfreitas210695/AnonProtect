@@ -230,7 +230,7 @@ export async function getReportStats(days: number | null = 30, filterCountry?: s
     departmentGroups,
     countryGroups,
     cityGroups,
-    reports,
+    rawTimeline,
     resolutionData,
   ] = await Promise.all([
     prisma.report.groupBy({
@@ -258,11 +258,20 @@ export async function getReportStats(days: number | null = 30, filterCountry?: s
       where,
       _count: { _all: true },
     }) as unknown as Promise<CityGroup[]>,
-    prisma.report.findMany({
-      where,
-      select: { createdAt: true },
-      orderBy: { createdAt: 'asc' },
-    }),
+    (() => {
+      const conditions = [Prisma.sql`deleted_at IS NULL`]
+      if (startDate) conditions.push(Prisma.sql`created_at >= ${startDate}`)
+      if (filterCountry) conditions.push(Prisma.sql`country = ${filterCountry}`)
+      const whereClause = Prisma.join(conditions, ' AND ')
+
+      return prisma.$queryRaw<{ day: Date; count: bigint }[]>`
+        SELECT date_trunc('day', created_at) as day, count(*)::bigint as count
+        FROM reports
+        WHERE ${whereClause}
+        GROUP BY day
+        ORDER BY day ASC
+      `
+    })(),
     prisma.report.findMany({
       where: { ...where, status: 'RESOLVED' },
       select: { createdAt: true, updatedAt: true },
@@ -316,15 +325,9 @@ export async function getReportStats(days: number | null = 30, filterCountry?: s
     count: g._count._all,
   }))
 
-  const timelineMap = new Map<string, number>()
-  reports.forEach((r) => {
-    const date = r.createdAt.toISOString().split('T')[0]
-    timelineMap.set(date, (timelineMap.get(date) || 0) + 1)
-  })
-
-  const timelineData = Array.from(timelineMap.entries()).map(([date, count]) => ({
-    date,
-    count,
+  const timelineData = rawTimeline.map((r) => ({
+    date: r.day.toISOString().split('T')[0],
+    count: Number(r.count),
   }))
 
   return {
