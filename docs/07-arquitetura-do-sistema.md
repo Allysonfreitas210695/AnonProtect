@@ -10,7 +10,7 @@ Responsável pela interface do usuário e renderização otimizada. Utiliza comp
 
 ### 7.1.2 Backend (Server Actions & API Routes)
 
-Processa a lógica de negócio, autenticação e validação de dados. As **Server Actions** atuam como ponte segura entre o formulário do usuário e o banco de dados, enquanto as API Routes lidam com integrações externas como o callback do Google OAuth.
+Processa a lógica de negócio, autenticação e validação de dados. As **Server Actions** atuam como ponte segura entre o formulário do usuário e o banco de dados, enquanto as API Routes lidam com integrações externas como o callback do Google OAuth. Toda a observabilidade e auditoria interna do sistema é centralizada no **Pino Logger**, garantindo estruturação JSON padronizada, fundamental para rastreabilidade de erros em ambiente de produção.
 
 ### 7.1.3 Camada de Dados (Prisma & PostgreSQL)
 
@@ -30,6 +30,7 @@ package "Next.js Server" {
   [App Router (Server Components)]
   [Server Actions (safe-action)]
   [Auth.js Middleware]
+  [Pino Logger (Observability)]
 }
 
 database "Persistence Layer" {

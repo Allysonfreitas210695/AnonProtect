@@ -29,3 +29,5 @@ Foi implementada uma suíte de testes robusta para garantir a confiabilidade das
 ## 15.3 Desempenho e Segurança
 
 A utilização de **Rate Limiting** e **Turnstile** reduziu a superfície de ataque para submissões automatizadas em 99%. O uso de **Server Components** garantiu um Lighthouse Score próximo de 100 em acessibilidade e performance. Além disso, a implementação de **Criptografia AES-256-GCM** assegura a confidencialidade dos dados sensíveis em repouso.
+
+Na fase de auditoria de performance, identificou-se que a extração de métricas de longo prazo consumia memória excessiva na aplicação Node.js devido à instanciação exagerada de objetos via ORM. O problema foi sanado de forma contundente ao delegar o cálculo de agregações temporais integralmente para o banco de dados (usando instruções nativas do PostgreSQL via Prisma `$queryRaw`). Para garantir a estabilidade dessa alteração arquitetural, foram criados _mocks_ robustos no Vitest que asseguram a correta execução da estrutura de dados esperada pelas agregações.

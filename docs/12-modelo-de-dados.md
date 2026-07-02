@@ -12,7 +12,7 @@ Abaixo estão detalhadas as principais tabelas do banco de dados relacional (Pos
 | tracking_code        | String (Unique) | Código para rastreamento (ex: AP-2026-X8Y2)         |
 | description          | Text            | Relato detalhado da ocorrência                      |
 | status               | Enum            | PENDING, IN_PROGRESS, RESOLVED, REJECTED, ARCHIVED  |
-| priority             | String          | LOW, MEDIUM, HIGH, CRITICAL                         |
+| priority             | Enum            | LOW, MEDIUM, HIGH, CRITICAL                         |
 | country              | String          | País da ocorrência                                  |
 | city                 | String          | Cidade da ocorrência                                |
 | category_id          | UUID (FK)       | Vínculo com a tabela de categorias                  |
@@ -45,7 +45,7 @@ entity "Report" as report {
   --
   tracking_code : text <<unique>>
   status : enum
-  priority : text
+  priority : enum
   redacted_description : text
   location_data : dynamic
 }
