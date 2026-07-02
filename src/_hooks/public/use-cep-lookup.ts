@@ -1,5 +1,6 @@
 import { toast } from 'sonner'
 import { getAddressByCep } from '@/_shared/utils/viacep'
+import { clientLogger } from '@/_shared/lib/client-logger'
 import { UseFormReturn } from 'react-hook-form'
 import { ReportInput } from '@/_schemas/report'
 
@@ -19,7 +20,7 @@ export function useCepLookup(form: UseFormReturn<ReportInput>) {
         }
       } catch (error) {
         toast.error('Erro ao buscar CEP')
-        console.error('ViaCEP error:', error)
+        clientLogger.error('ViaCEP error:', error)
       }
     }
   }

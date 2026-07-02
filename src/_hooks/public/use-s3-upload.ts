@@ -2,14 +2,15 @@
 
 import { useState } from 'react'
 import { getPresignedUrlAction } from '@/_actions/upload/s3.action'
+import { clientLogger } from '@/_shared/lib/client-logger'
 import { toast } from 'sonner'
 
 export function useS3Upload() {
   const [isUploading, setIsUploading] = useState(false)
-  
+
   async function stripMetadata(file: File): Promise<File | Blob> {
     if (!file.type.startsWith('image/')) return file
-    
+
     return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => {
@@ -42,7 +43,7 @@ export function useS3Upload() {
     try {
       for (const file of files) {
         const cleanFile = await stripMetadata(file)
-        
+
         const result = await getPresignedUrlAction({
           fileName: file.name,
           fileType: file.type,
@@ -74,7 +75,7 @@ export function useS3Upload() {
       }
       return uploadedFiles
     } catch (error) {
-      console.error(error)
+      clientLogger.error(error)
       toast.error('Erro ao fazer upload de arquivos')
       return []
     } finally {

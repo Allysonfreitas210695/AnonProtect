@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Loader2, FileJson } from 'lucide-react'
 import { Button as UIButton } from '@/_components/ui/button'
 import { exportUserData } from '@/_actions/admin/export-data'
+import { clientLogger } from '@/_shared/lib/client-logger'
 import { toast } from 'sonner'
 
 export function ExportDataButton() {
@@ -27,7 +28,7 @@ export function ExportDataButton() {
 
       toast.success('Dados exportados com sucesso!')
     } catch (error) {
-      console.error('Erro ao exportar dados:', error)
+      clientLogger.error('Erro ao exportar dados:', error)
       toast.error('Erro ao exportar seus dados. Tente novamente.')
     } finally {
       setIsExporting(false)
