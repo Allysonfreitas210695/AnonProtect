@@ -66,7 +66,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 1. Whistleblower can view all messages in their report thread by entering the tracking code on the tracking page
 2. Whistleblower can send a new message and see it appear in the thread
 3. Admin/supervisor can read the full message thread and send a reply from the report detail page
-4. Threads with more than 50 messages paginate correctly — no hard cap truncation
+4. Threads with more than 50 messages load fully with no hard cap truncation — pagination UI is intentionally out of scope per D-01 (03-CONTEXT.md): fetch-all is accepted as satisfying this criterion for a TCC-scale deployment
 5. Admin receives an email (via AWS SES) when the whistleblower sends a new message
    **Plans:** 3/3 plans complete
    **UI hint:** yes
