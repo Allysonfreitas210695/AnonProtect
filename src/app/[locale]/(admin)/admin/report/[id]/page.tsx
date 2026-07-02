@@ -67,7 +67,7 @@ export default async function AdminReportPage({ params }: Props) {
               </Link>
               <StatusBadge status={report.status} />
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
               <AdminPrintButton label={t('printButton')} />
               <ForwardReportForm reportId={report.id} departments={departments} />
               <StatusUpdateForm reportId={report.id} currentStatus={report.status} />

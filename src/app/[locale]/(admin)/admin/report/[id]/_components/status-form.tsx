@@ -18,7 +18,10 @@ export function StatusUpdateForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="flex items-center gap-2">
+      <form
+        onSubmit={onSubmit}
+        className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
+      >
         <FormField
           control={form.control}
           name="status"
@@ -28,7 +31,7 @@ export function StatusUpdateForm({
                 <select
                   {...field}
                   disabled={isExecuting}
-                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 items-center justify-between rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   <option value="PENDING">{t('PENDING')}</option>
                   <option value="IN_PROGRESS">{t('IN_PROGRESS')}</option>
@@ -40,7 +43,12 @@ export function StatusUpdateForm({
             </FormItem>
           )}
         />
-        <Button type="submit" variant="secondary" loading={isExecuting}>
+        <Button
+          type="submit"
+          variant="secondary"
+          loading={isExecuting}
+          className="w-full sm:w-auto"
+        >
           {t('update')}
         </Button>
       </form>

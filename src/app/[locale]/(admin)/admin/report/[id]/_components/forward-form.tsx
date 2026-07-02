@@ -71,7 +71,7 @@ export function ForwardReportForm({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" className="w-full sm:w-auto">
           <Share2 className="mr-2 h-4 w-4" />
           {t('submit')}
         </Button>
