@@ -67,6 +67,7 @@ export async function getReportById(id: string) {
     decryptedDescription = decrypt(report.description)
   } catch (e) {
     logger.error(e, 'Failed to decrypt report description')
+    decryptedDescription = '[DECRYPT_FAILED]'
   }
 
   try {
@@ -75,6 +76,7 @@ export async function getReportById(id: string) {
     }
   } catch (e) {
     logger.error(e, 'Failed to decrypt redacted report description')
+    decryptedRedactedDescription = '[DECRYPT_FAILED]'
   }
 
   const decryptedMessages = report.messages.map((msg) => {
@@ -82,7 +84,7 @@ export async function getReportById(id: string) {
     try {
       content = decrypt(msg.content)
     } catch {
-      // fallback for legacy plaintext data
+      content = '[DECRYPT_FAILED]'
     }
     return { ...msg, content }
   })
@@ -92,7 +94,7 @@ export async function getReportById(id: string) {
     try {
       content = decrypt(note.content)
     } catch {
-      // fallback for legacy plaintext data
+      content = '[DECRYPT_FAILED]'
     }
     return { ...note, content }
   })
@@ -185,7 +187,7 @@ export async function getInvestigationNoteById(id: string) {
   try {
     content = decrypt(note.content)
   } catch {
-    // fallback for legacy plaintext data
+    content = '[DECRYPT_FAILED]'
   }
   return { ...note, content }
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
+import { decrypt } from '@/_shared/lib/crypto'
 import { getReportById, getReportsPaginated, getQuickStats } from './admin.query'
 
 vi.mock('@/_shared/lib/prisma', () => ({
@@ -61,6 +62,31 @@ describe('admin.query', () => {
 
       const callArg = vi.mocked(prisma.report.findUnique).mock.calls[0][0]
       expect(callArg?.include?.messages).toEqual({ orderBy: { createdAt: 'asc' } })
+    })
+
+    it('should replace description/messages/notes with [DECRYPT_FAILED] sentinel on decrypt failure', async () => {
+      const id = 'r1'
+      const mockReport = {
+        id,
+        description: 'cipher-text',
+        redactedDescription: 'cipher-redacted',
+        attachments: [],
+        messages: [{ id: 'm1', content: 'cipher-msg' }],
+        investigationNotes: [{ id: 'n1', content: 'cipher-note' }],
+      }
+      vi.mocked(prisma.report.findUnique).mockResolvedValue(
+        mockReport as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>
+      )
+      vi.mocked(decrypt).mockImplementation(() => {
+        throw new Error('Decrypt failed')
+      })
+
+      const result = await getReportById(id)
+
+      expect(result?.description).toBe('[DECRYPT_FAILED]')
+      expect(result?.redactedDescription).toBe('[DECRYPT_FAILED]')
+      expect(result?.messages[0].content).toBe('[DECRYPT_FAILED]')
+      expect(result?.investigationNotes[0].content).toBe('[DECRYPT_FAILED]')
     })
   })
 
