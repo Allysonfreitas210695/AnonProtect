@@ -3,6 +3,7 @@
 import { actionClient, ActionError } from '@/_shared/utils/safe-action'
 import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
+import { sendEmail } from '@/_shared/lib/aws'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -17,7 +18,7 @@ export const sendMessageAction = actionClient
   .action(async ({ parsedInput: { reportId, code, content } }) => {
     const report = await prisma.report.findUnique({
       where: { id: reportId },
-      select: { trackingCode: true },
+      select: { trackingCode: true, assignedTo: { select: { email: true } } },
     })
 
     if (!report || report.trackingCode !== code) {
@@ -25,6 +26,13 @@ export const sendMessageAction = actionClient
     }
 
     await reportRepository.createMessage(reportId, content)
+
+    if (report.assignedTo?.email) {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      const adminLink = `${baseUrl}/admin/report/${reportId}`
+      const htmlBody = `<p>Nova mensagem recebida no relatório ${code}.</p><a href="${adminLink}">Acesse o painel para visualizar.</a>`
+      await sendEmail(report.assignedTo.email, 'Nova mensagem no AnonProtect', htmlBody)
+    }
 
     revalidatePath(`/report/${code}`)
     return { success: true, message: 'Mensagem enviada com sucesso!' }
