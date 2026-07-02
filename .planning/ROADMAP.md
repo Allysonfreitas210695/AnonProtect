@@ -68,7 +68,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 3. Admin/supervisor can read the full message thread and send a reply from the report detail page
 4. Threads with more than 50 messages load fully with no hard cap truncation — pagination UI is intentionally out of scope per D-01 (03-CONTEXT.md): fetch-all is accepted as satisfying this criterion for a TCC-scale deployment
 5. Admin receives an email (via AWS SES) when the whistleblower sends a new message
-   **Plans:** 3/3 plans complete
+   **Plans:** 5/5 plans complete
    **UI hint:** yes
    Plans:
 
@@ -115,6 +115,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | ------------------------ | -------------- | ----------- | ---------- |
 | 1. Bug Fixes             | 2/2            | Complete    | 2026-06-30 |
 | 2. Security Hardening    | 3/3            | Complete    | 2026-06-30 |
-| 3. Chat                  | 3/3            | Complete    | 2026-07-02 |
+| 3. Chat                  | 5/5            | Complete    | 2026-07-02 |
 | 4. Password Recovery     | 0/TBD          | Not started | -          |
 | 5. Performance & Quality | 0/TBD          | Not started | -          |
