@@ -204,12 +204,12 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   />
                 </div>
 
-                <div className="grid gap-4 px-4 sm:grid-cols-4">
+                <div className="grid gap-4 px-4 sm:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="city"
                     render={({ field }) => (
-                      <FormItem className="sm:col-span-1">
+                      <FormItem>
                         <FormLabel>
                           {t('city')}{' '}
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
