@@ -35,7 +35,7 @@ export async function getReportById(id: string) {
     where: { id, deletedAt: null },
     include: {
       category: true,
-      messages: { orderBy: { createdAt: 'asc' }, take: 50 },
+      messages: { orderBy: { createdAt: 'asc' } },
       assignedTo: true,
       assignedDepartment: true,
       attachments: { orderBy: { createdAt: 'desc' } },
