@@ -22,6 +22,7 @@ export function useNewReport() {
       city: '',
       state: '',
       district: '',
+      number: '',
       acceptTerms: false,
     },
   })
@@ -41,7 +42,13 @@ export function useNewReport() {
   })
 
   async function onSubmit(values: ReportInput, files?: File[]) {
-    let attachments: { url: string; key: string; fileName: string; fileSize: number; type: string }[] = []
+    let attachments: {
+      url: string
+      key: string
+      fileName: string
+      fileSize: number
+      type: string
+    }[] = []
     if (files && files.length > 0) {
       attachments = await uploadFiles(files)
     }

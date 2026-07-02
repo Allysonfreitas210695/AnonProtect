@@ -243,6 +243,7 @@
     "postalCodeInternational": "Código Postal / Zip Code",
     "postalCodePlaceholder": "00000-000",
     "postalCodePlaceholderInternational": "Digite o código postal",
+    "number": "Número",
     "optional": "(Opcional)",
     "city": "Cidade",
     "state": "Estado",

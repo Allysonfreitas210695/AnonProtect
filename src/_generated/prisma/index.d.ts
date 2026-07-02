@@ -7332,6 +7332,7 @@ export namespace Prisma {
     city: string | null
     district: string | null
     postalCode: string | null
+    number: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7352,6 +7353,7 @@ export namespace Prisma {
     city: string | null
     district: string | null
     postalCode: string | null
+    number: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7372,6 +7374,7 @@ export namespace Prisma {
     city: number
     district: number
     postalCode: number
+    number: number
     createdAt: number
     updatedAt: number
     assignedToId: number
@@ -7393,6 +7396,7 @@ export namespace Prisma {
     city?: true
     district?: true
     postalCode?: true
+    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7413,6 +7417,7 @@ export namespace Prisma {
     city?: true
     district?: true
     postalCode?: true
+    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7433,6 +7438,7 @@ export namespace Prisma {
     city?: true
     district?: true
     postalCode?: true
+    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7527,6 +7533,7 @@ export namespace Prisma {
     city: string | null
     district: string | null
     postalCode: string | null
+    number: string | null
     createdAt: Date
     updatedAt: Date
     assignedToId: string | null
@@ -7564,6 +7571,7 @@ export namespace Prisma {
         city?: boolean
         district?: boolean
         postalCode?: boolean
+        number?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         assignedToId?: boolean
@@ -7597,6 +7605,7 @@ export namespace Prisma {
       city?: boolean
       district?: boolean
       postalCode?: boolean
+      number?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7625,6 +7634,7 @@ export namespace Prisma {
       city?: boolean
       district?: boolean
       postalCode?: boolean
+      number?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7650,6 +7660,7 @@ export namespace Prisma {
     city?: boolean
     district?: boolean
     postalCode?: boolean
+    number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignedToId?: boolean
@@ -7671,6 +7682,7 @@ export namespace Prisma {
       | 'city'
       | 'district'
       | 'postalCode'
+      | 'number'
       | 'createdAt'
       | 'updatedAt'
       | 'assignedToId'
@@ -7728,6 +7740,7 @@ export namespace Prisma {
         city: string | null
         district: string | null
         postalCode: string | null
+        number: string | null
         createdAt: Date
         updatedAt: Date
         assignedToId: string | null
@@ -8318,6 +8331,7 @@ export namespace Prisma {
     readonly city: FieldRef<'Report', 'String'>
     readonly district: FieldRef<'Report', 'String'>
     readonly postalCode: FieldRef<'Report', 'String'>
+    readonly number: FieldRef<'Report', 'String'>
     readonly createdAt: FieldRef<'Report', 'DateTime'>
     readonly updatedAt: FieldRef<'Report', 'DateTime'>
     readonly assignedToId: FieldRef<'Report', 'String'>
@@ -16765,6 +16779,7 @@ export namespace Prisma {
     city: 'city'
     district: 'district'
     postalCode: 'postalCode'
+    number: 'number'
     createdAt: 'createdAt'
     updatedAt: 'updatedAt'
     assignedToId: 'assignedToId'
@@ -17328,6 +17343,7 @@ export namespace Prisma {
     city?: StringNullableFilter<'Report'> | string | null
     district?: StringNullableFilter<'Report'> | string | null
     postalCode?: StringNullableFilter<'Report'> | string | null
+    number?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17355,6 +17371,7 @@ export namespace Prisma {
     city?: SortOrderInput | SortOrder
     district?: SortOrderInput | SortOrder
     postalCode?: SortOrderInput | SortOrder
+    number?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17386,6 +17403,7 @@ export namespace Prisma {
       city?: StringNullableFilter<'Report'> | string | null
       district?: StringNullableFilter<'Report'> | string | null
       postalCode?: StringNullableFilter<'Report'> | string | null
+      number?: StringNullableFilter<'Report'> | string | null
       createdAt?: DateTimeFilter<'Report'> | Date | string
       updatedAt?: DateTimeFilter<'Report'> | Date | string
       assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17415,6 +17433,7 @@ export namespace Prisma {
     city?: SortOrderInput | SortOrder
     district?: SortOrderInput | SortOrder
     postalCode?: SortOrderInput | SortOrder
+    number?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17441,6 +17460,7 @@ export namespace Prisma {
     city?: StringNullableWithAggregatesFilter<'Report'> | string | null
     district?: StringNullableWithAggregatesFilter<'Report'> | string | null
     postalCode?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    number?: StringNullableWithAggregatesFilter<'Report'> | string | null
     createdAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     assignedToId?: StringNullableWithAggregatesFilter<'Report'> | string | null
@@ -18198,6 +18218,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -18222,6 +18243,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18246,6 +18268,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18270,6 +18293,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18294,6 +18318,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18314,6 +18339,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18331,6 +18357,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19188,6 +19215,7 @@ export namespace Prisma {
     city?: SortOrder
     district?: SortOrder
     postalCode?: SortOrder
+    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -19208,6 +19236,7 @@ export namespace Prisma {
     city?: SortOrder
     district?: SortOrder
     postalCode?: SortOrder
+    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -19228,6 +19257,7 @@ export namespace Prisma {
     city?: SortOrder
     district?: SortOrder
     postalCode?: SortOrder
+    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -21159,6 +21189,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -21182,6 +21213,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -21376,6 +21408,7 @@ export namespace Prisma {
     city?: StringNullableFilter<'Report'> | string | null
     district?: StringNullableFilter<'Report'> | string | null
     postalCode?: StringNullableFilter<'Report'> | string | null
+    number?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -22102,6 +22135,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22125,6 +22159,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22164,6 +22199,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22187,6 +22223,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22210,6 +22247,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22233,6 +22271,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22272,6 +22311,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22295,6 +22335,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22346,6 +22387,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22369,6 +22411,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22458,6 +22501,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22481,6 +22525,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22578,6 +22623,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22601,6 +22647,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22682,6 +22729,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22705,6 +22753,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22787,6 +22836,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22810,6 +22860,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22930,6 +22981,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22953,6 +23005,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23145,6 +23198,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -23241,6 +23295,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23264,6 +23319,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23287,6 +23343,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23501,6 +23558,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23520,6 +23578,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23543,6 +23602,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23566,6 +23626,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23599,6 +23660,7 @@ export namespace Prisma {
     city?: string | null
     district?: string | null
     postalCode?: string | null
+    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23679,6 +23741,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23702,6 +23765,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23725,6 +23789,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     district?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null

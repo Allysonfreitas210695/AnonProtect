@@ -170,6 +170,7 @@ exports.Prisma.ReportScalarFieldEnum = {
   city: 'city',
   district: 'district',
   postalCode: 'postalCode',
+  number: 'number',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   assignedToId: 'assignedToId',

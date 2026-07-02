@@ -13,6 +13,7 @@ export interface CreateReportData {
   city?: string
   district?: string
   postalCode?: string
+  number?: string
   priority?: string
   assignedDepartmentId?: string
   attachments?: { url: string; key: string; fileName: string; fileSize: number; type: string }[]
@@ -29,6 +30,7 @@ export async function createReport(data: CreateReportData) {
       city: data.city,
       district: data.district,
       postalCode: data.postalCode,
+      number: data.number,
       priority: data.priority,
       assignedDepartmentId: data.assignedDepartmentId,
       attachments: data.attachments

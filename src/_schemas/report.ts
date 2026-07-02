@@ -10,6 +10,7 @@ export const reportSchema = z.object({
   city: z.string().optional(),
   district: z.string().optional(),
   postalCode: z.string().optional(),
+  number: z.string().optional(),
   turnstileToken: z.string().optional(),
   attachments: z
     .array(

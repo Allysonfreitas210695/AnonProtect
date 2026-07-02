@@ -121,6 +121,7 @@ model Report {
   city       String?
   district   String?
   postalCode String? @map("postal_code")
+  number     String?
 
   createdAt            DateTime            @default(now()) @map("created_at")
   updatedAt            DateTime            @updatedAt @map("updated_at")

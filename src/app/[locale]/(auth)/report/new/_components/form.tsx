@@ -170,7 +170,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                   />
                 </div>
 
-                <div className="grid gap-4 px-4 sm:grid-cols-3">
+                <div className="grid gap-4 px-4 sm:grid-cols-4">
                   <FormField
                     control={form.control}
                     name="city"
@@ -198,6 +198,22 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                         </FormLabel>
                         <FormControl>
                           <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="number"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {t('number')}{' '}
+                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-11" type="text" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

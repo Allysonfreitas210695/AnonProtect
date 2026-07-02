@@ -256,6 +256,7 @@
     "invalidCep": "Invalid zip code or not found",
     "postalCodeInternational": "Postal Code / Zip Code",
     "postalCodePlaceholderInternational": "Enter postal code",
+    "number": "Number",
     "optional": "(Optional)",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",

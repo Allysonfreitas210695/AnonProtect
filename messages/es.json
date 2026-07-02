@@ -256,6 +256,7 @@
     "invalidCep": "Código postal inválido o no encontrado",
     "postalCodeInternational": "Código Postal / Zip Code",
     "postalCodePlaceholderInternational": "Ingrese el código postal",
+    "number": "Número",
     "optional": "(Opcional)",
     "uploadComingSoon": "La funcionalidad de carga será implementada pronto",
     "submit": "Enviar Denuncia",
