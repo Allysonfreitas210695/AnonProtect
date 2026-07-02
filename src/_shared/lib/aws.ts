@@ -1,6 +1,8 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import { SESClient } from '@aws-sdk/client-ses'
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+
+import { logger } from '@/_shared/lib/logger'
 
 const region = process.env.AWS_REGION || 'us-east-1'
 const credentials = {
@@ -37,3 +39,25 @@ export const sesClient = hasAwsCredentials
 
 export const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME || ''
 export const SES_FROM_EMAIL = process.env.AWS_SES_FROM_EMAIL || ''
+
+export async function sendEmail(to: string, subject: string, htmlBody: string) {
+  if (!sesClient || !SES_FROM_EMAIL) {
+    logger.warn({ to }, 'SES não configurado — email não enviado')
+    return
+  }
+
+  try {
+    const command = new SendEmailCommand({
+      Source: SES_FROM_EMAIL,
+      Destination: { ToAddresses: [to] },
+      Message: {
+        Subject: { Charset: 'UTF-8', Data: subject },
+        Body: { Html: { Charset: 'UTF-8', Data: htmlBody } },
+      },
+    })
+
+    await sesClient.send(command)
+  } catch (error) {
+    logger.error({ to, error }, 'Falha ao enviar email via SES')
+  }
+}
