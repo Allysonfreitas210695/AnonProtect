@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
-import { getReportById, getReportsPaginated, getQuickStats } from './admin.query'
+import { getReportById, getReportsPaginated, getQuickStats, getReportStats } from './admin.query'
 
 vi.mock('@/_shared/lib/prisma', () => ({
   prisma: {
@@ -13,6 +13,7 @@ vi.mock('@/_shared/lib/prisma', () => ({
     },
     category: { findMany: vi.fn() },
     department: { findMany: vi.fn() },
+    $queryRaw: vi.fn(),
   },
 }))
 
@@ -117,6 +118,31 @@ describe('admin.query', () => {
 
       expect(result.total).toBe(5)
       expect(prisma.report.count).toHaveBeenCalled()
+    })
+  })
+
+  describe('getReportStats', () => {
+    it('should build timelineData via $queryRaw SQL aggregation', async () => {
+      vi.mocked(prisma.report.groupBy).mockResolvedValue(
+        [] as unknown as Awaited<ReturnType<typeof prisma.report.groupBy>>
+      )
+      vi.mocked(prisma.report.findMany).mockResolvedValue(
+        [] as unknown as Awaited<ReturnType<typeof prisma.report.findMany>>
+      )
+      vi.mocked(prisma.category.findMany).mockResolvedValue(
+        [] as unknown as Awaited<ReturnType<typeof prisma.category.findMany>>
+      )
+      vi.mocked(prisma.department.findMany).mockResolvedValue(
+        [] as unknown as Awaited<ReturnType<typeof prisma.department.findMany>>
+      )
+      vi.mocked(prisma.$queryRaw).mockResolvedValue([
+        { day: new Date('2026-07-01T00:00:00.000Z'), count: BigInt(3) },
+      ])
+
+      const result = await getReportStats()
+
+      expect(prisma.$queryRaw).toHaveBeenCalled()
+      expect(result.timelineData).toEqual([{ date: '2026-07-01', count: 3 }])
     })
   })
 })
