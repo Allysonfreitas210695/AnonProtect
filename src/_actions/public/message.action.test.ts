@@ -3,6 +3,7 @@ import { sendMessageAction } from './message.action'
 import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
 import { sendEmail } from '@/_shared/lib/aws'
+import { checkMessageRateLimit } from '@/_shared/lib/ratelimit'
 
 vi.mock('@/_modules/report/report.data', () => ({
   createMessage: vi.fn(),
@@ -12,10 +13,21 @@ vi.mock('next/cache', () => ({
   revalidatePath: vi.fn(),
 }))
 
+vi.mock('next/headers', () => ({
+  headers: vi.fn(() => ({ get: vi.fn(() => '203.0.113.7') })),
+}))
+
+vi.mock('@/_shared/lib/ratelimit', () => ({
+  checkMessageRateLimit: vi.fn(),
+}))
+
 vi.mock('@/_shared/lib/prisma', () => ({
   prisma: {
     report: {
       findUnique: vi.fn(),
+    },
+    message: {
+      count: vi.fn(),
     },
   },
 }))
@@ -27,6 +39,8 @@ vi.mock('@/_shared/lib/aws', () => ({
 describe('Message Action', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    ;(checkMessageRateLimit as ReturnType<typeof vi.fn>).mockResolvedValue({ success: true })
+    ;(prisma.message.count as ReturnType<typeof vi.fn>).mockResolvedValue(0)
   })
 
   it('should send a message successfully', async () => {
@@ -136,5 +150,37 @@ describe('Message Action', () => {
 
     expect(result?.serverError).toBe('Acesso negado')
     expect(reportRepository.createMessage).not.toHaveBeenCalled()
+  })
+
+  it('rejects when message rate limit is exceeded', async () => {
+    ;(checkMessageRateLimit as ReturnType<typeof vi.fn>).mockResolvedValue({ success: false })
+
+    const result = await sendMessageAction({
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'hello',
+    })
+
+    expect(result?.serverError).toBe('Muitas mensagens enviadas. Tente novamente em instantes.')
+    expect(reportRepository.createMessage).not.toHaveBeenCalled()
+    expect(sendEmail).not.toHaveBeenCalled()
+  })
+
+  it('rejects when report message cap is reached', async () => {
+    ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
+      trackingCode: 'AP-2026-TEST',
+      assignedTo: { email: 'admin@sistema.com' },
+    })
+    ;(prisma.message.count as ReturnType<typeof vi.fn>).mockResolvedValue(1000)
+
+    const result = await sendMessageAction({
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'hello',
+    })
+
+    expect(result?.serverError).toBe('Limite de mensagens deste relatório atingido.')
+    expect(reportRepository.createMessage).not.toHaveBeenCalled()
+    expect(sendEmail).not.toHaveBeenCalled()
   })
 })
