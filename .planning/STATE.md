@@ -17,10 +17,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-30)
+See: .planning/PROJECT.md (updated 2026-07-02, milestone v1.0)
 
 **Core value:** Whistleblower can submit a report anonymously and track it via tracking code — if anything else fails, this must work.
-**Current focus:** Milestone v1.0 complete — all 5 phases done
+**Current focus:** Planning next milestone (v1.1)
 
 ## Current Position
 
@@ -54,22 +54,15 @@ _Updated after each plan completion_
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- Chat without WebSocket — polling sufficient for TCC
-- Use existing AWS SES lib for password reset and chat email notifications
-- Block SUPERVISOR self-registration, keep ADMIN-invite flow intact
-- Keep existing layered architecture (pages → actions → modules → shared libs)
-- [Phase ?]: Use try/catch with plaintext fallback in all decrypt loops — same pattern as Report.description
+Decisions are logged in PROJECT.md Key Decisions table (v1.0 milestone closed — full outcomes recorded there).
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
-- AWS SES must be verified/activated in AWS console before Phase 3 (CHAT-07) and Phase 4 (AUTH-01) can be tested end-to-end
+None open. AWS SES confirmed active and used in production for chat notifications and password recovery.
 
 ## Deferred Items
 
