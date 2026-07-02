@@ -539,6 +539,12 @@
     "REJECTED": "Esta denúncia não prosseguiu para investigação após análise preliminar.",
     "ARCHIVED": "Esta denúncia foi arquivada conforme política de retenção de dados."
   },
+  "NotFound": {
+    "title": "Denúncia Não Encontrada",
+    "description": "Não conseguimos localizar nenhuma denúncia com o código de rastreamento fornecido. Verifique se digitou corretamente ou se o código expirou.",
+    "backHome": "Voltar ao Início",
+    "trackAnother": "Rastrear Outra Denúncia"
+  },
   "Footer": {
     "rights": "© {year} AnonProtect Security Solutions. Todos os direitos reservados.",
     "links": "Links Legais",

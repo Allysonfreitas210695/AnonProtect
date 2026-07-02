@@ -6,7 +6,7 @@ import { useNewReport } from '@/_hooks/public/use-new-report'
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
-import { MapPin } from 'lucide-react'
+import { MapPin, X, FileIcon, ImageIcon } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -326,15 +326,68 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 )}
               />
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">{t('evidenceOptional')}</label>
-                <Input
-                  type="file"
-                  multiple
-                  onChange={(e) => setFiles(Array.from(e.target.files || []))}
-                  className="h-11 max-w-full overflow-hidden"
-                />
-                <p className="text-muted-foreground text-[10px] lg:text-xs">{t('uploadHint')}</p>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">{t('evidenceOptional')}</label>
+                  <Input
+                    type="file"
+                    multiple
+                    accept="image/*,video/*,audio/*,.pdf,.doc,.docx"
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        setFiles((prev) => [...prev, ...Array.from(e.target.files!)])
+                      }
+                      // Reset input so selecting the same file again works
+                      e.target.value = ''
+                    }}
+                    className="h-11 max-w-full overflow-hidden"
+                  />
+                  <p className="text-muted-foreground text-[10px] lg:text-xs">{t('uploadHint')}</p>
+                </div>
+
+                {files.length > 0 && (
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                    {files.map((file, index) => {
+                      const isImage = file.type.startsWith('image/')
+                      const objectUrl = isImage ? URL.createObjectURL(file) : null
+                      return (
+                        <div
+                          key={`${file.name}-${index}`}
+                          className="group border-border bg-muted/30 relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-lg border text-center shadow-sm"
+                        >
+                          {isImage ? (
+                            <img
+                              src={objectUrl!}
+                              alt={file.name}
+                              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                              onLoad={() => URL.revokeObjectURL(objectUrl!)}
+                            />
+                          ) : (
+                            <div className="flex flex-col items-center justify-center p-2">
+                              <FileIcon className="text-muted-foreground/60 mb-2 h-8 w-8" />
+                              <span className="text-muted-foreground line-clamp-2 text-[10px] font-medium break-all">
+                                {file.name}
+                              </span>
+                            </div>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => setFiles((prev) => prev.filter((_, i) => i !== index))}
+                            className="bg-background/80 hover:bg-destructive hover:text-destructive-foreground absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-sm transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+
+                          {/* File size indicator */}
+                          <div className="absolute bottom-0 left-0 w-full bg-black/60 px-1 py-0.5 text-center text-[9px] font-medium text-white backdrop-blur-sm">
+                            {(file.size / 1024 / 1024).toFixed(1)} MB
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
 
               {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (

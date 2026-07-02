@@ -539,6 +539,12 @@
     "REJECTED": "This report did not proceed to investigation after preliminary analysis.",
     "ARCHIVED": "This report has been archived according to data retention policy."
   },
+  "NotFound": {
+    "title": "Report Not Found",
+    "description": "We couldn't locate any report with the provided tracking code. Please check if you typed it correctly or if the code has expired.",
+    "backHome": "Back to Home",
+    "trackAnother": "Track Another Report"
+  },
   "Footer": {
     "rights": "© {year} AnonProtect Security Solutions. All rights reserved.",
     "links": "Legal Links",
