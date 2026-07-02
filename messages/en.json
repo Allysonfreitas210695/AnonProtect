@@ -109,7 +109,9 @@
     "backToHome": "Back to Home",
     "trackNow": "Track Now",
     "securitySignature": "Digitally Signed by AnonProtect Security",
-    "encryptionInfo": "Your connection is protected by end-to-end encryption"
+    "encryptionInfo": "Your connection is protected by end-to-end encryption",
+    "aiAnalysisStatus": "Intelligent Processing",
+    "aiAnalysisPending": "Our AI is classifying your report to the correct department. This may take a few seconds."
   },
   "Home": {
     "title": "Anonymous Reporting Channel",
@@ -485,6 +487,11 @@
     "termsOfService": "Terms of Service",
     "lastUpdated": "Last updated: {date}",
     "back": "Back",
+    "retention": "Data Retention",
+    "retentionDesc": "Control of storage time for sensitive information.",
+    "oldReports": "Old Reports (+1 year)",
+    "retentionHint": "Regulations require that data not be kept beyond what is necessary for the original purpose.",
+    "bulkArchive": "Archive All",
     "privacy": {
       "title": "Privacy Policy",
       "intro": "Your privacy is our top priority. This document explains how we protect your data.",

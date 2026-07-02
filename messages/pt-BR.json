@@ -115,9 +115,11 @@
   },
   "Home": {
     "title": "Canal de Denúncia Anônima",
+    "subtitle": "Canal seguro e anônimo para denúncias",
     "description": "Seu espaço seguro para reportar irregularidades, bullying ou assédio.",
     "identitySafety": "Sua identidade é preservada em todos os níveis.",
     "newReport": "Nova Denúncia",
+    "trackReport": "Acompanhar Denúncia",
     "trackStatus": "Acompanhar Status",
     "howItWorks": "Como funciona?",
     "simpleProcess": "Processo simples e seguro em 3 passos",
@@ -212,6 +214,7 @@
   "Login": {
     "title": "Área Administrativa",
     "subtitle": "Entre com suas credenciais para gerenciar os relatos",
+    "description": "Identifique-se para acessar o painel de gerenciamento",
     "email": "E-mail",
     "password": "Senha",
     "submit": "Entrar",
@@ -223,7 +226,11 @@
     "registerNow": "Cadastre-se agora",
     "privacy": "Privacidade",
     "terms": "Termos de Uso",
-    "errorTitle": "Erro de Autenticação"
+    "errorTitle": "Erro de Autenticação",
+    "errors": {
+      "invalid": "E-mail ou senha inválidos",
+      "server": "Erro interno do servidor"
+    }
   },
   "NewReport": {
     "title": "Nova Denúncia",

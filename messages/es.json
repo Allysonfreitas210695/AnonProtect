@@ -109,7 +109,9 @@
     "backToHome": "Volver al Inicio",
     "trackNow": "Seguir Ahora",
     "securitySignature": "Firmado Digitalmente por AnonProtect Security",
-    "encryptionInfo": "Su conexión está protegida con cifrado de extremo a extremo"
+    "encryptionInfo": "Su conexión está protegida con cifrado de extremo a extremo",
+    "aiAnalysisStatus": "Procesamiento Inteligente",
+    "aiAnalysisPending": "Nuestra IA está clasificando su denuncia en el departamento correcto. Esto puede tardar unos segundos."
   },
   "Home": {
     "title": "Canal de Denuncias Anónimas",
@@ -485,6 +487,11 @@
     "termsOfService": "Términos de Uso",
     "lastUpdated": "Última actualización: {date}",
     "back": "Volver",
+    "retention": "Retención de Datos",
+    "retentionDesc": "Control del tiempo de almacenamiento de información sensible.",
+    "oldReports": "Informes Antiguos (+1 año)",
+    "retentionHint": "La normativa exige que los datos no se conserven más allá de lo necesario para la finalidad original.",
+    "bulkArchive": "Archivar Todo",
     "privacy": {
       "title": "Política de Privacidad",
       "intro": "Su privacidad es nuestra máxima prioridad. Este documento explica cómo protegemos sus datos.",
