@@ -17,7 +17,7 @@ export const updateReportStatusAction = supervisorActionClient
   })
 
 const sendAdminReplySchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
   content: z.string().min(1, 'Mensagem não pode estar vazia'),
 })
 
@@ -33,7 +33,7 @@ export const sendAdminReplyAction = supervisorActionClient
   })
 
 const createNoteSchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
   content: z.string().min(1, 'Conteúdo é obrigatório'),
 })
 
@@ -49,8 +49,8 @@ export const createInvestigationNoteAction = supervisorActionClient
   })
 
 const deleteNoteSchema = z.object({
-  noteId: z.string().uuid(),
-  reportId: z.string().uuid(),
+  noteId: z.uuid(),
+  reportId: z.uuid(),
 })
 
 export const deleteInvestigationNoteAction = supervisorActionClient
@@ -65,8 +65,8 @@ export const deleteInvestigationNoteAction = supervisorActionClient
   })
 
 const forwardReportSchema = z.object({
-  reportId: z.string().uuid(),
-  departmentId: z.string().uuid(),
+  reportId: z.uuid(),
+  departmentId: z.uuid(),
   description: z.string().min(1, 'Justificativa é obrigatória'),
 })
 
@@ -82,7 +82,7 @@ export const forwardReportAction = supervisorActionClient
   })
 
 const batchStatusSchema = z.object({
-  reportIds: z.array(z.string().uuid()),
+  reportIds: z.array(z.uuid()),
   status: reportStatusSchema.shape.status,
 })
 
@@ -100,7 +100,7 @@ export const batchUpdateReportStatusAction = supervisorActionClient
   })
 
 const deleteReportSchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
 })
 
 export const deleteReportAction = adminActionClient

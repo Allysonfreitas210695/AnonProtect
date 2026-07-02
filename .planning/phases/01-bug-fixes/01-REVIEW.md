@@ -85,17 +85,17 @@ const percentage = quickStats.total > 0 ? Math.round((dept.count / quickStats.to
 ### CR-03: Sem validação de tamanho do array em `batchUpdateReportStatusAction`
 
 **File:** `src/_actions/admin/report.action.ts:84-100`
-**Issue:** `batchStatusSchema` aceita `reportIds: z.array(z.string().uuid())` sem limite de tamanho. Um supervisor mal-intencionado ou uma requisição forjada pode enviar milhares de UUIDs, disparando um `UPDATE` em massa irrestrito no banco — risco de DoS e de alteração de escopo não intencional.
+**Issue:** `batchStatusSchema` aceita `reportIds: z.array(z.uuid())` sem limite de tamanho. Um supervisor mal-intencionado ou uma requisição forjada pode enviar milhares de UUIDs, disparando um `UPDATE` em massa irrestrito no banco — risco de DoS e de alteração de escopo não intencional.
 
 ```ts
 // linha 85 — atual
-reportIds: z.array(z.string().uuid()),
+reportIds: z.array(z.uuid()),
 ```
 
 **Fix:**
 
 ```ts
-reportIds: z.array(z.string().uuid()).min(1, 'Selecione ao menos uma denúncia').max(100, 'Máximo de 100 denúncias por operação'),
+reportIds: z.array(z.uuid()).min(1, 'Selecione ao menos uma denúncia').max(100, 'Máximo de 100 denúncias por operação'),
 ```
 
 ---

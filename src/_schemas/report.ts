@@ -3,8 +3,11 @@ import { ReportStatus } from '@/_generated/prisma'
 import { Report, Category, Message, User } from '@/_generated/prisma'
 
 export const reportSchema = z.object({
-  categoryId: z.string().uuid('Selecione uma categoria válida'),
-  description: z.string().min(10, 'A descrição deve ter no mínimo 10 caracteres'),
+  categoryId: z.uuid('Selecione uma categoria válida'),
+  description: z
+    .string()
+    .min(10, 'A descrição deve ter no mínimo 10 caracteres')
+    .max(2000, 'A descrição deve ter no máximo 2000 caracteres'),
   country: z.string().min(1, 'Selecione o país da ocorrência'),
   state: z.string().optional(),
   city: z.string().optional(),
@@ -32,7 +35,7 @@ export const reportSchema = z.object({
 })
 
 export const reportStatusSchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
   status: z.nativeEnum(ReportStatus),
 })
 

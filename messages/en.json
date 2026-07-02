@@ -259,6 +259,7 @@
     "postalCodeInternational": "Postal Code / Zip Code",
     "postalCodePlaceholderInternational": "Enter postal code",
     "number": "Number",
+    "noNumber": "No number (N/A)",
     "optional": "(Optional)",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
@@ -530,6 +531,13 @@
       "independentAudit": "Independent Audit",
       "independentAuditDesc": "The anonymity engine's source code is reviewed periodically to ensure integrity."
     }
+  },
+  "Sla": {
+    "PENDING": "Your report is in the analysis queue. Estimated response time: up to 5 business days.",
+    "IN_PROGRESS": "Our team is investigating the case. Check this page for updates.",
+    "RESOLVED": "This report has been successfully resolved. Thank you for your collaboration.",
+    "REJECTED": "This report did not proceed to investigation after preliminary analysis.",
+    "ARCHIVED": "This report has been archived according to data retention policy."
   },
   "Footer": {
     "rights": "© {year} AnonProtect Security Solutions. All rights reserved.",

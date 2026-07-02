@@ -259,6 +259,7 @@
     "postalCodeInternational": "Código Postal / Zip Code",
     "postalCodePlaceholderInternational": "Ingrese el código postal",
     "number": "Número",
+    "noNumber": "Sin número (S/N)",
     "optional": "(Opcional)",
     "uploadComingSoon": "La funcionalidad de carga será implementada pronto",
     "submit": "Enviar Denuncia",
@@ -530,6 +531,13 @@
       "independentAudit": "Auditoría Independiente",
       "independentAuditDesc": "El código fuente del motor de anonimato se revisa periódicamente para garantizar su integridad."
     }
+  },
+  "Sla": {
+    "PENDING": "Su denuncia está en la cola de análisis. Tiempo estimado de respuesta: hasta 5 días hábiles.",
+    "IN_PROGRESS": "Nuestro equipo está investigando el caso. Consulte esta página para ver las actualizaciones.",
+    "RESOLVED": "Esta denuncia ha sido resuelta con éxito. Gracias por su colaboración.",
+    "REJECTED": "Esta denuncia no prosiguió a investigación tras el análisis preliminar.",
+    "ARCHIVED": "Esta denuncia ha sido archivada conforme a la política de retención de datos."
   },
   "Footer": {
     "rights": "© {year} AnonProtect Security Solutions. Todos los derechos reservados.",

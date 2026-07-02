@@ -6,7 +6,7 @@ export const categorySchema = z.object({
 })
 
 export const messageSchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
   content: z.string().min(1, 'Mensagem não pode estar vazia'),
 })
 

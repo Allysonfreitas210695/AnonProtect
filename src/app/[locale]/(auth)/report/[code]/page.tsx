@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { Card, CardContent } from '@/_components/ui/card'
 import { MessageList } from '@/_components/shared/message-list'
 import { ReportCard } from '@/_components/shared/report-card'
+import { ReportSlaBanner } from '@/_components/shared/report-sla-banner'
 import { MessageForm } from './_components/message-form'
 import { getTranslations } from 'next-intl/server'
 import { RateLimitGuard } from '@/_components/shared/rate-limit-guard'
@@ -25,6 +26,8 @@ export default async function ReportStatusPage({ params }: { params: Promise<{ c
           <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('title')}</h1>
           <p className="text-muted-foreground">{t('subtitle')}</p>
         </header>
+
+        <ReportSlaBanner status={report.status} />
 
         <ReportCard report={report} />
 

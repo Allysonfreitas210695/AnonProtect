@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 const sendMessageSchema = z.object({
-  reportId: z.string().uuid(),
+  reportId: z.uuid(),
   code: z.string().min(1, 'Código é obrigatório'),
   content: z.string().min(1, 'A mensagem não pode estar vazia'),
 })

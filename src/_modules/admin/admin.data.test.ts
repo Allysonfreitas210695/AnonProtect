@@ -17,6 +17,7 @@ vi.mock('@/_shared/lib/prisma', () => ({
     report: {
       update: vi.fn(),
       updateMany: vi.fn(),
+      findUnique: vi.fn(),
     },
     activityLog: {
       create: vi.fn(),
@@ -52,6 +53,11 @@ describe('admin.data', () => {
       const id = 'r1'
       const status = 'RESOLVED'
       const userId = 'u1'
+
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        status: 'PENDING',
+        trackingCode: 'AP-1234',
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
 
       vi.mocked(prisma.report.update).mockResolvedValue({ id, status } as unknown as Awaited<
         ReturnType<typeof prisma.report.update>

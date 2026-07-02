@@ -37,11 +37,14 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const locale = useLocale()
   const isLockedToBrazil = locale === 'pt-BR'
   const [files, setFiles] = useState<File[]>([])
+  const [noNumber, setNoNumber] = useState(false)
   const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup } = useNewReport()
 
   const selectedCountry = form.watch('country')
   const isBrazil = selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
   const postalCode = form.watch('postalCode')
+  const descriptionValue = form.watch('description') ?? ''
+  const MAX_DESCRIPTION = 2000
 
   // Se a locale for pt-BR, pré-seleciona Brasil e bloqueia o select
   useEffect(() => {
@@ -49,6 +52,17 @@ export default function NewReportForm({ categories }: { categories: Category[] }
       form.setValue('country', 'Brasil')
     }
   }, [isLockedToBrazil, form])
+
+  // S/N checkbox: preenche o campo number com "S/N" e bloqueia
+  useEffect(() => {
+    if (noNumber) {
+      form.setValue('number', 'S/N')
+    } else {
+      if (form.getValues('number') === 'S/N') {
+        form.setValue('number', '')
+      }
+    }
+  }, [noNumber, form])
 
   useEffect(() => {
     if (isBrazil && postalCode?.replace(/\D/g, '').length === 8) {
@@ -233,8 +247,27 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-11" type="text" />
+                          <Input
+                            {...field}
+                            className="h-11"
+                            type="text"
+                            disabled={noNumber}
+                            placeholder={noNumber ? 'S/N' : ''}
+                          />
                         </FormControl>
+                        <div className="mt-1.5 flex items-center gap-2">
+                          <Checkbox
+                            id="no-number"
+                            checked={noNumber}
+                            onCheckedChange={(v) => setNoNumber(!!v)}
+                          />
+                          <label
+                            htmlFor="no-number"
+                            className="text-muted-foreground cursor-pointer text-xs select-none"
+                          >
+                            {t('noNumber')}
+                          </label>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -270,10 +303,24 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                       <Textarea
                         placeholder={t('descriptionPlaceholder')}
                         className="min-h-[150px] resize-none lg:min-h-[200px]"
+                        maxLength={MAX_DESCRIPTION}
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription className="text-xs">{t('descriptionHint')}</FormDescription>
+                    <div className="flex items-center justify-between">
+                      <FormDescription className="text-xs">{t('descriptionHint')}</FormDescription>
+                      <span
+                        className={`text-[11px] font-semibold tabular-nums transition-colors ${
+                          descriptionValue.length >= MAX_DESCRIPTION
+                            ? 'text-destructive'
+                            : descriptionValue.length >= MAX_DESCRIPTION * 0.8
+                              ? 'text-amber-500'
+                              : 'text-muted-foreground'
+                        }`}
+                      >
+                        {descriptionValue.length}/{MAX_DESCRIPTION}
+                      </span>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

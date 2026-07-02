@@ -251,6 +251,7 @@
     "postalCodePlaceholder": "00000-000",
     "postalCodePlaceholderInternational": "Digite o código postal",
     "number": "Número",
+    "noNumber": "Sem número (S/N)",
     "optional": "(Opcional)",
     "city": "Cidade",
     "state": "Estado",
@@ -530,6 +531,13 @@
       "independentAudit": "Auditoria Independente",
       "independentAuditDesc": "O código-fonte do motor de anonimato é revisado periodicamente para garantir a integridade."
     }
+  },
+  "Sla": {
+    "PENDING": "Sua denúncia está na fila de análise. Prazo estimado de resposta: até 5 dias úteis.",
+    "IN_PROGRESS": "Nossa equipe está investigando o caso. Acompanhe as atualizações nesta página.",
+    "RESOLVED": "Esta denúncia foi encerrada com sucesso. Obrigado pela colaboração.",
+    "REJECTED": "Esta denúncia não prosseguiu para investigação após análise preliminar.",
+    "ARCHIVED": "Esta denúncia foi arquivada conforme política de retenção de dados."
   },
   "Footer": {
     "rights": "© {year} AnonProtect Security Solutions. Todos os direitos reservados.",

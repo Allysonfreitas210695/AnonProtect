@@ -27,7 +27,7 @@ export const createCategoryAction = adminActionClient
   })
 
 export const toggleCategoryAction = adminActionClient
-  .schema(z.object({ id: z.string().uuid(), active: z.boolean() }))
+  .schema(z.object({ id: z.uuid(), active: z.boolean() }))
   .action(async ({ parsedInput: { id, active } }) => {
     await categoryRepository.toggleCategory(id, active)
     revalidatePath('/admin/settings')
@@ -35,7 +35,7 @@ export const toggleCategoryAction = adminActionClient
   })
 
 export const deleteCategoryAction = adminActionClient
-  .schema(z.object({ id: z.string().uuid() }))
+  .schema(z.object({ id: z.uuid() }))
   .action(async ({ parsedInput: { id } }) => {
     await categoryRepository.deleteCategory(id)
     revalidatePath('/admin/settings')

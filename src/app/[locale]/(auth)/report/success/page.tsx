@@ -4,6 +4,7 @@ import { Button } from '@/_components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/_components/ui/alert'
 import { Card, CardContent } from '@/_components/ui/card'
 import { ShieldCheck, Home, Search, Sparkles } from 'lucide-react'
+import { TrackingQrCode } from '@/_components/shared/tracking-qr-code'
 
 export default async function SuccessPage({
   searchParams,
@@ -12,6 +13,7 @@ export default async function SuccessPage({
 }) {
   const t = await getTranslations('Success')
   const { code } = await searchParams
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
   return (
     <div className="relative mx-auto my-12 max-w-2xl px-4 text-center">
@@ -40,9 +42,14 @@ export default async function SuccessPage({
           </p>
         </div>
         <CardContent className="py-10">
-          <div className="group relative inline-flex items-center gap-4">
-            <div className="text-primary font-mono text-4xl font-black tracking-[0.2em] drop-shadow-sm sm:text-6xl">
-              {code}
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
+            <div className="group relative inline-flex items-center gap-4">
+              <div className="text-primary font-mono text-4xl font-black tracking-[0.2em] drop-shadow-sm sm:text-5xl">
+                {code}
+              </div>
+            </div>
+            <div className="border-border/50 sm:border-l sm:pl-6">
+              <TrackingQrCode trackingCode={code} baseUrl={baseUrl} />
             </div>
           </div>
         </CardContent>
