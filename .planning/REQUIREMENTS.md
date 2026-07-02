@@ -43,12 +43,12 @@
 
 ### Performance e Qualidade
 
-- [ ] **PERF-01**: JWT não realiza query no banco de dados a cada requisição autenticada — `role` e `country` são cacheados no token
-- [ ] **PERF-02**: `getPublicStats()` usa agregação SQL (`date_trunc` + `GROUP BY`) em vez de carregar todos os timestamps em memória
-- [ ] **QUAL-01**: `generateTrackingCode()` usa `crypto.randomBytes()` (CSPRNG) e verifica unicidade com retry antes de inserir no banco
-- [ ] **QUAL-02**: Nenhuma chamada a `console.error`, `console.warn` ou `console.log` existe no código de produção — todos substituídos por `logger` (pino)
-- [ ] **QUAL-03**: Campo `Report.priority` é um enum Prisma `ReportPriority` (`LOW | MEDIUM | HIGH | CRITICAL`) com constraint no banco
-- [ ] **QUAL-04**: Falha de descriptografia retorna sentinela `[DECRYPT_FAILED]` visível na UI em vez de ciphertext bruto
+- [x] **PERF-01**: JWT não realiza query no banco de dados a cada requisição autenticada — `role` e `country` são cacheados no token
+- [x] **PERF-02**: `getPublicStats()` usa agregação SQL (`date_trunc` + `GROUP BY`) em vez de carregar todos os timestamps em memória
+- [x] **QUAL-01**: `generateTrackingCode()` usa `crypto.randomBytes()` (CSPRNG) e verifica unicidade com retry antes de inserir no banco
+- [x] **QUAL-02**: Nenhuma chamada a `console.error`, `console.warn` ou `console.log` existe no código de produção — todos substituídos por `logger` (pino)
+- [x] **QUAL-03**: Campo `Report.priority` é um enum Prisma `ReportPriority` (`LOW | MEDIUM | HIGH | CRITICAL`) com constraint no banco
+- [x] **QUAL-04**: Falha de descriptografia retorna sentinela `[DECRYPT_FAILED]` visível na UI em vez de ciphertext bruto
 
 ## v2 Requirements
 
@@ -104,12 +104,12 @@
 | AUTH-02   | Phase 4 | Complete |
 | AUTH-03   | Phase 4 | Complete |
 | AUTH-04   | Phase 4 | Complete |
-| PERF-01   | Phase 5 | Pending  |
-| PERF-02   | Phase 5 | Pending  |
-| QUAL-01   | Phase 5 | Pending  |
-| QUAL-02   | Phase 5 | Pending  |
-| QUAL-03   | Phase 5 | Pending  |
-| QUAL-04   | Phase 5 | Pending  |
+| PERF-01   | Phase 5 | Complete |
+| PERF-02   | Phase 5 | Complete |
+| QUAL-01   | Phase 5 | Complete |
+| QUAL-02   | Phase 5 | Complete |
+| QUAL-03   | Phase 5 | Complete |
+| QUAL-04   | Phase 5 | Complete |
 
 **Cobertura:**
 
