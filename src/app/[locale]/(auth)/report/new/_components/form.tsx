@@ -41,7 +41,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup } = useNewReport()
 
   const selectedCountry = form.watch('country')
-  const isBrazil = selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
+  const isBrazil = isLockedToBrazil || selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
   const postalCode = form.watch('postalCode')
   const descriptionValue = form.watch('description') ?? ''
   const MAX_DESCRIPTION = 2000
@@ -152,7 +152,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                         </FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          value={field.value}
+                          value={isLockedToBrazil ? 'Brasil' : field.value}
                           disabled={isLockedToBrazil}
                         >
                           <FormControl>
