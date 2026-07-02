@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { sendMessageAction } from './message.action'
 import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
+import { sendEmail } from '@/_shared/lib/aws'
 
 vi.mock('@/_modules/report/report.data', () => ({
   createMessage: vi.fn(),
@@ -19,6 +20,10 @@ vi.mock('@/_shared/lib/prisma', () => ({
   },
 }))
 
+vi.mock('@/_shared/lib/aws', () => ({
+  sendEmail: vi.fn(),
+}))
+
 describe('Message Action', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -33,6 +38,7 @@ describe('Message Action', () => {
 
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
       trackingCode: 'AP-2026-TEST',
+      assignedTo: { email: 'admin@sistema.com' },
     })
 
     const result = await sendMessageAction(mockInput)
@@ -42,6 +48,66 @@ describe('Message Action', () => {
       mockInput.reportId,
       mockInput.content
     )
+  })
+
+  it('sends email when report has an assigned admin', async () => {
+    const mockInput = {
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'Hello, this is a test message.',
+    }
+
+    ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
+      trackingCode: 'AP-2026-TEST',
+      assignedTo: { email: 'admin@sistema.com' },
+    })
+
+    const result = await sendMessageAction(mockInput)
+
+    expect(result?.data).toEqual({ success: true, message: 'Mensagem enviada com sucesso!' })
+    expect(sendEmail).toHaveBeenCalledTimes(1)
+    expect(sendEmail).toHaveBeenCalledWith(
+      'admin@sistema.com',
+      expect.any(String),
+      expect.any(String)
+    )
+  })
+
+  it('does not send email when assignedTo is null', async () => {
+    const mockInput = {
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'Hello, this is a test message.',
+    }
+
+    ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
+      trackingCode: 'AP-2026-TEST',
+      assignedTo: null,
+    })
+
+    const result = await sendMessageAction(mockInput)
+
+    expect(result?.data).toEqual({ success: true, message: 'Mensagem enviada com sucesso!' })
+    expect(sendEmail).not.toHaveBeenCalled()
+  })
+
+  it('succeeds even if sendEmail rejects', async () => {
+    const mockInput = {
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'Hello, this is a test message.',
+    }
+
+    ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
+      trackingCode: 'AP-2026-TEST',
+      assignedTo: { email: 'admin@sistema.com' },
+    })
+    ;(sendEmail as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('SES down'))
+
+    const result = await sendMessageAction(mockInput)
+
+    expect(result?.data).toEqual({ success: true, message: 'Mensagem enviada com sucesso!' })
+    expect(result?.serverError).toBeUndefined()
   })
 
   it('should reject when trackingCode does not match reportId', async () => {

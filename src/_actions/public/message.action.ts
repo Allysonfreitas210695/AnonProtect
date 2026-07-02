@@ -4,6 +4,7 @@ import { actionClient, ActionError } from '@/_shared/utils/safe-action'
 import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
 import { sendEmail } from '@/_shared/lib/aws'
+import { logger } from '@/_shared/lib/logger'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -31,7 +32,11 @@ export const sendMessageAction = actionClient
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
       const adminLink = `${baseUrl}/admin/report/${reportId}`
       const htmlBody = `<p>Nova mensagem recebida no relatório ${code}.</p><a href="${adminLink}">Acesse o painel para visualizar.</a>`
-      await sendEmail(report.assignedTo.email, 'Nova mensagem no AnonProtect', htmlBody)
+      try {
+        await sendEmail(report.assignedTo.email, 'Nova mensagem no AnonProtect', htmlBody)
+      } catch (error) {
+        logger.error({ reportId, error }, 'Falha ao notificar admin sobre nova mensagem')
+      }
     }
 
     revalidatePath(`/report/${code}`)
