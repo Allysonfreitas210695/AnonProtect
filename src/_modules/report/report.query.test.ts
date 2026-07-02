@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
@@ -14,6 +15,7 @@ vi.mock('@/_shared/lib/prisma', () => ({
       groupBy: vi.fn(),
       findMany: vi.fn(),
     },
+    $queryRaw: vi.fn(),
   },
 }))
 
@@ -93,7 +95,7 @@ describe('report.query', () => {
 
       const result = await getReportByCode('TR123')
 
-      expect(result?.description).toBe('bad')
+      expect(result?.description).toBe('[DECRYPT_FAILED]')
     })
 
     it('should return null if report not found', async () => {
@@ -109,12 +111,15 @@ describe('report.query', () => {
       vi.mocked(prisma.report.groupBy).mockResolvedValue(
         [] as unknown as Awaited<ReturnType<typeof prisma.report.groupBy>>
       )
-      vi.mocked(prisma.report.findMany).mockResolvedValue(
-        [] as unknown as Awaited<ReturnType<typeof prisma.report.findMany>>
-      )
-      vi.mocked(prisma.category.findMany).mockResolvedValue(
-        [] as unknown as Awaited<ReturnType<typeof prisma.category.findMany>>
-      )
+      vi.mocked(prisma.report.groupBy).mockResolvedValueOnce([
+        { categoryId: 'c1', _count: { _all: 3 } } as any,
+      ])
+
+      vi.mocked(prisma.category.findMany).mockResolvedValue([{ id: 'c1', name: 'Cat 1' }] as any)
+
+      vi.mocked(prisma.$queryRaw).mockResolvedValueOnce([
+        { month: new Date(new Date().setFullYear(new Date().getFullYear() - 1)), count: BigInt(1) },
+      ] as any)
 
       const result = await getPublicStats()
 

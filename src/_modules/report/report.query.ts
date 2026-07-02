@@ -31,8 +31,8 @@ export async function getReportByCode(code: string) {
   let decryptedDescription = report.description
   try {
     decryptedDescription = decrypt(report.description)
-  } catch (e) {
-    console.warn('Failed to decrypt report description for public tracking', e)
+  } catch {
+    decryptedDescription = '[DECRYPT_FAILED]'
   }
 
   const decryptedMessages = report.messages.map((msg) => {
@@ -40,7 +40,7 @@ export async function getReportByCode(code: string) {
     try {
       content = decrypt(msg.content)
     } catch {
-      // fallback for legacy plaintext data
+      content = '[DECRYPT_FAILED]'
     }
     return { ...msg, content }
   })
@@ -67,14 +67,13 @@ export async function getPublicStats() {
         where: { deletedAt: null },
         _count: { _all: true },
       }),
-      prisma.report.findMany({
-        where: {
-          deletedAt: null,
-          createdAt: { gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1)) },
-        },
-        select: { createdAt: true },
-        orderBy: { createdAt: 'asc' },
-      }),
+      prisma.$queryRaw<{ month: Date; count: bigint }[]>`
+        SELECT date_trunc('month', created_at) as month, count(*)::bigint as count
+        FROM reports
+        WHERE deleted_at IS NULL AND created_at >= NOW() - INTERVAL '1 year'
+        GROUP BY month
+        ORDER BY month ASC
+      `,
     ])
 
   const statusStats = statusGroups.map((g) => ({
@@ -115,9 +114,10 @@ export async function getPublicStats() {
   }
 
   rawTimeline.forEach((r) => {
-    const label = `${monthNames[r.createdAt.getMonth()]}/${r.createdAt.getFullYear().toString().slice(-2)}`
+    const date = new Date(r.month)
+    const label = `${monthNames[date.getMonth()]}/${date.getFullYear().toString().slice(-2)}`
     if (timelineMap.has(label)) {
-      timelineMap.set(label, (timelineMap.get(label) || 0) + 1)
+      timelineMap.set(label, Number(r.count))
     }
   })
 

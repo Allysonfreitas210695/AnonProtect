@@ -23,6 +23,7 @@ import { AnalyticsChart } from '@/_components/shared/analytics-chart'
 import { DashboardDateFilter } from '@/_components/shared/dashboard-date-filter'
 import { ReportSearchFilter } from '@/_components/shared/report-search-filter'
 import { getCurrentUser } from '@/_shared/lib/auth'
+import { logger } from '@/_shared/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -83,7 +84,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
     fullStats = fs
     activities = act
   } catch (error) {
-    console.error('AdminDashboard error:', error)
+    logger.error(error, 'AdminDashboard error:')
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-6 px-4 text-center">
         <div className="bg-destructive/10 rounded-full p-4">

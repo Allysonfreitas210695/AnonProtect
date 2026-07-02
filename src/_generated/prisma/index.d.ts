@@ -78,6 +78,15 @@ export namespace $Enums {
 
   export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
+  export const ReportPriority: {
+    LOW: 'LOW'
+    MEDIUM: 'MEDIUM'
+    HIGH: 'HIGH'
+    CRITICAL: 'CRITICAL'
+  }
+
+  export type ReportPriority = (typeof ReportPriority)[keyof typeof ReportPriority]
+
   export const ReportStatus: {
     PENDING: 'PENDING'
     IN_PROGRESS: 'IN_PROGRESS'
@@ -123,6 +132,10 @@ export namespace $Enums {
 export type UserRole = $Enums.UserRole
 
 export const UserRole: typeof $Enums.UserRole
+
+export type ReportPriority = $Enums.ReportPriority
+
+export const ReportPriority: typeof $Enums.ReportPriority
 
 export type ReportStatus = $Enums.ReportStatus
 
@@ -7326,7 +7339,7 @@ export namespace Prisma {
     trackingCode: string | null
     description: string | null
     status: $Enums.ReportStatus | null
-    priority: string | null
+    priority: $Enums.ReportPriority | null
     country: string | null
     state: string | null
     city: string | null
@@ -7347,7 +7360,7 @@ export namespace Prisma {
     trackingCode: string | null
     description: string | null
     status: $Enums.ReportStatus | null
-    priority: string | null
+    priority: $Enums.ReportPriority | null
     country: string | null
     state: string | null
     city: string | null
@@ -7527,7 +7540,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status: $Enums.ReportStatus
-    priority: string | null
+    priority: $Enums.ReportPriority
     country: string | null
     state: string | null
     city: string | null
@@ -7734,7 +7747,7 @@ export namespace Prisma {
         trackingCode: string
         description: string
         status: $Enums.ReportStatus
-        priority: string | null
+        priority: $Enums.ReportPriority
         country: string | null
         state: string | null
         city: string | null
@@ -8325,7 +8338,7 @@ export namespace Prisma {
     readonly trackingCode: FieldRef<'Report', 'String'>
     readonly description: FieldRef<'Report', 'String'>
     readonly status: FieldRef<'Report', 'ReportStatus'>
-    readonly priority: FieldRef<'Report', 'String'>
+    readonly priority: FieldRef<'Report', 'ReportPriority'>
     readonly country: FieldRef<'Report', 'String'>
     readonly state: FieldRef<'Report', 'String'>
     readonly city: FieldRef<'Report', 'String'>
@@ -16961,6 +16974,22 @@ export namespace Prisma {
   >
 
   /**
+   * Reference to a field of type 'ReportPriority'
+   */
+  export type EnumReportPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'ReportPriority'
+  >
+
+  /**
+   * Reference to a field of type 'ReportPriority[]'
+   */
+  export type ListEnumReportPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'ReportPriority[]'
+  >
+
+  /**
    * Reference to a field of type 'AttachmentCategory'
    */
   export type EnumAttachmentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<
@@ -17337,7 +17366,7 @@ export namespace Prisma {
     trackingCode?: StringFilter<'Report'> | string
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
-    priority?: StringNullableFilter<'Report'> | string | null
+    priority?: EnumReportPriorityFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableFilter<'Report'> | string | null
     state?: StringNullableFilter<'Report'> | string | null
     city?: StringNullableFilter<'Report'> | string | null
@@ -17365,7 +17394,7 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
-    priority?: SortOrderInput | SortOrder
+    priority?: SortOrder
     country?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
@@ -17397,7 +17426,7 @@ export namespace Prisma {
       NOT?: ReportWhereInput | ReportWhereInput[]
       description?: StringFilter<'Report'> | string
       status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
-      priority?: StringNullableFilter<'Report'> | string | null
+      priority?: EnumReportPriorityFilter<'Report'> | $Enums.ReportPriority
       country?: StringNullableFilter<'Report'> | string | null
       state?: StringNullableFilter<'Report'> | string | null
       city?: StringNullableFilter<'Report'> | string | null
@@ -17427,7 +17456,7 @@ export namespace Prisma {
     trackingCode?: SortOrder
     description?: SortOrder
     status?: SortOrder
-    priority?: SortOrderInput | SortOrder
+    priority?: SortOrder
     country?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
@@ -17454,7 +17483,7 @@ export namespace Prisma {
     trackingCode?: StringWithAggregatesFilter<'Report'> | string
     description?: StringWithAggregatesFilter<'Report'> | string
     status?: EnumReportStatusWithAggregatesFilter<'Report'> | $Enums.ReportStatus
-    priority?: StringNullableWithAggregatesFilter<'Report'> | string | null
+    priority?: EnumReportPriorityWithAggregatesFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableWithAggregatesFilter<'Report'> | string | null
     state?: StringNullableWithAggregatesFilter<'Report'> | string | null
     city?: StringNullableWithAggregatesFilter<'Report'> | string | null
@@ -18212,7 +18241,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -18237,7 +18266,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -18262,7 +18291,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18287,7 +18316,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18312,7 +18341,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -18333,7 +18362,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18351,7 +18380,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19174,6 +19203,13 @@ export namespace Prisma {
     not?: NestedEnumReportStatusFilter<$PrismaModel> | $Enums.ReportStatus
   }
 
+  export type EnumReportPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportPriority | EnumReportPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportPriorityFilter<$PrismaModel> | $Enums.ReportPriority
+  }
+
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -19275,6 +19311,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumReportStatusFilter<$PrismaModel>
     _max?: NestedEnumReportStatusFilter<$PrismaModel>
+  }
+
+  export type EnumReportPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportPriority | EnumReportPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportPriorityWithAggregatesFilter<$PrismaModel> | $Enums.ReportPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportPriorityFilter<$PrismaModel>
+    _max?: NestedEnumReportPriorityFilter<$PrismaModel>
   }
 
   export type EnumAttachmentCategoryFilter<$PrismaModel = never> = {
@@ -20124,6 +20170,10 @@ export namespace Prisma {
 
   export type EnumReportStatusFieldUpdateOperationsInput = {
     set?: $Enums.ReportStatus
+  }
+
+  export type EnumReportPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.ReportPriority
   }
 
   export type UserUpdateOneWithoutReportsNestedInput = {
@@ -21057,6 +21107,13 @@ export namespace Prisma {
     not?: NestedEnumReportStatusFilter<$PrismaModel> | $Enums.ReportStatus
   }
 
+  export type NestedEnumReportPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportPriority | EnumReportPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportPriorityFilter<$PrismaModel> | $Enums.ReportPriority
+  }
+
   export type NestedEnumReportStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ReportStatus | EnumReportStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ReportStatus[] | ListEnumReportStatusFieldRefInput<$PrismaModel>
@@ -21065,6 +21122,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumReportStatusFilter<$PrismaModel>
     _max?: NestedEnumReportStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumReportPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReportPriority | EnumReportPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReportPriority[] | ListEnumReportPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumReportPriorityWithAggregatesFilter<$PrismaModel> | $Enums.ReportPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReportPriorityFilter<$PrismaModel>
+    _max?: NestedEnumReportPriorityFilter<$PrismaModel>
   }
 
   export type NestedEnumAttachmentCategoryFilter<$PrismaModel = never> = {
@@ -21183,7 +21250,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -21207,7 +21274,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -21402,7 +21469,7 @@ export namespace Prisma {
     trackingCode?: StringFilter<'Report'> | string
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
-    priority?: StringNullableFilter<'Report'> | string | null
+    priority?: EnumReportPriorityFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableFilter<'Report'> | string | null
     state?: StringNullableFilter<'Report'> | string | null
     city?: StringNullableFilter<'Report'> | string | null
@@ -22129,7 +22196,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22153,7 +22220,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22193,7 +22260,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22217,7 +22284,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22241,7 +22308,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22265,7 +22332,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22305,7 +22372,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22329,7 +22396,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22381,7 +22448,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22405,7 +22472,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22495,7 +22562,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22519,7 +22586,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22617,7 +22684,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22641,7 +22708,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22723,7 +22790,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22747,7 +22814,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22830,7 +22897,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22854,7 +22921,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22975,7 +23042,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -22999,7 +23066,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -23192,7 +23259,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -23289,7 +23356,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23313,7 +23380,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23337,7 +23404,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23552,7 +23619,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -23572,7 +23639,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23596,7 +23663,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23620,7 +23687,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23654,7 +23721,7 @@ export namespace Prisma {
     trackingCode: string
     description: string
     status?: $Enums.ReportStatus
-    priority?: string | null
+    priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
@@ -23735,7 +23802,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23759,7 +23826,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23783,7 +23850,7 @@ export namespace Prisma {
     trackingCode?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
-    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null

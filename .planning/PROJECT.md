@@ -28,6 +28,10 @@ O denunciante deve conseguir enviar uma denúncia de forma completamente anônim
 - ✓ Log de auditoria de ações administrativas — existente
 - ✓ Gerenciamento de categorias e departamentos — existente
 - ✓ Docker multi-stage + docker-compose para desenvolvimento local — existente
+- ✓ Exportação oficial de Dossiê em PDF para relatórios administrativos — existente
+- ✓ UX melhorada com Skeleton Loaders no dashboard — existente
+- ✓ Upload de evidências com preview em thumbnails e remoção — existente
+- ✓ Página 404 amigável para códigos de rastreio inválidos — existente
 
 ### Active
 
@@ -75,7 +79,6 @@ O denunciante deve conseguir enviar uma denúncia de forma completamente anônim
 - WebSocket / real-time push — polling ou SSE suficiente para o caso de uso de TCC
 - Provedores de identidade além de Credentials + Google OAuth — já cobre o necessário
 - Multi-tenant / multi-organização — projeto de escopo único
-- Exportação de relatórios para PDF/Excel — não foi solicitado
 
 ## Context
 

@@ -60,17 +60,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return session
     },
-    async jwt({ token }) {
-      if (!token.sub) return token
-
-      const existingUser = await prisma.user.findUnique({
-        where: { id: token.sub },
-      })
-
-      if (!existingUser) return token
-
-      token.role = existingUser.role
-      token.country = existingUser.country
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role
+        token.country = user.country
+      }
       return token
     },
   },

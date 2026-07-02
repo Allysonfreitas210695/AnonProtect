@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { getAddressByCep } from './viacep'
+import { logger } from '@/_shared/lib/logger'
 
 describe('viacep', () => {
   const mockAddress = {
@@ -42,7 +43,7 @@ describe('viacep', () => {
   })
 
   it('should return null and log error on fetch failure', async () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(logger, 'error').mockImplementation(() => {})
     const fetchMock = vi.fn().mockRejectedValue(new Error('Network error'))
     global.fetch = fetchMock
 

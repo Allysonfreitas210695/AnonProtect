@@ -39,3 +39,21 @@ export type RegisterInput = z.infer<typeof registerSchema>
 export type ProfileInput = z.infer<typeof profileSchema>
 export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>
 export type UserRole = $Enums.UserRole
+
+export const forgotPasswordSchema = z.object({
+  email: z.email('Email inválido'),
+})
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().min(1, 'Token inválido'),
+    password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+    confirmPassword: z.string().min(6, 'Confirmação de senha obrigatória'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  })
+
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>

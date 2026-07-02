@@ -3,6 +3,7 @@ import { analyzeReport } from '@/_shared/lib/ai'
 import { logger } from '@/_shared/lib/logger'
 import { getCategories } from './report.query'
 import { encrypt } from '@/_shared/lib/crypto'
+import type { $Enums } from '@/_generated/prisma'
 
 export interface CreateReportData {
   trackingCode: string
@@ -14,7 +15,7 @@ export interface CreateReportData {
   district?: string
   postalCode?: string
   number?: string
-  priority?: string
+  priority?: $Enums.ReportPriority
   assignedDepartmentId?: string
   attachments?: { url: string; key: string; fileName: string; fileSize: number; type: string }[]
 }
@@ -67,7 +68,7 @@ export async function createMessage(reportId: string, content: string) {
 export async function updateReportAiResults(
   id: string,
   categoryName: string,
-  priority: string,
+  priority: $Enums.ReportPriority,
   reasoning: string,
   redactedDescription: string
 ) {

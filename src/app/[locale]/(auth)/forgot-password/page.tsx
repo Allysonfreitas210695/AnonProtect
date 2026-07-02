@@ -7,10 +7,26 @@ import { KeyRound, ArrowLeft, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { useAction } from 'next-safe-action/hooks'
+import { sendPasswordResetEmailAction } from '@/_actions/public/reset-password.action'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [isSent, setIsSent] = useState(false)
+
+  const { execute, isExecuting } = useAction(sendPasswordResetEmailAction, {
+    onSuccess: ({ data }) => {
+      if (data?.error) {
+        toast.error(data.error)
+      } else if (data?.success) {
+        setIsSent(true)
+        toast.success('Se o e-mail estiver cadastrado, enviaremos um link.')
+      }
+    },
+    onError: () => {
+      toast.error('Ocorreu um erro inesperado.')
+    },
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,9 +34,7 @@ export default function ForgotPasswordPage() {
       toast.error('Informe seu email')
       return
     }
-    // Simulação de envio
-    setIsSent(true)
-    toast.success('Se o email existir, um link de recuperação será enviado.')
+    execute({ email })
   }
 
   return (
@@ -56,8 +70,8 @@ export default function ForgotPasswordPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" size="lg">
-                Enviar Link
+              <Button type="submit" className="w-full" size="lg" disabled={isExecuting}>
+                {isExecuting ? 'Enviando...' : 'Enviar Link'}
               </Button>
             </form>
           ) : (

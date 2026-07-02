@@ -4,6 +4,7 @@ import { prisma } from '@/_shared/lib/prisma'
 import { getDownloadUrl } from '@/_shared/lib/aws'
 import { decrypt } from '@/_shared/lib/crypto'
 import { Prisma, ReportStatus } from '@/_generated/prisma'
+import { logger } from '@/_shared/lib/logger'
 
 interface StatusGroup {
   status: ReportStatus
@@ -65,7 +66,7 @@ export async function getReportById(id: string) {
   try {
     decryptedDescription = decrypt(report.description)
   } catch (e) {
-    console.error('Failed to decrypt report description', e)
+    logger.error(e, 'Failed to decrypt report description')
   }
 
   try {
@@ -73,7 +74,7 @@ export async function getReportById(id: string) {
       decryptedRedactedDescription = decrypt(report.redactedDescription)
     }
   } catch (e) {
-    console.error('Failed to decrypt redacted report description', e)
+    logger.error(e, 'Failed to decrypt redacted report description')
   }
 
   const decryptedMessages = report.messages.map((msg) => {

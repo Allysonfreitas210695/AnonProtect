@@ -11,13 +11,13 @@
 ### UC01 - Enviar Denúncia Anônima
 
 - **Ator**: Denunciante Anônimo.
-- **Descrição**: O usuário preenche o formulário com o relato, seleciona a categoria e anexa evidências. O sistema processa e retorna um código de rastreio exclusivo.
+- **Descrição**: O usuário preenche o formulário com o relato, seleciona a categoria e anexa evidências (com preview visual e opção de remoção). O sistema processa e retorna um código de rastreio exclusivo.
 - **Requisito**: Não deve exigir login.
 
 ### UC02 - Acompanhar Denúncia
 
 - **Ator**: Denunciante Anônimo.
-- **Descrição**: O usuário insere seu código de rastreio para verificar o status e ler mensagens da administração.
+- **Descrição**: O usuário insere seu código de rastreio para verificar o status e ler mensagens da administração. Caso o código seja inválido ou não exista, uma página de erro 404 contextualizada é exibida.
 
 ### UC03 - Autenticar Gestor
 
@@ -38,6 +38,11 @@
 
 - **Ator**: Administrador.
 - **Descrição**: Criar e editar categorias, departamentos e usuários do sistema.
+
+### UC07 - Gerar Dossiê de Denúncia (Exportação PDF)
+
+- **Ator**: Supervisor / Administrador.
+- **Descrição**: O gestor exporta os dados completos da denúncia, seu andamento e evidências em um documento oficial no formato PDF para fins de auditoria ou arquivamento externo.
 
 ## 9.3 Diagrama de Casos de Uso (PlantUML)
 

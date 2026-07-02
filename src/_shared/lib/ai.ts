@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { reportAnalysisSchema } from '@/_schemas/ai'
+import { logger } from '@/_shared/lib/logger'
 
 let genAIInstance: GoogleGenerativeAI | null = null
 
@@ -122,22 +123,22 @@ export async function analyzeReport(
     const validated = reportAnalysisSchema.safeParse(parsed)
 
     if (!validated.success) {
-      console.error('Invalid AI report analysis response:', validated.error.format())
+      logger.error(validated.error.format(), 'Invalid AI report analysis response:')
       return null
     }
 
     // Garante que a categoria sugerida existe na lista atual de categorias
     if (!categories.includes(validated.data.suggestedCategory)) {
-      console.warn(
-        'AI suggested category not in available categories. Falling back to null.',
-        validated.data.suggestedCategory
+      logger.warn(
+        { suggestedCategory: validated.data.suggestedCategory },
+        'AI suggested category not in available categories. Falling back to null.'
       )
       return null
     }
 
     return validated.data as ReportAnalysis
   } catch (error) {
-    console.error('Error in analyzeReport:', error)
+    logger.error(error, 'Error in analyzeReport:')
     return null
   }
 }

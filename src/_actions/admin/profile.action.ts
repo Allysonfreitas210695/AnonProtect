@@ -5,6 +5,7 @@ import { profileSchema, updatePasswordSchema } from '@/_schemas/auth'
 import { prisma } from '@/_shared/lib/prisma'
 import { hash, compare } from 'bcryptjs'
 import { revalidatePath } from 'next/cache'
+import { logger } from '@/_shared/lib/logger'
 
 export const updateProfileAction = authActionClient
   .schema(profileSchema)
@@ -28,7 +29,7 @@ export const updateProfileAction = authActionClient
       revalidatePath('/', 'layout')
       return { success: true, message: 'Perfil atualizado com sucesso!' }
     } catch (error) {
-      console.error('Error updating profile:', error)
+      logger.error(error, 'Error updating profile:')
       return { error: 'Erro ao atualizar perfil' }
     }
   })
@@ -62,7 +63,7 @@ export const updatePasswordAction = authActionClient
 
       return { success: true, message: 'Senha alterada com sucesso!' }
     } catch (error) {
-      console.error('Error updating password:', error)
+      logger.error(error, 'Error updating password:')
       return { error: 'Erro ao atualizar senha' }
     }
   })

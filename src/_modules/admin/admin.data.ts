@@ -3,6 +3,7 @@ import { prisma } from '@/_shared/lib/prisma'
 import { encrypt } from '@/_shared/lib/crypto'
 import { sendEmail, SES_FROM_EMAIL } from '@/_shared/lib/aws'
 import { getStatusChangeEmailHtml } from '@/_shared/lib/email-templates'
+import { logger } from '@/_shared/lib/logger'
 
 export async function softDeleteReport(id: string) {
   return await prisma.report.update({
@@ -37,7 +38,7 @@ export async function updateReportStatus(id: string, status: ReportStatus, userI
   if (oldReport && oldReport.status !== status && SES_FROM_EMAIL) {
     const htmlBody = getStatusChangeEmailHtml(report.trackingCode, oldReport.status, status)
     sendEmail(SES_FROM_EMAIL, `Atualização: Denúncia ${report.trackingCode}`, htmlBody).catch(
-      (err) => console.error('Failed to send status update email', err)
+      (err) => logger.error('Failed to send status update email', err)
     )
   }
 

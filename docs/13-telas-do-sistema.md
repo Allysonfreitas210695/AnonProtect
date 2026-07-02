@@ -12,11 +12,11 @@ Uma interface limpa que guia o usuário no preenchimento do relato. Inclui campo
 
 - Descrição detalhada (com contador de caracteres).
 - Seleção de categoria via dropdown.
-- Upload de evidências (implementação futura/parcial).
+- Upload de evidências (com interface de visualização por thumbnails e botão de exclusão pré-envio).
 
 ### 13.1.3 Tela de Sucesso e Rastreio
 
-Após o envio, o sistema exibe o **Identificador Exclusivo de Rastreio**. Esta tela inclui um aviso crítico de que o código não pode ser recuperado se perdido, reforçando o protocolo de segurança.
+Após o envio, o sistema exibe o **Identificador Exclusivo de Rastreio**. Esta tela inclui um aviso crítico de que o código não pode ser recuperado se perdido, reforçando o protocolo de segurança. A página de rastreio em si também possui tratamento elegante de erro (página 404 estilizada) caso um código inválido seja buscado.
 
 ## 13.2 Área Administrativa (Restrita)
 
@@ -24,9 +24,10 @@ Após o envio, o sistema exibe o **Identificador Exclusivo de Rastreio**. Esta t
 
 Visão analítica e de governança contendo:
 
-- **Cards de Resumo**: Total de denúncias, pendentes, em análise e resolvidas.
+- **Cards de Resumo**: Total de denúncias, pendentes, em análise e resolvidas (com suporte a _Skeleton Loaders_ para mitigar tempos de carregamento).
 - **Métricas de Conformidade**: Monitoramento em tempo real de criptografia AES-256, redação de PII por IA, e gestão de retenção de dados (Art. 15 LGPD).
 - **Gráficos**: Distribuição geográfica global e por categoria de ocorrência.
+- **Ações Rápidas e Integrações**: Opção para geração rápida de Dossiê Oficial em PDF nas páginas de relatório.
 
 ### 13.2.2 Perfil e Direitos do Titular
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // Verifica que as 4 novas chaves Compliance.terms existem nos 3 locales.
 const keys = ['object','objectDesc','lgpd','lgpdDesc','limitation','limitationDesc','contact','contactDesc']
 let ok = true

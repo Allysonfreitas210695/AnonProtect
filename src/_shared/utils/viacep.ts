@@ -1,3 +1,4 @@
+import { logger } from '@/_shared/lib/logger'
 export interface ViaCEPAddress {
   cep: string
   logradouro: string
@@ -29,7 +30,7 @@ export async function getAddressByCep(cep: string): Promise<ViaCEPAddress | null
 
     return data
   } catch (error) {
-    console.error('Error fetching address from ViaCEP:', error)
+    logger.error(error, 'Error fetching address from ViaCEP:')
     return null
   }
 }

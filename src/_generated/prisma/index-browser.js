@@ -265,6 +265,13 @@ exports.ReportStatus = exports.$Enums.ReportStatus = {
   ARCHIVED: 'ARCHIVED',
 }
 
+exports.ReportPriority = exports.$Enums.ReportPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL',
+}
+
 exports.AttachmentCategory = exports.$Enums.AttachmentCategory = {
   PHOTO: 'PHOTO',
   VIDEO: 'VIDEO',

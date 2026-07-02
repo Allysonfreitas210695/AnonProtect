@@ -1,5 +1,6 @@
 import { createSafeActionClient } from 'next-safe-action'
 import { getCurrentUser } from '@/_shared/lib/auth'
+import { logger } from '@/_shared/lib/logger'
 
 export class ActionError extends Error {
   constructor(message: string) {
@@ -10,7 +11,7 @@ export class ActionError extends Error {
 
 export const actionClient = createSafeActionClient({
   handleServerError(e) {
-    console.error('Action error:', e.message)
+    logger.error(e, 'Action error:')
     return e.message
   },
 })

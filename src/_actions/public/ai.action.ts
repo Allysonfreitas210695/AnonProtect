@@ -4,6 +4,7 @@ import { actionClient } from '@/_shared/utils/safe-action'
 import { z } from 'zod'
 import { prisma } from '@/_shared/lib/prisma'
 import { getChatCompletion, WHISTLEBLOWER_SYSTEM_PROMPT, ChatMessage } from '@/_shared/lib/ai'
+import { logger } from '@/_shared/lib/logger'
 
 const chatSchema = z.object({
   history: z.array(
@@ -29,7 +30,7 @@ export const assistantChatAction = actionClient
 
       return { success: true, response }
     } catch (error) {
-      console.error('AI Assistant Error:', error)
+      logger.error(error, 'AI Assistant Error:')
       return { success: false, error: 'O assistente está temporariamente indisponível.' }
     }
   })

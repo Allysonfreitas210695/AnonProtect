@@ -53,22 +53,41 @@ export const submitReportAction = actionClient
 
     logger.info({ categoryId: parsedInput.categoryId }, 'Iniciando submissão de nova denúncia')
 
-    const trackingCode = generateTrackingCode()
     const encryptedDescription = encrypt(parsedInput.description)
 
-    const report = await reportData.createReport({
-      ...parsedInput,
-      description: encryptedDescription,
-      trackingCode,
-      priority: 'MEDIUM',
-      attachments: parsedInput.attachments?.map((a) => ({
-        url: a.url,
-        key: a.key,
-        fileName: a.fileName,
-        fileSize: a.fileSize,
-        type: a.type,
-      })),
-    })
+    let report = null
+    let attempts = 0
+    let trackingCode = ''
+
+    while (attempts < 5 && !report) {
+      try {
+        trackingCode = generateTrackingCode()
+        report = await reportData.createReport({
+          ...parsedInput,
+          description: encryptedDescription,
+          trackingCode,
+          attachments: parsedInput.attachments?.map((a) => ({
+            url: a.url,
+            key: a.key,
+            fileName: a.fileName,
+            fileSize: a.fileSize,
+            type: a.type,
+          })),
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        if (e.code === 'P2002') {
+          attempts++
+          logger.warn({ trackingCode }, 'Colisão de código de rastreamento, tentando novamente...')
+        } else {
+          throw e
+        }
+      }
+    }
+
+    if (!report) {
+      throw new Error('Falha ao gerar código de rastreamento único. Tente novamente.')
+    }
 
     logger.info({ trackingCode, reportId: report.id }, 'Denúncia registrada com sucesso')
 

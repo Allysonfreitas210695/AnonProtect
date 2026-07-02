@@ -12,6 +12,13 @@ enum UserRole {
   SUPERVISOR
 }
 
+enum ReportPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
 enum ReportStatus {
   PENDING
   IN_PROGRESS
@@ -109,11 +116,11 @@ model VerificationToken {
 }
 
 model Report {
-  id           String       @id @default(uuid())
-  trackingCode String       @unique @map("tracking_code")
+  id           String         @id @default(uuid())
+  trackingCode String         @unique @map("tracking_code")
   description  String
-  status       ReportStatus @default(PENDING)
-  priority     String?      @default("MEDIUM")
+  status       ReportStatus   @default(PENDING)
+  priority     ReportPriority @default(MEDIUM)
 
   // Location
   country    String?
