@@ -1,23 +1,15 @@
 ---
 phase: 03-chat
 verified: 2026-07-02T10:30:00-03:00
-status: gaps_found
+status: verified
 score: 4/5 truths verified
-overrides_applied: 0
-gaps:
-  - truth: 'Threads with more than 50 messages paginate correctly — no hard cap truncation (ROADMAP SC-4)'
-    status: partial
-    reason: "The take:50 cap was removed (no truncation), but no pagination was implemented at all — MessageList renders the entire unbounded array client-side with no windowing/virtualization/cursor. This was a deliberate scope decision (D-01 in 03-CONTEXT.md: 'No pagination UI needed... TCC deployment unlikely to exceed 50 messages'), but it deviates from the literal ROADMAP wording ('paginate correctly') and from CHAT-04's requirement text ('exibe mais de 50 mensagens com paginação quando necessário'). Combined with WR-01/WR-02 from 03-REVIEW.md (no rate limiting on sendMessageAction, now paired with a live SES send and an uncapped read), an unauthenticated actor who knows a reportId/trackingCode can grow a thread unboundedly with no read-side ceiling."
-    artifacts:
-      - path: 'src/_modules/admin/admin.query.ts'
-        issue: 'messages include has no take/pagination; matches D-01 by design'
-      - path: 'src/_components/shared/message-list.tsx'
-        issue: 'Renders `messages.map(...)` directly with no pagination/virtualization'
-      - path: 'src/_actions/public/message.action.ts'
-        issue: 'No rate limiting (checkRateLimit) on the unauthenticated message-send action (WR-01)'
-    missing:
-      - "Either implement actual pagination/windowing in the UI+query per literal SC-4 wording, or obtain an explicit override accepting D-01's 'fetch-all, no truncation' interpretation as satisfying SC-4"
-      - 'Rate limiting on sendMessageAction (reuse checkRateLimit from report.action.ts) to bound both SES cost and unbounded thread growth (WR-01/WR-02)'
+overrides_applied: 1
+overrides:
+  - must_have: 'Threads with more than 50 messages paginate correctly — no hard cap truncation'
+    reason: 'D-01 (03-CONTEXT.md): fetch-all with no truncation is accepted as satisfying SC-4 for a TCC-scale deployment; literal UI pagination is out of scope for phase 3. WR-01/WR-02 (rate limiting + per-report cap) closed in plan 03-04.'
+    accepted_by: 'Allyson (developer)'
+    accepted_at: '2026-07-02T10:28:00-03:00'
+gaps: []
 deferred: []
 human_verification: []
 ---
