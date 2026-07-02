@@ -43,6 +43,25 @@ describe('admin.query', () => {
       expect(prisma.report.findUnique).toHaveBeenCalled()
       expect(result?.attachments[0].url).toBe('http://signed-url.com')
     })
+
+    it('should fetch messages uncapped, without a take limit', async () => {
+      const id = 'r1'
+      const mockReport = {
+        id,
+        description: 'cipher-text',
+        attachments: [],
+        messages: [],
+        investigationNotes: [],
+      }
+      vi.mocked(prisma.report.findUnique).mockResolvedValue(
+        mockReport as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>
+      )
+
+      await getReportById(id)
+
+      const callArg = vi.mocked(prisma.report.findUnique).mock.calls[0][0]
+      expect(callArg?.include?.messages).toEqual({ orderBy: { createdAt: 'asc' } })
+    })
   })
 
   describe('getReportsPaginated', () => {
