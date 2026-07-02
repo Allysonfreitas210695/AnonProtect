@@ -1,27 +1,17 @@
 ---
 phase: 02-security-hardening
 verified: 2026-06-30T18:30:00Z
-status: gaps_found
-score: 4/5 must-haves verified
-gaps:
+status: verified
+score: 5/5 must-haves verified
+gaps: []
+overrides_applied: 0
+notes:
+  - 'Re-verification (2026-07-02): the SEC-03/SEC-04 gap below was closed by plan 02-03 ("Gap Closure: SEC-03/SEC-04 — Message e InvestigationNote Encryption", see 02-03-SUMMARY.md) same day as this initial verification. createMessage()/createInvestigationNote() now encrypt() on write; report.query.ts/admin.query.ts decrypt() on read with try/catch legacy-plaintext fallback. REQUIREMENTS.md already reflects SEC-03/SEC-04 as Complete. This frontmatter was stale (never updated after 02-03 executed) — corrected at v1.0 milestone close.'
+original_gaps_at_initial_verification:
   - truth: 'Message.content e InvestigationNote.content são armazenados criptografados (AES-256-GCM) no banco de dados'
     status: failed
     reason: 'Nenhum dos dois planos executados (02-01, 02-02) implementou SEC-03 ou SEC-04. createMessage() e createInvestigationNote() armazenam content em plaintext. Query files não fazem decrypt.'
-    artifacts:
-      - path: 'src/_modules/report/report.data.ts'
-        issue: 'createMessage() persiste content sem encrypt() — linha 59: `content` direto no prisma.message.create'
-      - path: 'src/_modules/admin/admin.data.ts'
-        issue: 'createInvestigationNote() persiste content sem encrypt() — linha 54: `content` direto no prisma.investigationNote.create'
-      - path: 'src/_modules/report/report.query.ts'
-        issue: 'Messages incluídas em getReportByTrackingCode (linha 25) não passam por decrypt()'
-      - path: 'src/_modules/admin/admin.query.ts'
-        issue: 'InvestigationNotes retornadas não passam por decrypt()'
-    missing:
-      - 'encrypt(content) em createMessage() antes do prisma.message.create'
-      - 'encrypt(content) em createInvestigationNote() antes do prisma.investigationNote.create'
-      - 'decrypt em loop sobre messages em report.query.ts (seguir padrão de Report.description já existente)'
-      - 'decrypt em loop sobre investigationNotes em admin.query.ts'
-      - 'Plano dedicado SEC-03/SEC-04 — os dois planos desta fase não cobriram esses requirements'
+    closed_by: '02-03-PLAN.md / 02-03-SUMMARY.md'
   - truth: 'Rate limiting usa IP Cloudflare-aware (CF-Connecting-IP primeiro, rightmost XFF como fallback) como chave de limitação'
     status: passed
     reason: 'Implementação confirmada pelo usuário como correta: CF-Connecting-IP + rightmost XFF é defensivamente superior ao simples primeiro XFF em ambiente Cloudflare. ROADMAP SC atualizado para refletir a implementação real.'
@@ -30,9 +20,9 @@ gaps:
 # Phase 02: Security Hardening — Verification Report
 
 **Phase Goal:** Fechar 6 vulnerabilidades de segurança identificadas na análise pré-planejamento: bloqueio de auto-registro de SUPERVISOR, criptografia de campos sensíveis, validação de ownership em mensagens, e hardening de configurações de rate-limit e captcha.
-**Verified:** 2026-06-30T18:30:00Z
-**Status:** gaps_found
-**Re-verification:** No — initial verification
+**Verified:** 2026-06-30T18:30:00Z (re-verified 2026-07-02 — gap closed by plan 02-03)
+**Status:** verified
+**Re-verification:** Yes — SEC-03/SEC-04 gap closed by 02-03, frontmatter corrected at milestone close
 
 ---
 
