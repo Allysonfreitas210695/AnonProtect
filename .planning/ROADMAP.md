@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Bug Fixes** - Eliminate known defects in the tracking code validator, country filter, missing page, and redundant role check (completed 2026-06-30)
 - [x] **Phase 2: Security Hardening** - Close all known security gaps before the system handles real data (completed 2026-06-30)
 - [x] **Phase 3: Chat** - Complete the full bidirectional chat UI and email notification for whistleblower ↔ admin communication (completed 2026-07-02)
-- [ ] **Phase 4: Password Recovery** - Activate AWS SES to deliver secure, time-limited password reset links to admins
+- [x] **Phase 4: Password Recovery** - Activate AWS SES to deliver secure, time-limited password reset links to admins (completed 2026-07-02, verified retroactively)
 - [ ] **Phase 5: Performance & Quality** - Eliminate performance anti-patterns, unsafe randomness, silent failures, and console noise
 
 ## Phase Details
@@ -88,7 +88,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 2. Reset link expires after 1 hour and is rejected if submitted after expiry
 3. Admin who clicks a valid link can set a new password and log in successfully
 4. Using the reset link a second time is rejected — token is invalidated on first use
-   **Plans:** TBD
+   **Plans:** Implemented manually outside GSD workflow (commit 11a9ec5); verified retroactively — see `.planning/phases/04-password-recovery/04-VERIFICATION.md`
    **UI hint:** yes
 
 ### Phase 5: Performance & Quality
@@ -116,5 +116,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Bug Fixes             | 2/2            | Complete    | 2026-06-30 |
 | 2. Security Hardening    | 3/3            | Complete    | 2026-06-30 |
 | 3. Chat                  | 5/5            | Complete    | 2026-07-02 |
-| 4. Password Recovery     | 0/TBD          | Not started | -          |
+| 4. Password Recovery     | n/a (manual)   | Complete    | 2026-07-02 |
 | 5. Performance & Quality | 0/TBD          | Not started | -          |

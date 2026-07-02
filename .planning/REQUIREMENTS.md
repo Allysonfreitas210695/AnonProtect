@@ -36,10 +36,10 @@
 
 ### Recuperação de Senha
 
-- [ ] **AUTH-01**: Usuário que solicita recuperação de senha recebe um email real com link de reset (via AWS SES)
-- [ ] **AUTH-02**: Link de reset contém token de tempo limitado (expiração configurável, padrão 1h) armazenado de forma segura
-- [ ] **AUTH-03**: Usuário que clica no link válido pode definir uma nova senha
-- [ ] **AUTH-04**: Token de reset é invalidado após uso único
+- [x] **AUTH-01**: Usuário que solicita recuperação de senha recebe um email real com link de reset (via AWS SES)
+- [x] **AUTH-02**: Link de reset contém token de tempo limitado (expiração configurável, padrão 1h) armazenado de forma segura
+- [x] **AUTH-03**: Usuário que clica no link válido pode definir uma nova senha
+- [x] **AUTH-04**: Token de reset é invalidado após uso único
 
 ### Performance e Qualidade
 
@@ -100,10 +100,10 @@
 | CHAT-05   | Phase 3 | Pending  |
 | CHAT-06   | Phase 3 | Pending  |
 | CHAT-07   | Phase 3 | Pending  |
-| AUTH-01   | Phase 4 | Pending  |
-| AUTH-02   | Phase 4 | Pending  |
-| AUTH-03   | Phase 4 | Pending  |
-| AUTH-04   | Phase 4 | Pending  |
+| AUTH-01   | Phase 4 | Complete |
+| AUTH-02   | Phase 4 | Complete |
+| AUTH-03   | Phase 4 | Complete |
+| AUTH-04   | Phase 4 | Complete |
 | PERF-01   | Phase 5 | Pending  |
 | PERF-02   | Phase 5 | Pending  |
 | QUAL-01   | Phase 5 | Pending  |
