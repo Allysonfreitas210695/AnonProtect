@@ -52,7 +52,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 2. A mismatched `code` and `reportId` pair is rejected by `sendMessageAction` before any message is created
 3. `Message.content` and `InvestigationNote.content` are stored encrypted (AES-256-GCM) in the database
 4. Omitting `TURNSTILE_SECRET_KEY` causes Turnstile verification to fail, not pass silently
-5. Rate limiting keys on only the first IP in `x-forwarded-for`, not the full comma-separated string
+5. Rate limiting keys on `cf-connecting-ip` first (Cloudflare-set, not spoofable by the client), falling back to the rightmost IP in `x-forwarded-for` — accepted as defensively superior to the original "first IP" wording (see 02-VERIFICATION.md notes)
    **Plans:** 3/3 plans complete
 
 ### Phase 3: Chat
