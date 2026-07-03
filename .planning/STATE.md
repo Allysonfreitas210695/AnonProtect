@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: Awaiting next milestone
 last_updated: '2026-07-02T20:08:51.385Z'
-last_activity: 2026-07-03 - Completed quick task 260703-jn0: Refactor E2E Playwright suite (shared login helper, hard assertions)
+last_activity: 2026-07-03 - Completed quick task 260703-jvc: Added E2E coverage for AI analysis, attachment upload, chat
 progress:
   total_phases: 5
   completed_phases: 5
@@ -66,13 +66,14 @@ None open. AWS SES confirmed active and used in production for chat notification
 
 ### Quick Tasks Completed
 
-| #          | Description                                                                                                                                                                     | Date       | Commit  | Directory                                                                                                                         |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| 260702-o0y | Fix getReportStats in admin.query.ts to use SQL aggregation instead of in-memory timeline building, mirroring getPublicStats                                                    | 2026-07-02 | 4546e5f | [260702-o0y-fix-getreportstats-in-admin-query-ts-to-](./quick/260702-o0y-fix-getreportstats-in-admin-query-ts-to-/)               |
-| 260703-g13 | Fix "número" field freeze (CEP lookup re-render loop) and missing NewReport.uploading/analyzing i18n keys in pt-BR/en/es                                                        | 2026-07-03 | 148f25e | [260703-g13-bugfix-numero-input-e-i18n-pt-br-denunci](./quick/260703-g13-bugfix-numero-input-e-i18n-pt-br-denunci/)               |
-| 260703-j3w | Fix hardcoded/typo'd "PROJETADO PELA LGPD" badge and admin report "Voltar" link double locale prefix (404), found via full E2E Playwright walkthrough                           | 2026-07-03 | b2ea4dc | [260703-j3w-corrigir-texto-lgpd-hardcoded-no-reportcard](./quick/260703-j3w-corrigir-texto-lgpd-hardcoded-no-reportcard/)         |
-| 260703-k7m | Add missing revalidatePath calls to admin report actions (status update, notes, replies, forward, delete) so the admin panel UI updates without a manual reload                 | 2026-07-03 | 11fba2c | [260703-k7m-adicionar-revalidatepath-em-admin-report-action](./quick/260703-k7m-adicionar-revalidatepath-em-admin-report-action/) |
-| 260703-jn0 | Refactor E2E Playwright suite: extract shared login helper, replace silent isVisible guards with hard assertions, reduce fixed waitForTimeout in favor of condition-based waits | 2026-07-03 | c11e643 | [260703-jn0-refatorar-suite-e2e-playwright-extrair-h](./quick/260703-jn0-refatorar-suite-e2e-playwright-extrair-h/)               |
+| #          | Description                                                                                                                                                                                                                   | Date       | Commit  | Directory                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 260702-o0y | Fix getReportStats in admin.query.ts to use SQL aggregation instead of in-memory timeline building, mirroring getPublicStats                                                                                                  | 2026-07-02 | 4546e5f | [260702-o0y-fix-getreportstats-in-admin-query-ts-to-](./quick/260702-o0y-fix-getreportstats-in-admin-query-ts-to-/)               |
+| 260703-g13 | Fix "número" field freeze (CEP lookup re-render loop) and missing NewReport.uploading/analyzing i18n keys in pt-BR/en/es                                                                                                      | 2026-07-03 | 148f25e | [260703-g13-bugfix-numero-input-e-i18n-pt-br-denunci](./quick/260703-g13-bugfix-numero-input-e-i18n-pt-br-denunci/)               |
+| 260703-j3w | Fix hardcoded/typo'd "PROJETADO PELA LGPD" badge and admin report "Voltar" link double locale prefix (404), found via full E2E Playwright walkthrough                                                                         | 2026-07-03 | b2ea4dc | [260703-j3w-corrigir-texto-lgpd-hardcoded-no-reportcard](./quick/260703-j3w-corrigir-texto-lgpd-hardcoded-no-reportcard/)         |
+| 260703-k7m | Add missing revalidatePath calls to admin report actions (status update, notes, replies, forward, delete) so the admin panel UI updates without a manual reload                                                               | 2026-07-03 | 11fba2c | [260703-k7m-adicionar-revalidatepath-em-admin-report-action](./quick/260703-k7m-adicionar-revalidatepath-em-admin-report-action/) |
+| 260703-jn0 | Refactor E2E Playwright suite: extract shared login helper, replace silent isVisible guards with hard assertions, reduce fixed waitForTimeout in favor of condition-based waits                                               | 2026-07-03 | c11e643 | [260703-jn0-refatorar-suite-e2e-playwright-extrair-h](./quick/260703-jn0-refatorar-suite-e2e-playwright-extrair-h/)               |
+| 260703-jvc | Add E2E coverage for AI auto-analysis (graceful degradation), attachment upload, and whistleblower<->admin chat round trip. Blocked from running locally by active Cloudflare Turnstile (needs a no-Turnstile env to execute) | 2026-07-03 | (merge) | [260703-jvc-adicionar-cobertura-e2e-playwright-para-](./quick/260703-jvc-adicionar-cobertura-e2e-playwright-para-/)               |
 
 ## Deferred Items
 
