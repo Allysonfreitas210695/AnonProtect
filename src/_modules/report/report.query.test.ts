@@ -103,6 +103,57 @@ describe('report.query', () => {
       const result = await getReportByCode('NOT_FOUND')
       expect(result).toBeNull()
     })
+
+    it('should decrypt redactedDescription when present', async () => {
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        trackingCode: 'TR123',
+        description: 'cipher-text',
+        redactedDescription: 'cipher-redacted',
+        messages: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+      vi.mocked(decrypt).mockImplementation((val: string) =>
+        val === 'cipher-redacted' ? 'redacted-plain-text' : 'plain-text'
+      )
+
+      const result = await getReportByCode('TR123')
+
+      expect(decrypt).toHaveBeenCalledWith('cipher-redacted')
+      expect(result?.redactedDescription).toBe('redacted-plain-text')
+    })
+
+    it('should return [DECRYPT_FAILED] when redactedDescription decryption throws', async () => {
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        trackingCode: 'TR123',
+        description: 'cipher-text',
+        redactedDescription: 'cipher-redacted',
+        messages: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+      vi.mocked(decrypt).mockImplementation((val: string) => {
+        if (val === 'cipher-redacted') throw new Error('Decrypt failed')
+        return 'plain-text'
+      })
+
+      const result = await getReportByCode('TR123')
+
+      expect(result?.redactedDescription).toBe('[DECRYPT_FAILED]')
+      expect(result?.description).toBe('plain-text')
+    })
+
+    it('should keep redactedDescription null unchanged when AI has not run', async () => {
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        trackingCode: 'TR123',
+        description: 'cipher-text',
+        redactedDescription: null,
+        messages: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+      vi.mocked(decrypt).mockReturnValue('plain-text')
+
+      const result = await getReportByCode('TR123')
+
+      expect(result?.redactedDescription).toBeNull()
+      expect(decrypt).toHaveBeenCalledTimes(1)
+      expect(decrypt).toHaveBeenCalledWith('cipher-text')
+    })
   })
 
   describe('getPublicStats', () => {

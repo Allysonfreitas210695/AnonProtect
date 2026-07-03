@@ -2,6 +2,7 @@ import 'server-only'
 
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
+import { logger } from '@/_shared/lib/logger'
 
 export async function getCategories() {
   return await prisma.category.findMany({
@@ -29,10 +30,21 @@ export async function getReportByCode(code: string) {
   if (!report) return null
 
   let decryptedDescription = report.description
+  let decryptedRedactedDescription = report.redactedDescription
+
   try {
     decryptedDescription = decrypt(report.description)
   } catch {
     decryptedDescription = '[DECRYPT_FAILED]'
+  }
+
+  try {
+    if (report.redactedDescription) {
+      decryptedRedactedDescription = decrypt(report.redactedDescription)
+    }
+  } catch (e) {
+    logger.error(e, 'Failed to decrypt redacted report description')
+    decryptedRedactedDescription = '[DECRYPT_FAILED]'
   }
 
   const decryptedMessages = report.messages.map((msg) => {
@@ -48,6 +60,7 @@ export async function getReportByCode(code: string) {
   return {
     ...report,
     description: decryptedDescription,
+    redactedDescription: decryptedRedactedDescription,
     messages: decryptedMessages,
   }
 }
