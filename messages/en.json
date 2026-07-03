@@ -264,6 +264,8 @@
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
     "submitting": "Submitting...",
+    "uploading": "Uploading attachments...",
+    "analyzing": "Analyzing report...",
     "acceptTerms": "I have read and accept the privacy terms and I understand that my data will be treated according to LGPD/GDPR.",
     "acceptTermsError": "You must accept the terms to proceed.",
     "acceptAi": "I authorize the processing of my report by Artificial Intelligence for classification and data anonymization purposes.",

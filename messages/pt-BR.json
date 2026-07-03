@@ -264,6 +264,8 @@
     "uploadComingSoon": "Funcionalidade de upload será implementada em breve",
     "submit": "Enviar Denúncia",
     "submitting": "Enviando...",
+    "uploading": "Enviando anexos...",
+    "analyzing": "Analisando denúncia...",
     "acceptTerms": "Li e aceito os termos de privacidade e entendo que meus dados serão tratados conforme a LGPD.",
     "acceptTermsError": "Você deve aceitar os termos para prosseguir.",
     "acceptAi": "Autorizo o processamento da minha denúncia por Inteligência Artificial para fins de classificação e anonimização de dados.",
