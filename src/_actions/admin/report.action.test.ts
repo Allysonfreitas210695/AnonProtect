@@ -3,6 +3,10 @@ import { Report } from '@/_generated/prisma'
 import { deleteReportAction } from './report.action'
 import * as adminData from '@/_modules/admin/admin.data'
 
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
+}))
+
 vi.mock('@/_modules/admin/admin.data', () => ({
   softDeleteReport: vi.fn(),
   updateReportStatus: vi.fn(),

@@ -4,12 +4,16 @@ import { supervisorActionClient, adminActionClient, ActionError } from '@/_share
 import * as adminData from '@/_modules/admin/admin.data'
 import { z } from 'zod'
 import { reportStatusSchema } from '@/_schemas/report'
+import { revalidatePath } from 'next/cache'
 
 export const updateReportStatusAction = supervisorActionClient
   .schema(reportStatusSchema)
   .action(async ({ parsedInput: { reportId, status }, ctx: { user } }) => {
     try {
       await adminData.updateReportStatus(reportId, status, user.id)
+      revalidatePath(`/admin/report/${reportId}`)
+      revalidatePath('/admin/report')
+      revalidatePath('/admin')
       return { success: true, message: 'Status atualizado com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao atualizar status')
@@ -26,6 +30,7 @@ export const sendAdminReplyAction = supervisorActionClient
   .action(async ({ parsedInput: { reportId, content }, ctx: { user } }) => {
     try {
       await adminData.createAdminReply(reportId, user.id, content)
+      revalidatePath(`/admin/report/${reportId}`)
       return { success: true, message: 'Mensagem enviada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao enviar resposta')
@@ -42,6 +47,7 @@ export const createInvestigationNoteAction = supervisorActionClient
   .action(async ({ parsedInput: { reportId, content }, ctx: { user } }) => {
     try {
       await adminData.createInvestigationNote(reportId, user.id, content)
+      revalidatePath(`/admin/report/${reportId}`)
       return { success: true, message: 'Nota adicionada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao adicionar nota')
@@ -58,6 +64,7 @@ export const deleteInvestigationNoteAction = supervisorActionClient
   .action(async ({ parsedInput: { noteId, reportId }, ctx: { user } }) => {
     try {
       await adminData.deleteInvestigationNote(noteId, user.id, reportId)
+      revalidatePath(`/admin/report/${reportId}`)
       return { success: true, message: 'Nota excluída com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao excluir nota')
@@ -75,6 +82,7 @@ export const forwardReportAction = supervisorActionClient
   .action(async ({ parsedInput: { reportId, departmentId, description }, ctx: { user } }) => {
     try {
       await adminData.forwardReport(reportId, departmentId, user.id, description)
+      revalidatePath(`/admin/report/${reportId}`)
       return { success: true, message: 'Denúncia encaminhada com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao encaminhar denúncia')
@@ -91,6 +99,8 @@ export const batchUpdateReportStatusAction = supervisorActionClient
   .action(async ({ parsedInput: { reportIds, status } }) => {
     try {
       await adminData.updateReportsStatus(reportIds, status)
+      revalidatePath('/admin/report')
+      revalidatePath('/admin')
       return { success: true, message: `${reportIds.length} denúncias atualizadas com sucesso` }
     } catch (error) {
       throw new ActionError(
@@ -108,6 +118,8 @@ export const deleteReportAction = adminActionClient
   .action(async ({ parsedInput: { reportId } }) => {
     try {
       await adminData.softDeleteReport(reportId)
+      revalidatePath('/admin/report')
+      revalidatePath('/admin')
       return { success: true, message: 'Denúncia excluída com sucesso' }
     } catch (error) {
       throw new ActionError(error instanceof Error ? error.message : 'Falha ao excluir denúncia')
