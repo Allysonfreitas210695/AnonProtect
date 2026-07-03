@@ -11,8 +11,8 @@ const prisma = new PrismaClient({ adapter })
 async function main() {
   console.log('🌱 Starting robust seed process...')
 
-  const adminEmail = 'admin@admin.com'
-  const superEmail = 'supervisor@supervisor.com'
+  const adminEmail = 'admin@sistema.com'
+  const superEmail = 'supervisor@sistema.com'
 
   // Step 1: Departments
   console.log('🏢 Processing departments (upsert)...')
@@ -71,21 +71,25 @@ async function main() {
 
   // Step 3: Users
   console.log('👥 Processing administrative users (upsert)...')
-  const HASHED_PASSWORD = '$2a$10$wR.pD1Mv.W3m.L8M.u.e.eXF.mE.xU.jD.qW.zD.vS.yG'
+  // Hashes pré-gerados (bcryptjs, cost 12) — evita recalcular hash em runtime no seed
+  // para manter determinismo. ADMIN_PASSWORD_HASH = hash de 'admin123'.
+  // SUPERVISOR_PASSWORD_HASH = hash de 'super123'.
+  const ADMIN_PASSWORD_HASH = '$2b$12$q5HZqxwRHsXiSW2WKU2iYOucgeq45Vp5XmZRD1oAYn4mlCLQg9Tta'
+  const SUPERVISOR_PASSWORD_HASH = '$2b$12$A1xel4LQT6jqV14Qm1pSk.xY4NQeGs2TUj0TZCePFSQg/t8ovX6Di'
 
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
     update: {
       name: 'Administrador Global',
       role: UserRole.ADMIN,
-      password: HASHED_PASSWORD,
+      password: ADMIN_PASSWORD_HASH,
       departmentId: compliance?.id,
     },
     create: {
       email: adminEmail,
       name: 'Administrador Global',
       role: UserRole.ADMIN,
-      password: HASHED_PASSWORD,
+      password: ADMIN_PASSWORD_HASH,
       departmentId: compliance?.id,
     },
   })
@@ -95,14 +99,14 @@ async function main() {
     update: {
       name: 'Supervisor RH',
       role: UserRole.SUPERVISOR,
-      password: HASHED_PASSWORD,
+      password: SUPERVISOR_PASSWORD_HASH,
       departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
     },
     create: {
       email: superEmail,
       name: 'Supervisor RH',
       role: UserRole.SUPERVISOR,
-      password: HASHED_PASSWORD,
+      password: SUPERVISOR_PASSWORD_HASH,
       departmentId: createdDepts.find((d) => d.name === 'RH')?.id,
     },
   })
