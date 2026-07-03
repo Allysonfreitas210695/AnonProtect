@@ -329,6 +329,12 @@
     "ARCHIVED": "Archived",
     "update": "Update"
   },
+  "Priority": {
+    "LOW": "Low",
+    "MEDIUM": "Medium",
+    "HIGH": "High",
+    "CRITICAL": "Critical"
+  },
   "Forward": {
     "title": "Forward Report",
     "description": "Send this report to a specific department for analysis.",

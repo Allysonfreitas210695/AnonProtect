@@ -329,6 +329,12 @@
     "ARCHIVED": "Arquivado",
     "update": "Atualizar"
   },
+  "Priority": {
+    "LOW": "Baixa",
+    "MEDIUM": "Média",
+    "HIGH": "Alta",
+    "CRITICAL": "Crítica"
+  },
   "Forward": {
     "title": "Encaminhar Denúncia",
     "description": "Envie esta denúncia para um departamento específico para análise.",

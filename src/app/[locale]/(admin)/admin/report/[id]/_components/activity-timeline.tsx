@@ -15,6 +15,18 @@ interface ActivityTimelineProps {
 }
 export function ActivityTimeline({ activities }: ActivityTimelineProps) {
   const t = useTranslations('Timeline')
+  const tPriority = useTranslations('Priority')
+
+  const formatDescription = (description: string) => {
+    let formatted = description
+    const priorities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
+    priorities.forEach((p) => {
+      if (formatted.includes(`Prioridade: ${p}`)) {
+        formatted = formatted.replace(`Prioridade: ${p}`, `Prioridade: ${tPriority(p)}`)
+      }
+    })
+    return formatted
+  }
 
   if (activities.length === 0) {
     return (
@@ -54,7 +66,9 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
               {/* Content */}
               <div className="flex-1 pt-0.5">
                 <div className="mb-1 flex items-start justify-between gap-2">
-                  <p className="text-sm font-medium print:text-black">{activity.description}</p>
+                  <p className="text-sm font-medium print:text-black">
+                    {formatDescription(activity.description)}
+                  </p>
                   <Badge variant="outline" className="shrink-0 text-xs">
                     {formatCompactDateTime(activity.createdAt)}
                   </Badge>

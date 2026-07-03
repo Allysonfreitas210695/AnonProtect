@@ -18,6 +18,18 @@ interface GlobalActivityLogProps {
 export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
   const t = useTranslations('Dashboard')
   const tT = useTranslations('Timeline')
+  const tPriority = useTranslations('Priority')
+
+  const formatDescription = (description: string) => {
+    let formatted = description
+    const priorities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
+    priorities.forEach((p) => {
+      if (formatted.includes(`Prioridade: ${p}`)) {
+        formatted = formatted.replace(`Prioridade: ${p}`, `Prioridade: ${tPriority(p)}`)
+      }
+    })
+    return formatted
+  }
 
   return (
     <Card className="ring-border flex flex-col border-none shadow-sm ring-1">
@@ -41,7 +53,7 @@ export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
                 </div>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-medium">{activity.description}</p>
+                    <p className="text-sm font-medium">{formatDescription(activity.description)}</p>
                     <span className="text-muted-foreground shrink-0 text-[10px]">
                       {formatCompactDateTime(activity.createdAt)}
                     </span>
