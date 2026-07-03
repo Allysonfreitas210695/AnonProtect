@@ -72,7 +72,8 @@ export default function NewReportForm({ categories }: { categories: Category[] }
       }
       handleCepLookup(postalCode)
     }
-  }, [postalCode, isBrazil, handleCepLookup, form])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postalCode, isBrazil, handleCepLookup])
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-8 lg:py-12">
