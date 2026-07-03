@@ -418,6 +418,8 @@
     "reports": "Denúncias",
     "profile": "Meu Perfil",
     "analytics": "Análise",
+    "status": "Status do Sistema",
+    "auditLog": "Log de Auditoria",
     "settings": "Configurações",
     "logout": "Sair do Sistema"
   },

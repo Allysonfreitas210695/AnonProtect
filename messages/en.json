@@ -418,6 +418,8 @@
     "reports": "Reports",
     "profile": "My Profile",
     "analytics": "Analytics",
+    "status": "System Status",
+    "auditLog": "Audit Log",
     "settings": "Settings",
     "logout": "Sign Out"
   },
