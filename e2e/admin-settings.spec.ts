@@ -14,8 +14,7 @@ test.describe('Admin - Settings & Profile', () => {
         .first()
         .click()
       await page.waitForURL(/\/pt-BR\/admin\/settings/, { timeout: 10000 })
-      await page.waitForTimeout(2000)
-      await expect(page.getByText(/nova categoria/i)).toBeVisible()
+      await expect(page.getByText(/nova categoria/i)).toBeVisible({ timeout: 10000 })
       await expect(page.getByText(/categorias cadastradas/i)).toBeVisible()
     })
 
@@ -25,8 +24,7 @@ test.describe('Admin - Settings & Profile', () => {
         .first()
         .click()
       await page.waitForURL(/\/pt-BR\/admin\/settings/, { timeout: 10000 })
-      await page.waitForTimeout(1000)
-      await expect(page.getByText(/departamentos cadastrados/i)).toBeVisible()
+      await expect(page.getByText(/departamentos cadastrados/i)).toBeVisible({ timeout: 10000 })
     })
 
     test('03 - Profile page loads', async ({ page }) => {
@@ -35,17 +33,14 @@ test.describe('Admin - Settings & Profile', () => {
         .first()
         .click()
       await page.waitForURL(/\/pt-BR\/admin\/profile/, { timeout: 10000 })
-      await page.waitForTimeout(2000)
       await expect(page.locator('body')).toBeVisible()
     })
 
     test('04 - Profile shows personal info form', async ({ page }) => {
       await page.goto('/pt-BR/admin/profile', { waitUntil: 'load' })
-      await page.waitForTimeout(2000)
       const nameInput = page.locator('input[name="name"]').first()
-      if (await nameInput.isVisible()) {
-        await expect(nameInput).toHaveValue(/administrador/i)
-      }
+      await expect(nameInput).toBeVisible({ timeout: 10000 })
+      await expect(nameInput).toHaveValue(/administrador/i)
     })
   })
 
@@ -69,7 +64,6 @@ test.describe('Admin - Settings & Profile', () => {
     test('07 - Audit log page loads (ADMIN only)', async ({ page }) => {
       await loginAdmin(page)
       await page.goto('/pt-BR/admin/audit-log', { waitUntil: 'load' })
-      await page.waitForTimeout(3000)
       await expect(page.locator('body')).toBeVisible()
     })
 

@@ -5,7 +5,6 @@ import { login } from './helpers/auth'
 test.describe('Authentication Flows', () => {
   test('01 - Login page renders correctly', async ({ page }) => {
     await page.goto('/pt-BR/login', { waitUntil: 'load' })
-    await page.waitForTimeout(1000)
     await expect(page.getByText(/área administrativa/i).first()).toBeVisible()
     await expect(page.getByPlaceholder('admin@sistema.com')).toBeVisible()
     await expect(page.getByRole('button', { name: 'Entrar', exact: true })).toBeVisible()
@@ -26,12 +25,10 @@ test.describe('Authentication Flows', () => {
 
   test('04 - Invalid credentials show error toast', async ({ page }) => {
     await page.goto('/pt-BR/login', { waitUntil: 'load' })
-    await page.waitForTimeout(1000)
     await page.fill('input[name="email"]', 'admin@sistema.com')
     await page.fill('input[name="password"]', 'wrongpassword')
     await page.getByRole('button', { name: 'Entrar', exact: true }).click()
-    await page.waitForTimeout(3000)
-    await expect(page.getByText(/incorreta|erro|inválido/i)).toBeVisible()
+    await expect(page.getByText(/incorreta|erro|inválido/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('05 - Logout redirects to login', async ({ page }) => {
@@ -43,29 +40,24 @@ test.describe('Authentication Flows', () => {
 
   test('06 - Forgot password page renders', async ({ page }) => {
     await page.goto('/pt-BR/forgot-password', { waitUntil: 'load' })
-    await page.waitForTimeout(1000)
     await expect(page.getByText(/recuperar|esqueceu|senha/i)).toBeVisible()
   })
 
   test('07 - Forgot password form submission', async ({ page }) => {
     await page.goto('/pt-BR/forgot-password', { waitUntil: 'load' })
-    await page.waitForTimeout(1000)
     const submitBtn = page.getByRole('button', { name: /enviar|recuperar/i }).first()
-    if (await submitBtn.isVisible()) {
-      const emailInput = page.getByPlaceholder(/email|e-?mail/i).first()
-      if (await emailInput.isVisible()) {
-        await emailInput.fill('admin@sistema.com')
-      }
-      await submitBtn.click()
-      await page.waitForTimeout(2000)
-    }
+    const emailInput = page.getByPlaceholder(/email|e-?mail/i).first()
+    await expect(submitBtn).toBeVisible()
+    await expect(emailInput).toBeVisible()
+    await emailInput.fill('admin@sistema.com')
+    await submitBtn.click()
     await expect(page.locator('body')).toBeVisible()
   })
 
   test('08 - Login page redirects to admin if authenticated', async ({ page }) => {
     await login(page, 'admin@sistema.com', 'admin123')
     await page.goto('/pt-BR/login', { waitUntil: 'load' })
-    await page.waitForTimeout(3000)
+    await page.waitForURL(/\/pt-BR\/admin/, { timeout: 10000 })
     expect(page.url()).toContain('/admin')
   })
 })
