@@ -1,6 +1,8 @@
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
+import { logger } from '@/_shared/lib/logger'
+
 const redis =
   process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
     ? new Redis({
@@ -33,7 +35,12 @@ export async function checkRateLimit(identifier: string) {
     return { success: true, limit: 0, remaining: 0, reset: 0 }
   }
 
-  return await reportRateLimit.limit(identifier)
+  try {
+    return await reportRateLimit.limit(identifier)
+  } catch (err) {
+    logger.error({ err }, 'Rate limit check failed, failing open')
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
 }
 
 /**
@@ -61,5 +68,10 @@ export async function checkMessageRateLimit(identifier: string) {
     return { success: true, limit: 0, remaining: 0, reset: 0 }
   }
 
-  return await messageRateLimit.limit(identifier)
+  try {
+    return await messageRateLimit.limit(identifier)
+  } catch (err) {
+    logger.error({ err }, 'Rate limit check failed, failing open')
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
 }
