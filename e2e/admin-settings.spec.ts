@@ -1,24 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-async function loginAdmin(page: import('@playwright/test').Page) {
-  await page.goto('/pt-BR/login', { waitUntil: 'load' })
-  await page.waitForTimeout(1000)
-  await page.fill('input[name="email"]', 'admin@sistema.com')
-  await page.fill('input[name="password"]', 'admin123')
-  await page.getByRole('button', { name: 'Entrar', exact: true }).click()
-  await page.waitForURL(/\/pt-BR\/admin/, { timeout: 20000 })
-  await page.waitForTimeout(2000)
-}
-
-async function loginSupervisor(page: import('@playwright/test').Page) {
-  await page.goto('/pt-BR/login', { waitUntil: 'load' })
-  await page.waitForTimeout(1000)
-  await page.fill('input[name="email"]', 'supervisor@sistema.com')
-  await page.fill('input[name="password"]', 'super123')
-  await page.getByRole('button', { name: 'Entrar', exact: true }).click()
-  await page.waitForURL(/\/pt-BR\/admin/, { timeout: 20000 })
-  await page.waitForTimeout(2000)
-}
+import { loginAdmin, loginSupervisor } from './helpers/auth'
 
 test.describe('Admin - Settings & Profile', () => {
   test.describe('As ADMIN', () => {

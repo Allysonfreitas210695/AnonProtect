@@ -1,13 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-async function loginAdmin(page: import('@playwright/test').Page) {
-  await page.goto('/pt-BR/login', { waitUntil: 'load' })
-  await page.fill('input[name="email"]', 'admin@sistema.com')
-  await page.fill('input[name="password"]', 'admin123')
-  await page.getByRole('button', { name: 'Entrar', exact: true }).click()
-  await page.waitForURL(/\/pt-BR\/admin/, { timeout: 20000 })
-  await page.waitForTimeout(1500)
-}
+import { loginAdmin } from './helpers/auth'
 
 test.describe('Admin - Report Management', () => {
   test.beforeEach(async ({ page }) => {

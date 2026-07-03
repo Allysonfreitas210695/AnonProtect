@@ -1,14 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-async function login(page: import('@playwright/test').Page, email: string, password: string) {
-  await page.goto('/pt-BR/login', { waitUntil: 'load' })
-  await page.waitForTimeout(1000)
-  await page.fill('input[name="email"]', email)
-  await page.fill('input[name="password"]', password)
-  await page.getByRole('button', { name: 'Entrar', exact: true }).click()
-  await page.waitForURL(/\/pt-BR\/admin/, { timeout: 20000 })
-  await page.waitForTimeout(2000)
-}
+import { login } from './helpers/auth'
 
 test.describe('Authentication Flows', () => {
   test('01 - Login page renders correctly', async ({ page }) => {
