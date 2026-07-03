@@ -10,6 +10,12 @@ jobs:
   lint-typecheck-test:
     name: Lint, Typecheck & Unit Tests
     runs-on: ubuntu-latest
+    env:
+      # prisma.config.js resolves DATABASE_URL eagerly (even for `prisma generate`,
+      # which never opens a connection). No real database is needed here: unit
+      # tests run against a mocked Prisma client (src/__tests__/mocks/prisma.ts)
+      # and override this value in src/__tests__/setup.ts. A placeholder is enough.
+      DATABASE_URL: 'postgresql://ci:ci@localhost:5432/ci_placeholder'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
