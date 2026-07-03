@@ -12,6 +12,9 @@ import {
   X,
   ShieldCheck,
   User,
+  BarChart3,
+  Activity,
+  History,
 } from 'lucide-react'
 import { useState } from 'react'
 import { ThemeToggle } from '@/_components/shared/theme-toggle'
@@ -48,8 +51,23 @@ export function AdminLayoutClient({ children, user }: AdminLayoutClientProps) {
       label: t('profile'),
       icon: User,
     },
+    {
+      href: '/admin/analytics',
+      label: t('analytics'),
+      icon: BarChart3,
+    },
     ...(user.role === 'ADMIN'
       ? [
+          {
+            href: '/admin/status',
+            label: t('status'),
+            icon: Activity,
+          },
+          {
+            href: '/admin/audit-log',
+            label: t('auditLog'),
+            icon: History,
+          },
           {
             href: '/admin/settings',
             label: t('settings'),
