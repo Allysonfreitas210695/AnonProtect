@@ -80,7 +80,7 @@ export function ReportCard({
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-600 ring-1 ring-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-400">
                   <ShieldCheck className="h-3 w-3" />
-                  PROJETADO PELA LGPD
+                  {t('protectedByLgpd')}
                 </div>
                 <button
                   onClick={() => setShowOriginal(!showOriginal)}
@@ -89,12 +89,12 @@ export function ReportCard({
                   {showOriginal ? (
                     <>
                       <EyeOff className="h-3 w-3" />
-                      Ocultar Originais
+                      {t('hideOriginal')}
                     </>
                   ) : (
                     <>
                       <Eye className="h-3 w-3" />
-                      Ver Originais
+                      {t('showOriginal')}
                     </>
                   )}
                 </button>

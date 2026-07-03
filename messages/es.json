@@ -402,7 +402,10 @@
     "category": "Categoría",
     "notInformed": "No informada",
     "creationDate": "Fecha de Creación",
-    "description": "Descripción del Hecho"
+    "description": "Descripción del Hecho",
+    "protectedByLgpd": "Protegido por la LGPD",
+    "showOriginal": "Ver Originales",
+    "hideOriginal": "Ocultar Originales"
   },
   "Sidebar": {
     "dashboard": "Panel",

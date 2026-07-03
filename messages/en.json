@@ -402,7 +402,10 @@
     "category": "Category",
     "notInformed": "Not informed",
     "creationDate": "Creation Date",
-    "description": "Occurrence Description"
+    "description": "Occurrence Description",
+    "protectedByLgpd": "Protected by LGPD",
+    "showOriginal": "Show Original",
+    "hideOriginal": "Hide Original"
   },
   "Sidebar": {
     "dashboard": "Dashboard",

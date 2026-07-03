@@ -59,7 +59,7 @@ export default async function AdminReportPage({ params }: Props) {
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
               <Link
-                href={`/${locale}/admin/report`}
+                href="/admin/report"
                 className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-bold transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
