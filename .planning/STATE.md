@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-02, milestone v1.0)
 Phase: Milestone v1.0 complete
 Plan: —
 Status: Awaiting next milestone
-Last activity: 2026-07-02 — Milestone v1.0 completed and archived
+Last activity: 2026-07-03 - Completed quick task 260703-qqq: Add sidebar links for 3 orphaned admin pages (analytics, status, audit-log)
 
 ## Performance Metrics
 
@@ -74,6 +74,7 @@ None open. AWS SES confirmed active and used in production for chat notification
 | 260703-k7m | Add missing revalidatePath calls to admin report actions (status update, notes, replies, forward, delete) so the admin panel UI updates without a manual reload                                                               | 2026-07-03 | 11fba2c | [260703-k7m-adicionar-revalidatepath-em-admin-report-action](./quick/260703-k7m-adicionar-revalidatepath-em-admin-report-action/) |
 | 260703-jn0 | Refactor E2E Playwright suite: extract shared login helper, replace silent isVisible guards with hard assertions, reduce fixed waitForTimeout in favor of condition-based waits                                               | 2026-07-03 | c11e643 | [260703-jn0-refatorar-suite-e2e-playwright-extrair-h](./quick/260703-jn0-refatorar-suite-e2e-playwright-extrair-h/)               |
 | 260703-jvc | Add E2E coverage for AI auto-analysis (graceful degradation), attachment upload, and whistleblower<->admin chat round trip. Blocked from running locally by active Cloudflare Turnstile (needs a no-Turnstile env to execute) | 2026-07-03 | (merge) | [260703-jvc-adicionar-cobertura-e2e-playwright-para-](./quick/260703-jvc-adicionar-cobertura-e2e-playwright-para-/)               |
+| 260703-qqq | Add sidebar links for 3 orphaned admin pages (analytics, status, audit-log) — previously only reachable by typing the URL directly                                                                                            | 2026-07-03 | 825e01d | [260703-qqq-adicionar-ao-sidebar-links-para-3-pagina](./quick/260703-qqq-adicionar-ao-sidebar-links-para-3-pagina/)               |
 
 ## Deferred Items
 
