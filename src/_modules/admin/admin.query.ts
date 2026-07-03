@@ -259,15 +259,37 @@ export async function getReportStats(days: number | null = 30, filterCountry?: s
       _count: { _all: true },
     }) as unknown as Promise<CityGroup[]>,
     (() => {
-      const conditions = [Prisma.sql`deleted_at IS NULL`]
-      if (startDate) conditions.push(Prisma.sql`created_at >= ${startDate}`)
-      if (filterCountry) conditions.push(Prisma.sql`country = ${filterCountry}`)
-      const whereClause = Prisma.join(conditions, ' AND ')
-
+      if (startDate && filterCountry) {
+        return prisma.$queryRaw<{ day: Date; count: bigint }[]>`
+          SELECT date_trunc('day', created_at) as day, count(*)::bigint as count
+          FROM reports
+          WHERE deleted_at IS NULL AND created_at >= ${startDate} AND country = ${filterCountry}
+          GROUP BY day
+          ORDER BY day ASC
+        `
+      }
+      if (startDate) {
+        return prisma.$queryRaw<{ day: Date; count: bigint }[]>`
+          SELECT date_trunc('day', created_at) as day, count(*)::bigint as count
+          FROM reports
+          WHERE deleted_at IS NULL AND created_at >= ${startDate}
+          GROUP BY day
+          ORDER BY day ASC
+        `
+      }
+      if (filterCountry) {
+        return prisma.$queryRaw<{ day: Date; count: bigint }[]>`
+          SELECT date_trunc('day', created_at) as day, count(*)::bigint as count
+          FROM reports
+          WHERE deleted_at IS NULL AND country = ${filterCountry}
+          GROUP BY day
+          ORDER BY day ASC
+        `
+      }
       return prisma.$queryRaw<{ day: Date; count: bigint }[]>`
         SELECT date_trunc('day', created_at) as day, count(*)::bigint as count
         FROM reports
-        WHERE ${whereClause}
+        WHERE deleted_at IS NULL
         GROUP BY day
         ORDER BY day ASC
       `
