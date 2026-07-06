@@ -75,3 +75,37 @@ export async function checkMessageRateLimit(identifier: string) {
     return { success: true, limit: 0, remaining: 0, reset: 0 }
   }
 }
+
+/**
+ * Limitador de taxa dedicado para geração de URLs de upload (presigned URLs).
+ * Configurado para 20 uploads por IP por hora — generoso para o envio de
+ * múltiplos anexos em uma denúncia, mas suficiente para barrar abuso
+ * automatizado de preenchimento do bucket S3.
+ */
+export const uploadRateLimit = redis
+  ? new Ratelimit({
+      redis: redis,
+      limiter: Ratelimit.slidingWindow(20, '1 h'),
+      analytics: true,
+      prefix: 'anonprotect_upload_ratelimit',
+    })
+  : null
+
+/**
+ * Verifica se a geração de URL de upload deve ser limitada.
+ *
+ * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
+ */
+export async function checkUploadRateLimit(identifier: string) {
+  if (!uploadRateLimit) {
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+
+  try {
+    return await uploadRateLimit.limit(identifier)
+  } catch (err) {
+    logger.error({ err }, 'Rate limit check failed, failing open')
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+}
