@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { getPresignedUrlAction } from './s3.action'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { checkUploadRateLimit } from '@/_shared/lib/ratelimit'
 
 vi.mock('@/_shared/lib/aws', () => ({
   s3Client: {},
@@ -15,12 +16,39 @@ vi.mock('@aws-sdk/client-s3', () => ({
   PutObjectCommand: vi.fn(),
 }))
 
+vi.mock('next/headers', () => ({
+  headers: vi.fn().mockResolvedValue(new Map()),
+}))
+
+vi.mock('@/_shared/lib/logger', () => ({
+  logger: { error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn() },
+}))
+
+vi.mock('@/_shared/lib/ratelimit', () => ({
+  checkUploadRateLimit: vi.fn().mockResolvedValue({
+    success: true,
+    limit: 20,
+    remaining: 19,
+    reset: 0,
+  }),
+}))
+
 vi.mock('@/_shared/utils/safe-action', () => {
   const mockAction =
-    (fn: (args: { parsedInput: unknown; ctx: { user: { id: string } } }) => Promise<unknown>) =>
+    (
+      schema: {
+        safeParse: (input: unknown) => { success: boolean; data?: unknown; error?: unknown }
+      },
+      fn: (args: { parsedInput: unknown; ctx: { user: { id: string } } }) => Promise<unknown>
+    ) =>
     async (input: unknown) => {
+      const parsed = schema.safeParse(input)
+      if (!parsed.success) {
+        return { validationErrors: parsed.error }
+      }
+
       try {
-        const result = await fn({ parsedInput: input, ctx: { user: { id: 'test-user' } } })
+        const result = await fn({ parsedInput: parsed.data, ctx: { user: { id: 'test-user' } } })
         return { data: result }
       } catch (e: unknown) {
         const message = e instanceof Error ? e.message : 'Unknown error'
@@ -30,8 +58,10 @@ vi.mock('@/_shared/utils/safe-action', () => {
 
   return {
     actionClient: {
-      schema: () => ({
-        action: mockAction,
+      schema: (schema: { safeParse: (input: unknown) => { success: boolean } }) => ({
+        action: (
+          fn: (args: { parsedInput: unknown; ctx: { user: { id: string } } }) => Promise<unknown>
+        ) => mockAction(schema, fn),
       }),
     },
     ActionError: class extends Error {},
@@ -42,6 +72,12 @@ describe('S3 Upload Action', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     process.env.AWS_REGION = 'us-east-1'
+    vi.mocked(checkUploadRateLimit).mockResolvedValue({
+      success: true,
+      limit: 20,
+      remaining: 19,
+      reset: 0,
+    })
   })
 
   it('should generate a presigned URL successfully', async () => {
@@ -51,6 +87,7 @@ describe('S3 Upload Action', () => {
     const result = await getPresignedUrlAction({
       fileName: 'test.jpg',
       fileType: 'image/jpeg',
+      fileSize: 1024,
     })
 
     expect(result?.data).toBeDefined()
@@ -58,5 +95,45 @@ describe('S3 Upload Action', () => {
     expect(result?.data?.key).toContain('evidence/')
     expect(result?.data?.key).toContain('test.jpg')
     expect(result?.data?.publicUrl).toContain('test-bucket.s3.us-east-1.amazonaws.com')
+  })
+
+  it('should reject a fileType outside the whitelist', async () => {
+    const result = await getPresignedUrlAction({
+      fileName: 'malware.exe',
+      fileType: 'application/x-msdownload',
+      fileSize: 1024,
+    })
+
+    expect(result?.data).toBeUndefined()
+    expect(result?.validationErrors).toBeDefined()
+  })
+
+  it('should reject a fileSize exceeding the max', async () => {
+    const result = await getPresignedUrlAction({
+      fileName: 'huge.jpg',
+      fileType: 'image/jpeg',
+      fileSize: 11 * 1024 * 1024,
+    })
+
+    expect(result?.data).toBeUndefined()
+    expect(result?.validationErrors).toBeDefined()
+  })
+
+  it('should reject when the upload rate limit has been reached', async () => {
+    vi.mocked(checkUploadRateLimit).mockResolvedValue({
+      success: false,
+      limit: 20,
+      remaining: 0,
+      reset: 0,
+    })
+
+    const result = await getPresignedUrlAction({
+      fileName: 'test.jpg',
+      fileType: 'image/jpeg',
+      fileSize: 1024,
+    })
+
+    expect(result?.serverError).toBe('Limite de uploads atingido. Tente novamente mais tarde.')
+    expect(getSignedUrl).not.toHaveBeenCalled()
   })
 })
