@@ -76,6 +76,13 @@ export async function updateReportAiResults(
     where: { name: categoryName },
   })
 
+  if (!category) {
+    logger.warn(
+      { reportId: id, categoryName },
+      'Categoria sugerida pela IA não encontrada; categoryId não será atualizado'
+    )
+  }
+
   return await prisma.report.update({
     where: { id },
     data: {

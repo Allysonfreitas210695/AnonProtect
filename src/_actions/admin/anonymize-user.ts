@@ -21,6 +21,7 @@ export async function anonymizeUser() {
       active: false,
     },
   })
+  revalidatePath('/admin/profile')
   await signOut()
 
   return { success: true }
