@@ -63,7 +63,7 @@ export const deleteInvestigationNoteAction = supervisorActionClient
   .schema(deleteNoteSchema)
   .action(async ({ parsedInput: { noteId, reportId }, ctx: { user } }) => {
     try {
-      await adminData.deleteInvestigationNote(noteId, user.id, reportId)
+      await adminData.deleteInvestigationNote(noteId, user.id, reportId, user.role)
       revalidatePath(`/admin/report/${reportId}`)
       return { success: true, message: 'Nota excluída com sucesso' }
     } catch (error) {

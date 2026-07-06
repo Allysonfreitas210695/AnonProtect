@@ -1,4 +1,4 @@
-import { ReportStatus } from '@/_generated/prisma'
+import { ReportStatus, UserRole } from '@/_generated/prisma'
 import { prisma } from '@/_shared/lib/prisma'
 import { encrypt } from '@/_shared/lib/crypto'
 import { sendEmail, SES_FROM_EMAIL } from '@/_shared/lib/aws'
@@ -81,7 +81,22 @@ export async function createInvestigationNote(reportId: string, authorId: string
   ])
 }
 
-export async function deleteInvestigationNote(id: string, userId: string, reportId: string) {
+export async function deleteInvestigationNote(
+  id: string,
+  userId: string,
+  reportId: string,
+  userRole: UserRole
+) {
+  const note = await prisma.investigationNote.findUnique({ where: { id } })
+
+  if (!note) {
+    throw new Error('Nota de investigação não encontrada')
+  }
+
+  if (note.userId !== userId && userRole !== 'ADMIN') {
+    throw new Error('Você não tem permissão para remover esta nota de investigação')
+  }
+
   return await prisma.$transaction([
     prisma.investigationNote.delete({ where: { id } }),
     prisma.activityLog.create({
