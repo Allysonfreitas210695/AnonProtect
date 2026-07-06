@@ -6,6 +6,7 @@ import {
   forwardReport,
   createAdminReply,
   createInvestigationNote,
+  deleteInvestigationNote,
 } from './admin.data'
 
 vi.mock('@/_shared/lib/crypto', () => ({
@@ -28,6 +29,7 @@ vi.mock('@/_shared/lib/prisma', () => ({
     investigationNote: {
       create: vi.fn(),
       delete: vi.fn(),
+      findUnique: vi.fn(),
     },
     $transaction: vi.fn((input) => {
       if (typeof input === 'function') return input(prisma)
@@ -125,6 +127,53 @@ describe('admin.data', () => {
           }),
         })
       )
+    })
+  })
+
+  describe('deleteInvestigationNote', () => {
+    it('should throw when note is not found and never call delete', async () => {
+      vi.mocked(prisma.investigationNote.findUnique).mockResolvedValue(null)
+
+      await expect(deleteInvestigationNote('n1', 'u1', 'r1', 'SUPERVISOR')).rejects.toThrow(
+        'Nota de investigação não encontrada'
+      )
+      expect(prisma.investigationNote.delete).not.toHaveBeenCalled()
+    })
+
+    it('should throw when a non-author SUPERVISOR attempts to delete', async () => {
+      vi.mocked(prisma.investigationNote.findUnique).mockResolvedValue({
+        id: 'n1',
+        userId: 'other-user',
+      } as unknown as Awaited<ReturnType<typeof prisma.investigationNote.findUnique>>)
+
+      await expect(deleteInvestigationNote('n1', 'u1', 'r1', 'SUPERVISOR')).rejects.toThrow(
+        'Você não tem permissão para remover esta nota de investigação'
+      )
+      expect(prisma.investigationNote.delete).not.toHaveBeenCalled()
+    })
+
+    it('should allow the author (any role) to delete their own note', async () => {
+      vi.mocked(prisma.investigationNote.findUnique).mockResolvedValue({
+        id: 'n1',
+        userId: 'u1',
+      } as unknown as Awaited<ReturnType<typeof prisma.investigationNote.findUnique>>)
+
+      await deleteInvestigationNote('n1', 'u1', 'r1', 'SUPERVISOR')
+
+      expect(prisma.investigationNote.delete).toHaveBeenCalledWith({ where: { id: 'n1' } })
+      expect(prisma.activityLog.create).toHaveBeenCalled()
+    })
+
+    it('should allow ADMIN to delete a note authored by someone else', async () => {
+      vi.mocked(prisma.investigationNote.findUnique).mockResolvedValue({
+        id: 'n1',
+        userId: 'other-user',
+      } as unknown as Awaited<ReturnType<typeof prisma.investigationNote.findUnique>>)
+
+      await deleteInvestigationNote('n1', 'u1', 'r1', 'ADMIN')
+
+      expect(prisma.investigationNote.delete).toHaveBeenCalledWith({ where: { id: 'n1' } })
+      expect(prisma.activityLog.create).toHaveBeenCalled()
     })
   })
 })

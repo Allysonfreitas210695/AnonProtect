@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { Report } from '@/_generated/prisma'
-import { deleteReportAction } from './report.action'
+import { deleteReportAction, deleteInvestigationNoteAction } from './report.action'
 import * as adminData from '@/_modules/admin/admin.data'
 
 vi.mock('next/cache', () => ({
@@ -102,6 +102,50 @@ describe('Admin Report Actions', () => {
       expect(result.data).toEqual({ success: true, message: 'Denúncia excluída com sucesso' })
       expect(adminData.softDeleteReport).toHaveBeenCalledWith(
         '00000000-0000-0000-0000-000000000000'
+      )
+    })
+  })
+
+  describe('deleteInvestigationNoteAction', () => {
+    it('should pass user.role through to adminData.deleteInvestigationNote', async () => {
+      mockUser = { id: 'u1', role: 'ADMIN' }
+      vi.mocked(adminData.deleteInvestigationNote).mockResolvedValue(
+        undefined as unknown as Awaited<ReturnType<typeof adminData.deleteInvestigationNote>>
+      )
+
+      const result = await deleteInvestigationNoteAction({
+        noteId: '00000000-0000-0000-0000-000000000001',
+        reportId: '00000000-0000-0000-0000-000000000002',
+      })
+
+      expect(result.data).toEqual({ success: true, message: 'Nota excluída com sucesso' })
+      expect(adminData.deleteInvestigationNote).toHaveBeenCalledWith(
+        '00000000-0000-0000-0000-000000000001',
+        'u1',
+        '00000000-0000-0000-0000-000000000002',
+        'ADMIN'
+      )
+    })
+
+    it('should surface the authorization error as serverError for a non-author SUPERVISOR', async () => {
+      mockUser = { id: 'u2', role: 'SUPERVISOR' }
+      vi.mocked(adminData.deleteInvestigationNote).mockRejectedValue(
+        new Error('Você não tem permissão para remover esta nota de investigação')
+      )
+
+      const result = await deleteInvestigationNoteAction({
+        noteId: '00000000-0000-0000-0000-000000000001',
+        reportId: '00000000-0000-0000-0000-000000000002',
+      })
+
+      expect(result.serverError).toBe(
+        'Você não tem permissão para remover esta nota de investigação'
+      )
+      expect(adminData.deleteInvestigationNote).toHaveBeenCalledWith(
+        '00000000-0000-0000-0000-000000000001',
+        'u2',
+        '00000000-0000-0000-0000-000000000002',
+        'SUPERVISOR'
       )
     })
   })
