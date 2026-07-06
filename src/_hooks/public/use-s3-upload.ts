@@ -47,6 +47,7 @@ export function useS3Upload() {
         const result = await getPresignedUrlAction({
           fileName: file.name,
           fileType: file.type,
+          fileSize: file.size,
         })
 
         if (!result?.data?.url) {
