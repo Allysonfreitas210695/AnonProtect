@@ -7,26 +7,7 @@ import { s3Client, BUCKET_NAME } from '@/_shared/lib/aws'
 import { checkUploadRateLimit } from '@/_shared/lib/ratelimit'
 import { logger } from '@/_shared/lib/logger'
 import { actionClient } from '@/_shared/utils/safe-action'
-import { z } from 'zod'
-
-const ALLOWED_UPLOAD_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/gif',
-  'application/pdf',
-] as const
-
-const MAX_UPLOAD_FILE_SIZE = 10 * 1024 * 1024
-
-const uploadSchema = z.object({
-  fileName: z.string().min(1, 'Nome do arquivo é obrigatório'),
-  fileType: z.enum(ALLOWED_UPLOAD_MIME_TYPES, { message: 'Tipo de arquivo não permitido' }),
-  fileSize: z
-    .number()
-    .positive('Tamanho de arquivo inválido')
-    .max(MAX_UPLOAD_FILE_SIZE, 'Arquivo excede o tamanho máximo permitido (10MB)'),
-})
+import { uploadSchema } from '@/_schemas/upload'
 
 export const getPresignedUrlAction = actionClient
   .schema(uploadSchema)

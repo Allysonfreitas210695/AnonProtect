@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import { getPresignedUrlAction } from '@/_actions/upload/s3.action'
 import { clientLogger } from '@/_shared/lib/client-logger'
+import { ALLOWED_UPLOAD_MIME_TYPES } from '@/_schemas/upload'
 import { toast } from 'sonner'
+
+function isAllowedUploadMimeType(type: string): type is (typeof ALLOWED_UPLOAD_MIME_TYPES)[number] {
+  return (ALLOWED_UPLOAD_MIME_TYPES as readonly string[]).includes(type)
+}
 
 export function useS3Upload() {
   const [isUploading, setIsUploading] = useState(false)
@@ -42,6 +47,10 @@ export function useS3Upload() {
 
     try {
       for (const file of files) {
+        if (!isAllowedUploadMimeType(file.type)) {
+          throw new Error(`Tipo de arquivo não permitido: ${file.name}`)
+        }
+
         const cleanFile = await stripMetadata(file)
 
         const result = await getPresignedUrlAction({

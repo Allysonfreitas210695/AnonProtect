@@ -100,7 +100,9 @@ describe('S3 Upload Action', () => {
   it('should reject a fileType outside the whitelist', async () => {
     const result = await getPresignedUrlAction({
       fileName: 'malware.exe',
-      fileType: 'application/x-msdownload',
+      fileType: 'application/x-msdownload' as Parameters<
+        typeof getPresignedUrlAction
+      >[0]['fileType'],
       fileSize: 1024,
     })
 
