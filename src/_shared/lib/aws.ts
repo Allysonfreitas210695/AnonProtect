@@ -40,6 +40,15 @@ export const sesClient = hasAwsCredentials
 export const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME || ''
 export const SES_FROM_EMAIL = process.env.AWS_SES_FROM_EMAIL || ''
 
+/**
+ * Retorna o hostname virtual-hosted-style do bucket S3 configurado, usado
+ * para restringir URLs de anexo ao domínio esperado (evita phishing via
+ * URLs externas arbitrárias na galeria de evidências).
+ */
+export function getBucketHostname() {
+  return `${BUCKET_NAME}.s3.${region}.amazonaws.com`
+}
+
 export async function sendEmail(to: string, subject: string, htmlBody: string) {
   if (!sesClient || !SES_FROM_EMAIL) {
     logger.warn({ to }, 'SES não configurado — email não enviado')
