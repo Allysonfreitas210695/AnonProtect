@@ -100,4 +100,39 @@ describe('ratelimit', () => {
       expect(result).toEqual(okResult)
     })
   })
+
+  describe('checkUploadRateLimit', () => {
+    it('should return success if ratelimit is not configured', async () => {
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
+      const { checkUploadRateLimit } = await import('./ratelimit')
+
+      const result = await checkUploadRateLimit('test-ip')
+
+      expect(result).toEqual({ success: true, limit: 0, remaining: 0, reset: 0 })
+    })
+
+    it('should fail open when Redis is configured but unreachable', async () => {
+      process.env.UPSTASH_REDIS_REST_URL = 'https://example.upstash.io'
+      process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token'
+      mockLimit.mockRejectedValue(new Error('fetch failed'))
+      const { checkUploadRateLimit } = await import('./ratelimit')
+
+      const result = await checkUploadRateLimit('test-ip')
+
+      expect(result).toEqual({ success: true, limit: 0, remaining: 0, reset: 0 })
+    })
+
+    it('should pass through the result when Redis responds normally', async () => {
+      process.env.UPSTASH_REDIS_REST_URL = 'https://example.upstash.io'
+      process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token'
+      const okResult = { success: true, limit: 20, remaining: 15, reset: 789 }
+      mockLimit.mockResolvedValue(okResult)
+      const { checkUploadRateLimit } = await import('./ratelimit')
+
+      const result = await checkUploadRateLimit('test-ip')
+
+      expect(result).toEqual(okResult)
+    })
+  })
 })
