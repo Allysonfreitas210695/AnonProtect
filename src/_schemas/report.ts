@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReportStatus } from '@/_generated/prisma'
 import { Report, Category, Message, User } from '@/_generated/prisma'
+import { getBucketHostname } from '@/_shared/lib/aws'
 
 export const reportSchema = z.object({
   categoryId: z.uuid('Selecione uma categoria válida'),
@@ -18,7 +19,19 @@ export const reportSchema = z.object({
   attachments: z
     .array(
       z.object({
-        url: z.string().url(),
+        url: z
+          .string()
+          .url()
+          .refine(
+            (url) => {
+              try {
+                return new URL(url).hostname === getBucketHostname()
+              } catch {
+                return false
+              }
+            },
+            { message: 'URL de anexo inválida' }
+          ),
         key: z.string(),
         fileName: z.string(),
         fileSize: z.number(),
