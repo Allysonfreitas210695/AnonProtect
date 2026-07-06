@@ -109,3 +109,36 @@ export async function checkUploadRateLimit(identifier: string) {
     return { success: true, limit: 0, remaining: 0, reset: 0 }
   }
 }
+
+/**
+ * Limitador de taxa dedicado para tentativas de login com credenciais.
+ * Configurado para 10 tentativas por IP a cada 15 minutos — suficiente
+ * para barrar ataques de força bruta contra o provedor Credentials.
+ */
+export const loginRateLimit = redis
+  ? new Ratelimit({
+      redis: redis,
+      limiter: Ratelimit.slidingWindow(10, '15 m'),
+      analytics: true,
+      prefix: 'anonprotect_login_ratelimit',
+    })
+  : null
+
+/**
+ * Verifica se a tentativa de login deve ser limitada.
+ *
+ * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
+ */
+export async function checkLoginRateLimit(identifier: string) {
+  if (!loginRateLimit) {
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+
+  try {
+    return await loginRateLimit.limit(identifier)
+  } catch (err) {
+    logger.error({ err }, 'Rate limit check failed, failing open')
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+}
