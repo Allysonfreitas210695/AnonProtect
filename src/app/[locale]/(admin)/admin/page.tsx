@@ -203,7 +203,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                           key={report.id}
                           className="group hover:bg-muted/40 border-border/40 transition-all"
                         >
-                          <TableCell className="text-primary/90 py-4 font-mono text-xs font-black sm:text-sm">
+                          <TableCell className="text-primary/90 py-4 font-mono text-xs font-black whitespace-nowrap sm:text-sm">
                             {report.trackingCode}
                           </TableCell>
                           <TableCell className="max-w-[120px] truncate py-4 text-xs font-semibold sm:text-sm md:max-w-none">

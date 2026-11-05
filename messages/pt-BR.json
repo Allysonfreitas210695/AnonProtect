@@ -284,7 +284,7 @@
     "title": "Acompanhar Denúncia",
     "accessSecure": "Acesso Seguro",
     "trackingCode": "Código de Acompanhamento",
-    "placeholder": "EX: AP-2025-XXXX",
+    "placeholder": "EX: AP-2026-XXXX-XXXX-XXXX-XXXX",
     "hint": "Informe o código de acompanhamento que você recebeu ao enviar a denúncia.",
     "submit": "Acessar",
     "submitting": "Acessando..."

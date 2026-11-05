@@ -284,7 +284,7 @@
     "title": "Track Report",
     "accessSecure": "Secure Access",
     "trackingCode": "Tracking Code",
-    "placeholder": "EX: AP-2025-XXXX",
+    "placeholder": "EX: AP-2026-XXXX-XXXX-XXXX-XXXX",
     "hint": "Enter the tracking code you received when submitting the report.",
     "submit": "Access",
     "submitting": "Accessing..."

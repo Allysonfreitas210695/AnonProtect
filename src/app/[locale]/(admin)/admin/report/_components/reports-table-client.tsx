@@ -175,7 +175,7 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                           aria-label={`Select ${report.trackingCode}`}
                         />
                       </TableCell>
-                      <TableCell className="text-primary/90 py-4 font-mono text-sm font-black">
+                      <TableCell className="text-primary/90 py-4 font-mono text-sm font-black whitespace-nowrap">
                         {report.trackingCode}
                       </TableCell>
                       <TableCell className="py-4 text-sm font-semibold">
