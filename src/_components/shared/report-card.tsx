@@ -5,11 +5,16 @@ import { ReportWithCategory } from '@/_schemas/report'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { formatDate } from '@/_shared/utils/formatters'
 import { StatusBadge } from '@/_components/shared/status-badge'
-import { ShieldCheck, Eye, EyeOff } from 'lucide-react'
+import { ShieldCheck, ShieldAlert, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 
-interface ReportCardProps {
-  report: ReportWithCategory
+// Visão do painel: o relato original nunca chega ao componente
+export type AdminReportCardData = Omit<ReportWithCategory, 'description'>
+
+type ReportCardProps = (
+  | { variant: 'admin'; report: AdminReportCardData; pendingAction?: React.ReactNode }
+  | { variant?: 'whistleblower'; report: ReportWithCategory; pendingAction?: never }
+) & {
   showStatus?: boolean
   showCategory?: boolean
   showDate?: boolean
@@ -18,6 +23,8 @@ interface ReportCardProps {
 
 export function ReportCard({
   report,
+  variant = 'whistleblower',
+  pendingAction,
   showStatus = true,
   showCategory = true,
   showDate = true,
@@ -26,12 +33,13 @@ export function ReportCard({
   const t = useTranslations('ReportCard')
   const [showOriginal, setShowOriginal] = useState(false)
 
-  const hasRedaction = !!(report as unknown as { redactedDescription?: string | null })
-    .redactedDescription
-  const displayDescription = showOriginal
-    ? report.description
-    : (report as unknown as { redactedDescription?: string | null }).redactedDescription ||
-      report.description
+  const isAdmin = variant === 'admin'
+  const original = 'description' in report ? report.description : null
+  const hasRedaction = !!report.redactedDescription
+  const canToggle = !isAdmin && hasRedaction
+  const isPending = isAdmin && !hasRedaction
+  const displayDescription =
+    canToggle && showOriginal ? original : report.redactedDescription || (isAdmin ? null : original)
 
   return (
     <Card className="bg-card/40 ring-border/50 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-300 hover:shadow-lg print:bg-white print:shadow-none print:ring-0">
@@ -82,28 +90,41 @@ export function ReportCard({
                   <ShieldCheck className="h-3 w-3" />
                   {t('protectedByLgpd')}
                 </div>
-                <button
-                  onClick={() => setShowOriginal(!showOriginal)}
-                  className="text-muted-foreground hover:text-primary flex items-center gap-1 text-[10px] font-bold uppercase transition-colors print:hidden"
-                >
-                  {showOriginal ? (
-                    <>
-                      <EyeOff className="h-3 w-3" />
-                      {t('hideOriginal')}
-                    </>
-                  ) : (
-                    <>
-                      <Eye className="h-3 w-3" />
-                      {t('showOriginal')}
-                    </>
-                  )}
-                </button>
+                {canToggle && (
+                  <button
+                    onClick={() => setShowOriginal(!showOriginal)}
+                    className="text-muted-foreground hover:text-primary flex items-center gap-1 text-[10px] font-bold uppercase transition-colors print:hidden"
+                  >
+                    {showOriginal ? (
+                      <>
+                        <EyeOff className="h-3 w-3" />
+                        {t('hideOriginal')}
+                      </>
+                    ) : (
+                      <>
+                        <Eye className="h-3 w-3" />
+                        {t('showOriginal')}
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             )}
           </div>
-          <p className="text-foreground/90 text-md leading-relaxed font-medium whitespace-pre-wrap print:text-black">
-            {displayDescription}
-          </p>
+          {isPending ? (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-amber-600 dark:text-amber-400">
+                <ShieldAlert className="h-4 w-4" />
+                {t('pendingAnonymization')}
+              </div>
+              <p className="text-muted-foreground text-sm">{t('pendingAnonymizationHint')}</p>
+              <div className="print:hidden">{pendingAction}</div>
+            </div>
+          ) : (
+            <p className="text-foreground/90 text-md leading-relaxed font-medium whitespace-pre-wrap print:text-black">
+              {displayDescription}
+            </p>
+          )}
           <div className="bg-primary/20 absolute top-0 left-0 h-full w-1 opacity-50 print:hidden" />
         </div>
 

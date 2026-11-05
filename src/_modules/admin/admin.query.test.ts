@@ -1,7 +1,13 @@
 import { describe, expect, it, vi } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
-import { getReportById, getReportsPaginated, getQuickStats, getReportStats } from './admin.query'
+import {
+  getReportById,
+  getReportForReanalysis,
+  getReportsPaginated,
+  getQuickStats,
+  getReportStats,
+} from './admin.query'
 
 vi.mock('@/_shared/lib/prisma', () => ({
   prisma: {
@@ -46,6 +52,39 @@ describe('admin.query', () => {
       expect(result?.attachments[0].url).toBe('http://signed-url.com')
     })
 
+    it('should never expose the original description', async () => {
+      vi.mocked(decrypt).mockImplementation((val: string) => val)
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        id: 'r1',
+        description: 'cipher-text',
+        redactedDescription: 'cipher-redacted',
+        attachments: [],
+        messages: [],
+        investigationNotes: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+
+      const result = await getReportById('r1')
+
+      expect(result).not.toHaveProperty('description')
+      expect(result?.redactedDescription).toBe('cipher-redacted')
+      expect(decrypt).not.toHaveBeenCalledWith('cipher-text')
+    })
+
+    it('should return null redactedDescription when absent', async () => {
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        id: 'r1',
+        description: 'cipher-text',
+        redactedDescription: null,
+        attachments: [],
+        messages: [],
+        investigationNotes: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+
+      const result = await getReportById('r1')
+
+      expect(result?.redactedDescription).toBeNull()
+    })
+
     it('should fetch messages uncapped, without a take limit', async () => {
       const id = 'r1'
       const mockReport = {
@@ -84,10 +123,24 @@ describe('admin.query', () => {
 
       const result = await getReportById(id)
 
-      expect(result?.description).toBe('[DECRYPT_FAILED]')
+      expect(result).not.toHaveProperty('description')
       expect(result?.redactedDescription).toBe('[DECRYPT_FAILED]')
       expect(result?.messages[0].content).toBe('[DECRYPT_FAILED]')
       expect(result?.investigationNotes[0].content).toBe('[DECRYPT_FAILED]')
+    })
+  })
+
+  describe('getReportForReanalysis', () => {
+    it('should select cipher fields only for non-deleted report', async () => {
+      vi.mocked(prisma.report.findUnique).mockResolvedValue(null)
+
+      const result = await getReportForReanalysis('r1')
+
+      expect(result).toBeNull()
+      expect(vi.mocked(prisma.report.findUnique)).toHaveBeenLastCalledWith({
+        where: { id: 'r1', deletedAt: null },
+        select: { id: true, description: true, country: true, redactedDescription: true },
+      })
     })
   })
 

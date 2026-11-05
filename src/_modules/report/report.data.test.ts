@@ -142,8 +142,9 @@ describe('report.data', () => {
         redactedDescription: 'redacted info',
       } as unknown as Awaited<ReturnType<typeof analyzeReport>>)
 
-      await processAiAnalysis('r1', 'description', 'BR')
+      const ok = await processAiAnalysis('r1', 'description', 'BR')
 
+      expect(ok).toBe(true)
       expect(query.getCategories).toHaveBeenCalled()
       expect(analyzeReport).toHaveBeenCalledWith('description', ['Cat 1'], 'BR')
       expect(mockPrisma.report.update).toHaveBeenCalled()
@@ -155,15 +156,16 @@ describe('report.data', () => {
       )
       vi.mocked(analyzeReport).mockResolvedValue(null)
 
-      await processAiAnalysis('r1', 'description')
+      const ok = await processAiAnalysis('r1', 'description')
 
+      expect(ok).toBe(false)
       expect(mockPrisma.report.update).not.toHaveBeenCalled()
     })
 
     it('should handle errors gracefully', async () => {
       vi.spyOn(query, 'getCategories').mockRejectedValue(new Error('DB Error'))
 
-      await expect(processAiAnalysis('r1', 'desc')).resolves.not.toThrow()
+      await expect(processAiAnalysis('r1', 'desc')).resolves.toBe(false)
     })
   })
 })

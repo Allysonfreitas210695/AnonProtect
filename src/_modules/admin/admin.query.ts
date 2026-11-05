@@ -60,15 +60,7 @@ export async function getReportById(id: string) {
     })
   )
 
-  let decryptedDescription = report.description
   let decryptedRedactedDescription = report.redactedDescription
-
-  try {
-    decryptedDescription = decrypt(report.description)
-  } catch (e) {
-    logger.error(e, 'Failed to decrypt report description')
-    decryptedDescription = '[DECRYPT_FAILED]'
-  }
 
   try {
     if (report.redactedDescription) {
@@ -99,14 +91,27 @@ export async function getReportById(id: string) {
     return { ...note, content }
   })
 
+  // O relato original nunca sai desta camada: o painel só vê o texto anonimizado
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { description: _omitted, ...rest } = report
+
   return {
-    ...report,
-    description: decryptedDescription,
+    ...rest,
     redactedDescription: decryptedRedactedDescription,
     attachments: attachmentsWithSignedUrls,
     messages: decryptedMessages,
     investigationNotes: decryptedInvestigationNotes,
   }
+}
+
+export type AdminReportDetails = NonNullable<Awaited<ReturnType<typeof getReportById>>>
+
+// Uso exclusivo de Server Actions: devolve o texto ainda cifrado
+export async function getReportForReanalysis(id: string) {
+  return prisma.report.findUnique({
+    where: { id, deletedAt: null },
+    select: { id: true, description: true, country: true, redactedDescription: true },
+  })
 }
 
 export async function getReportsPaginated(
