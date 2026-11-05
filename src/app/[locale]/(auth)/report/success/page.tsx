@@ -41,14 +41,12 @@ export default async function SuccessPage({
             {t('trackingCodeLabel')}
           </p>
         </div>
-        <CardContent className="py-10">
-          <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
-            <div className="group relative inline-flex items-center gap-4">
-              <div className="text-primary font-mono text-4xl font-black tracking-[0.2em] drop-shadow-sm sm:text-5xl">
-                {code}
-              </div>
+        <CardContent className="px-4 py-8 sm:px-8">
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-primary w-full font-mono text-xl font-black tracking-wider wrap-break-word drop-shadow-sm select-all sm:text-2xl md:text-3xl">
+              {code}
             </div>
-            <div className="border-border/50 sm:border-l sm:pl-6">
+            <div className="border-border/50 w-full border-t pt-6">
               <TrackingQrCode trackingCode={code} baseUrl={baseUrl} />
             </div>
           </div>
