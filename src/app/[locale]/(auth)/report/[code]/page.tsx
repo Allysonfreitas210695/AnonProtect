@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { headers } from 'next/headers'
 import { Card, CardContent } from '@/_components/ui/card'
 import { MessageList } from '@/_components/shared/message-list'
 import { ReportCard } from '@/_components/shared/report-card'
@@ -7,15 +8,21 @@ import { MessageForm } from './_components/message-form'
 import { getTranslations } from 'next-intl/server'
 import { RateLimitGuard } from '@/_components/shared/rate-limit-guard'
 import { getReportByCode } from '@/_modules/report/report.query'
+import { getClientIp } from '@/_shared/lib/get-client-ip'
+import { checkTrackingRateLimit } from '@/_shared/lib/ratelimit'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ReportStatusPage({ params }: { params: Promise<{ code: string }> }) {
   const t = await getTranslations('Tracking')
   const { code } = await params
+
+  const ip = getClientIp(await headers())
+  const { success: trackingRateLimitOk } = await checkTrackingRateLimit(ip)
+
   const report = await getReportByCode(code)
 
-  if (!report) {
+  if (!trackingRateLimitOk || !report) {
     notFound()
   }
 

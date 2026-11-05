@@ -5,16 +5,14 @@ import { actionClient } from '@/_shared/utils/safe-action'
 import { loginSchema } from '@/_schemas/auth'
 import { signIn } from '@/_shared/lib/auth'
 import { checkLoginRateLimit } from '@/_shared/lib/ratelimit'
+import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { AuthError } from 'next-auth'
 
 export const loginAction = actionClient
   .schema(loginSchema)
   .action(async ({ parsedInput: { email, password } }) => {
     const hdrs = await headers()
-    const ip =
-      hdrs.get('cf-connecting-ip') ||
-      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
-      '127.0.0.1'
+    const ip = getClientIp(hdrs)
     const { success: rateLimitOk } = await checkLoginRateLimit(ip)
 
     if (!rateLimitOk) {

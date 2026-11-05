@@ -4,6 +4,7 @@ import { actionClient } from '@/_shared/utils/safe-action'
 import { reportSchema } from '@/_schemas/report'
 import * as reportData from '@/_modules/report/report.data'
 import { checkRateLimit } from '@/_shared/lib/ratelimit'
+import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { headers } from 'next/headers'
 import { triggerAiAnalysis } from './ai-analysis'
 import { encrypt } from '@/_shared/lib/crypto'
@@ -30,10 +31,7 @@ export const submitReportAction = actionClient
   .schema(reportSchema)
   .action(async ({ parsedInput }) => {
     const hdrs = await headers()
-    const ip =
-      hdrs.get('cf-connecting-ip') ||
-      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
-      '127.0.0.1'
+    const ip = getClientIp(hdrs)
     const { success: rateLimitOk } = await checkRateLimit(ip)
 
     if (!rateLimitOk) {

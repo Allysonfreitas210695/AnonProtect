@@ -6,6 +6,7 @@ import { prisma } from '@/_shared/lib/prisma'
 import { sendEmail } from '@/_shared/lib/aws'
 import { logger } from '@/_shared/lib/logger'
 import { checkMessageRateLimit } from '@/_shared/lib/ratelimit'
+import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
@@ -22,10 +23,7 @@ export const sendMessageAction = actionClient
   .schema(sendMessageSchema)
   .action(async ({ parsedInput: { reportId, code, content } }) => {
     const hdrs = await headers()
-    const ip =
-      hdrs.get('cf-connecting-ip') ||
-      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
-      '127.0.0.1'
+    const ip = getClientIp(hdrs)
     const { success: rateLimitOk } = await checkMessageRateLimit(ip)
 
     if (!rateLimitOk) {

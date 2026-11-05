@@ -5,6 +5,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { headers } from 'next/headers'
 import { s3Client, BUCKET_NAME } from '@/_shared/lib/aws'
 import { checkUploadRateLimit } from '@/_shared/lib/ratelimit'
+import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { logger } from '@/_shared/lib/logger'
 import { actionClient } from '@/_shared/utils/safe-action'
 import { uploadSchema } from '@/_schemas/upload'
@@ -13,10 +14,7 @@ export const getPresignedUrlAction = actionClient
   .schema(uploadSchema)
   .action(async ({ parsedInput: { fileName, fileType } }) => {
     const hdrs = await headers()
-    const ip =
-      hdrs.get('cf-connecting-ip') ||
-      (hdrs.get('x-forwarded-for') || '').split(',').at(-1)?.trim() ||
-      '127.0.0.1'
+    const ip = getClientIp(hdrs)
     const { success: rateLimitOk } = await checkUploadRateLimit(ip)
 
     if (!rateLimitOk) {

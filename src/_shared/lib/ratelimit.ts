@@ -142,3 +142,37 @@ export async function checkLoginRateLimit(identifier: string) {
     return { success: true, limit: 0, remaining: 0, reset: 0 }
   }
 }
+
+/**
+ * Limitador de taxa dedicado para consulta pelo código de rastreamento.
+ * Configurado para 20 consultas por IP a cada 10 minutos — fecha o
+ * oráculo de enumeração sem Redis configurado (analytics desligado
+ * para não registrar o código em claro em nenhum painel externo).
+ */
+export const trackingRateLimit = redis
+  ? new Ratelimit({
+      redis: redis,
+      limiter: Ratelimit.slidingWindow(20, '10 m'),
+      analytics: false,
+      prefix: 'anonprotect_tracking_ratelimit',
+    })
+  : null
+
+/**
+ * Verifica se a consulta pelo código de rastreamento deve ser limitada.
+ *
+ * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
+ */
+export async function checkTrackingRateLimit(identifier: string) {
+  if (!trackingRateLimit) {
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+
+  try {
+    return await trackingRateLimit.limit(identifier)
+  } catch (err) {
+    logger.error({ err }, 'Rate limit check failed, failing open')
+    return { success: true, limit: 0, remaining: 0, reset: 0 }
+  }
+}
