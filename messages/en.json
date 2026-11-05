@@ -371,7 +371,8 @@
     "AUDIO": "Audio",
     "DOCUMENT": "Document",
     "OTHER": "Other",
-    "imageAlt": "Evidence: {name}"
+    "imageAlt": "Evidence: {name}",
+    "genericName": "attachment-{index}.{ext}"
   },
   "Timeline": {
     "title": "Activity Timeline",
@@ -578,5 +579,11 @@
     "anonymity": "Anonymity",
     "anonymityDesc": "We do not request identification. Only use the tracking code.",
     "rights": "© {year} Anonymous Reporting System. All rights reserved."
+  },
+  "Upload": {
+    "invalidType": "File type not allowed.",
+    "fileTooLarge": "The file exceeds the 10MB size limit.",
+    "metadataStripFailed": "Could not remove the image metadata. For your safety, the file was not uploaded. Try another image or submit without an attachment.",
+    "uploadFailed": "Error uploading files."
   }
 }

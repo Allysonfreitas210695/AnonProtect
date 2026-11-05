@@ -8,11 +8,11 @@ import { checkUploadRateLimit } from '@/_shared/lib/ratelimit'
 import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { logger } from '@/_shared/lib/logger'
 import { actionClient } from '@/_shared/utils/safe-action'
-import { uploadSchema } from '@/_schemas/upload'
+import { buildEvidenceKey, uploadSchema } from '@/_schemas/upload'
 
 export const getPresignedUrlAction = actionClient
   .schema(uploadSchema)
-  .action(async ({ parsedInput: { fileName, fileType } }) => {
+  .action(async ({ parsedInput: { fileType } }) => {
     const hdrs = await headers()
     const ip = getClientIp(hdrs)
     const { success: rateLimitOk } = await checkUploadRateLimit(ip)
@@ -26,7 +26,7 @@ export const getPresignedUrlAction = actionClient
       throw new Error('S3 Client not configured')
     }
 
-    const key = `evidence/${Date.now()}-${fileName}`
+    const key = buildEvidenceKey(fileType)
     const command = new PutObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key,
