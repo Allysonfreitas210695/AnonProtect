@@ -7,6 +7,7 @@ import { Badge } from '@/_components/ui/badge'
 import { FileText, Image as ImageIcon, Video, Music, Download } from 'lucide-react'
 import { Button } from '@/_components/ui/button'
 import NextImage from 'next/image'
+import { resolveAttachmentCategory } from '@/_shared/utils/attachment-category'
 
 interface EvidenceGalleryProps {
   attachments: Attachment[]
@@ -32,7 +33,7 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
 
   const evidenceByCategory = attachments.reduce(
     (acc, attachment) => {
-      const category = attachment.category
+      const category = resolveAttachmentCategory(attachment)
       if (!acc[category]) {
         acc[category] = []
       }
@@ -146,12 +147,12 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
                 >
                   <div className="flex items-start gap-3">
                     <div className="bg-primary/10 rounded-lg p-2">
-                      {getIconByCategory(attachment.category)}
+                      {getIconByCategory(resolveAttachmentCategory(attachment))}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="mb-1 flex items-center gap-2">
                         <Badge variant="outline" className="text-xs">
-                          {t(attachment.category)}
+                          {t(resolveAttachmentCategory(attachment))}
                         </Badge>
                       </div>
                       <p
@@ -185,7 +186,7 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
                   </div>
 
                   {/* Preview for images */}
-                  {attachment.category === AttachmentCategory.PHOTO && (
+                  {resolveAttachmentCategory(attachment) === AttachmentCategory.PHOTO && (
                     <div className="relative mt-3 h-40 w-full overflow-hidden rounded-lg">
                       <NextImage
                         src={attachment.url}

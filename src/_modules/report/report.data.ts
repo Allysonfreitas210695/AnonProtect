@@ -3,6 +3,7 @@ import { analyzeReport } from '@/_shared/lib/ai'
 import { logger } from '@/_shared/lib/logger'
 import { getCategories } from './report.query'
 import { encrypt } from '@/_shared/lib/crypto'
+import { getAttachmentCategory } from '@/_shared/utils/attachment-category'
 import type { $Enums } from '@/_generated/prisma'
 
 export interface CreateReportData {
@@ -42,6 +43,7 @@ export async function createReport(data: CreateReportData) {
               fileName: a.fileName,
               fileSize: a.fileSize,
               type: a.type,
+              category: getAttachmentCategory(a.type),
             })),
           }
         : undefined,
