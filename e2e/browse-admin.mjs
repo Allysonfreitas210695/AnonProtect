@@ -32,7 +32,9 @@ async function pause(ms = 1000) {
 
 // 1. Login
 console.log('\n🔐 1. Logando como admin...')
-await page.goto('http://127.0.0.1:3000/pt-BR/login', { waitUntil: 'load' })
+await page.goto(`${process.env.E2E_BASE_URL ?? 'http://127.0.0.1:3100'}/pt-BR/login`, {
+  waitUntil: 'load',
+})
 await snap('01-login')
 
 await page.fill('input[name="email"]', 'admin@sistema.com')
@@ -44,7 +46,10 @@ await snap('02-dashboard')
 
 // 2. Reports list
 console.log('\n📋 2. Navegando para lista de denúncias...')
-await page.getByRole('link', { name: /denúncias/i }).first().click()
+await page
+  .getByRole('link', { name: /denúncias/i })
+  .first()
+  .click()
 await page.waitForURL(/\/pt-BR\/admin\/report/, { timeout: 10000 })
 await pause(2000)
 await snap('03-lista-denuncias')
@@ -63,7 +68,10 @@ if (await detailsLink.isVisible()) {
 
 // 4. Profile page
 console.log('\n👤 4. Acessando perfil...')
-await page.getByRole('link', { name: /meu perfil|perfil/i }).first().click()
+await page
+  .getByRole('link', { name: /meu perfil|perfil/i })
+  .first()
+  .click()
 await page.waitForURL(/\/pt-BR\/admin\/profile/, { timeout: 10000 })
 await pause(2000)
 await snap('05-perfil')

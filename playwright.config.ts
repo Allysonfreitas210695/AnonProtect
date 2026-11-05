@@ -1,4 +1,20 @@
+import 'dotenv/config'
 import { defineConfig, devices } from '@playwright/test'
+
+// E2E nunca roda contra o banco de produção: exige um banco próprio (ex.: branch de teste na Neon)
+const e2eDatabaseUrl = process.env.E2E_DATABASE_URL
+if (!e2eDatabaseUrl) {
+  throw new Error(
+    'Defina E2E_DATABASE_URL apontando para um banco de teste (nunca o de produção) antes de rodar o E2E.'
+  )
+}
+if (process.env.DATABASE_URL && e2eDatabaseUrl === process.env.DATABASE_URL) {
+  throw new Error('E2E_DATABASE_URL não pode ser igual a DATABASE_URL.')
+}
+
+// Porta própria para não reaproveitar um `npm run dev` comum, que usa o .env de produção
+const PORT = 3100
+const BASE_URL = `http://localhost:${PORT}`
 
 export default defineConfig({
   testDir: './e2e',
@@ -9,7 +25,7 @@ export default defineConfig({
   timeout: 60000,
   reporter: 'line',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: BASE_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
@@ -20,9 +36,13 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    command: `npx next dev -p ${PORT}`,
+    url: BASE_URL,
+    reuseExistingServer: false,
     timeout: 120000,
+    // Variáveis do processo têm precedência sobre o .env no Next.js
+    env: {
+      DATABASE_URL: e2eDatabaseUrl,
+    },
   },
 })
