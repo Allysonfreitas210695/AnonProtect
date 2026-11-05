@@ -317,11 +317,6 @@
     "subtitle": "View your report's status and history below",
     "history": "Communication & History"
   },
-  "RateLimit": {
-    "title": "Too Many Requests",
-    "description": "You have reached the request limit. Please try again in a few moments.",
-    "back": "Back to Home"
-  },
   "Status": {
     "PENDING": "Pending",
     "IN_PROGRESS": "In Analysis",

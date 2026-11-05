@@ -1,3 +1,5 @@
+import { createHmac, randomBytes } from 'node:crypto'
+
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
@@ -11,6 +13,37 @@ const redis =
       })
     : null
 
+let cachedKey: Buffer | null = null
+
+function getRateLimitKey(): Buffer {
+  if (cachedKey) return cachedKey
+
+  const secret = process.env.RATE_LIMIT_SECRET
+  if (secret && secret.length >= 64 && secret.length % 2 === 0 && /^[0-9a-fA-F]+$/.test(secret)) {
+    cachedKey = Buffer.from(secret, 'hex')
+    return cachedKey
+  }
+
+  if (process.env.AUTH_SECRET) {
+    // Separação de domínio: a chave nunca é o AUTH_SECRET cru
+    cachedKey = createHmac('sha256', process.env.AUTH_SECRET)
+      .update('anonprotect-ratelimit-v1')
+      .digest()
+    logger.warn('RATE_LIMIT_SECRET ausente ou inválido; derivando chave de AUTH_SECRET')
+  } else {
+    cachedKey = randomBytes(32)
+    logger.warn(
+      'RATE_LIMIT_SECRET e AUTH_SECRET ausentes; usando chave aleatória por processo no rate limit'
+    )
+  }
+  return cachedKey
+}
+
+/** Transforma o identificador (IP) em HMAC-SHA256 hex antes de sair do processo. */
+export function hashIdentifier(identifier: string): string {
+  return createHmac('sha256', getRateLimitKey()).update(identifier).digest('hex')
+}
+
 /**
  * Limitador de taxa para submissão de denúncias.
  * Configurado para 10 denúncias por IP por hora, conforme o roadmap.
@@ -19,7 +52,7 @@ export const reportRateLimit = redis
   ? new Ratelimit({
       redis: redis,
       limiter: Ratelimit.slidingWindow(10, '1 h'),
-      analytics: true,
+      analytics: false,
       prefix: 'anonprotect_ratelimit',
     })
   : null
@@ -27,7 +60,7 @@ export const reportRateLimit = redis
 /**
  * Verifica se a requisição deve ser limitada.
  *
- * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
  */
 export async function checkRateLimit(identifier: string) {
@@ -36,7 +69,7 @@ export async function checkRateLimit(identifier: string) {
   }
 
   try {
-    return await reportRateLimit.limit(identifier)
+    return await reportRateLimit.limit(hashIdentifier(identifier))
   } catch (err) {
     logger.error({ err }, 'Rate limit check failed, failing open')
     return { success: true, limit: 0, remaining: 0, reset: 0 }
@@ -52,7 +85,7 @@ export const messageRateLimit = redis
   ? new Ratelimit({
       redis: redis,
       limiter: Ratelimit.slidingWindow(10, '1 m'),
-      analytics: true,
+      analytics: false,
       prefix: 'anonprotect_message_ratelimit',
     })
   : null
@@ -60,7 +93,7 @@ export const messageRateLimit = redis
 /**
  * Verifica se o envio de mensagem deve ser limitado.
  *
- * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
  */
 export async function checkMessageRateLimit(identifier: string) {
@@ -69,7 +102,7 @@ export async function checkMessageRateLimit(identifier: string) {
   }
 
   try {
-    return await messageRateLimit.limit(identifier)
+    return await messageRateLimit.limit(hashIdentifier(identifier))
   } catch (err) {
     logger.error({ err }, 'Rate limit check failed, failing open')
     return { success: true, limit: 0, remaining: 0, reset: 0 }
@@ -86,7 +119,7 @@ export const uploadRateLimit = redis
   ? new Ratelimit({
       redis: redis,
       limiter: Ratelimit.slidingWindow(20, '1 h'),
-      analytics: true,
+      analytics: false,
       prefix: 'anonprotect_upload_ratelimit',
     })
   : null
@@ -94,7 +127,7 @@ export const uploadRateLimit = redis
 /**
  * Verifica se a geração de URL de upload deve ser limitada.
  *
- * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
  */
 export async function checkUploadRateLimit(identifier: string) {
@@ -103,7 +136,7 @@ export async function checkUploadRateLimit(identifier: string) {
   }
 
   try {
-    return await uploadRateLimit.limit(identifier)
+    return await uploadRateLimit.limit(hashIdentifier(identifier))
   } catch (err) {
     logger.error({ err }, 'Rate limit check failed, failing open')
     return { success: true, limit: 0, remaining: 0, reset: 0 }
@@ -119,7 +152,7 @@ export const loginRateLimit = redis
   ? new Ratelimit({
       redis: redis,
       limiter: Ratelimit.slidingWindow(10, '15 m'),
-      analytics: true,
+      analytics: false,
       prefix: 'anonprotect_login_ratelimit',
     })
   : null
@@ -127,7 +160,7 @@ export const loginRateLimit = redis
 /**
  * Verifica se a tentativa de login deve ser limitada.
  *
- * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
  */
 export async function checkLoginRateLimit(identifier: string) {
@@ -136,7 +169,7 @@ export async function checkLoginRateLimit(identifier: string) {
   }
 
   try {
-    return await loginRateLimit.limit(identifier)
+    return await loginRateLimit.limit(hashIdentifier(identifier))
   } catch (err) {
     logger.error({ err }, 'Rate limit check failed, failing open')
     return { success: true, limit: 0, remaining: 0, reset: 0 }
@@ -161,7 +194,7 @@ export const trackingRateLimit = redis
 /**
  * Verifica se a consulta pelo código de rastreamento deve ser limitada.
  *
- * @param {string} identifier - Geralmente o endereço IP do usuário.
+ * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
  */
 export async function checkTrackingRateLimit(identifier: string) {
@@ -170,7 +203,7 @@ export async function checkTrackingRateLimit(identifier: string) {
   }
 
   try {
-    return await trackingRateLimit.limit(identifier)
+    return await trackingRateLimit.limit(hashIdentifier(identifier))
   } catch (err) {
     logger.error({ err }, 'Rate limit check failed, failing open')
     return { success: true, limit: 0, remaining: 0, reset: 0 }

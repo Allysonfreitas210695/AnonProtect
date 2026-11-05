@@ -317,11 +317,6 @@
     "subtitle": "Vea abajo el estado e historial de su denuncia",
     "history": "Comunicación e Historial"
   },
-  "RateLimit": {
-    "title": "Demasiadas solicitudes",
-    "description": "Ha alcanzado el límite de solicitudes. Por favor, inténtelo nuevamente en unos instantes.",
-    "back": "Volver al Inicio"
-  },
   "Status": {
     "PENDING": "Pendiente",
     "IN_PROGRESS": "En Análisis",
