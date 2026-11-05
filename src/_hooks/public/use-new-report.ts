@@ -27,7 +27,7 @@ export function useNewReport() {
     },
   })
 
-  const { handleCepLookup } = useCepLookup(form)
+  const { handleCepLookup, cepFilled } = useCepLookup(form)
 
   const { execute, isExecuting: isSubmitting } = useAction(submitReportAction, {
     onSuccess: ({ data }) => {
@@ -63,5 +63,6 @@ export function useNewReport() {
     isUploading,
     isSubmitting,
     handleCepLookup,
+    cepFilled,
   }
 }

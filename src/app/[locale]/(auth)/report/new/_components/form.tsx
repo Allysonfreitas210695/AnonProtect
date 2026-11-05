@@ -38,7 +38,8 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const isLockedToBrazil = locale === 'pt-BR'
   const [files, setFiles] = useState<File[]>([])
   const [noNumber, setNoNumber] = useState(false)
-  const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup } = useNewReport()
+  const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup, cepFilled } =
+    useNewReport()
 
   const selectedCountry = form.watch('country')
   const isBrazil = isLockedToBrazil || selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
@@ -216,7 +217,11 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                          <Input
+                            {...field}
+                            className="h-11"
+                            readOnly={isBrazil && cepFilled.city}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -232,7 +237,11 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                          <Input
+                            {...field}
+                            className="h-11"
+                            readOnly={isBrazil && cepFilled.state}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -283,7 +292,11 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-11" readOnly={isBrazil && !!field.value} />
+                          <Input
+                            {...field}
+                            className="h-11"
+                            readOnly={isBrazil && cepFilled.district}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
