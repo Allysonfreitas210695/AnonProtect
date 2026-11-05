@@ -3,11 +3,19 @@ import { generateTrackingCode } from './tracking'
 
 describe('tracking', () => {
   describe('generateTrackingCode', () => {
-    it('should generate a code in the format AP-YYYY-XXXX', () => {
+    it('should generate a code in the format AP-YYYY-XXXX-XXXX-XXXX-XXXX', () => {
       const code = generateTrackingCode()
       const year = new Date().getFullYear().toString()
-      const regex = new RegExp(`^AP-${year}-[A-Z0-9]{4}$`)
+      const regex = new RegExp(`^AP-${year}-[2-9A-HJ-NP-Z]{4}(-[2-9A-HJ-NP-Z]{4}){3}$`)
       expect(code).toMatch(regex)
+    })
+
+    it('should not contain ambiguous characters (0, 1, I, L, O)', () => {
+      for (let i = 0; i < 100; i++) {
+        const code = generateTrackingCode()
+        const randomPart = code.split('-').slice(2).join('')
+        expect(randomPart).not.toMatch(/[01ILO]/)
+      }
     })
 
     it('should generate unique codes', () => {

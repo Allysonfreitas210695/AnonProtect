@@ -20,17 +20,18 @@ describe('validators', () => {
 
   describe('isValidTrackingCode', () => {
     it('should return true for valid AP tracking codes', () => {
-      expect(isValidTrackingCode('AP-2024-AB12')).toBe(true)
-      expect(isValidTrackingCode('AP-2026-XY9Z')).toBe(true)
-      expect(isValidTrackingCode('AP-2099-ZZZZ')).toBe(true)
-      expect(isValidTrackingCode('AP-2024-XXXX')).toBe(true)
+      expect(isValidTrackingCode('AP-2026-ABCD-EFGH-JKMN-PQRS')).toBe(true)
+      expect(isValidTrackingCode('AP-2026-XY9Z-2345-789A-BCDE')).toBe(true)
+      expect(isValidTrackingCode('AP-2099-ZZZZ-ZZZZ-ZZZZ-ZZZZ')).toBe(true)
+      expect(isValidTrackingCode('AP-2024-XXXX-XXXX-XXXX-XXXX')).toBe(true)
     })
 
     it('should return false for invalid tracking codes', () => {
       expect(isValidTrackingCode('RPT-ABC123')).toBe(false)
+      expect(isValidTrackingCode('AP-2024-AB12')).toBe(false)
       expect(isValidTrackingCode('AP-2024-ABC')).toBe(false)
       expect(isValidTrackingCode('AP-24-ABCD')).toBe(false)
-      expect(isValidTrackingCode('ap-2024-AB12')).toBe(false)
+      expect(isValidTrackingCode('ap-2024-abcd-efgh-jkmn-pqrs')).toBe(false)
       expect(isValidTrackingCode('')).toBe(false)
     })
   })
