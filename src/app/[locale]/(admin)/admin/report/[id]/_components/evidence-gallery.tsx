@@ -51,6 +51,10 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
     others: evidenceByCategory[AttachmentCategory.OTHER]?.length || 0,
   }
 
+  // Registros antigos guardam o nome original: exibir sempre nome genérico
+  const getDisplayName = (attachment: Attachment, index: number) =>
+    t('genericName', { index: index + 1, ext: attachment.key.match(/\.([a-z0-9]+)$/i)?.[1] ?? '' })
+
   const formatFileSize = (bytes?: number) => {
     if (!bytes) return t('unknownSize')
     const kb = bytes / 1024
@@ -133,59 +137,67 @@ export function EvidenceGallery({ attachments }: EvidenceGalleryProps) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {attachments.map((attachment) => (
-              <div
-                key={attachment.id}
-                className="hover:bg-muted/50 rounded-lg border p-4 transition-colors"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="bg-primary/10 rounded-lg p-2">
-                    {getIconByCategory(attachment.category)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="mb-1 flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">
-                        {t(attachment.category)}
-                      </Badge>
+            {attachments.map((attachment, index) => {
+              const displayName = getDisplayName(attachment, index)
+              return (
+                <div
+                  key={attachment.id}
+                  className="hover:bg-muted/50 rounded-lg border p-4 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary/10 rounded-lg p-2">
+                      {getIconByCategory(attachment.category)}
                     </div>
-                    <p
-                      className="truncate text-sm font-medium print:text-black"
-                      title={attachment.fileName}
-                    >
-                      {attachment.fileName}
-                    </p>
-                    {attachment.description && (
-                      <p className="text-muted-foreground mt-1 text-xs print:text-black">
-                        {attachment.description}
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <Badge variant="outline" className="text-xs">
+                          {t(attachment.category)}
+                        </Badge>
+                      </div>
+                      <p
+                        className="truncate text-sm font-medium print:text-black"
+                        title={displayName}
+                      >
+                        {displayName}
                       </p>
-                    )}
-                    <div className="mt-2 flex items-center justify-between">
-                      <p className="text-muted-foreground text-xs">
-                        {formatFileSize(attachment.fileSize || undefined)}
-                      </p>
-                      <Button size="sm" variant="ghost" asChild className="h-8">
-                        <a href={attachment.url} target="_blank" rel="noopener noreferrer" download>
-                          <Download className="mr-1 h-3 w-3" />
-                          {t('download')}
-                        </a>
-                      </Button>
+                      {attachment.description && (
+                        <p className="text-muted-foreground mt-1 text-xs print:text-black">
+                          {attachment.description}
+                        </p>
+                      )}
+                      <div className="mt-2 flex items-center justify-between">
+                        <p className="text-muted-foreground text-xs">
+                          {formatFileSize(attachment.fileSize || undefined)}
+                        </p>
+                        <Button size="sm" variant="ghost" asChild className="h-8">
+                          <a
+                            href={attachment.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            download
+                          >
+                            <Download className="mr-1 h-3 w-3" />
+                            {t('download')}
+                          </a>
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Preview for images */}
-                {attachment.category === AttachmentCategory.PHOTO && (
-                  <div className="relative mt-3 h-40 w-full overflow-hidden rounded-lg">
-                    <NextImage
-                      src={attachment.url}
-                      alt={t('imageAlt', { name: attachment.fileName })}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
+                  {/* Preview for images */}
+                  {attachment.category === AttachmentCategory.PHOTO && (
+                    <div className="relative mt-3 h-40 w-full overflow-hidden rounded-lg">
+                      <NextImage
+                        src={attachment.url}
+                        alt={t('imageAlt', { name: displayName })}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </CardContent>
       </Card>
