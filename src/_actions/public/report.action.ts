@@ -76,7 +76,7 @@ export const submitReportAction = actionClient
       } catch (e: any) {
         if (e.code === 'P2002') {
           attempts++
-          logger.warn({ trackingCode }, 'Colisão de código de rastreamento, tentando novamente...')
+          logger.warn({ attempts }, 'Colisão de código de rastreamento, tentando novamente...')
         } else {
           throw e
         }
@@ -87,7 +87,7 @@ export const submitReportAction = actionClient
       throw new Error('Falha ao gerar código de rastreamento único. Tente novamente.')
     }
 
-    logger.info({ trackingCode, reportId: report.id }, 'Denúncia registrada com sucesso')
+    logger.info({ reportId: report.id }, 'Denúncia registrada com sucesso')
 
     await triggerAiAnalysis(report.id, parsedInput.description, parsedInput.country || 'Brasil')
 
