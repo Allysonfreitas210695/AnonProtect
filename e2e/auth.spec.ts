@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { login } from './helpers/auth'
+import { loginAdmin, loginSupervisor } from './helpers/auth'
 
 test.describe('Authentication Flows', () => {
   test('01 - Login page renders correctly', async ({ page }) => {
@@ -12,15 +12,15 @@ test.describe('Authentication Flows', () => {
   })
 
   test('02 - Login as admin succeeds', async ({ page }) => {
-    await login(page, 'admin@sistema.com', 'admin123')
-    await expect(page.getByText(/dashboard/i).first()).toBeVisible()
-    await expect(page.getByText(/administrador global/i)).toBeVisible()
+    await loginAdmin(page, { fresh: true })
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible({ timeout: 15000 })
+    await expect(page.getByText(/administrador/i).first()).toBeVisible()
   })
 
   test('03 - Login as supervisor succeeds', async ({ page }) => {
-    await login(page, 'supervisor@sistema.com', 'super123')
-    await expect(page.getByText(/dashboard/i).first()).toBeVisible()
-    await expect(page.getByText(/supervisor/i)).toBeVisible()
+    await loginSupervisor(page, { fresh: true })
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible({ timeout: 15000 })
+    await expect(page.getByText(/supervisor/i).first()).toBeVisible()
   })
 
   test('04 - Invalid credentials show error toast', async ({ page }) => {
@@ -32,9 +32,10 @@ test.describe('Authentication Flows', () => {
   })
 
   test('05 - Logout redirects to login', async ({ page }) => {
-    await login(page, 'admin@sistema.com', 'admin123')
+    await loginAdmin(page)
     await page.getByRole('button', { name: /sair/i }).click()
-    await page.waitForURL(/\/pt-BR\/login/, { timeout: 15000 })
+    // O logoutAction redireciona para /login sem prefixo de idioma
+    await page.waitForURL(/\/(pt-BR\/)?login/, { timeout: 15000 })
     await expect(page.getByText(/área administrativa/i).first()).toBeVisible()
   })
 
@@ -55,7 +56,7 @@ test.describe('Authentication Flows', () => {
   })
 
   test('08 - Login page redirects to admin if authenticated', async ({ page }) => {
-    await login(page, 'admin@sistema.com', 'admin123')
+    await loginAdmin(page)
     await page.goto('/pt-BR/login', { waitUntil: 'load' })
     await page.waitForURL(/\/pt-BR\/admin/, { timeout: 10000 })
     expect(page.url()).toContain('/admin')

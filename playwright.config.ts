@@ -43,6 +43,8 @@ export default defineConfig({
     // Variáveis do processo têm precedência sobre o .env no Next.js
     env: {
       DATABASE_URL: e2eDatabaseUrl,
+      // O redirecionamento pós-login do Auth.js usa AUTH_URL; sem isso ele aponta para a porta do .env
+      AUTH_URL: BASE_URL,
       // Chaves de teste oficiais do Cloudflare Turnstile (sempre aprovam); nunca usar em produção.
       // https://developers.cloudflare.com/turnstile/troubleshooting/testing/
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: '1x00000000000000000000AA',

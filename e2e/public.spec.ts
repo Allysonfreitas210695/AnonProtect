@@ -13,16 +13,18 @@ test.describe('Public Pages', () => {
   })
 
   test('02 - How it works page', async ({ page }) => {
-    await page.goto('/how-it-works', { waitUntil: 'load' })
-    await expect(page.getByText(/como funciona|how it works/i)).toBeVisible()
+    await page.goto('/pt-BR/how-it-works', { waitUntil: 'load' })
     await expect(
-      page.getByRole('link', { name: /fazer denúncia|make report/i }).first()
+      page.getByRole('heading', { level: 1, name: 'Como o AnonProtect funciona' })
+    ).toBeVisible()
+    await expect(
+      page.getByRole('link', { name: /fazer uma denúncia agora/i }).first()
     ).toBeVisible()
   })
 
   test('03 - Privacy policy page', async ({ page }) => {
-    await page.goto('/privacy-policy', { waitUntil: 'load' })
-    await expect(page.getByText(/privacidade|privacy/i)).toBeVisible()
+    await page.goto('/pt-BR/privacy-policy', { waitUntil: 'load' })
+    await expect(page.getByRole('heading', { level: 1, name: /privacidade/i })).toBeVisible()
   })
 
   test('04 - Terms of service page', async ({ page }) => {

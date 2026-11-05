@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test'
-import { expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 export interface SubmitReportOptions {
   description?: string
@@ -12,6 +12,13 @@ export async function submitReportViaForm(
   page: Page,
   opts: SubmitReportOptions = {}
 ): Promise<string> {
+  // Em produção o Turnstile usa as chaves reais e recusa navegadores automatizados;
+  // esses fluxos são executados localmente (chaves de teste) ou manualmente.
+  test.skip(
+    process.env.E2E_TARGET === 'production',
+    'Envio de denúncia exige verificação humana do Turnstile em produção'
+  )
+
   await page.goto('/pt-BR/report/new', { waitUntil: 'load' })
 
   await page.getByRole('combobox').first().click()
@@ -30,6 +37,16 @@ export async function submitReportViaForm(
   await page
     .getByLabel(/Autorizo o processamento da minha denúncia por Inteligência Artificial/)
     .click()
+
+  // Aguarda o token do Turnstile (instantâneo com a chave de teste; em produção pode exigir clique)
+  await page.waitForFunction(
+    () => {
+      const el = document.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]')
+      return !el || el.value.length > 0
+    },
+    undefined,
+    { timeout: 180000 }
+  )
 
   await page.getByRole('button', { name: 'Enviar Denúncia' }).click()
 

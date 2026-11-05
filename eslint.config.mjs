@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     'build/**',
     'next-env.d.ts',
     'src/_generated/**',
+    // Cópias de revisão das alterações (não fazem parte do build)
+    'alteracoes-*/**',
   ]),
 ])
 

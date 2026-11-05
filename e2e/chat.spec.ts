@@ -20,7 +20,9 @@ test.describe('Chat Round Trip (Whistleblower <-> Admin)', () => {
       await anonPage.goto(`/pt-BR/report/${trackingCode}`, { waitUntil: 'load' })
       await anonPage.getByPlaceholder('Digite sua mensagem...').fill(anonMessage)
       await anonPage.getByRole('button', { name: 'Enviar' }).click()
-      await expect(anonPage.getByText(anonMessage)).toBeVisible({ timeout: 15000 })
+      await expect(anonPage.getByText(anonMessage).filter({ visible: true }).first()).toBeVisible({
+        timeout: 15000,
+      })
 
       await loginAdmin(adminPage)
       await adminPage
@@ -41,15 +43,21 @@ test.describe('Chat Round Trip (Whistleblower <-> Admin)', () => {
       await detailsLink.click()
       await adminPage.waitForURL(/\/pt-BR\/admin\/report\//, { timeout: 10000 })
 
-      await expect(adminPage.getByText(anonMessage)).toBeVisible({ timeout: 15000 })
+      await expect(adminPage.getByText(anonMessage).filter({ visible: true }).first()).toBeVisible({
+        timeout: 15000,
+      })
 
       const adminReply = `Resposta do admin ${Date.now()}`
       await adminPage.getByPlaceholder('Responder como Admin...').fill(adminReply)
       await adminPage.getByRole('button', { name: 'Enviar' }).click()
-      await expect(adminPage.getByText(adminReply)).toBeVisible({ timeout: 15000 })
+      await expect(adminPage.getByText(adminReply).filter({ visible: true }).first()).toBeVisible({
+        timeout: 15000,
+      })
 
       await anonPage.reload({ waitUntil: 'load' })
-      await expect(anonPage.getByText(adminReply)).toBeVisible({ timeout: 15000 })
+      await expect(anonPage.getByText(adminReply).filter({ visible: true }).first()).toBeVisible({
+        timeout: 15000,
+      })
     } finally {
       await anonContext.close()
       await adminContext.close()

@@ -14,7 +14,9 @@ test.describe('Admin - Settings & Profile', () => {
         .first()
         .click()
       await page.waitForURL(/\/pt-BR\/admin\/settings/, { timeout: 10000 })
-      await expect(page.getByText(/nova categoria/i)).toBeVisible({ timeout: 10000 })
+      await expect(page.getByText('Nova Categoria', { exact: true })).toBeVisible({
+        timeout: 10000,
+      })
       await expect(page.getByText(/categorias cadastradas/i)).toBeVisible()
     })
 

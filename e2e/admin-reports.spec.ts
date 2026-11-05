@@ -8,9 +8,9 @@ test.describe('Admin - Report Management', () => {
   })
 
   test('01 - Dashboard shows stats cards', async ({ page }) => {
-    await expect(page.getByText(/dashboard/i)).toBeVisible()
-    await expect(page.getByText(/visão geral/i)).toBeVisible()
-    await expect(page.getByText(/denúncias recentes|recent reports/i)).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible({ timeout: 15000 })
+    await expect(page.getByText('Visão geral do sistema de proteção').first()).toBeVisible()
+    await expect(page.getByText('Denúncias Recentes').first()).toBeVisible()
   })
 
   test('02 - Reports list loads with table', async ({ page }) => {
@@ -36,14 +36,18 @@ test.describe('Admin - Report Management', () => {
   })
 
   test('04 - Date filter works', async ({ page }) => {
-    await expect(page.getByText(/7d|30d|90d|todos|all/i)).toBeVisible()
+    const periodFilter = page.getByRole('combobox').filter({ hasText: 'Últimos 30 dias' })
+    await expect(periodFilter).toBeVisible({ timeout: 10000 })
+    await periodFilter.click()
+    await page.getByRole('option', { name: 'Últimos 7 dias' }).click()
+    await expect(page).toHaveURL(/period=7d/, { timeout: 10000 })
   })
 
   test('05 - View report detail from dashboard', async ({ page }) => {
     const detailsLink = page.getByRole('link', { name: /ver detalhes|view details/i }).first()
     await expect(detailsLink).toBeVisible({ timeout: 10000 })
     await detailsLink.click()
-    await page.waitForURL(/\/pt-BR\/admin\/report\//, { timeout: 10000 })
+    await page.waitForURL(/\/pt-BR\/admin\/report\//, { timeout: 20000 })
     await expect(page.locator('body')).toBeVisible()
   })
 

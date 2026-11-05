@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+import { submitReportViaForm } from './helpers/report'
+
 const KNOWN_TRACKING_CODE = 'AP-2025-0001'
 
 test.describe('Report (Whistleblower) Flows', () => {
@@ -13,20 +15,19 @@ test.describe('Report (Whistleblower) Flows', () => {
 
   test('02 - Track report page renders with code input', async ({ page }) => {
     await page.goto('/pt-BR/report/track', { waitUntil: 'load' })
-    await expect(page.getByText(/código|code|código de rastreamento/i)).toBeVisible()
+    await expect(page.getByLabel('Código de Acompanhamento')).toBeVisible()
   })
 
   test('03 - Track report with valid code shows status', async ({ page }) => {
+    // O código é gerado no envio (16 símbolos Base32), então a denúncia é criada aqui
+    const trackingCode = await submitReportViaForm(page)
     await page.goto('/pt-BR/report/track', { waitUntil: 'load' })
-    const input = page.locator('input').first()
+    const input = page.getByLabel('Código de Acompanhamento')
     await expect(input).toBeVisible({ timeout: 10000 })
-    await input.fill(KNOWN_TRACKING_CODE)
-    const trackButton = page.getByRole('button', { name: /consultar|track|buscar/i }).first()
-    await expect(trackButton).toBeVisible()
-    await trackButton.click()
-    await expect(page.getByText(/status|situação|em análise|recebid/i).first()).toBeVisible({
-      timeout: 10000,
-    })
+    await input.fill(trackingCode)
+    await page.getByRole('button', { name: 'Acessar' }).click()
+    await page.waitForURL(new RegExp(`/report/${trackingCode}`), { timeout: 20000 })
+    await expect(page.getByText(/pendente/i).first()).toBeVisible({ timeout: 10000 })
   })
 
   test('04 - Report success page shows tracking code', async ({ page }) => {

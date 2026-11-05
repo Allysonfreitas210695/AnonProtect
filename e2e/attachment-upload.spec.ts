@@ -31,6 +31,8 @@ test.describe('Attachment Upload', () => {
     await detailsLink.click()
     await page.waitForURL(/\/pt-BR\/admin\/report\//, { timeout: 10000 })
 
-    await expect(page.getByText('evidence.pdf')).toBeVisible({ timeout: 15000 })
+    // O anexo é exibido com nome genérico; o nome original do arquivo não é preservado
+    await expect(page.getByText(/anexo-1\.pdf/).first()).toBeVisible({ timeout: 15000 })
+    await expect(page.getByText('evidence.pdf')).toHaveCount(0)
   })
 })
