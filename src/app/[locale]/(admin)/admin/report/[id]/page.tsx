@@ -194,7 +194,9 @@ export default async function AdminReportPage({ params }: Props) {
 
         {/* Report Identification */}
         <section className="mb-8 border-b-2 border-dashed border-gray-200 pb-8">
-          <h1 className="mb-4 text-3xl font-black">Denuncia #{report.trackingCode}</h1>
+          <h1 className="mb-4 text-2xl font-black wrap-break-word">
+            Denuncia #{report.trackingCode}
+          </h1>
           <div className="grid grid-cols-2 gap-y-4">
             <div>
               <div className="text-[10px] font-black text-gray-500 uppercase">Categoría</div>

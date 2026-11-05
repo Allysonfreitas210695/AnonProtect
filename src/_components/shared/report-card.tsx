@@ -45,7 +45,7 @@ export function ReportCard({
     <Card className="bg-card/40 ring-border/50 relative overflow-hidden border-none shadow-sm ring-1 backdrop-blur-md transition-all duration-300 hover:shadow-lg print:bg-white print:shadow-none print:ring-0">
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-4">
-          <CardTitle className="text-foreground text-2xl font-black tracking-tighter lg:text-3xl">
+          <CardTitle className="text-foreground min-w-0 text-xl font-black tracking-tighter wrap-break-word sm:text-2xl lg:text-3xl">
             {t('title', { code: report.trackingCode })}
           </CardTitle>
           {showStatus && (
