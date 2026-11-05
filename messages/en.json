@@ -309,7 +309,8 @@
     "communicationTitle": "Communication with Whistleblower",
     "evidence": "Evidence",
     "activityTimeline": "Activities",
-    "investigationNotes": "Investigation Notes"
+    "investigationNotes": "Investigation Notes",
+    "pendingAnonymizationPrint": "Awaiting anonymization — original text protected."
   },
   "Tracking": {
     "title": "Report Tracking",
@@ -411,7 +412,11 @@
     "description": "Occurrence Description",
     "protectedByLgpd": "Protected by LGPD",
     "showOriginal": "Show Original",
-    "hideOriginal": "Hide Original"
+    "hideOriginal": "Hide Original",
+    "pendingAnonymization": "Awaiting anonymization",
+    "pendingAnonymizationHint": "The original text remains encrypted and will only be shown after automatic anonymization.",
+    "retryAnonymization": "Retry anonymization",
+    "retryingAnonymization": "Anonymizing..."
   },
   "Sidebar": {
     "dashboard": "Dashboard",

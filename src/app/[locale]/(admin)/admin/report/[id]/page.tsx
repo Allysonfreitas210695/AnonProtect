@@ -15,6 +15,7 @@ import { Card, CardContent } from '@/_components/ui/card'
 import { MessageList } from '@/_components/shared/message-list'
 import { AdminMessageForm } from './_components/admin-message-form'
 import { AdminPrintButton } from './_components/admin-print-button'
+import { RetryAnonymizationButton } from './_components/retry-anonymization-button'
 import { Logo } from '@/_components/shared/logo'
 import { getReportById } from '@/_modules/admin/admin.query'
 import { logReportView } from '@/_modules/admin/admin.data'
@@ -81,7 +82,12 @@ export default async function AdminReportPage({ params }: Props) {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-8 lg:col-span-2">
-            <ReportCard report={report} showStatus={false}>
+            <ReportCard
+              variant="admin"
+              report={report}
+              showStatus={false}
+              pendingAction={<RetryAnonymizationButton reportId={report.id} />}
+            >
               <div className="grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-3">
                 <div>
                   <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
@@ -215,7 +221,7 @@ export default async function AdminReportPage({ params }: Props) {
               Descrição da Ocorrência
             </div>
             <div className="rounded border bg-gray-50/50 p-4 text-sm leading-relaxed whitespace-pre-wrap">
-              {report.description}
+              {report.redactedDescription ?? t('pendingAnonymizationPrint')}
             </div>
           </div>
         </section>

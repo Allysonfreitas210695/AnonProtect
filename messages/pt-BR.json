@@ -309,7 +309,8 @@
     "communicationTitle": "Comunicação com Denunciante",
     "evidence": "Evidências",
     "activityTimeline": "Atividades",
-    "investigationNotes": "Notas de Investigação"
+    "investigationNotes": "Notas de Investigação",
+    "pendingAnonymizationPrint": "Aguardando anonimização — texto original protegido."
   },
   "Tracking": {
     "title": "Acompanhamento de Denúncia",
@@ -411,7 +412,11 @@
     "description": "Descrição da Ocorrência",
     "protectedByLgpd": "Protegido pela LGPD",
     "showOriginal": "Ver Originais",
-    "hideOriginal": "Ocultar Originais"
+    "hideOriginal": "Ocultar Originais",
+    "pendingAnonymization": "Aguardando anonimização",
+    "pendingAnonymizationHint": "O texto original permanece criptografado e só será exibido após a anonimização automática.",
+    "retryAnonymization": "Tentar anonimizar novamente",
+    "retryingAnonymization": "Anonimizando..."
   },
   "Sidebar": {
     "dashboard": "Dashboard",
