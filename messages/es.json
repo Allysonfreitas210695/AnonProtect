@@ -372,7 +372,8 @@
     "AUDIO": "Audio",
     "DOCUMENT": "Documento",
     "OTHER": "Otro",
-    "imageAlt": "Evidencia: {name}"
+    "imageAlt": "Evidencia: {name}",
+    "genericName": "adjunto-{index}.{ext}"
   },
   "Timeline": {
     "title": "Línea de Tiempo de Actividades",
@@ -579,5 +580,11 @@
     "anonymity": "Anonimato",
     "anonymityDesc": "No solicitamos identificación. Use solo el código de seguimiento.",
     "rights": "© {year} Sistema de Denuncias Anónimas. Todos los derechos reservados."
+  },
+  "Upload": {
+    "invalidType": "Tipo de archivo no permitido.",
+    "fileTooLarge": "El archivo supera el tamaño máximo de 10MB.",
+    "metadataStripFailed": "No se pudieron eliminar los metadatos de la imagen. Por seguridad, el archivo no se envió. Prueba con otra imagen o envía sin adjunto.",
+    "uploadFailed": "Error al subir los archivos."
   }
 }

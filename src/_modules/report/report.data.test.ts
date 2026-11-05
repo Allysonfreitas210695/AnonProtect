@@ -81,7 +81,7 @@ describe('report.data', () => {
         trackingCode: 'TR123',
         categoryId: 'cat1',
         description: 'Test report',
-        attachments: [{ url: 'u', key: 'k', fileSize: 10, type: 't' }],
+        attachments: [{ url: 'u', key: 'k', fileName: 'f', fileSize: 10, type: 't' }],
       }
       await createReport(data)
       expect(mockPrisma.report.create).toHaveBeenCalledWith(

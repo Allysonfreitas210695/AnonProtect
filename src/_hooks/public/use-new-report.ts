@@ -42,15 +42,11 @@ export function useNewReport() {
   })
 
   async function onSubmit(values: ReportInput, files?: File[]) {
-    let attachments: {
-      url: string
-      key: string
-      fileName: string
-      fileSize: number
-      type: string
-    }[] = []
+    let attachments: NonNullable<ReportInput['attachments']> = []
     if (files && files.length > 0) {
-      attachments = await uploadFiles(files)
+      const uploaded = await uploadFiles(files)
+      if (!uploaded) return
+      attachments = uploaded
     }
 
     execute({ ...values, attachments })
