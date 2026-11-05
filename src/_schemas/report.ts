@@ -2,6 +2,12 @@ import { z } from 'zod'
 import { ReportStatus } from '@/_generated/prisma'
 import { Report, Category, Message, User } from '@/_generated/prisma'
 import { getBucketHostname } from '@/_shared/lib/aws'
+import {
+  ALLOWED_UPLOAD_MIME_TYPES,
+  EVIDENCE_KEY_REGEX,
+  MAX_UPLOAD_FILE_SIZE,
+  UPLOAD_MIME_EXTENSIONS,
+} from '@/_schemas/upload'
 
 export const reportSchema = z.object({
   categoryId: z.uuid('Selecione uma categoria válida'),
@@ -18,25 +24,41 @@ export const reportSchema = z.object({
   turnstileToken: z.string().optional(),
   attachments: z
     .array(
-      z.object({
-        url: z
-          .string()
-          .url()
-          .refine(
-            (url) => {
-              try {
-                return new URL(url).hostname === getBucketHostname()
-              } catch {
-                return false
-              }
-            },
-            { message: 'URL de anexo inválida' }
-          ),
-        key: z.string(),
-        fileName: z.string(),
-        fileSize: z.number(),
-        type: z.string(),
-      })
+      z
+        .object({
+          url: z
+            .string()
+            .url()
+            .refine(
+              (url) => {
+                try {
+                  return new URL(url).hostname === getBucketHostname()
+                } catch {
+                  return false
+                }
+              },
+              { message: 'URL de anexo inválida' }
+            ),
+          key: z.string().regex(EVIDENCE_KEY_REGEX, 'Chave de anexo inválida'),
+          fileSize: z
+            .number()
+            .positive('Tamanho de arquivo inválido')
+            .max(MAX_UPLOAD_FILE_SIZE, 'Arquivo excede o tamanho máximo permitido (10MB)'),
+          type: z.enum(ALLOWED_UPLOAD_MIME_TYPES, { message: 'Tipo de arquivo não permitido' }),
+        })
+        .refine((a) => a.key.endsWith(`.${UPLOAD_MIME_EXTENSIONS[a.type]}`), {
+          message: 'Extensão do anexo não corresponde ao tipo',
+        })
+        .refine(
+          (a) => {
+            try {
+              return new URL(a.url).pathname === `/${a.key}`
+            } catch {
+              return false
+            }
+          },
+          { message: 'URL de anexo não corresponde à chave' }
+        )
     )
     .optional(),
   acceptTerms: z.boolean().refine((val) => val === true, {

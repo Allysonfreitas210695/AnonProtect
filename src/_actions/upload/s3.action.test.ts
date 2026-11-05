@@ -85,21 +85,30 @@ describe('S3 Upload Action', () => {
     vi.mocked(getSignedUrl).mockResolvedValue(mockUrl as never)
 
     const result = await getPresignedUrlAction({
-      fileName: 'test.jpg',
       fileType: 'image/jpeg',
       fileSize: 1024,
     })
 
     expect(result?.data).toBeDefined()
     expect(result?.data?.url).toBe(mockUrl)
-    expect(result?.data?.key).toContain('evidence/')
-    expect(result?.data?.key).toContain('test.jpg')
+    expect(result?.data?.key).toMatch(/^evidence\/[0-9a-f-]{36}\.jpg$/)
+    expect(result?.data?.key).not.toContain('test')
     expect(result?.data?.publicUrl).toContain('test-bucket.s3.us-east-1.amazonaws.com')
+  })
+
+  it.each([
+    ['image/png', 'png'],
+    ['image/webp', 'webp'],
+    ['image/gif', 'gif'],
+    ['application/pdf', 'pdf'],
+  ] as const)('derives the key extension from mime %s', async (fileType, ext) => {
+    vi.mocked(getSignedUrl).mockResolvedValue('https://x' as never)
+    const result = await getPresignedUrlAction({ fileType, fileSize: 1024 })
+    expect(result?.data?.key).toMatch(new RegExp(`^evidence/[0-9a-f-]{36}\\.${ext}$`))
   })
 
   it('should reject a fileType outside the whitelist', async () => {
     const result = await getPresignedUrlAction({
-      fileName: 'malware.exe',
       fileType: 'application/x-msdownload' as Parameters<
         typeof getPresignedUrlAction
       >[0]['fileType'],
@@ -112,7 +121,6 @@ describe('S3 Upload Action', () => {
 
   it('should reject a fileSize exceeding the max', async () => {
     const result = await getPresignedUrlAction({
-      fileName: 'huge.jpg',
       fileType: 'image/jpeg',
       fileSize: 11 * 1024 * 1024,
     })
@@ -130,7 +138,6 @@ describe('S3 Upload Action', () => {
     })
 
     const result = await getPresignedUrlAction({
-      fileName: 'test.jpg',
       fileType: 'image/jpeg',
       fileSize: 1024,
     })

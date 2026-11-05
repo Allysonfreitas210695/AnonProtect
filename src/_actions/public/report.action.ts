@@ -2,6 +2,7 @@
 
 import { actionClient } from '@/_shared/utils/safe-action'
 import { reportSchema } from '@/_schemas/report'
+import { buildGenericAttachmentName } from '@/_schemas/upload'
 import * as reportData from '@/_modules/report/report.data'
 import { checkRateLimit } from '@/_shared/lib/ratelimit'
 import { getClientIp } from '@/_shared/lib/get-client-ip'
@@ -64,10 +65,10 @@ export const submitReportAction = actionClient
           ...parsedInput,
           description: encryptedDescription,
           trackingCode,
-          attachments: parsedInput.attachments?.map((a) => ({
+          attachments: parsedInput.attachments?.map((a, i) => ({
             url: a.url,
             key: a.key,
-            fileName: a.fileName,
+            fileName: buildGenericAttachmentName(i, a.type),
             fileSize: a.fileSize,
             type: a.type,
           })),
