@@ -75,7 +75,7 @@ Google Gemini (`gemini-2.5-flash`) via `@google/generative-ai`. Two uses:
 
 ### Rate Limiting
 
-Upstash Redis sliding window (10 reports/IP/hour). Gracefully degrades to no-limit when Redis env vars are absent.
+Upstash Redis sliding window (10 reports/IP/hour). Gracefully degrades to no-limit when Redis env vars are absent. Identifiers are HMAC-SHA256 of the IP (never plain IP), analytics disabled, and page views do not consume any limit (each action uses only its own limiter).
 
 ### Testing
 
@@ -174,7 +174,7 @@ AnonProtect é uma plataforma de denúncias anônimas desenvolvida como Trabalho
 ## Configuration
 
 - All secrets via environment variables; `.env` file present (never read)
-- Required vars: `DATABASE_URL`, `ENCRYPTION_KEY` (32-byte hex, 64 chars), `AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_GENERATIVE_AI_API_KEY`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET_NAME`, `AWS_SES_FROM_EMAIL`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
+- Required vars: `DATABASE_URL`, `ENCRYPTION_KEY` (32-byte hex, 64 chars), `RATE_LIMIT_SECRET` (32-byte hex, 64 chars; opcional — fallback derivado de `AUTH_SECRET`), `AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_GENERATIVE_AI_API_KEY`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET_NAME`, `AWS_SES_FROM_EMAIL`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
 - AWS and Upstash integrations gracefully degrade when env vars are absent
 - `next.config.ts` - Next.js config with `output: 'standalone'` and next-intl plugin
 - `tsconfig.json` - ES2017 target, strict mode, `@/` alias → `src/`

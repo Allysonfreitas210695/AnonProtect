@@ -18,7 +18,7 @@ export const getPresignedUrlAction = actionClient
     const { success: rateLimitOk } = await checkUploadRateLimit(ip)
 
     if (!rateLimitOk) {
-      logger.warn({ ip }, 'Limite de uploads atingido')
+      logger.warn('Limite de uploads atingido')
       throw new Error('Limite de uploads atingido. Tente novamente mais tarde.')
     }
 
