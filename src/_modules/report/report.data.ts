@@ -100,7 +100,11 @@ export async function updateReportAiResults(
   })
 }
 
-export async function processAiAnalysis(reportId: string, description: string, country?: string) {
+export async function processAiAnalysis(
+  reportId: string,
+  description: string,
+  country?: string
+): Promise<boolean> {
   logger.debug({ reportId }, 'Iniciando análise de IA em background')
   try {
     const categories = await getCategories()
@@ -125,8 +129,11 @@ export async function processAiAnalysis(reportId: string, description: string, c
         aiAnalysis.reasoning,
         aiAnalysis.redactedDescription
       )
+      return true
     }
+    return false
   } catch (error) {
     logger.error({ reportId, error }, 'Falha no processamento de IA em background')
+    return false
   }
 }
