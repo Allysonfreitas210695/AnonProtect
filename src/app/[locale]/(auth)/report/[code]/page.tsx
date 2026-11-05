@@ -6,7 +6,6 @@ import { ReportCard } from '@/_components/shared/report-card'
 import { ReportSlaBanner } from '@/_components/shared/report-sla-banner'
 import { MessageForm } from './_components/message-form'
 import { getTranslations } from 'next-intl/server'
-import { RateLimitGuard } from '@/_components/shared/rate-limit-guard'
 import { getReportByCode } from '@/_modules/report/report.query'
 import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { checkTrackingRateLimit } from '@/_shared/lib/ratelimit'
@@ -27,31 +26,29 @@ export default async function ReportStatusPage({ params }: { params: Promise<{ c
   }
 
   return (
-    <RateLimitGuard>
-      <div className="mx-auto max-w-4xl space-y-8 px-4 py-8 lg:py-12">
-        <header className="space-y-2">
-          <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('title')}</h1>
-          <p className="text-muted-foreground">{t('subtitle')}</p>
-        </header>
+    <div className="mx-auto max-w-4xl space-y-8 px-4 py-8 lg:py-12">
+      <header className="space-y-2">
+        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">{t('title')}</h1>
+        <p className="text-muted-foreground">{t('subtitle')}</p>
+      </header>
 
-        <ReportSlaBanner status={report.status} />
+      <ReportSlaBanner status={report.status} />
 
-        <ReportCard report={report} />
+      <ReportCard report={report} />
 
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight">{t('history')}</h2>
-          <Card className="bg-card flex h-[600px] flex-col overflow-hidden shadow-xl">
-            <CardContent className="flex-1 overflow-hidden p-0">
-              <div className="h-full overflow-y-auto p-4 lg:p-6">
-                <MessageList messages={report.messages} currentUserType="USER" />
-              </div>
-            </CardContent>
-            <div className="bg-muted/30 p-4 lg:p-6">
-              <MessageForm reportId={report.id} code={code} />
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold tracking-tight">{t('history')}</h2>
+        <Card className="bg-card flex h-[600px] flex-col overflow-hidden shadow-xl">
+          <CardContent className="flex-1 overflow-hidden p-0">
+            <div className="h-full overflow-y-auto p-4 lg:p-6">
+              <MessageList messages={report.messages} currentUserType="USER" />
             </div>
-          </Card>
-        </div>
+          </CardContent>
+          <div className="bg-muted/30 p-4 lg:p-6">
+            <MessageForm reportId={report.id} code={code} />
+          </div>
+        </Card>
       </div>
-    </RateLimitGuard>
+    </div>
   )
 }
