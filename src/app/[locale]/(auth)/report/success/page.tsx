@@ -51,9 +51,6 @@ export default async function SuccessPage({
             </div>
           </div>
         </CardContent>
-        <div className="bg-muted/30 flex justify-center py-4">
-          <p className="text-muted-foreground text-xs">{t('securitySignature')}</p>
-        </div>
       </Card>
 
       <Alert className="bg-warning/5 mb-6 text-left shadow-lg">

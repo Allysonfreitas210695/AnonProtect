@@ -86,12 +86,12 @@
           "desc": "Trazabilidad total de visualizaciones por administradores."
         },
         "anonymization": {
-          "title": "Anonimización Avanzada",
-          "desc": "Procesamiento seguro siguiendo el Recital 26 de la GDPR."
+          "title": "Anonimización por IA",
+          "desc": "Datos personales del relato reemplazados por [DADO PROTEGIDO] antes de que los gestores lo lean."
         },
         "integrity": {
           "title": "Integridad de Datos",
-          "desc": "Garantía de no violación y protección contra DoS."
+          "desc": "Validación de entrada, límite de solicitudes y verificación anti-bot (Turnstile)."
         },
         "retention": {
           "title": "Gestión de Retención",
@@ -102,14 +102,13 @@
   },
   "Success": {
     "title": "¡Denuncia Enviada!",
-    "message": "Su denuncia ha sido registrada con éxito bajo total confidencialidad. Nuestro equipo de seguridad ya ha iniciado el procesamiento.",
+    "message": "Su denuncia se registró correctamente y será analizada por el equipo responsable.",
     "trackingCodeLabel": "Identificador Exclusivo de Seguimiento",
     "actionNecessary": "ACCIÓN NECESARIA",
-    "securityWarning": "Guarde este código ahora. Por razones de seguridad extrema, no se mostrará nuevamente y no puede recuperarse. Es su única clave de comunicación con nosotros.",
+    "securityWarning": "Guarde este código ahora. No se mostrará de nuevo y no se puede recuperar. Es la única forma de seguir su denuncia y hablar con el equipo.",
     "backToHome": "Volver al Inicio",
     "trackNow": "Seguir Ahora",
-    "securitySignature": "Firmado Digitalmente por AnonProtect Security",
-    "encryptionInfo": "Su conexión está protegida con cifrado de extremo a extremo",
+    "encryptionInfo": "Su conexión está protegida por HTTPS y el relato se almacena cifrado.",
     "aiAnalysisStatus": "Procesamiento Inteligente",
     "aiAnalysisPending": "Nuestra IA está clasificando su denuncia en el departamento correcto. Esto puede tardar unos segundos."
   },
@@ -117,7 +116,7 @@
     "title": "Canal de Denuncias Anónimas",
     "subtitle": "Canal seguro y anónimo para denuncias",
     "description": "Su espacio seguro para reportar irregularidades, acoso o bullying.",
-    "identitySafety": "Su identidad se preserva en todos los niveles.",
+    "identitySafety": "No pedimos ningún dato que lo identifique.",
     "newReport": "Nueva Denuncia",
     "trackReport": "Seguir Denuncia",
     "trackStatus": "Seguir Estado",
@@ -138,10 +137,10 @@
   },
   "HowItWorks": {
     "title": "Cómo funciona AnonProtect",
-    "subtitle": "Entienda en detalle el camino de su denuncia, cómo garantizamos el anonimato y dónde entra la Inteligencia Artificial en el proceso.",
+    "subtitle": "Entienda, en detalle, el recorrido de su denuncia, cómo protegemos su anonimato y dónde entra la Inteligencia Artificial en el proceso.",
     "ctaReport": "Realizar una denuncia ahora",
     "ctaBackHome": "Volver al inicio",
-    "step1Title": "1. Envío totalmente anónimo",
+    "step1Title": "1. Envío sin identificación",
     "step1Description": "Usted completa el formulario sin informar nombre, correo electrónico ni ningún dato personal. El sistema no exige registro y no registra IPs para identificar el origen.",
     "step2Title": "2. Generación del código seguro",
     "step2Description": "Al finalizar, recibe un código de seguimiento único. Es la única llave para acceder a su denuncia y comunicarse con el equipo responsable.",
@@ -158,7 +157,7 @@
     "aiUsageItem2": "El equipo responsable revisa cada caso antes de cualquier derivación o cierre.",
     "aiUsageItem3": "Las respuestas de la IA son auditables y pasan por validaciones técnicas para evitar errores.",
     "readyTitle": "¿Listo para realizar su denuncia con seguridad?",
-    "readyDescription": "Usted permanece 100% anónimo durante todo el proceso. Use el canal con responsabilidad y sinceridad.",
+    "readyDescription": "En ninguna etapa pedimos datos que lo identifiquen. Use el canal con responsabilidad y sinceridad.",
     "readyCtaNew": "Iniciar nueva denuncia",
     "readyCtaTrack": "Seguir denuncia"
   },
@@ -236,7 +235,7 @@
     "title": "Nueva Denuncia",
     "description": "Complete el formulario abajo de forma anónima y segura",
     "occurrenceDetails": "Detalles del Hecho",
-    "confidentialityNotice": "Toda la información es confidencial y su anonimato está garantizado",
+    "confidentialityNotice": "La información se trata con confidencialidad y no solicitamos su identificación.",
     "occurrenceType": "Tipo de Hecho",
     "selectType": "Seleccione el tipo...",
     "noCategories": "No hay categorías disponibles",
@@ -277,7 +276,7 @@
       "placeholder": "Describa brevemente lo ocurrido...",
       "send": "Enviar",
       "error": "Error al cargar la respuesta.",
-      "anonymityReady": "Garantizamos su anonimato total."
+      "anonymityReady": "No solicitamos su identificación en ningún momento."
     }
   },
   "Track": {
@@ -514,7 +513,7 @@
       "usage": "Uso de la Información",
       "usageDesc": "La información proporcionada en la denuncia se utiliza exclusivamente para fines de investigación interna.",
       "security": "Seguridad Absoluta",
-      "securityDesc": "Utilizamos cifrado de nivel militar para garantizar que sus denuncias permanezcan anónimas."
+      "securityDesc": "Los relatos se almacenan cifrados (AES-256-GCM) y viajan por conexión HTTPS."
     },
     "terms": {
       "title": "Términos de Uso",
@@ -523,8 +522,8 @@
       "responsibilityDesc": "El usuario es responsable de la veracidad de la información reportada.",
       "prohibitions": "Prohibiciones",
       "prohibitionsDesc": "Está prohibido usar la plataforma para denuncias calumniosas o bromas.",
-      "anonymity": "Garantía de Anonimato",
-      "anonymityDesc": "El sistema garantiza que no se rastree el origen de la denuncia por el lado del servidor.",
+      "anonymity": "Anonimato",
+      "anonymityDesc": "El sistema no pide identificación y no guarda la IP del denunciante en la base de datos. El límite de solicitudes usa solo un hash temporal de la IP.",
       "object": "Objeto y Propósito",
       "objectDesc": "AnonProtect es una plataforma académica de denuncias anónimas desarrollada como Trabajo de Conclusión de Carrera. Su objetivo es facilitar el registro seguro de informes, preservando la identidad del denunciante y garantizando el seguimiento del caso mediante un código de rastreo único.",
       "lgpd": "Privacidad y Cumplimiento (LGPD)",
@@ -537,12 +536,12 @@
     "transparency": {
       "label": "Transparencia",
       "trustTitle": "¿Por qué confiar en AnonProtect?",
-      "anonymityLayer": "Capa de Anonimato",
-      "anonymityLayerDesc": "Nuestra arquitectura utiliza enrutamiento por capas que impide que los administradores vean el origen de la conexión.",
-      "zeroLogs": "Cero Logs de IP",
-      "zeroLogsDesc": "No mantenemos registros de acceso que contengan información de red de los usuarios.",
-      "independentAudit": "Auditoría Independiente",
-      "independentAuditDesc": "El código fuente del motor de anonimato se revisa periódicamente para garantizar su integridad."
+      "anonymityLayer": "Panel sin datos personales",
+      "anonymityLayerDesc": "Los gestores solo ven la versión del relato en la que la IA reemplazó los datos personales por [DADO PROTEGIDO].",
+      "zeroLogs": "Sin IP en la aplicación",
+      "zeroLogsDesc": "La aplicación no guarda la IP del denunciante en la base de datos ni en sus logs. Los proveedores de hosting y de protección anti-bot pueden registrar IPs en sus propios logs.",
+      "independentAudit": "Proyecto académico",
+      "independentAuditDesc": "El sistema fue desarrollado como Trabajo de Conclusión de Curso y su código es evaluado por el tribunal examinador."
     }
   },
   "Sla": {
@@ -565,8 +564,8 @@
     "terms": "Términos",
     "transparency": "Transparencia",
     "trust": "Confianza",
-    "shielded": "Alojamiento Blindado",
-    "description": "AnonProtect es la plataforma líder en denuncias anónimas corporativas e institucionales. Garantizamos total confidencialidad y protección para quienes reportan."
+    "shielded": "Hosting en la nube (Vercel)",
+    "description": "AnonProtect es una plataforma de denuncias anónimas para empresas e instituciones, desarrollada como Trabajo de Conclusión de Curso."
   },
   "Logo": {
     "tagline": "Protección Anónima"
@@ -575,7 +574,7 @@
     "about": "Acerca de",
     "aboutDesc": "Canal seguro y anónimo para denuncias de irregularidades.",
     "privacy": "Privacidad",
-    "privacyDesc": "Su información está protegida y su anonimato está garantizado.",
+    "privacyDesc": "Su información se almacena cifrada y no solicitamos su identificación.",
     "anonymity": "Anonimato",
     "anonymityDesc": "No solicitamos identificación. Use solo el código de seguimiento.",
     "rights": "© {year} Sistema de Denuncias Anónimas. Todos los derechos reservados."

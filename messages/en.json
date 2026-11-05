@@ -86,12 +86,12 @@
           "desc": "Full traceability of views by administrators."
         },
         "anonymization": {
-          "title": "Advanced Anonymization",
-          "desc": "Secure processing following GDPR Recital 26."
+          "title": "AI anonymization",
+          "desc": "Personal data in the report replaced with [DADO PROTEGIDO] before managers read it."
         },
         "integrity": {
           "title": "Data Integrity",
-          "desc": "Guarantee of non-violation and protection against DoS."
+          "desc": "Input validation, rate limiting and anti-bot verification (Turnstile)."
         },
         "retention": {
           "title": "Retention Management",
@@ -102,14 +102,13 @@
   },
   "Success": {
     "title": "Report Submitted!",
-    "message": "Your occurrence has been successfully recorded under total secrecy. Our security team has already started processing it.",
+    "message": "Your report was successfully submitted and will be reviewed by the responsible team.",
     "trackingCodeLabel": "Exclusive Tracking Identifier",
     "actionNecessary": "ACTION NECESSARY",
-    "securityWarning": "Save this code now. For extreme security reasons, it will not be shown again and cannot be recovered. It is your only key for communication with us.",
+    "securityWarning": "Save this code now. It will not be shown again and cannot be recovered. It is the only way to follow your report and talk to the team.",
     "backToHome": "Back to Home",
     "trackNow": "Track Now",
-    "securitySignature": "Digitally Signed by AnonProtect Security",
-    "encryptionInfo": "Your connection is protected by end-to-end encryption",
+    "encryptionInfo": "Your connection is protected by HTTPS and your report is stored encrypted.",
     "aiAnalysisStatus": "Intelligent Processing",
     "aiAnalysisPending": "Our AI is classifying your report to the correct department. This may take a few seconds."
   },
@@ -117,7 +116,7 @@
     "title": "Anonymous Reporting Channel",
     "subtitle": "Safe and anonymous channel for reports",
     "description": "Your safe space to report irregularities, bullying, or harassment.",
-    "identitySafety": "Your identity is preserved at all levels.",
+    "identitySafety": "We never ask for any information that identifies you.",
     "newReport": "New Report",
     "trackReport": "Track Report",
     "trackStatus": "Track Status",
@@ -138,10 +137,10 @@
   },
   "HowItWorks": {
     "title": "How AnonProtect works",
-    "subtitle": "Understand, in detail, the path of your report, how we guarantee anonymity, and where Artificial Intelligence comes into play.",
+    "subtitle": "Understand, in detail, the path of your report, how we protect your anonymity and where Artificial Intelligence comes into the process.",
     "ctaReport": "Submit a report now",
     "ctaBackHome": "Back to home",
-    "step1Title": "1. Fully anonymous submission",
+    "step1Title": "1. Submission without identification",
     "step1Description": "You fill out the form without providing name, email, or any personal data. The system does not require registration and does not log IPs to identify the origin.",
     "step2Title": "2. Secure code generation",
     "step2Description": "At the end, you receive a unique tracking code. It is the only key to access your report and talk to the responsible team.",
@@ -158,7 +157,7 @@
     "aiUsageItem2": "The responsible team reviews each case before any forwarding or closure.",
     "aiUsageItem3": "AI responses are auditable and go through technical validations to avoid errors.",
     "readyTitle": "Ready to submit your report securely?",
-    "readyDescription": "You remain 100% anonymous throughout the entire process. Use the channel responsibly and sincerely.",
+    "readyDescription": "At no step do we ask for information that identifies you. Use the channel responsibly and honestly.",
     "readyCtaNew": "Start a new report",
     "readyCtaTrack": "Track a report"
   },
@@ -236,7 +235,7 @@
     "title": "New Report",
     "description": "Fill out the form below anonymously and securely",
     "occurrenceDetails": "Occurrence Details",
-    "confidentialityNotice": "All information is confidential and your anonymity is guaranteed",
+    "confidentialityNotice": "Information is handled confidentially and we do not ask for your identification.",
     "occurrenceType": "Occurrence Type",
     "selectType": "Select type...",
     "noCategories": "No categories available",
@@ -277,7 +276,7 @@
       "placeholder": "Describe the occurrence briefly...",
       "send": "Send",
       "error": "Error loading response.",
-      "anonymityReady": "We guarantee your total anonymity."
+      "anonymityReady": "We never ask for your identification."
     }
   },
   "Track": {
@@ -514,7 +513,7 @@
       "usage": "Information Usage",
       "usageDesc": "Information provided in the report is used exclusively for internal investigation purposes.",
       "security": "Absolute Security",
-      "securityDesc": "We use military-grade encryption to ensure your reports remain anonymous."
+      "securityDesc": "Reports are stored encrypted (AES-256-GCM) and travel over HTTPS."
     },
     "terms": {
       "title": "Terms of Service",
@@ -523,8 +522,8 @@
       "responsibilityDesc": "The user is responsible for the veracity of the reported information.",
       "prohibitions": "Prohibitions",
       "prohibitionsDesc": "It is forbidden to use the platform for slanderous reports or pranks.",
-      "anonymity": "Anonymity Guarantee",
-      "anonymityDesc": "The system guarantees non-tracking of the report origin on the server side.",
+      "anonymity": "Anonymity",
+      "anonymityDesc": "The system does not ask for identification and does not store the whistleblower's IP in the database. Rate limiting uses only a temporary hash of the IP.",
       "object": "Purpose and Scope",
       "objectDesc": "AnonProtect is an academic anonymous reporting platform developed as a Final Undergraduate Thesis. Its purpose is to facilitate the secure registration of reports, preserving the whistleblower's identity and ensuring case tracking through a unique tracking code.",
       "lgpd": "Privacy and Compliance (LGPD)",
@@ -537,12 +536,12 @@
     "transparency": {
       "label": "Transparency",
       "trustTitle": "Why trust AnonProtect?",
-      "anonymityLayer": "Anonymity Layer",
-      "anonymityLayerDesc": "Our architecture uses layered routing that prevents administrators from seeing the connection origin.",
-      "zeroLogs": "Zero IP Logs",
-      "zeroLogsDesc": "We do not keep access logs that contain network information from users.",
-      "independentAudit": "Independent Audit",
-      "independentAuditDesc": "The anonymity engine's source code is reviewed periodically to ensure integrity."
+      "anonymityLayer": "Dashboard without personal data",
+      "anonymityLayerDesc": "Managers only see the version of the report in which the AI replaced personal data with [DADO PROTEGIDO].",
+      "zeroLogs": "No IP in the application",
+      "zeroLogsDesc": "The application does not store the whistleblower's IP in the database or in its logs. Hosting and anti-bot providers may record IPs in their own logs.",
+      "independentAudit": "Academic project",
+      "independentAuditDesc": "The system was developed as an undergraduate thesis project and its code is reviewed by the examining board."
     }
   },
   "Sla": {
@@ -565,8 +564,8 @@
     "terms": "Terms",
     "transparency": "Transparency",
     "trust": "Trust",
-    "shielded": "Shielded Hosting",
-    "description": "AnonProtect is the leading platform for corporate and institutional anonymous reporting. We guarantee total secrecy and protection for those who report."
+    "shielded": "Cloud hosting (Vercel)",
+    "description": "AnonProtect is an anonymous reporting platform for companies and institutions, developed as an undergraduate thesis project."
   },
   "Logo": {
     "tagline": "Anonymous Protection"
@@ -575,7 +574,7 @@
     "about": "About",
     "aboutDesc": "Safe and anonymous channel for reports of irregularities.",
     "privacy": "Privacy",
-    "privacyDesc": "Your information is protected and your anonymity is guaranteed.",
+    "privacyDesc": "Your information is stored encrypted and we do not ask for your identification.",
     "anonymity": "Anonymity",
     "anonymityDesc": "We do not request identification. Only use the tracking code.",
     "rights": "© {year} Anonymous Reporting System. All rights reserved."
