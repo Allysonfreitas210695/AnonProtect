@@ -4,7 +4,8 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Category } from '@/_generated/prisma'
 import { useNewReport } from '@/_hooks/public/use-new-report'
 import { useTheme } from 'next-themes'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { toast } from 'sonner'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_components/ui/card'
 import { MapPin, X, FileIcon, ImageIcon } from 'lucide-react'
 import {
@@ -27,7 +28,7 @@ import { Textarea } from '@/_components/ui/textarea'
 import { Input } from '@/_components/ui/input'
 import { Button } from '@/_components/ui/button'
 import { Checkbox } from '@/_components/ui/checkbox'
-import { Turnstile } from '@marsidev/react-turnstile'
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { WhistleblowerAssistant } from './whistleblower-assistant'
 import { formatCEP } from '@/_shared/utils/formatters'
 
@@ -38,8 +39,28 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const isLockedToBrazil = locale === 'pt-BR'
   const [files, setFiles] = useState<File[]>([])
   const [noNumber, setNoNumber] = useState(false)
+  const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+  const turnstileRef = useRef<TurnstileInstance>(null)
+  const [captchaError, setCaptchaError] = useState<string | null>(null)
   const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup, cepFilled } =
-    useNewReport()
+    useNewReport({
+      // O token do Turnstile é de uso único: após uma recusa do servidor, gera outro
+      onSubmitError: () => {
+        form.setValue('turnstileToken', '')
+        turnstileRef.current?.reset()
+      },
+    })
+
+  function handleFormSubmit() {
+    if (turnstileEnabled && !form.getValues('turnstileToken')) {
+      const message = t('captchaRequired')
+      setCaptchaError(message)
+      toast.error(message)
+      void form.trigger() // mostra também os demais erros do formulário
+      return
+    }
+    onSubmit(files)
+  }
 
   const selectedCountry = form.watch('country')
   const isBrazil = isLockedToBrazil || selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
@@ -95,7 +116,7 @@ export default function NewReportForm({ categories }: { categories: Category[] }
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                onSubmit(files)
+                handleFormSubmit()
               }}
               className="space-y-6"
             >
@@ -404,13 +425,31 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                 )}
               </div>
 
-              {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-                <div className="flex w-full justify-center overflow-x-auto py-2">
+              {turnstileEnabled && (
+                <div className="flex w-full flex-col items-center gap-2 overflow-x-auto py-2">
                   <Turnstile
-                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                    onSuccess={(token) => form.setValue('turnstileToken', token || '')}
+                    ref={turnstileRef}
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                    onSuccess={(token) => {
+                      form.setValue('turnstileToken', token || '')
+                      setCaptchaError(null)
+                    }}
+                    onError={() => {
+                      form.setValue('turnstileToken', '')
+                      setCaptchaError(t('captchaError'))
+                    }}
+                    onExpire={() => {
+                      form.setValue('turnstileToken', '')
+                      setCaptchaError(t('captchaExpired'))
+                      turnstileRef.current?.reset()
+                    }}
                     options={{ theme: theme === 'dark' ? 'dark' : 'light' }}
                   />
+                  {captchaError && (
+                    <p role="alert" className="text-destructive text-center text-sm font-medium">
+                      {captchaError}
+                    </p>
+                  )}
                 </div>
               )}
 

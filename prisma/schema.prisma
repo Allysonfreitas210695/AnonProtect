@@ -214,7 +214,7 @@ model ActivityLog {
   description String
   metadata    String?
   createdAt   DateTime       @default(now()) @map("created_at")
-  report      Report         @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  report      Report         @relation(fields: [reportId], references: [id], onDelete: Restrict)
   user        User?          @relation("ActivityLogs", fields: [userId], references: [id])
 
   @@index([reportId])

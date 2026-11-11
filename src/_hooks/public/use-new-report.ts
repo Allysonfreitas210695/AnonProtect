@@ -8,7 +8,7 @@ import { submitReportAction } from '@/_actions/public/report.action'
 import { useS3Upload } from '@/_hooks/public/use-s3-upload'
 import { useCepLookup } from '@/_hooks/public/use-cep-lookup'
 
-export function useNewReport() {
+export function useNewReport(options?: { onSubmitError?: () => void }) {
   const router = useRouter()
   const { uploadFiles, isUploading } = useS3Upload()
 
@@ -24,6 +24,7 @@ export function useNewReport() {
       district: '',
       number: '',
       acceptTerms: false,
+      acceptAi: false,
     },
   })
 
@@ -38,6 +39,7 @@ export function useNewReport() {
     },
     onError: ({ error }) => {
       toast.error(error.serverError || 'Erro ao registrar denúncia')
+      options?.onSubmitError?.()
     },
   })
 

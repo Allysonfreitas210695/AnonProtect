@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { after } from 'next/server'
 import * as reportData from '@/_modules/report/report.data'
