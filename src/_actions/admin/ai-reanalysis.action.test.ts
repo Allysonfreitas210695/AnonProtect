@@ -72,7 +72,7 @@ describe('retryAnonymizationAction', () => {
     vi.stubEnv('GOOGLE_GENERATIVE_AI_API_KEY', '')
     const r = await retryAnonymizationAction({ reportId: ID })
     expect(r.serverError).toBe(
-      'Serviço de IA não configurado: não é possível anonimizar a denúncia'
+      'Serviço de IA não configurado: não é possível ocultar os dados da denúncia'
     )
   })
 
@@ -107,7 +107,7 @@ describe('retryAnonymizationAction', () => {
     vi.mocked(reportData.processAiAnalysis).mockResolvedValue(false)
     const r = await retryAnonymizationAction({ reportId: ID })
     expect(r.serverError).toBe(
-      'Não foi possível anonimizar a denúncia. Tente novamente mais tarde.'
+      'Não foi possível ocultar os dados da denúncia. Tente novamente mais tarde.'
     )
     expect(revalidatePath).not.toHaveBeenCalled()
   })

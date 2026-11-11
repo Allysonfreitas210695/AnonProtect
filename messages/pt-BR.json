@@ -86,7 +86,7 @@
           "desc": "Rastreabilidade total de visualizações por administradores."
         },
         "anonymization": {
-          "title": "Anonimização por IA",
+          "title": "Ocultação de dados por IA",
           "desc": "Dados pessoais do relato substituídos por [DADO PROTEGIDO] antes da leitura pelos gestores."
         },
         "integrity": {
@@ -270,7 +270,7 @@
     "analyzing": "Analisando denúncia...",
     "acceptTerms": "Li e aceito os termos de privacidade e entendo que meus dados serão tratados conforme a LGPD.",
     "acceptTermsError": "Você deve aceitar os termos para prosseguir.",
-    "acceptAi": "Autorizo o processamento da minha denúncia por Inteligência Artificial para fins de classificação e anonimização de dados.",
+    "acceptAi": "Autorizo o processamento da minha denúncia por Inteligência Artificial para fins de classificação e ocultação de dados pessoais.",
     "acceptAiError": "Você deve autorizar o processamento por IA para prosseguir.",
     "assistant": {
       "trigger": "Dúvidas sobre a categoria?",
@@ -312,7 +312,7 @@
     "evidence": "Evidências",
     "activityTimeline": "Atividades",
     "investigationNotes": "Notas de Investigação",
-    "pendingAnonymizationPrint": "Aguardando anonimização — texto original protegido."
+    "pendingAnonymizationPrint": "Aguardando ocultação de dados pessoais — texto original protegido."
   },
   "Tracking": {
     "title": "Acompanhamento de Denúncia",
@@ -411,10 +411,10 @@
     "protectedByLgpd": "Protegido pela LGPD",
     "showOriginal": "Ver Originais",
     "hideOriginal": "Ocultar Originais",
-    "pendingAnonymization": "Aguardando anonimização",
-    "pendingAnonymizationHint": "O texto original permanece criptografado e só será exibido após a anonimização automática.",
-    "retryAnonymization": "Tentar anonimizar novamente",
-    "retryingAnonymization": "Anonimizando..."
+    "pendingAnonymization": "Aguardando ocultação",
+    "pendingAnonymizationHint": "O relato será exibido depois que os dados pessoais forem ocultados automaticamente. O texto original permanece criptografado.",
+    "retryAnonymization": "Tentar ocultar novamente",
+    "retryingAnonymization": "Ocultando..."
   },
   "Sidebar": {
     "dashboard": "Dashboard",

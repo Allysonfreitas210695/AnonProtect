@@ -16,31 +16,35 @@ export const retryAnonymizationAction = supervisorActionClient
   .schema(retryAnonymizationSchema)
   .action(async ({ parsedInput: { reportId }, ctx: { user } }) => {
     if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-      throw new ActionError('Serviço de IA não configurado: não é possível anonimizar a denúncia')
+      throw new ActionError(
+        'Serviço de IA não configurado: não é possível ocultar os dados da denúncia'
+      )
     }
 
     const report = await getReportForReanalysis(reportId)
     if (!report) throw new ActionError('Denúncia não encontrada')
 
     if (report.redactedDescription) {
-      return { success: true, message: 'Denúncia já anonimizada' }
+      return { success: true, message: 'Dados pessoais da denúncia já ocultados' }
     }
 
-    logger.info({ reportId, userId: user.id }, 'Nova tentativa de anonimização solicitada')
+    logger.info({ reportId, userId: user.id }, 'Nova tentativa de ocultação solicitada')
 
     let plain: string
     try {
       plain = decrypt(report.description)
     } catch {
-      throw new ActionError('Falha ao preparar a denúncia para anonimização')
+      throw new ActionError('Falha ao preparar a denúncia para a ocultação')
     }
 
     // O texto original é usado apenas aqui, no servidor, e nunca é devolvido
     const ok = await processAiAnalysis(report.id, plain, report.country || 'Brasil')
     if (!ok) {
-      throw new ActionError('Não foi possível anonimizar a denúncia. Tente novamente mais tarde.')
+      throw new ActionError(
+        'Não foi possível ocultar os dados da denúncia. Tente novamente mais tarde.'
+      )
     }
 
     revalidatePath(`/admin/report/${reportId}`)
-    return { success: true, message: 'Denúncia anonimizada com sucesso' }
+    return { success: true, message: 'Dados pessoais ocultados com sucesso' }
   })

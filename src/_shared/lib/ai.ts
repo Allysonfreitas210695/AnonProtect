@@ -94,25 +94,46 @@ function normalizeForComparison(text: string) {
   return text.normalize('NFC').replace(/\s+/g, ' ').trim()
 }
 
+// Maior trecho do original que uma única marca pode substituir: cabe um nome
+// completo ou um endereço curto, mas não uma frase inteira.
+export const MAX_REDACTED_SPAN = 80
+
 /**
- * Verifica que o texto redigido pela IA, sem as marcas [DADO PROTEGIDO], é
- * composto apenas de trechos do original, na mesma ordem. Detecta reescrita,
- * resumo ou conteúdo inventado (alucinação ou prompt injection).
+ * Verifica que o texto redigido pela IA é o relato original com trechos curtos
+ * trocados por [DADO PROTEGIDO], e nada além disso:
+ * - os trechos mantidos aparecem no original, na mesma ordem;
+ * - todo trecho do original que sumiu está no lugar de uma marca e tem no
+ *   máximo MAX_REDACTED_SPAN caracteres por marca;
+ * - não sobra texto do original sem cobertura no início nem no fim.
+ * Detecta reescrita, resumo, omissão de frases e conteúdo inventado
+ * (alucinação ou prompt injection).
  */
 export function isFaithfulRedaction(original: string, redacted: string): boolean {
   const source = normalizeForComparison(original)
-  const segments = redacted
-    .split(PII_PLACEHOLDER)
-    .map(normalizeForComparison)
-    .filter((segment) => segment.length > 0)
+  // parts[i] e parts[i + 1] são separados por exatamente uma marca; partes vazias
+  // indicam marcas consecutivas ou marcas no início/fim do texto
+  const parts = redacted.split(PII_PLACEHOLDER).map(normalizeForComparison)
+
+  const gapIsCovered = (gap: string, tags: number) =>
+    tags === 0 ? gap.length === 0 : gap.length <= tags * MAX_REDACTED_SPAN
 
   let cursor = 0
-  for (const segment of segments) {
+  let pendingTags = 0 // marcas desde o último trecho casado
+  for (let i = 0; i < parts.length; i++) {
+    if (i > 0) pendingTags++
+    const segment = parts[i]
+    if (!segment) continue
+
+    // A ocorrência mais próxima minimiza o trecho pulado e não atrapalha os seguintes
     const index = source.indexOf(segment, cursor)
     if (index === -1) return false
+    if (!gapIsCovered(source.slice(cursor, index).trim(), pendingTags)) return false
+
     cursor = index + segment.length
+    pendingTags = 0
   }
-  return true
+
+  return gapIsCovered(source.slice(cursor).trim(), pendingTags)
 }
 
 function buildAnalysisInstructions(categories: string[], country: string) {
@@ -197,7 +218,7 @@ export async function analyzeReport(
     }
 
     // O texto redigido só pode conter trechos do relato pré-filtrado. Se a IA
-    // reescreveu ou inventou conteúdo, o caso fica "Aguardando anonimização".
+    // reescreveu ou inventou conteúdo, o caso fica "Aguardando ocultação".
     if (!isFaithfulRedaction(prefiltered, validated.data.redactedDescription)) {
       logger.warn('Texto redigido pela IA diverge do relato original; análise descartada')
       return null

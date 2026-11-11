@@ -86,7 +86,7 @@
           "desc": "Trazabilidad total de visualizaciones por administradores."
         },
         "anonymization": {
-          "title": "Anonimización por IA",
+          "title": "Ocultación de datos por IA",
           "desc": "Datos personales del relato reemplazados por [DADO PROTEGIDO] antes de que los gestores lo lean."
         },
         "integrity": {
@@ -270,7 +270,7 @@
     "analyzing": "Analizando denuncia...",
     "acceptTerms": "He leído y acepto los términos de privacidad y entiendo que mis datos serán tratados según la LGPD/GDPR.",
     "acceptTermsError": "Debe aceptar los términos para continuar.",
-    "acceptAi": "Autorizo el procesamiento de mi denuncia por Inteligencia Artificial para fines de clasificación y anonimización de datos.",
+    "acceptAi": "Autorizo el procesamiento de mi denuncia por Inteligencia Artificial para fines de clasificación y ocultación de datos personales.",
     "acceptAiError": "Debe autorizar el procesamiento por IA para continuar.",
     "assistant": {
       "trigger": "¿Dudas sobre la categoría?",
@@ -312,7 +312,7 @@
     "evidence": "Evidencias",
     "activityTimeline": "Actividades",
     "investigationNotes": "Notas de Investigación",
-    "pendingAnonymizationPrint": "Pendiente de anonimización — texto original protegido."
+    "pendingAnonymizationPrint": "Pendiente de ocultación de datos personales — texto original protegido."
   },
   "Tracking": {
     "title": "Seguimiento de Denuncia",
@@ -411,10 +411,10 @@
     "protectedByLgpd": "Protegido por la LGPD",
     "showOriginal": "Ver Originales",
     "hideOriginal": "Ocultar Originales",
-    "pendingAnonymization": "Pendiente de anonimización",
-    "pendingAnonymizationHint": "El texto original permanece cifrado y solo se mostrará tras la anonimización automática.",
-    "retryAnonymization": "Reintentar anonimización",
-    "retryingAnonymization": "Anonimizando..."
+    "pendingAnonymization": "Pendiente de ocultación",
+    "pendingAnonymizationHint": "El relato se mostrará una vez que los datos personales se oculten automáticamente. El texto original permanece cifrado.",
+    "retryAnonymization": "Reintentar ocultación",
+    "retryingAnonymization": "Ocultando..."
   },
   "Sidebar": {
     "dashboard": "Panel",

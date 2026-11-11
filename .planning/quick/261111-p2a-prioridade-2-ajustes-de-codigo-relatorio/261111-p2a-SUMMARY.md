@@ -41,3 +41,12 @@ commits: n/a (diretório sem repositório git)
 
 - 2.6 proteção de branch na `main` (configuração no GitHub)
 - 2.7 cobertura (`vitest --coverage`) e nota de acessibilidade
+
+## Follow-up (revisão externa, 2026-11-11)
+
+- `isFaithfulRedaction` passou a rejeitar omissões: cada marca cobre no máximo 80 caracteres
+  (`MAX_REDACTED_SPAN`), trecho pulado sem marca reprova, e sobra no início/fim reprova. +6 testes (300 no total)
+- Rótulos da interface: "Aguardando anonimização" → "Aguardando ocultação" (e textos relacionados) nos 3 idiomas
+  e nas mensagens da `retryAnonymizationAction`; dica do painel corrigida (o original nunca é exibido ao gestor)
+- Gemini real (2ª rodada, checagem nova): 4/4 aceitos; no caso de prompt injection a prioridade veio CRITICAL
+  (1ª rodada: HIGH) — a checagem de fidelidade não cobre categoria/prioridade

@@ -91,7 +91,7 @@ export async function getReportById(id: string) {
     return { ...note, content }
   })
 
-  // O relato original nunca sai desta camada: o painel só vê o texto anonimizado
+  // O relato original nunca sai desta camada: o painel só vê o texto com dados ocultados
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { description: _omitted, ...rest } = report
 

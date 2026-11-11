@@ -152,6 +152,57 @@ describe('AI Library (Modules)', () => {
         false
       )
     })
+
+    const report =
+      'O gerente João Pereira desviou verba da filial. Ele também apagou os e-mails do setor.'
+
+    it('rejects a sentence omitted without a placeholder', () => {
+      expect(
+        isFaithfulRedaction(report, 'O gerente [DADO PROTEGIDO] desviou verba da filial.')
+      ).toBe(false)
+    })
+
+    it('rejects text omitted at the beginning', () => {
+      expect(
+        isFaithfulRedaction(
+          report,
+          'desviou verba da filial. Ele também apagou os e-mails do setor.'
+        )
+      ).toBe(false)
+    })
+
+    it('rejects a placeholder that hides a whole sentence', () => {
+      const long =
+        'O gerente desviou verba. Ele também mandou destruir todos os documentos fiscais do último trimestre da empresa.'
+      expect(isFaithfulRedaction(long, 'O gerente desviou verba. [DADO PROTEGIDO]')).toBe(false)
+    })
+
+    it('accepts placeholders at the beginning and at the end', () => {
+      expect(
+        isFaithfulRedaction(
+          'João Pereira desviou verba com Ana Lima',
+          '[DADO PROTEGIDO] desviou verba com [DADO PROTEGIDO]'
+        )
+      ).toBe(true)
+    })
+
+    it('accepts consecutive placeholders covering a longer span', () => {
+      expect(
+        isFaithfulRedaction(
+          'O caso ocorreu na Avenida Presidente Juscelino Kubitschek de Oliveira, 1500, apartamento 302, bloco B, ontem.',
+          'O caso ocorreu na [DADO PROTEGIDO], [DADO PROTEGIDO], ontem.'
+        )
+      ).toBe(true)
+    })
+
+    it('accepts placeholders already inserted by the pre-filter', () => {
+      expect(
+        isFaithfulRedaction(
+          'O gerente João desviou verba. CPF dele: [DADO PROTEGIDO].',
+          'O gerente [DADO PROTEGIDO] desviou verba. CPF dele: [DADO PROTEGIDO].'
+        )
+      ).toBe(true)
+    })
   })
 
   describe('getChatCompletion', () => {

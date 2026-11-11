@@ -86,7 +86,7 @@
           "desc": "Full traceability of views by administrators."
         },
         "anonymization": {
-          "title": "AI anonymization",
+          "title": "AI redaction",
           "desc": "Personal data in the report replaced with [DADO PROTEGIDO] before managers read it."
         },
         "integrity": {
@@ -270,7 +270,7 @@
     "analyzing": "Analyzing report...",
     "acceptTerms": "I have read and accept the privacy terms and I understand that my data will be treated according to LGPD/GDPR.",
     "acceptTermsError": "You must accept the terms to proceed.",
-    "acceptAi": "I authorize the processing of my report by Artificial Intelligence for classification and data anonymization purposes.",
+    "acceptAi": "I authorize the processing of my report by Artificial Intelligence for classification and personal data redaction purposes.",
     "acceptAiError": "You must authorize AI processing to proceed.",
     "assistant": {
       "trigger": "Questions about the category?",
@@ -312,7 +312,7 @@
     "evidence": "Evidence",
     "activityTimeline": "Activities",
     "investigationNotes": "Investigation Notes",
-    "pendingAnonymizationPrint": "Awaiting anonymization — original text protected."
+    "pendingAnonymizationPrint": "Awaiting personal data redaction — original text protected."
   },
   "Tracking": {
     "title": "Report Tracking",
@@ -411,10 +411,10 @@
     "protectedByLgpd": "Protected by LGPD",
     "showOriginal": "Show Original",
     "hideOriginal": "Hide Original",
-    "pendingAnonymization": "Awaiting anonymization",
-    "pendingAnonymizationHint": "The original text remains encrypted and will only be shown after automatic anonymization.",
-    "retryAnonymization": "Retry anonymization",
-    "retryingAnonymization": "Anonymizing..."
+    "pendingAnonymization": "Awaiting redaction",
+    "pendingAnonymizationHint": "The report will be shown once personal data has been automatically redacted. The original text remains encrypted.",
+    "retryAnonymization": "Retry redaction",
+    "retryingAnonymization": "Redacting..."
   },
   "Sidebar": {
     "dashboard": "Dashboard",

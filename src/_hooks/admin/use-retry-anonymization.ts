@@ -8,7 +8,7 @@ export function useRetryAnonymization(reportId: string) {
       if (data?.message) toast.success(data.message)
     },
     onError: ({ error }) => {
-      toast.error(error.serverError || 'Erro ao anonimizar denúncia')
+      toast.error(error.serverError || 'Erro ao ocultar os dados da denúncia')
     },
   })
 
