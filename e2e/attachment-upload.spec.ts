@@ -21,10 +21,8 @@ test.describe('Attachment Upload', () => {
       .click()
     await page.waitForURL(/\/pt-BR\/admin\/report/, { timeout: 10000 })
 
-    const searchInput = page.getByPlaceholder(/buscar|search|código/i).first()
-    await expect(searchInput).toBeVisible({ timeout: 10000 })
-    await searchInput.fill(trackingCode)
-    await searchInput.press('Enter')
+    // O painel não conhece o código de protocolo (o banco guarda só o hash dele).
+    // Com workers: 1, a denúncia mais recente da lista é a que acabou de ser enviada.
 
     const detailsLink = page.getByRole('link', { name: /ver detalhes|view details/i }).first()
     await expect(detailsLink).toBeVisible({ timeout: 10000 })

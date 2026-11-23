@@ -31,10 +31,8 @@ test.describe('Chat Round Trip (Whistleblower <-> Admin)', () => {
         .click()
       await adminPage.waitForURL(/\/pt-BR\/admin\/report/, { timeout: 10000 })
 
-      const searchInput = adminPage.getByPlaceholder(/buscar|search|código/i).first()
-      await expect(searchInput).toBeVisible({ timeout: 10000 })
-      await searchInput.fill(trackingCode)
-      await searchInput.press('Enter')
+      // O painel não conhece o código de protocolo (o banco guarda só o hash dele).
+      // Com workers: 1, a denúncia mais recente da lista é a que acabou de ser enviada.
 
       const detailsLink = adminPage
         .getByRole('link', { name: /ver detalhes|view details/i })

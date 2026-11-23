@@ -7,15 +7,13 @@ import { getAttachmentCategory } from '@/_shared/utils/attachment-category'
 import type { $Enums } from '@/_generated/prisma'
 
 export interface CreateReportData {
-  trackingCode: string
+  /** SHA-256 do código de protocolo (ver hashTrackingCode). */
+  trackingCodeHash: string
   categoryId: string
   description: string
   country?: string
   state?: string
   city?: string
-  district?: string
-  postalCode?: string
-  number?: string
   priority?: $Enums.ReportPriority
   assignedDepartmentId?: string
   attachments?: { url: string; key: string; fileName: string; fileSize: number; type: string }[]
@@ -24,15 +22,12 @@ export interface CreateReportData {
 export async function createReport(data: CreateReportData) {
   return await prisma.report.create({
     data: {
-      trackingCode: data.trackingCode,
+      trackingCodeHash: data.trackingCodeHash,
       categoryId: data.categoryId,
       description: data.description,
       country: data.country,
       state: data.state,
       city: data.city,
-      district: data.district,
-      postalCode: data.postalCode,
-      number: data.number,
       priority: data.priority,
       assignedDepartmentId: data.assignedDepartmentId,
       attachments: data.attachments

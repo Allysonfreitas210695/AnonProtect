@@ -61,7 +61,7 @@ describe('report.data', () => {
   describe('createReport', () => {
     it('should create report with activity log', async () => {
       const data = {
-        trackingCode: 'TR123',
+        trackingCodeHash: 'hash-tr123',
         categoryId: 'cat1',
         description: 'Test report',
       }
@@ -69,7 +69,7 @@ describe('report.data', () => {
       expect(mockPrisma.report.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            trackingCode: 'TR123',
+            trackingCodeHash: 'hash-tr123',
             activityLogs: expect.anything(),
           }),
         })
@@ -78,7 +78,7 @@ describe('report.data', () => {
 
     it('should include attachments if provided', async () => {
       const data = {
-        trackingCode: 'TR123',
+        trackingCodeHash: 'hash-tr123',
         categoryId: 'cat1',
         description: 'Test report',
         attachments: [{ url: 'u', key: 'k', fileName: 'f', fileSize: 10, type: 't' }],

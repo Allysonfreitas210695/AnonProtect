@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { generateTrackingCode } from './tracking'
+import { formatCaseNumber, generateTrackingCode, hashTrackingCode } from './tracking'
 
 describe('tracking', () => {
   describe('generateTrackingCode', () => {
@@ -35,6 +35,34 @@ describe('tracking', () => {
       expect(code).toContain('AP-2025-')
 
       vi.useRealTimers()
+    })
+  })
+
+  describe('hashTrackingCode', () => {
+    it('gera o SHA-256 em hexadecimal, igual ao encode(sha256(...), hex) da migration', () => {
+      // echo -n 'AP-2026-ABCD-EFGH-JKMN-PQRS' | sha256sum
+      expect(hashTrackingCode('AP-2026-ABCD-EFGH-JKMN-PQRS')).toBe(
+        '662d3fa55afa7b457e77ac1b8befeefd52890ab94c2230cbd2891089a2b50ce8'
+      )
+    })
+
+    it('ignora espaços e letras minúsculas no código digitado', () => {
+      expect(hashTrackingCode('  ap-2026-abcd-efgh-jkmn-pqrs ')).toBe(
+        hashTrackingCode('AP-2026-ABCD-EFGH-JKMN-PQRS')
+      )
+    })
+
+    it('não contém o código em claro', () => {
+      const code = generateTrackingCode()
+      expect(hashTrackingCode(code)).not.toContain(code)
+      expect(hashTrackingCode(code)).toMatch(/^[0-9a-f]{64}$/)
+    })
+  })
+
+  describe('formatCaseNumber', () => {
+    it('preenche com zeros à esquerda', () => {
+      expect(formatCaseNumber(42)).toBe('000042')
+      expect(formatCaseNumber(1234567)).toBe('1234567')
     })
   })
 })

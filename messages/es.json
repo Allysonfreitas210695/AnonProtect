@@ -192,7 +192,7 @@
     "archiveError": "Error al archivar denuncias",
     "connectionError": "Error de conexión",
     "Filters": {
-      "searchPlaceholder": "Buscar código...",
+      "searchPlaceholder": "Buscar nº del caso...",
       "statusPlaceholder": "Estado",
       "categoryPlaceholder": "Categoría",
       "countryPlaceholder": "País",
@@ -245,20 +245,13 @@
     "evidenceOptional": "Evidencias (Opcional)",
     "uploadHint": "Envíe fotos, documentos o videos que ayuden en la investigación.",
     "location": "Lugar del Hecho",
-    "postalCode": "Código Postal",
-    "postalCodePlaceholder": "00000-000",
     "city": "Ciudad",
     "state": "Estado / Provincia",
-    "district": "Barrio",
     "country": "País",
     "selectCountry": "Seleccione el país",
     "selectCountryError": "Seleccione el país de la ocurrencia",
     "fetchingAddress": "Buscando dirección...",
     "invalidCep": "Código postal inválido o no encontrado",
-    "postalCodeInternational": "Código Postal / Zip Code",
-    "postalCodePlaceholderInternational": "Ingrese el código postal",
-    "number": "Número",
-    "noNumber": "Sin número (S/N)",
     "optional": "(Opcional)",
     "uploadComingSoon": "La funcionalidad de carga será implementada pronto",
     "submit": "Enviar Denuncia",
@@ -280,7 +273,8 @@
       "send": "Enviar",
       "error": "Error al cargar la respuesta.",
       "anonymityReady": "No solicitamos su identificación en ningún momento."
-    }
+    },
+    "locationMinimalNotice": "Solo recopilamos país, estado y ciudad. No informe dirección, barrio ni código postal: estos datos pueden identificar a quien denuncia."
   },
   "Track": {
     "title": "Seguir Denuncia",
@@ -317,7 +311,8 @@
   "Tracking": {
     "title": "Seguimiento de Denuncia",
     "subtitle": "Vea abajo el estado e historial de su denuncia",
-    "history": "Comunicación e Historial"
+    "history": "Comunicación e Historial",
+    "messagePrivacyNotice": "No incluya datos que lo identifiquen. CPF, correo electrónico, teléfono y código postal se ocultan automáticamente antes de que el equipo lea el mensaje; los nombres, no."
   },
   "Status": {
     "PENDING": "Pendiente",

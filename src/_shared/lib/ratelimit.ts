@@ -4,6 +4,7 @@ import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
 import { logger } from '@/_shared/lib/logger'
+import { isStrictSecurityMode, reportSecurityDegraded } from '@/_shared/lib/security-mode'
 
 const redis =
   process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
@@ -44,168 +45,121 @@ export function hashIdentifier(identifier: string): string {
   return createHmac('sha256', getRateLimitKey()).update(identifier).digest('hex')
 }
 
-/**
- * Limitador de taxa para submissão de denúncias.
- * Configurado para 10 denúncias por IP por hora, conforme o roadmap.
- */
-export const reportRateLimit = redis
-  ? new Ratelimit({
-      redis: redis,
-      limiter: Ratelimit.slidingWindow(10, '1 h'),
-      analytics: false,
-      prefix: 'anonprotect_ratelimit',
-    })
-  : null
+type RateLimitResult = { success: boolean; limit: number; remaining: number; reset: number }
 
 /**
- * Verifica se a requisição deve ser limitada.
+ * Comportamento quando o Redis não está configurado ou não responde.
  *
- * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
- * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
+ * - 'open': libera a requisição. Usado onde bloquear também causa dano: o canal
+ *   de denúncias não pode sair do ar porque o Redis caiu.
+ * - 'closed': recusa a requisição. Usado nos alvos de força bruta (login dos
+ *   gestores e consulta pelo código de protocolo), em que liberar tentativas
+ *   ilimitadas é pior do que deixar o usuário esperar.
+ *
+ * Nos dois casos a degradação gera o evento `security.degraded` no log, para que
+ * a implantação configure um alerta sobre ele (ver security-mode.ts).
  */
+type FailMode = 'open' | 'closed'
+
+const OPEN: RateLimitResult = { success: true, limit: 0, remaining: 0, reset: 0 }
+const CLOSED: RateLimitResult = { success: false, limit: 0, remaining: 0, reset: 0 }
+
+function createLimiter(
+  limiter: ReturnType<typeof Ratelimit.slidingWindow>,
+  prefix: string
+): Ratelimit | null {
+  return redis ? new Ratelimit({ redis, limiter, analytics: false, prefix }) : null
+}
+
+async function check(
+  name: string,
+  limiter: Ratelimit | null,
+  failMode: FailMode,
+  identifier: string
+): Promise<RateLimitResult> {
+  if (!limiter) {
+    // Em desenvolvimento, rodar sem Redis é normal. Em produção, é uma falha de
+    // configuração e não pode passar em silêncio.
+    if (!isStrictSecurityMode()) return OPEN
+    reportSecurityDegraded('ratelimit', 'Redis não configurado', { limiter: name, failMode })
+    return failMode === 'open' ? OPEN : CLOSED
+  }
+
+  try {
+    return await limiter.limit(hashIdentifier(identifier))
+  } catch (err) {
+    reportSecurityDegraded('ratelimit', 'Redis indisponível', { limiter: name, failMode, err })
+    return failMode === 'open' ? OPEN : CLOSED
+  }
+}
+
+/** Envio de denúncias: 10 por IP por hora. Fail-open, para não derrubar o canal. */
+export const reportRateLimit = createLimiter(
+  Ratelimit.slidingWindow(10, '1 h'),
+  'anonprotect_ratelimit'
+)
+
+/** @param identifier IP do cliente; é transformado em HMAC antes de sair do processo. */
 export async function checkRateLimit(identifier: string) {
-  if (!reportRateLimit) {
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
-
-  try {
-    return await reportRateLimit.limit(hashIdentifier(identifier))
-  } catch (err) {
-    logger.error({ err }, 'Rate limit check failed, failing open')
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
+  return check('report', reportRateLimit, 'open', identifier)
 }
 
-/**
- * Limitador de taxa dedicado para envio de mensagens no chat.
- * Configurado para 10 mensagens por IP por minuto — generoso para
- * conversas humanas, mas suficiente para barrar flood automatizado.
- */
-export const messageRateLimit = redis
-  ? new Ratelimit({
-      redis: redis,
-      limiter: Ratelimit.slidingWindow(10, '1 m'),
-      analytics: false,
-      prefix: 'anonprotect_message_ratelimit',
-    })
-  : null
+/** Mensagens no chat: 10 por IP por minuto. Fail-open. */
+export const messageRateLimit = createLimiter(
+  Ratelimit.slidingWindow(10, '1 m'),
+  'anonprotect_message_ratelimit'
+)
 
-/**
- * Verifica se o envio de mensagem deve ser limitado.
- *
- * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
- * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
- */
+/** @param identifier IP do cliente; é transformado em HMAC antes de sair do processo. */
 export async function checkMessageRateLimit(identifier: string) {
-  if (!messageRateLimit) {
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
-
-  try {
-    return await messageRateLimit.limit(hashIdentifier(identifier))
-  } catch (err) {
-    logger.error({ err }, 'Rate limit check failed, failing open')
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
+  return check('message', messageRateLimit, 'open', identifier)
 }
 
-/**
- * Limitador de taxa dedicado para geração de URLs de upload (presigned URLs).
- * Configurado para 20 uploads por IP por hora — generoso para o envio de
- * múltiplos anexos em uma denúncia, mas suficiente para barrar abuso
- * automatizado de preenchimento do bucket S3.
- */
-export const uploadRateLimit = redis
-  ? new Ratelimit({
-      redis: redis,
-      limiter: Ratelimit.slidingWindow(20, '1 h'),
-      analytics: false,
-      prefix: 'anonprotect_upload_ratelimit',
-    })
-  : null
+/** URLs de upload: 20 por IP por hora. Fail-open, para não impedir anexos. */
+export const uploadRateLimit = createLimiter(
+  Ratelimit.slidingWindow(20, '1 h'),
+  'anonprotect_upload_ratelimit'
+)
 
-/**
- * Verifica se a geração de URL de upload deve ser limitada.
- *
- * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
- * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
- */
+/** @param identifier IP do cliente; é transformado em HMAC antes de sair do processo. */
 export async function checkUploadRateLimit(identifier: string) {
-  if (!uploadRateLimit) {
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
-
-  try {
-    return await uploadRateLimit.limit(hashIdentifier(identifier))
-  } catch (err) {
-    logger.error({ err }, 'Rate limit check failed, failing open')
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
+  return check('upload', uploadRateLimit, 'open', identifier)
 }
 
 /**
- * Limitador de taxa dedicado para tentativas de login com credenciais.
- * Configurado para 10 tentativas por IP a cada 15 minutos — suficiente
- * para barrar ataques de força bruta contra o provedor Credentials.
+ * Login dos gestores: 10 tentativas por IP a cada 15 minutos.
+ * Fail-closed: sem o limitador, o painel ficaria aberto a força bruta.
  */
-export const loginRateLimit = redis
-  ? new Ratelimit({
-      redis: redis,
-      limiter: Ratelimit.slidingWindow(10, '15 m'),
-      analytics: false,
-      prefix: 'anonprotect_login_ratelimit',
-    })
-  : null
+export const loginRateLimit = createLimiter(
+  Ratelimit.slidingWindow(10, '15 m'),
+  'anonprotect_login_ratelimit'
+)
 
-/**
- * Verifica se a tentativa de login deve ser limitada.
- *
- * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
- * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
- */
+/** @param identifier IP do cliente; é transformado em HMAC antes de sair do processo. */
 export async function checkLoginRateLimit(identifier: string) {
-  if (!loginRateLimit) {
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
-
-  try {
-    return await loginRateLimit.limit(hashIdentifier(identifier))
-  } catch (err) {
-    logger.error({ err }, 'Rate limit check failed, failing open')
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
+  return check('login', loginRateLimit, 'closed', identifier)
 }
 
 /**
- * Limitador de taxa dedicado para consulta pelo código de rastreamento.
- * Configurado para 20 consultas por IP a cada 10 minutos — fecha o
- * oráculo de enumeração sem Redis configurado (analytics desligado
- * para não registrar o código em claro em nenhum painel externo).
+ * Consulta pelo código de protocolo: 20 por IP a cada 10 minutos.
+ * Fail-closed: sem o limitador, o código poderia ser procurado por tentativa.
  */
-export const trackingRateLimit = redis
-  ? new Ratelimit({
-      redis: redis,
-      limiter: Ratelimit.slidingWindow(20, '10 m'),
-      analytics: false,
-      prefix: 'anonprotect_tracking_ratelimit',
-    })
-  : null
+export const trackingRateLimit = createLimiter(
+  Ratelimit.slidingWindow(20, '10 m'),
+  'anonprotect_tracking_ratelimit'
+)
 
-/**
- * Verifica se a consulta pelo código de rastreamento deve ser limitada.
- *
- * @param {string} identifier - IP do cliente; é transformado em HMAC antes de sair do processo.
- * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number }>}
- */
+/** @param identifier IP do cliente; é transformado em HMAC antes de sair do processo. */
 export async function checkTrackingRateLimit(identifier: string) {
-  if (!trackingRateLimit) {
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
-  }
+  return check('tracking', trackingRateLimit, 'closed', identifier)
+}
 
+/** Usado pela página de status: confirma que o Redis responde, não só que está configurado. */
+export async function pingRateLimitStore(): Promise<boolean> {
+  if (!redis) return false
   try {
-    return await trackingRateLimit.limit(hashIdentifier(identifier))
-  } catch (err) {
-    logger.error({ err }, 'Rate limit check failed, failing open')
-    return { success: true, limit: 0, remaining: 0, reset: 0 }
+    return (await redis.ping()) === 'PONG'
+  } catch {
+    return false
   }
 }

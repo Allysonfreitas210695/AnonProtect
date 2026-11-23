@@ -12,6 +12,7 @@ vi.mock('@/_modules/report/report.data', () => ({
 
 vi.mock('@/_shared/utils/tracking', () => ({
   generateTrackingCode: vi.fn(() => 'AP-TEST'),
+  hashTrackingCode: vi.fn((code: string) => `hash(${code})`),
 }))
 
 vi.mock('./ai-analysis', () => ({
@@ -45,6 +46,11 @@ describe('Public Report Actions', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     process.env.TURNSTILE_SECRET_KEY = 'test-secret'
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'test-site-key'
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
   })
 
   describe('reportSchema attachment url validation', () => {
@@ -168,7 +174,10 @@ describe('Public Report Actions', () => {
         trackingCode: 'AP-TEST',
       })
 
-      expect(reportData.createReport).toHaveBeenCalled()
+      // O banco recebe só o resumo do código, nunca o código em claro
+      const created = vi.mocked(reportData.createReport).mock.calls[0]?.[0]
+      expect(created?.trackingCodeHash).toBe('hash(AP-TEST)')
+      expect(JSON.stringify(created)).not.toContain('"AP-TEST"')
       expect(triggerAiAnalysis).toHaveBeenCalledWith(
         'r1',
         'Valid test description of sufficient length',
@@ -204,6 +213,43 @@ describe('Public Report Actions', () => {
 
       const call = vi.mocked(reportData.createReport).mock.calls[0]?.[0]
       expect(call?.attachments?.map((a) => a.fileName)).toEqual(['anexo-1.jpg', 'anexo-2.pdf'])
+    })
+    const validInput = {
+      categoryId: '00000000-0000-0000-0000-000000000000',
+      description: 'Valid test description of sufficient length',
+      acceptTerms: true,
+      acceptAi: true,
+      country: 'Brasil',
+    }
+
+    it('em produção, recusa o envio quando o Turnstile não está configurado', async () => {
+      vi.stubEnv('NODE_ENV', 'production')
+      vi.stubEnv('TURNSTILE_SECRET_KEY', '')
+
+      const result = await submitReportAction(validInput)
+
+      expect(result?.serverError).toBe(
+        'Envio temporariamente indisponível. Tente novamente mais tarde.'
+      )
+      expect(reportData.createReport).not.toHaveBeenCalled()
+    })
+
+    it('fora de produção, segue sem Turnstile quando ele não está configurado', async () => {
+      vi.stubEnv('TURNSTILE_SECRET_KEY', '')
+      vi.stubEnv('NEXT_PUBLIC_TURNSTILE_SITE_KEY', '')
+      vi.mocked(reportData.createReport).mockResolvedValue({ id: 'r1' } as unknown as Report)
+
+      const result = await submitReportAction(validInput)
+
+      expect(result?.data?.success).toBe(true)
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it('exige o token quando o Turnstile está configurado', async () => {
+      const result = await submitReportAction(validInput)
+
+      expect(result?.serverError).toBe('Falha na verificação de captcha. Tente novamente.')
+      expect(reportData.createReport).not.toHaveBeenCalled()
     })
   })
 })

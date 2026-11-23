@@ -15,6 +15,7 @@ import {
 } from '@/_components/ui/table'
 import { Checkbox } from '@/_components/ui/checkbox'
 import { formatDate } from '@/_shared/utils/formatters'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 import { ReportStatus } from '@/_generated/prisma'
 import { batchUpdateReportStatusAction } from '@/_actions/admin/report.action'
 import { toast } from 'sonner'
@@ -23,7 +24,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 interface Report {
   id: string
-  trackingCode: string
+  caseNumber: number
   status: ReportStatus
   createdAt: Date
   country: string | null
@@ -172,11 +173,11 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                         <Checkbox
                           checked={isSelected}
                           onCheckedChange={() => toggleOne(report.id)}
-                          aria-label={`Select ${report.trackingCode}`}
+                          aria-label={`Select #${formatCaseNumber(report.caseNumber)}`}
                         />
                       </TableCell>
                       <TableCell className="text-primary/90 py-4 font-mono text-sm font-black whitespace-nowrap">
-                        {report.trackingCode}
+                        #{formatCaseNumber(report.caseNumber)}
                       </TableCell>
                       <TableCell className="py-4 text-sm font-semibold">
                         {report.category?.name || 'Geral'}
@@ -235,12 +236,12 @@ export function ReportsTableClient({ reports }: ReportsTableClientProps) {
                       <Checkbox
                         checked={isSelected}
                         onCheckedChange={() => toggleOne(report.id)}
-                        aria-label={`Select ${report.trackingCode}`}
+                        aria-label={`Select #${formatCaseNumber(report.caseNumber)}`}
                         className="mt-1"
                       />
                       <div className="flex flex-col">
                         <span className="text-primary font-mono text-sm font-black">
-                          {report.trackingCode}
+                          #{formatCaseNumber(report.caseNumber)}
                         </span>
                         <span className="text-muted-foreground text-[10px] font-bold uppercase">
                           {report.category?.name || 'Geral'}

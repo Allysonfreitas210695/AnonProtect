@@ -192,7 +192,7 @@
     "archiveError": "Erro ao arquivar denúncias",
     "connectionError": "Erro de conexão",
     "Filters": {
-      "searchPlaceholder": "Pesquisar código...",
+      "searchPlaceholder": "Pesquisar nº do caso...",
       "statusPlaceholder": "Status",
       "categoryPlaceholder": "Categoria",
       "countryPlaceholder": "País",
@@ -245,16 +245,9 @@
     "evidenceOptional": "Evidências (Opcional)",
     "uploadHint": "Envie fotos, documentos ou vídeos que ajudem na investigação.",
     "location": "Localização da Ocorrência",
-    "postalCode": "CEP",
-    "postalCodeInternational": "Código Postal / Zip Code",
-    "postalCodePlaceholder": "00000-000",
-    "postalCodePlaceholderInternational": "Digite o código postal",
-    "number": "Número",
-    "noNumber": "Sem número (S/N)",
     "optional": "(Opcional)",
     "city": "Cidade",
     "state": "Estado",
-    "district": "Bairro",
     "country": "País",
     "selectCountry": "Selecione o país",
     "selectCountryError": "Selecione o país da ocorrência",
@@ -280,7 +273,8 @@
       "send": "Enviar",
       "error": "Erro ao carregar resposta.",
       "anonymityReady": "Não solicitamos sua identificação em nenhum momento."
-    }
+    },
+    "locationMinimalNotice": "Coletamos só país, estado e cidade. Não informe endereço, bairro ou CEP: esses dados podem identificar quem denuncia."
   },
   "Track": {
     "title": "Acompanhar Denúncia",
@@ -317,7 +311,8 @@
   "Tracking": {
     "title": "Acompanhamento de Denúncia",
     "subtitle": "Veja abaixo o status e histórico da sua denúncia",
-    "history": "Comunicação e Histórico"
+    "history": "Comunicação e Histórico",
+    "messagePrivacyNotice": "Não inclua dados que identifiquem você. CPF, e-mail, telefone e CEP são ocultados automaticamente antes de a equipe ler a mensagem; nomes, não."
   },
   "Status": {
     "PENDING": "Pendente",

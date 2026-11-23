@@ -4,6 +4,7 @@ import { encrypt } from '@/_shared/lib/crypto'
 import { sendEmail, SES_FROM_EMAIL } from '@/_shared/lib/aws'
 import { getStatusChangeEmailHtml } from '@/_shared/lib/email-templates'
 import { logger } from '@/_shared/lib/logger'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 
 export async function softDeleteReport(id: string) {
   return await prisma.report.update({
@@ -15,7 +16,7 @@ export async function softDeleteReport(id: string) {
 export async function updateReportStatus(id: string, status: ReportStatus, userId?: string) {
   const oldReport = await prisma.report.findUnique({
     where: { id },
-    select: { status: true, trackingCode: true },
+    select: { status: true },
   })
 
   const report = await prisma.report.update({
@@ -36,9 +37,11 @@ export async function updateReportStatus(id: string, status: ReportStatus, userI
 
   // Enviar email de notificação assíncrono para o admin, se configurado
   if (oldReport && oldReport.status !== status && SES_FROM_EMAIL) {
-    const htmlBody = getStatusChangeEmailHtml(report.trackingCode, oldReport.status, status)
-    sendEmail(SES_FROM_EMAIL, `Atualização: Denúncia ${report.trackingCode}`, htmlBody).catch(
-      (err) => logger.error('Failed to send status update email', err)
+    // O e-mail identifica o caso pelo número, nunca pelo código de protocolo
+    const caseLabel = `#${formatCaseNumber(report.caseNumber)}`
+    const htmlBody = getStatusChangeEmailHtml(caseLabel, oldReport.status, status)
+    sendEmail(SES_FROM_EMAIL, `Atualização: Denúncia ${caseLabel}`, htmlBody).catch((err) =>
+      logger.error('Failed to send status update email', err)
     )
   }
 

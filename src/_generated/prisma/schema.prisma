@@ -116,19 +116,19 @@ model VerificationToken {
 }
 
 model Report {
-  id           String         @id @default(uuid())
-  trackingCode String         @unique @map("tracking_code")
-  description  String
-  status       ReportStatus   @default(PENDING)
-  priority     ReportPriority @default(MEDIUM)
+  id               String         @id @default(uuid())
+  /// SHA-256 (hex) do código de protocolo. O código em claro só existe com o denunciante.
+  trackingCodeHash String         @unique @map("tracking_code_hash")
+  /// Identificador do caso exibido no painel, sem relação com o código de protocolo.
+  caseNumber       Int            @unique @default(autoincrement()) @map("case_number")
+  description      String
+  status           ReportStatus   @default(PENDING)
+  priority         ReportPriority @default(MEDIUM)
 
-  // Location
-  country    String?
-  state      String?
-  city       String?
-  district   String?
-  postalCode String? @map("postal_code")
-  number     String?
+  // Location (coleta mínima: bairro, CEP e número não são coletados)
+  country String?
+  state   String?
+  city    String?
 
   createdAt            DateTime            @default(now()) @map("created_at")
   updatedAt            DateTime            @updatedAt @map("updated_at")
@@ -146,7 +146,6 @@ model Report {
   deletedAt            DateTime?           @map("deleted_at")
 
   @@index([status, createdAt])
-  @@index([trackingCode])
   @@index([city])
   @@map("reports")
 }

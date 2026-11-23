@@ -30,7 +30,6 @@ import { Button } from '@/_components/ui/button'
 import { Checkbox } from '@/_components/ui/checkbox'
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { WhistleblowerAssistant } from './whistleblower-assistant'
-import { formatCEP } from '@/_shared/utils/formatters'
 
 export default function NewReportForm({ categories }: { categories: Category[] }) {
   const t = useTranslations('NewReport')
@@ -38,18 +37,16 @@ export default function NewReportForm({ categories }: { categories: Category[] }
   const locale = useLocale()
   const isLockedToBrazil = locale === 'pt-BR'
   const [files, setFiles] = useState<File[]>([])
-  const [noNumber, setNoNumber] = useState(false)
   const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
   const turnstileRef = useRef<TurnstileInstance>(null)
   const [captchaError, setCaptchaError] = useState<string | null>(null)
-  const { form, onSubmit, isExecuting, isUploading, isSubmitting, handleCepLookup, cepFilled } =
-    useNewReport({
-      // O token do Turnstile é de uso único: após uma recusa do servidor, gera outro
-      onSubmitError: () => {
-        form.setValue('turnstileToken', '')
-        turnstileRef.current?.reset()
-      },
-    })
+  const { form, onSubmit, isExecuting, isUploading, isSubmitting } = useNewReport({
+    // O token do Turnstile é de uso único: após uma recusa do servidor, gera outro
+    onSubmitError: () => {
+      form.setValue('turnstileToken', '')
+      turnstileRef.current?.reset()
+    },
+  })
 
   function handleFormSubmit() {
     if (turnstileEnabled && !form.getValues('turnstileToken')) {
@@ -62,9 +59,6 @@ export default function NewReportForm({ categories }: { categories: Category[] }
     onSubmit(files)
   }
 
-  const selectedCountry = form.watch('country')
-  const isBrazil = isLockedToBrazil || selectedCountry === 'Brasil' || selectedCountry === 'Brazil'
-  const postalCode = form.watch('postalCode')
   const descriptionValue = form.watch('description') ?? ''
   const MAX_DESCRIPTION = 2000
 
@@ -74,28 +68,6 @@ export default function NewReportForm({ categories }: { categories: Category[] }
       form.setValue('country', 'Brasil')
     }
   }, [isLockedToBrazil, form])
-
-  // S/N checkbox: preenche o campo number com "S/N" e bloqueia
-  useEffect(() => {
-    if (noNumber) {
-      form.setValue('number', 'S/N')
-    } else {
-      if (form.getValues('number') === 'S/N') {
-        form.setValue('number', '')
-      }
-    }
-  }, [noNumber, form])
-
-  useEffect(() => {
-    if (isBrazil && postalCode?.replace(/\D/g, '').length === 8) {
-      const formatted = formatCEP(postalCode)
-      if (formatted !== postalCode) {
-        form.setValue('postalCode', formatted)
-      }
-      handleCepLookup(postalCode)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postalCode, isBrazil, handleCepLookup])
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-8 lg:py-12">
@@ -195,31 +167,15 @@ export default function NewReportForm({ categories }: { categories: Category[] }
 
                   <FormField
                     control={form.control}
-                    name="postalCode"
+                    name="state"
                     render={({ field }) => (
                       <FormItem className="px-4">
                         <FormLabel>
-                          {isBrazil ? t('postalCode') : t('postalCodeInternational')}
+                          {t('state')}{' '}
+                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            onChange={(e) => {
-                              const val = e.target.value
-                              if (isBrazil) {
-                                field.onChange(formatCEP(val))
-                              } else {
-                                field.onChange(val)
-                              }
-                            }}
-                            placeholder={
-                              isBrazil
-                                ? t('postalCodePlaceholder')
-                                : t('postalCodePlaceholderInternational')
-                            }
-                            className="h-11"
-                            maxLength={isBrazil ? 9 : 20}
-                          />
+                          <Input {...field} className="h-11" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -238,92 +194,14 @@ export default function NewReportForm({ categories }: { categories: Category[] }
                           <span className="text-xs font-normal opacity-70">{t('optional')}</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            className="h-11"
-                            readOnly={isBrazil && cepFilled.city}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="state"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {t('state')}{' '}
-                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            className="h-11"
-                            readOnly={isBrazil && cepFilled.state}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="number"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {t('number')}{' '}
-                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            className="h-11"
-                            type="text"
-                            disabled={noNumber}
-                            placeholder={noNumber ? 'S/N' : ''}
-                          />
-                        </FormControl>
-                        <div className="mt-1.5 flex items-center gap-2">
-                          <Checkbox
-                            id="no-number"
-                            checked={noNumber}
-                            onCheckedChange={(v) => setNoNumber(!!v)}
-                          />
-                          <label
-                            htmlFor="no-number"
-                            className="text-muted-foreground cursor-pointer text-xs select-none"
-                          >
-                            {t('noNumber')}
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="district"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {t('district')}{' '}
-                          <span className="text-xs font-normal opacity-70">{t('optional')}</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            className="h-11"
-                            readOnly={isBrazil && cepFilled.district}
-                          />
+                          <Input {...field} className="h-11" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
+                <p className="text-muted-foreground px-4 text-xs">{t('locationMinimalNotice')}</p>
               </div>
 
               <div className="bg-border/50 h-px opacity-50 transition-opacity" />

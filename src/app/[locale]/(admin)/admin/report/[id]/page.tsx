@@ -5,6 +5,7 @@ import { ArrowLeft, Building2 } from 'lucide-react'
 import { StatusBadge } from '@/_components/shared/status-badge'
 import { Link } from '@/i18n/navigation'
 import { formatCompactDateTime, formatDate } from '@/_shared/utils/formatters'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 import { ForwardReportForm } from './_components/forward-form'
 import { StatusUpdateForm } from './_components/status-form'
 import { ReportCard } from '@/_components/shared/report-card'
@@ -195,7 +196,7 @@ export default async function AdminReportPage({ params }: Props) {
         {/* Report Identification */}
         <section className="mb-8 border-b-2 border-dashed border-gray-200 pb-8">
           <h1 className="mb-4 text-2xl font-black wrap-break-word">
-            Denuncia #{report.trackingCode}
+            Denuncia #{formatCaseNumber(report.caseNumber)}
           </h1>
           <div className="grid grid-cols-2 gap-y-4">
             <div>

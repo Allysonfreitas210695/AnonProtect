@@ -52,6 +52,31 @@ describe('admin.query', () => {
       expect(result?.attachments[0].url).toBe('http://signed-url.com')
     })
 
+    it('oculta CPF, e-mail e telefone nas mensagens do denunciante, não nas do gestor', async () => {
+      vi.mocked(decrypt).mockImplementation((val: string) => val)
+      vi.mocked(prisma.report.findUnique).mockResolvedValue({
+        id: 'r1',
+        description: 'cipher-text',
+        trackingCodeHash: 'abc123',
+        attachments: [],
+        messages: [
+          { id: 'm1', sender: 'USER', content: 'Meu CPF é 123.456.789-09, liguem (11) 98765-4321' },
+          { id: 'm2', sender: 'ADMIN', content: 'Contato do RH: rh@empresa.com' },
+        ],
+        investigationNotes: [],
+      } as unknown as Awaited<ReturnType<typeof prisma.report.findUnique>>)
+
+      const result = await getReportById('r1')
+
+      const [fromUser, fromAdmin] = result!.messages
+      expect(fromUser.content).not.toContain('123.456.789-09')
+      expect(fromUser.content).not.toContain('98765-4321')
+      expect(fromUser.content).toContain('[DADO PROTEGIDO]')
+      expect(fromAdmin.content).toBe('Contato do RH: rh@empresa.com')
+      // O resumo do código de protocolo não vai ao painel
+      expect(result).not.toHaveProperty('trackingCodeHash')
+    })
+
     it('should never expose the original description', async () => {
       vi.mocked(decrypt).mockImplementation((val: string) => val)
       vi.mocked(prisma.report.findUnique).mockResolvedValue({

@@ -10,13 +10,24 @@ import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { timingSafeEqual } from 'node:crypto'
+import { formatCaseNumber, hashTrackingCode } from '@/_shared/utils/tracking'
 
 const MAX_MESSAGES_PER_REPORT = 1000
+
+function sameHash(a: string, b: string): boolean {
+  const bufA = Buffer.from(a, 'hex')
+  const bufB = Buffer.from(b, 'hex')
+  return bufA.length === bufB.length && timingSafeEqual(bufA, bufB)
+}
 
 const sendMessageSchema = z.object({
   reportId: z.uuid(),
   code: z.string().min(1, 'Código é obrigatório'),
-  content: z.string().min(1, 'A mensagem não pode estar vazia'),
+  content: z
+    .string()
+    .min(1, 'A mensagem não pode estar vazia')
+    .max(2000, 'A mensagem deve ter no máximo 2000 caracteres'),
 })
 
 export const sendMessageAction = actionClient
@@ -32,10 +43,14 @@ export const sendMessageAction = actionClient
 
     const report = await prisma.report.findUnique({
       where: { id: reportId },
-      select: { trackingCode: true, assignedTo: { select: { email: true } } },
+      select: {
+        trackingCodeHash: true,
+        caseNumber: true,
+        assignedTo: { select: { email: true } },
+      },
     })
 
-    if (!report || report.trackingCode !== code) {
+    if (!report || !sameHash(report.trackingCodeHash, hashTrackingCode(code))) {
       throw new ActionError('Acesso negado')
     }
 
@@ -50,7 +65,8 @@ export const sendMessageAction = actionClient
     if (report.assignedTo?.email) {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
       const adminLink = `${baseUrl}/admin/report/${reportId}`
-      const htmlBody = `<p>Nova mensagem recebida no relatório ${code}.</p><a href="${adminLink}">Acesse o painel para visualizar.</a>`
+      // O e-mail usa o número do caso: o código de protocolo é a credencial do denunciante
+      const htmlBody = `<p>Nova mensagem recebida no caso #${formatCaseNumber(report.caseNumber)}.</p><a href="${adminLink}">Acesse o painel para visualizar.</a>`
       try {
         await sendEmail(report.assignedTo.email, 'Nova mensagem no AnonProtect', htmlBody)
       } catch (error) {

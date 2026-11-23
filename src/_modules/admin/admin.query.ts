@@ -5,6 +5,7 @@ import { getDownloadUrl } from '@/_shared/lib/aws'
 import { decrypt } from '@/_shared/lib/crypto'
 import { Prisma, ReportStatus } from '@/_generated/prisma'
 import { logger } from '@/_shared/lib/logger'
+import { redactStructuredPii } from '@/_shared/lib/pii-filter'
 
 interface StatusGroup {
   status: ReportStatus
@@ -71,12 +72,18 @@ export async function getReportById(id: string) {
     decryptedRedactedDescription = '[DECRYPT_FAILED]'
   }
 
+  // Mensagens do denunciante passam pelo mesmo pré-filtro do relato (CPF, CNPJ,
+  // e-mail, telefone e CEP) antes de chegar ao painel. O original continua cifrado
+  // no banco e só aparece na página do próprio denunciante. Nomes não são ocultados.
   const decryptedMessages = report.messages.map((msg) => {
     let content = msg.content
     try {
       content = decrypt(msg.content)
     } catch {
       content = '[DECRYPT_FAILED]'
+    }
+    if (msg.sender === 'USER') {
+      content = redactStructuredPii(content).text
     }
     return { ...msg, content }
   })
@@ -92,8 +99,9 @@ export async function getReportById(id: string) {
   })
 
   // O relato original nunca sai desta camada: o painel só vê o texto com dados ocultados
+  // O resumo do código também fica no servidor: o painel identifica o caso pelo número
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { description: _omitted, ...rest } = report
+  const { description: _omitted, trackingCodeHash: _hash, ...rest } = report
 
   return {
     ...rest,
@@ -128,7 +136,11 @@ export async function getReportsPaginated(
   const where: Prisma.ReportWhereInput = { deletedAt: null }
 
   if (startDate) where.createdAt = { gte: startDate }
-  if (search) where.trackingCode = { contains: search, mode: 'insensitive' }
+  // Busca pelo número do caso (ex.: "42" ou "#000042"); o código de protocolo não existe no painel
+  if (search) {
+    const caseNumber = Number(search.replace(/[^0-9]/g, ''))
+    where.caseNumber = Number.isSafeInteger(caseNumber) && caseNumber > 0 ? caseNumber : -1
+  }
   if (status) where.status = status as ReportStatus
   if (categoryId) where.categoryId = categoryId
   if (country) where.country = country
@@ -142,7 +154,7 @@ export async function getReportsPaginated(
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
-        trackingCode: true,
+        caseNumber: true,
         status: true,
         createdAt: true,
         country: true,
@@ -381,7 +393,7 @@ export async function getGlobalActivityLogs(limit: number = 10, filterCountry?: 
     orderBy: { createdAt: 'desc' },
     include: {
       user: { select: { id: true, name: true } },
-      report: { select: { id: true, trackingCode: true } },
+      report: { select: { id: true, caseNumber: true } },
     },
   })
 }

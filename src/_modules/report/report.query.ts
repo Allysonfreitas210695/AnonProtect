@@ -3,6 +3,7 @@ import 'server-only'
 import { prisma } from '@/_shared/lib/prisma'
 import { decrypt } from '@/_shared/lib/crypto'
 import { logger } from '@/_shared/lib/logger'
+import { hashTrackingCode } from '@/_shared/utils/tracking'
 
 export async function getCategories() {
   return await prisma.category.findMany({
@@ -20,7 +21,8 @@ export async function getActiveCategories() {
 
 export async function getReportByCode(code: string) {
   const report = await prisma.report.findUnique({
-    where: { trackingCode: code, deletedAt: null },
+    // O banco só guarda o resumo do código: a busca é pelo SHA-256 do que foi digitado
+    where: { trackingCodeHash: hashTrackingCode(code), deletedAt: null },
     include: {
       category: true,
       messages: { orderBy: { createdAt: 'asc' } },

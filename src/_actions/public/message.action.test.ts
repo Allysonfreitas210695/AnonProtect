@@ -4,6 +4,9 @@ import * as reportRepository from '@/_modules/report/report.data'
 import { prisma } from '@/_shared/lib/prisma'
 import { sendEmail } from '@/_shared/lib/aws'
 import { checkMessageRateLimit } from '@/_shared/lib/ratelimit'
+import { hashTrackingCode } from '@/_shared/utils/tracking'
+
+const HASH = hashTrackingCode('AP-2026-TEST')
 
 vi.mock('@/_modules/report/report.data', () => ({
   createMessage: vi.fn(),
@@ -51,7 +54,8 @@ describe('Message Action', () => {
     }
 
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-TEST',
+      trackingCodeHash: HASH,
+      caseNumber: 7,
       assignedTo: { email: 'admin@sistema.com' },
     })
 
@@ -72,7 +76,8 @@ describe('Message Action', () => {
     }
 
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-TEST',
+      trackingCodeHash: HASH,
+      caseNumber: 7,
       assignedTo: { email: 'admin@sistema.com' },
     })
 
@@ -83,8 +88,10 @@ describe('Message Action', () => {
     expect(sendEmail).toHaveBeenCalledWith(
       'admin@sistema.com',
       expect.any(String),
-      expect.any(String)
+      expect.stringContaining('#000007')
     )
+    // O código de protocolo é a credencial do denunciante e não pode ir no e-mail
+    expect(JSON.stringify(vi.mocked(sendEmail).mock.calls)).not.toContain('AP-2026-TEST')
   })
 
   it('does not send email when assignedTo is null', async () => {
@@ -95,7 +102,8 @@ describe('Message Action', () => {
     }
 
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-TEST',
+      trackingCodeHash: HASH,
+      caseNumber: 7,
       assignedTo: null,
     })
 
@@ -113,7 +121,8 @@ describe('Message Action', () => {
     }
 
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-TEST',
+      trackingCodeHash: HASH,
+      caseNumber: 7,
       assignedTo: { email: 'admin@sistema.com' },
     })
     ;(sendEmail as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('SES down'))
@@ -126,7 +135,8 @@ describe('Message Action', () => {
 
   it('should reject when trackingCode does not match reportId', async () => {
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-DIFFERENT',
+      trackingCodeHash: hashTrackingCode('AP-2026-DIFFERENT'),
+      caseNumber: 7,
     })
 
     const result = await sendMessageAction({
@@ -136,6 +146,33 @@ describe('Message Action', () => {
     })
 
     expect(result?.serverError).toBe('Acesso negado')
+    expect(reportRepository.createMessage).not.toHaveBeenCalled()
+  })
+
+  it('accepts the code typed in lowercase or with spaces', async () => {
+    ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
+      trackingCodeHash: HASH,
+      caseNumber: 7,
+      assignedTo: null,
+    })
+
+    const result = await sendMessageAction({
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: '  ap-2026-test ',
+      content: 'hello',
+    })
+
+    expect(result?.data?.success).toBe(true)
+  })
+
+  it('rejects messages longer than 2000 characters', async () => {
+    const result = await sendMessageAction({
+      reportId: 'e8c464ef-5e8f-4f6c-9f6b-8c8f6e4e6f4a',
+      code: 'AP-2026-TEST',
+      content: 'a'.repeat(2001),
+    })
+
+    expect(result?.validationErrors).toBeDefined()
     expect(reportRepository.createMessage).not.toHaveBeenCalled()
   })
 
@@ -168,7 +205,8 @@ describe('Message Action', () => {
 
   it('rejects when report message cap is reached', async () => {
     ;(prisma.report.findUnique as ReturnType<typeof vi.fn>).mockResolvedValue({
-      trackingCode: 'AP-2026-TEST',
+      trackingCodeHash: HASH,
+      caseNumber: 7,
       assignedTo: { email: 'admin@sistema.com' },
     })
     ;(prisma.message.count as ReturnType<typeof vi.fn>).mockResolvedValue(1000)

@@ -10,16 +10,15 @@ import { headers } from 'next/headers'
 import { triggerAiAnalysis } from './ai-analysis'
 import { encrypt } from '@/_shared/lib/crypto'
 import { logger } from '@/_shared/lib/logger'
-import { generateTrackingCode } from '@/_shared/utils/tracking'
+import { isStrictSecurityMode, reportSecurityDegraded } from '@/_shared/lib/security-mode'
+import { generateTrackingCode, hashTrackingCode } from '@/_shared/utils/tracking'
 
-async function verifyTurnstile(token: string) {
-  if (!process.env.TURNSTILE_SECRET_KEY) return false
-
+async function verifyTurnstile(token: string, secret: string) {
   const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      secret: process.env.TURNSTILE_SECRET_KEY,
+      secret,
       response: token,
     }),
   })
@@ -39,12 +38,29 @@ export const submitReportAction = actionClient
       throw new Error('Limite de denúncias atingido. Tente novamente em 1 hora.')
     }
 
-    if (!parsedInput.turnstileToken && process.env.TURNSTILE_SECRET_KEY) {
-      throw new Error('Falha na verificação de captcha. Tente novamente.')
-    }
+    // O widget só aparece com a chave pública, e a validação exige a secreta:
+    // as duas precisam estar presentes para a verificação funcionar.
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
+    const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
-    if (parsedInput.turnstileToken) {
-      const isHuman = await verifyTurnstile(parsedInput.turnstileToken)
+    if (!turnstileSecret || !turnstileSiteKey) {
+      if (isStrictSecurityMode()) {
+        // Em produção, seguir sem verificação deixaria o canal aberto a bots sem
+        // ninguém saber; recusa e registra o evento para alerta.
+        reportSecurityDegraded('turnstile', 'Turnstile não configurado; envio recusado', {
+          hasSecret: !!turnstileSecret,
+          hasSiteKey: !!turnstileSiteKey,
+        })
+        throw new Error('Envio temporariamente indisponível. Tente novamente mais tarde.')
+      }
+      if (turnstileSecret || turnstileSiteKey) {
+        logger.warn('Turnstile com apenas uma das chaves configurada; verificação ignorada')
+      }
+    } else {
+      if (!parsedInput.turnstileToken) {
+        throw new Error('Falha na verificação de captcha. Tente novamente.')
+      }
+      const isHuman = await verifyTurnstile(parsedInput.turnstileToken, turnstileSecret)
       if (!isHuman) {
         throw new Error('Falha na verificação de captcha. Tente novamente.')
       }
@@ -64,7 +80,8 @@ export const submitReportAction = actionClient
         report = await reportData.createReport({
           ...parsedInput,
           description: encryptedDescription,
-          trackingCode,
+          // Só o resumo vai ao banco; o código em claro é devolvido uma única vez ao denunciante
+          trackingCodeHash: hashTrackingCode(trackingCode),
           attachments: parsedInput.attachments?.map((a, i) => ({
             url: a.url,
             key: a.key,
@@ -94,6 +111,6 @@ export const submitReportAction = actionClient
 
     return {
       success: true,
-      trackingCode: report.trackingCode,
+      trackingCode,
     }
   })

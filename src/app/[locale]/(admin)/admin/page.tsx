@@ -11,6 +11,7 @@ import {
   TableRow,
 } from '@/_components/ui/table'
 import { getReportsPaginated } from '@/_modules/admin/admin.query'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { FileText, ShieldCheck } from 'lucide-react'
 
@@ -204,7 +205,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                           className="group hover:bg-muted/40 border-border/40 transition-all"
                         >
                           <TableCell className="text-primary/90 py-4 font-mono text-xs font-black whitespace-nowrap sm:text-sm">
-                            {report.trackingCode}
+                            #{formatCaseNumber(report.caseNumber)}
                           </TableCell>
                           <TableCell className="max-w-[120px] truncate py-4 text-xs font-semibold sm:text-sm md:max-w-none">
                             {report.category?.name || 'Geral'}

@@ -161,16 +161,14 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
 
 exports.Prisma.ReportScalarFieldEnum = {
   id: 'id',
-  trackingCode: 'trackingCode',
+  trackingCodeHash: 'trackingCodeHash',
+  caseNumber: 'caseNumber',
   description: 'description',
   status: 'status',
   priority: 'priority',
   country: 'country',
   state: 'state',
   city: 'city',
-  district: 'district',
-  postalCode: 'postalCode',
-  number: 'number',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   assignedToId: 'assignedToId',

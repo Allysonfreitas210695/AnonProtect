@@ -4,13 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { ExternalLink } from 'lucide-react'
 import { cn } from '@/_shared/lib/utils'
 import { formatCompactDateTime } from '@/_shared/utils/formatters'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 
 import { useTranslations } from 'next-intl'
 import { getActivityIcon, getActivityColor } from '@/_shared/utils/activity-helpers'
 
 interface GlobalActivityLogProps {
   activities: (ActivityLog & {
-    report: { id: string; trackingCode: string }
+    report: { id: string; caseNumber: number }
     user?: { name: string | null } | null
   })[]
 }
@@ -63,7 +64,7 @@ export function GlobalActivityLog({ activities }: GlobalActivityLogProps) {
                       href={`/admin/report/${activity.report.id}`}
                       className="text-primary flex items-center gap-1 text-[11px] font-bold hover:underline"
                     >
-                      #{activity.report.trackingCode}
+                      #{formatCaseNumber(activity.report.caseNumber)}
                       <ExternalLink className="h-2 w-2" />
                     </Link>
                     <span className="text-muted-foreground text-[10px]">

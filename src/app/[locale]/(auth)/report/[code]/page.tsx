@@ -9,6 +9,7 @@ import { getTranslations } from 'next-intl/server'
 import { getReportByCode } from '@/_modules/report/report.query'
 import { getClientIp } from '@/_shared/lib/get-client-ip'
 import { checkTrackingRateLimit } from '@/_shared/lib/ratelimit'
+import { normalizeTrackingCode } from '@/_shared/utils/tracking'
 
 export const dynamic = 'force-dynamic'
 
@@ -34,7 +35,7 @@ export default async function ReportStatusPage({ params }: { params: Promise<{ c
 
       <ReportSlaBanner status={report.status} />
 
-      <ReportCard report={report} />
+      <ReportCard report={report} trackingCode={normalizeTrackingCode(code)} />
 
       <div className="space-y-4">
         <h2 className="text-2xl font-bold tracking-tight">{t('history')}</h2>

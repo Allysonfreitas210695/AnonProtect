@@ -192,7 +192,7 @@
     "archiveError": "Error archiving reports",
     "connectionError": "Connection error",
     "Filters": {
-      "searchPlaceholder": "Search code...",
+      "searchPlaceholder": "Search case number...",
       "statusPlaceholder": "Status",
       "categoryPlaceholder": "Category",
       "countryPlaceholder": "Country",
@@ -245,20 +245,13 @@
     "evidenceOptional": "Evidence (Optional)",
     "uploadHint": "Upload photos, documents, or videos to help the investigation.",
     "location": "Occurrence Location",
-    "postalCode": "Zip Code",
-    "postalCodePlaceholder": "00000-000",
     "city": "City",
     "state": "State",
-    "district": "District",
     "country": "Country",
     "selectCountry": "Select country",
     "selectCountryError": "Select the occurrence country",
     "fetchingAddress": "Fetching address...",
     "invalidCep": "Invalid zip code or not found",
-    "postalCodeInternational": "Postal Code / Zip Code",
-    "postalCodePlaceholderInternational": "Enter postal code",
-    "number": "Number",
-    "noNumber": "No number (N/A)",
     "optional": "(Optional)",
     "uploadComingSoon": "Upload functionality will be implemented soon",
     "submit": "Submit Report",
@@ -280,7 +273,8 @@
       "send": "Send",
       "error": "Error loading response.",
       "anonymityReady": "We never ask for your identification."
-    }
+    },
+    "locationMinimalNotice": "We only collect country, state and city. Do not provide a street address, neighborhood or zip code: these details may identify the person reporting."
   },
   "Track": {
     "title": "Track Report",
@@ -317,7 +311,8 @@
   "Tracking": {
     "title": "Report Tracking",
     "subtitle": "View your report's status and history below",
-    "history": "Communication & History"
+    "history": "Communication & History",
+    "messagePrivacyNotice": "Do not include information that identifies you. Tax IDs, e-mails, phone numbers and zip codes are hidden automatically before the team reads the message; names are not."
   },
   "Status": {
     "PENDING": "Pending",

@@ -6,7 +6,10 @@ import { z } from 'zod'
 import { sendMessageAction } from '@/_actions/public/message.action'
 
 const sendMessageSchema = z.object({
-  content: z.string().min(1, 'A mensagem não pode estar vazia'),
+  content: z
+    .string()
+    .min(1, 'A mensagem não pode estar vazia')
+    .max(2000, 'A mensagem deve ter no máximo 2000 caracteres'),
 })
 
 export function useMessage(reportId: string, code: string) {

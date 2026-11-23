@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { reportSchema, type ReportInput } from '@/_schemas/report'
 import { submitReportAction } from '@/_actions/public/report.action'
 import { useS3Upload } from '@/_hooks/public/use-s3-upload'
-import { useCepLookup } from '@/_hooks/public/use-cep-lookup'
 
 export function useNewReport(options?: { onSubmitError?: () => void }) {
   const router = useRouter()
@@ -18,17 +17,12 @@ export function useNewReport(options?: { onSubmitError?: () => void }) {
       categoryId: '',
       description: '',
       country: '',
-      postalCode: '',
       city: '',
       state: '',
-      district: '',
-      number: '',
       acceptTerms: false,
       acceptAi: false,
     },
   })
-
-  const { handleCepLookup, cepFilled } = useCepLookup(form)
 
   const { execute, isExecuting: isSubmitting } = useAction(submitReportAction, {
     onSuccess: ({ data }) => {
@@ -60,7 +54,5 @@ export function useNewReport(options?: { onSubmitError?: () => void }) {
     isExecuting: isSubmitting || isUploading,
     isUploading,
     isSubmitting,
-    handleCepLookup,
-    cepFilled,
   }
 }

@@ -4,16 +4,28 @@ import { useTranslations } from 'next-intl'
 import { ReportWithCategory } from '@/_schemas/report'
 import { Card, CardContent, CardHeader, CardTitle } from '@/_components/ui/card'
 import { formatDate } from '@/_shared/utils/formatters'
+import { formatCaseNumber } from '@/_shared/utils/tracking'
 import { StatusBadge } from '@/_components/shared/status-badge'
 import { ShieldCheck, ShieldAlert, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 
-// Visão do painel: o relato original nunca chega ao componente
-export type AdminReportCardData = Omit<ReportWithCategory, 'description'>
+// Visão do painel: o relato original e o resumo do código nunca chegam ao componente
+export type AdminReportCardData = Omit<ReportWithCategory, 'description' | 'trackingCodeHash'>
 
 type ReportCardProps = (
-  | { variant: 'admin'; report: AdminReportCardData; pendingAction?: React.ReactNode }
-  | { variant?: 'whistleblower'; report: ReportWithCategory; pendingAction?: never }
+  | {
+      variant: 'admin'
+      report: AdminReportCardData
+      pendingAction?: React.ReactNode
+      trackingCode?: never
+    }
+  | {
+      variant?: 'whistleblower'
+      report: ReportWithCategory
+      pendingAction?: never
+      /** Código digitado pelo denunciante; o banco só guarda o resumo dele. */
+      trackingCode: string
+    }
 ) & {
   showStatus?: boolean
   showCategory?: boolean
@@ -25,6 +37,7 @@ export function ReportCard({
   report,
   variant = 'whistleblower',
   pendingAction,
+  trackingCode,
   showStatus = true,
   showCategory = true,
   showDate = true,
@@ -46,7 +59,9 @@ export function ReportCard({
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-4">
           <CardTitle className="text-foreground min-w-0 text-xl font-black tracking-tighter wrap-break-word sm:text-2xl lg:text-3xl">
-            {t('title', { code: report.trackingCode })}
+            {t('title', {
+              code: isAdmin ? formatCaseNumber(report.caseNumber) : (trackingCode ?? ''),
+            })}
           </CardTitle>
           {showStatus && (
             <div className="print:hidden">

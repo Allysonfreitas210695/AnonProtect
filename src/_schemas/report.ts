@@ -16,11 +16,8 @@ export const reportSchema = z.object({
     .min(10, 'A descrição deve ter no mínimo 10 caracteres')
     .max(2000, 'A descrição deve ter no máximo 2000 caracteres'),
   country: z.string().min(1, 'Selecione o país da ocorrência'),
-  state: z.string().optional(),
-  city: z.string().optional(),
-  district: z.string().optional(),
-  postalCode: z.string().optional(),
-  number: z.string().optional(),
+  state: z.string().max(100).optional(),
+  city: z.string().max(100).optional(),
   turnstileToken: z.string().optional(),
   attachments: z
     .array(

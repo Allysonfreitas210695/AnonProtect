@@ -1,9 +1,9 @@
-export function getStatusChangeEmailHtml(reportCode: string, oldStatus: string, newStatus: string) {
+export function getStatusChangeEmailHtml(caseLabel: string, oldStatus: string, newStatus: string) {
   return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 8px;">
       <h2 style="color: #0f172a; margin-bottom: 20px;">Atualização de Status de Denúncia</h2>
       <p style="color: #334155; font-size: 16px; line-height: 1.5;">
-        A denúncia <strong>${reportCode}</strong> teve seu status alterado.
+        A denúncia <strong>${caseLabel}</strong> teve seu status alterado.
       </p>
       
       <div style="background-color: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;">

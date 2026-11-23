@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 import { prisma } from '@/_shared/lib/prisma'
 import { getSystemStatus } from './system-status'
+import { pingRateLimitStore } from '@/_shared/lib/ratelimit'
 
 vi.mock('@/_shared/lib/prisma', () => ({
   prisma: {
@@ -15,7 +16,7 @@ vi.mock('@/_shared/lib/aws', () => ({
 }))
 
 vi.mock('@/_shared/lib/ratelimit', () => ({
-  reportRateLimit: {},
+  pingRateLimitStore: vi.fn().mockResolvedValue(true),
 }))
 
 describe('system-status action', () => {
@@ -46,6 +47,15 @@ describe('system-status action', () => {
     expect(statuses.find((s) => s.name === 'Storage (AWS S3)')?.status).toBe('healthy')
     expect(statuses.find((s) => s.name === 'Email (AWS SES)')?.status).toBe('healthy')
     expect(statuses.find((s) => s.name === 'Bot Protection (Turnstile)')?.status).toBe('healthy')
+  })
+
+  it('mostra o Redis como indisponível quando ele não responde ao ping', async () => {
+    vi.mocked(prisma.$queryRaw).mockResolvedValue([1] as unknown as unknown[])
+    vi.mocked(pingRateLimitStore).mockResolvedValueOnce(false)
+
+    const statuses = await getSystemStatus()
+
+    expect(statuses.find((s) => s.name === 'Rate Limiting (Upstash)')?.status).toBe('unavailable')
   })
 
   it('should return unavailable for database if query fails', async () => {

@@ -5,6 +5,7 @@ import { Button } from '@/_components/ui/button'
 import { Input } from '@/_components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/_components/ui/form'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface MessageFormProps {
   reportId: string
@@ -12,10 +13,12 @@ interface MessageFormProps {
 }
 
 export function MessageForm({ reportId, code }: MessageFormProps) {
+  const t = useTranslations('Tracking')
   const { form, onSubmit, isExecuting } = useMessage(reportId, code)
 
   return (
     <Form {...form}>
+      <p className="text-muted-foreground mb-3 text-xs">{t('messagePrivacyNotice')}</p>
       <form onSubmit={onSubmit} className="flex w-full gap-2">
         <FormField
           control={form.control}
@@ -28,6 +31,7 @@ export function MessageForm({ reportId, code }: MessageFormProps) {
                   type="text"
                   placeholder="Digite sua mensagem..."
                   autoComplete="off"
+                  maxLength={2000}
                   disabled={isExecuting}
                 />
               </FormControl>

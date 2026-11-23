@@ -7330,22 +7330,30 @@ export namespace Prisma {
 
   export type AggregateReport = {
     _count: ReportCountAggregateOutputType | null
+    _avg: ReportAvgAggregateOutputType | null
+    _sum: ReportSumAggregateOutputType | null
     _min: ReportMinAggregateOutputType | null
     _max: ReportMaxAggregateOutputType | null
   }
 
+  export type ReportAvgAggregateOutputType = {
+    caseNumber: number | null
+  }
+
+  export type ReportSumAggregateOutputType = {
+    caseNumber: number | null
+  }
+
   export type ReportMinAggregateOutputType = {
     id: string | null
-    trackingCode: string | null
+    trackingCodeHash: string | null
+    caseNumber: number | null
     description: string | null
     status: $Enums.ReportStatus | null
     priority: $Enums.ReportPriority | null
     country: string | null
     state: string | null
     city: string | null
-    district: string | null
-    postalCode: string | null
-    number: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7357,16 +7365,14 @@ export namespace Prisma {
 
   export type ReportMaxAggregateOutputType = {
     id: string | null
-    trackingCode: string | null
+    trackingCodeHash: string | null
+    caseNumber: number | null
     description: string | null
     status: $Enums.ReportStatus | null
     priority: $Enums.ReportPriority | null
     country: string | null
     state: string | null
     city: string | null
-    district: string | null
-    postalCode: string | null
-    number: string | null
     createdAt: Date | null
     updatedAt: Date | null
     assignedToId: string | null
@@ -7378,16 +7384,14 @@ export namespace Prisma {
 
   export type ReportCountAggregateOutputType = {
     id: number
-    trackingCode: number
+    trackingCodeHash: number
+    caseNumber: number
     description: number
     status: number
     priority: number
     country: number
     state: number
     city: number
-    district: number
-    postalCode: number
-    number: number
     createdAt: number
     updatedAt: number
     assignedToId: number
@@ -7398,18 +7402,24 @@ export namespace Prisma {
     _all: number
   }
 
+  export type ReportAvgAggregateInputType = {
+    caseNumber?: true
+  }
+
+  export type ReportSumAggregateInputType = {
+    caseNumber?: true
+  }
+
   export type ReportMinAggregateInputType = {
     id?: true
-    trackingCode?: true
+    trackingCodeHash?: true
+    caseNumber?: true
     description?: true
     status?: true
     priority?: true
     country?: true
     state?: true
     city?: true
-    district?: true
-    postalCode?: true
-    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7421,16 +7431,14 @@ export namespace Prisma {
 
   export type ReportMaxAggregateInputType = {
     id?: true
-    trackingCode?: true
+    trackingCodeHash?: true
+    caseNumber?: true
     description?: true
     status?: true
     priority?: true
     country?: true
     state?: true
     city?: true
-    district?: true
-    postalCode?: true
-    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7442,16 +7450,14 @@ export namespace Prisma {
 
   export type ReportCountAggregateInputType = {
     id?: true
-    trackingCode?: true
+    trackingCodeHash?: true
+    caseNumber?: true
     description?: true
     status?: true
     priority?: true
     country?: true
     state?: true
     city?: true
-    district?: true
-    postalCode?: true
-    number?: true
     createdAt?: true
     updatedAt?: true
     assignedToId?: true
@@ -7502,6 +7508,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
+     * Select which fields to average
+     **/
+    _avg?: ReportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: ReportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
      * Select which fields to find the minimum value
      **/
     _min?: ReportMinAggregateInputType
@@ -7531,22 +7549,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ReportCountAggregateInputType | true
+    _avg?: ReportAvgAggregateInputType
+    _sum?: ReportSumAggregateInputType
     _min?: ReportMinAggregateInputType
     _max?: ReportMaxAggregateInputType
   }
 
   export type ReportGroupByOutputType = {
     id: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber: number
     description: string
     status: $Enums.ReportStatus
     priority: $Enums.ReportPriority
     country: string | null
     state: string | null
     city: string | null
-    district: string | null
-    postalCode: string | null
-    number: string | null
     createdAt: Date
     updatedAt: Date
     assignedToId: string | null
@@ -7555,6 +7573,8 @@ export namespace Prisma {
     redactedDescription: string | null
     deletedAt: Date | null
     _count: ReportCountAggregateOutputType | null
+    _avg: ReportAvgAggregateOutputType | null
+    _sum: ReportSumAggregateOutputType | null
     _min: ReportMinAggregateOutputType | null
     _max: ReportMaxAggregateOutputType | null
   }
@@ -7575,16 +7595,14 @@ export namespace Prisma {
     $Extensions.GetSelect<
       {
         id?: boolean
-        trackingCode?: boolean
+        trackingCodeHash?: boolean
+        caseNumber?: boolean
         description?: boolean
         status?: boolean
         priority?: boolean
         country?: boolean
         state?: boolean
         city?: boolean
-        district?: boolean
-        postalCode?: boolean
-        number?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         assignedToId?: boolean
@@ -7609,16 +7627,14 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean
-      trackingCode?: boolean
+      trackingCodeHash?: boolean
+      caseNumber?: boolean
       description?: boolean
       status?: boolean
       priority?: boolean
       country?: boolean
       state?: boolean
       city?: boolean
-      district?: boolean
-      postalCode?: boolean
-      number?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7638,16 +7654,14 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean
-      trackingCode?: boolean
+      trackingCodeHash?: boolean
+      caseNumber?: boolean
       description?: boolean
       status?: boolean
       priority?: boolean
       country?: boolean
       state?: boolean
       city?: boolean
-      district?: boolean
-      postalCode?: boolean
-      number?: boolean
       createdAt?: boolean
       updatedAt?: boolean
       assignedToId?: boolean
@@ -7664,16 +7678,14 @@ export namespace Prisma {
 
   export type ReportSelectScalar = {
     id?: boolean
-    trackingCode?: boolean
+    trackingCodeHash?: boolean
+    caseNumber?: boolean
     description?: boolean
     status?: boolean
     priority?: boolean
     country?: boolean
     state?: boolean
     city?: boolean
-    district?: boolean
-    postalCode?: boolean
-    number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignedToId?: boolean
@@ -7686,16 +7698,14 @@ export namespace Prisma {
   export type ReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     $Extensions.GetOmit<
       | 'id'
-      | 'trackingCode'
+      | 'trackingCodeHash'
+      | 'caseNumber'
       | 'description'
       | 'status'
       | 'priority'
       | 'country'
       | 'state'
       | 'city'
-      | 'district'
-      | 'postalCode'
-      | 'number'
       | 'createdAt'
       | 'updatedAt'
       | 'assignedToId'
@@ -7744,16 +7754,20 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<
       {
         id: string
-        trackingCode: string
+        /**
+         * SHA-256 (hex) do código de protocolo. O código em claro só existe com o denunciante.
+         */
+        trackingCodeHash: string
+        /**
+         * Identificador do caso exibido no painel, sem relação com o código de protocolo.
+         */
+        caseNumber: number
         description: string
         status: $Enums.ReportStatus
         priority: $Enums.ReportPriority
         country: string | null
         state: string | null
         city: string | null
-        district: string | null
-        postalCode: string | null
-        number: string | null
         createdAt: Date
         updatedAt: Date
         assignedToId: string | null
@@ -8335,16 +8349,14 @@ export namespace Prisma {
    */
   interface ReportFieldRefs {
     readonly id: FieldRef<'Report', 'String'>
-    readonly trackingCode: FieldRef<'Report', 'String'>
+    readonly trackingCodeHash: FieldRef<'Report', 'String'>
+    readonly caseNumber: FieldRef<'Report', 'Int'>
     readonly description: FieldRef<'Report', 'String'>
     readonly status: FieldRef<'Report', 'ReportStatus'>
     readonly priority: FieldRef<'Report', 'ReportPriority'>
     readonly country: FieldRef<'Report', 'String'>
     readonly state: FieldRef<'Report', 'String'>
     readonly city: FieldRef<'Report', 'String'>
-    readonly district: FieldRef<'Report', 'String'>
-    readonly postalCode: FieldRef<'Report', 'String'>
-    readonly number: FieldRef<'Report', 'String'>
     readonly createdAt: FieldRef<'Report', 'DateTime'>
     readonly updatedAt: FieldRef<'Report', 'DateTime'>
     readonly assignedToId: FieldRef<'Report', 'String'>
@@ -16783,16 +16795,14 @@ export namespace Prisma {
 
   export const ReportScalarFieldEnum: {
     id: 'id'
-    trackingCode: 'trackingCode'
+    trackingCodeHash: 'trackingCodeHash'
+    caseNumber: 'caseNumber'
     description: 'description'
     status: 'status'
     priority: 'priority'
     country: 'country'
     state: 'state'
     city: 'city'
-    district: 'district'
-    postalCode: 'postalCode'
-    number: 'number'
     createdAt: 'createdAt'
     updatedAt: 'updatedAt'
     assignedToId: 'assignedToId'
@@ -17363,16 +17373,14 @@ export namespace Prisma {
     OR?: ReportWhereInput[]
     NOT?: ReportWhereInput | ReportWhereInput[]
     id?: StringFilter<'Report'> | string
-    trackingCode?: StringFilter<'Report'> | string
+    trackingCodeHash?: StringFilter<'Report'> | string
+    caseNumber?: IntFilter<'Report'> | number
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
     priority?: EnumReportPriorityFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableFilter<'Report'> | string | null
     state?: StringNullableFilter<'Report'> | string | null
     city?: StringNullableFilter<'Report'> | string | null
-    district?: StringNullableFilter<'Report'> | string | null
-    postalCode?: StringNullableFilter<'Report'> | string | null
-    number?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17391,16 +17399,14 @@ export namespace Prisma {
 
   export type ReportOrderByWithRelationInput = {
     id?: SortOrder
-    trackingCode?: SortOrder
+    trackingCodeHash?: SortOrder
+    caseNumber?: SortOrder
     description?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     country?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
-    district?: SortOrderInput | SortOrder
-    postalCode?: SortOrderInput | SortOrder
-    number?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17420,7 +17426,8 @@ export namespace Prisma {
   export type ReportWhereUniqueInput = Prisma.AtLeast<
     {
       id?: string
-      trackingCode?: string
+      trackingCodeHash?: string
+      caseNumber?: number
       AND?: ReportWhereInput | ReportWhereInput[]
       OR?: ReportWhereInput[]
       NOT?: ReportWhereInput | ReportWhereInput[]
@@ -17430,9 +17437,6 @@ export namespace Prisma {
       country?: StringNullableFilter<'Report'> | string | null
       state?: StringNullableFilter<'Report'> | string | null
       city?: StringNullableFilter<'Report'> | string | null
-      district?: StringNullableFilter<'Report'> | string | null
-      postalCode?: StringNullableFilter<'Report'> | string | null
-      number?: StringNullableFilter<'Report'> | string | null
       createdAt?: DateTimeFilter<'Report'> | Date | string
       updatedAt?: DateTimeFilter<'Report'> | Date | string
       assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -17448,21 +17452,19 @@ export namespace Prisma {
       activityLogs?: ActivityLogListRelationFilter
       assignedDepartment?: XOR<DepartmentNullableScalarRelationFilter, DepartmentWhereInput> | null
     },
-    'id' | 'trackingCode'
+    'id' | 'trackingCodeHash' | 'caseNumber'
   >
 
   export type ReportOrderByWithAggregationInput = {
     id?: SortOrder
-    trackingCode?: SortOrder
+    trackingCodeHash?: SortOrder
+    caseNumber?: SortOrder
     description?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     country?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
-    district?: SortOrderInput | SortOrder
-    postalCode?: SortOrderInput | SortOrder
-    number?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
@@ -17471,8 +17473,10 @@ export namespace Prisma {
     redactedDescription?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
     _count?: ReportCountOrderByAggregateInput
+    _avg?: ReportAvgOrderByAggregateInput
     _max?: ReportMaxOrderByAggregateInput
     _min?: ReportMinOrderByAggregateInput
+    _sum?: ReportSumOrderByAggregateInput
   }
 
   export type ReportScalarWhereWithAggregatesInput = {
@@ -17480,16 +17484,14 @@ export namespace Prisma {
     OR?: ReportScalarWhereWithAggregatesInput[]
     NOT?: ReportScalarWhereWithAggregatesInput | ReportScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<'Report'> | string
-    trackingCode?: StringWithAggregatesFilter<'Report'> | string
+    trackingCodeHash?: StringWithAggregatesFilter<'Report'> | string
+    caseNumber?: IntWithAggregatesFilter<'Report'> | number
     description?: StringWithAggregatesFilter<'Report'> | string
     status?: EnumReportStatusWithAggregatesFilter<'Report'> | $Enums.ReportStatus
     priority?: EnumReportPriorityWithAggregatesFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableWithAggregatesFilter<'Report'> | string | null
     state?: StringNullableWithAggregatesFilter<'Report'> | string | null
     city?: StringNullableWithAggregatesFilter<'Report'> | string | null
-    district?: StringNullableWithAggregatesFilter<'Report'> | string | null
-    postalCode?: StringNullableWithAggregatesFilter<'Report'> | string | null
-    number?: StringNullableWithAggregatesFilter<'Report'> | string | null
     createdAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<'Report'> | Date | string
     assignedToId?: StringNullableWithAggregatesFilter<'Report'> | string | null
@@ -18238,16 +18240,14 @@ export namespace Prisma {
 
   export type ReportCreateInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -18263,16 +18263,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18288,16 +18286,13 @@ export namespace Prisma {
 
   export type ReportUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18313,16 +18308,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18338,16 +18331,14 @@ export namespace Prisma {
 
   export type ReportCreateManyInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -18359,16 +18350,13 @@ export namespace Prisma {
 
   export type ReportUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18377,16 +18365,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19196,6 +19182,17 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type EnumReportStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ReportStatus | EnumReportStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ReportStatus[] | ListEnumReportStatusFieldRefInput<$PrismaModel>
@@ -19242,16 +19239,14 @@ export namespace Prisma {
 
   export type ReportCountOrderByAggregateInput = {
     id?: SortOrder
-    trackingCode?: SortOrder
+    trackingCodeHash?: SortOrder
+    caseNumber?: SortOrder
     description?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     country?: SortOrder
     state?: SortOrder
     city?: SortOrder
-    district?: SortOrder
-    postalCode?: SortOrder
-    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -19261,18 +19256,20 @@ export namespace Prisma {
     deletedAt?: SortOrder
   }
 
+  export type ReportAvgOrderByAggregateInput = {
+    caseNumber?: SortOrder
+  }
+
   export type ReportMaxOrderByAggregateInput = {
     id?: SortOrder
-    trackingCode?: SortOrder
+    trackingCodeHash?: SortOrder
+    caseNumber?: SortOrder
     description?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     country?: SortOrder
     state?: SortOrder
     city?: SortOrder
-    district?: SortOrder
-    postalCode?: SortOrder
-    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -19284,16 +19281,14 @@ export namespace Prisma {
 
   export type ReportMinOrderByAggregateInput = {
     id?: SortOrder
-    trackingCode?: SortOrder
+    trackingCodeHash?: SortOrder
+    caseNumber?: SortOrder
     description?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     country?: SortOrder
     state?: SortOrder
     city?: SortOrder
-    district?: SortOrder
-    postalCode?: SortOrder
-    number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedToId?: SortOrder
@@ -19301,6 +19296,26 @@ export namespace Prisma {
     assignedDepartmentId?: SortOrder
     redactedDescription?: SortOrder
     deletedAt?: SortOrder
+  }
+
+  export type ReportSumOrderByAggregateInput = {
+    caseNumber?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumReportStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -20318,6 +20333,14 @@ export namespace Prisma {
     >
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type AttachmentUncheckedUpdateManyWithoutReportNestedInput = {
     create?:
       | XOR<AttachmentCreateWithoutReportInput, AttachmentUncheckedCreateWithoutReportInput>
@@ -21114,6 +21137,33 @@ export namespace Prisma {
     not?: NestedEnumReportPriorityFilter<$PrismaModel> | $Enums.ReportPriority
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedEnumReportStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ReportStatus | EnumReportStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ReportStatus[] | ListEnumReportStatusFieldRefInput<$PrismaModel>
@@ -21247,16 +21297,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutAssignedToInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -21271,16 +21319,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutAssignedToInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -21466,16 +21512,14 @@ export namespace Prisma {
     OR?: ReportScalarWhereInput[]
     NOT?: ReportScalarWhereInput | ReportScalarWhereInput[]
     id?: StringFilter<'Report'> | string
-    trackingCode?: StringFilter<'Report'> | string
+    trackingCodeHash?: StringFilter<'Report'> | string
+    caseNumber?: IntFilter<'Report'> | number
     description?: StringFilter<'Report'> | string
     status?: EnumReportStatusFilter<'Report'> | $Enums.ReportStatus
     priority?: EnumReportPriorityFilter<'Report'> | $Enums.ReportPriority
     country?: StringNullableFilter<'Report'> | string | null
     state?: StringNullableFilter<'Report'> | string | null
     city?: StringNullableFilter<'Report'> | string | null
-    district?: StringNullableFilter<'Report'> | string | null
-    postalCode?: StringNullableFilter<'Report'> | string | null
-    number?: StringNullableFilter<'Report'> | string | null
     createdAt?: DateTimeFilter<'Report'> | Date | string
     updatedAt?: DateTimeFilter<'Report'> | Date | string
     assignedToId?: StringNullableFilter<'Report'> | string | null
@@ -22193,16 +22237,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutAttachmentsInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22217,16 +22259,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutAttachmentsInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22257,16 +22297,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutAttachmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22281,16 +22318,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutAttachmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22305,16 +22340,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutMessagesInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22329,16 +22362,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutMessagesInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22369,16 +22400,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22393,16 +22421,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22445,16 +22471,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutCategoryInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22469,16 +22493,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutCategoryInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22559,16 +22581,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutInvestigationNotesInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22583,16 +22603,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutInvestigationNotesInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22681,16 +22699,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutInvestigationNotesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22705,16 +22720,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutInvestigationNotesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22787,16 +22800,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutActivityLogsInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -22811,16 +22822,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutActivityLogsInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -22894,16 +22903,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutActivityLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22918,16 +22924,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutActivityLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23039,16 +23043,14 @@ export namespace Prisma {
 
   export type ReportCreateWithoutAssignedDepartmentInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     redactedDescription?: string | null
@@ -23063,16 +23065,14 @@ export namespace Prisma {
 
   export type ReportUncheckedCreateWithoutAssignedDepartmentInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23256,16 +23256,14 @@ export namespace Prisma {
 
   export type ReportCreateManyAssignedToInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId?: string | null
@@ -23353,16 +23351,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutAssignedToInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23377,16 +23372,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutAssignedToInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23401,16 +23394,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateManyWithoutAssignedToInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23616,16 +23607,14 @@ export namespace Prisma {
 
   export type ReportCreateManyCategoryInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23636,16 +23625,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23660,16 +23646,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23684,16 +23668,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateManyWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23718,16 +23700,14 @@ export namespace Prisma {
 
   export type ReportCreateManyAssignedDepartmentInput = {
     id?: string
-    trackingCode: string
+    trackingCodeHash: string
+    caseNumber?: number
     description: string
     status?: $Enums.ReportStatus
     priority?: $Enums.ReportPriority
     country?: string | null
     state?: string | null
     city?: string | null
-    district?: string | null
-    postalCode?: string | null
-    number?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedToId?: string | null
@@ -23799,16 +23779,13 @@ export namespace Prisma {
 
   export type ReportUpdateWithoutAssignedDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     redactedDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23823,16 +23800,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateWithoutAssignedDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23847,16 +23822,14 @@ export namespace Prisma {
 
   export type ReportUncheckedUpdateManyWithoutAssignedDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    trackingCode?: StringFieldUpdateOperationsInput | string
+    trackingCodeHash?: StringFieldUpdateOperationsInput | string
+    caseNumber?: IntFieldUpdateOperationsInput | number
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
     priority?: EnumReportPriorityFieldUpdateOperationsInput | $Enums.ReportPriority
     country?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
-    district?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    number?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null

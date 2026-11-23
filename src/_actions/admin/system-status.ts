@@ -1,6 +1,6 @@
 import { prisma } from '@/_shared/lib/prisma'
 import { s3Client, sesClient, BUCKET_NAME } from '@/_shared/lib/aws'
-import { reportRateLimit } from '@/_shared/lib/ratelimit'
+import { pingRateLimitStore } from '@/_shared/lib/ratelimit'
 
 export interface ServiceStatus {
   name: string
@@ -52,10 +52,17 @@ export async function getSystemStatus(): Promise<ServiceStatus[]> {
   if (!hasUpstash) {
     statuses.push(createStatus('Rate Limiting (Upstash)', false, '', 'Credenciais Redis ausentes'))
   } else {
+    // Ping real: com o Redis fora do ar, login e consulta por código ficam bloqueados
+    // e o envio de denúncias segue sem limite, então o status precisa refletir isso.
+    const start = Date.now()
+    const reachable = await pingRateLimitStore()
     statuses.push({
       name: 'Rate Limiting (Upstash)',
-      status: reportRateLimit ? 'healthy' : 'degraded',
-      message: reportRateLimit ? 'Serviço ativo' : 'Falha ao inicializar cliente',
+      status: reachable ? 'healthy' : 'unavailable',
+      message: reachable
+        ? 'Serviço ativo'
+        : 'Redis não responde: login e consulta por código bloqueados; denúncias sem limite',
+      latency: reachable ? Date.now() - start : undefined,
     })
   }
 

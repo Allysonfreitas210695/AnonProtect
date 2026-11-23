@@ -149,15 +149,37 @@ describe('ratelimit', () => {
       expect(result).toEqual({ success: true, limit: 0, remaining: 0, reset: 0 })
     })
 
-    it('should fail open when Redis is configured but unreachable', async () => {
+    it('falha fechado quando o Redis está configurado mas não responde (força bruta)', async () => {
       process.env.UPSTASH_REDIS_REST_URL = 'https://example.upstash.io'
       process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token'
       mockLimit.mockRejectedValue(new Error('fetch failed'))
       const { checkLoginRateLimit } = await import('./ratelimit')
+      const { logger } = await import('@/_shared/lib/logger')
 
       const result = await checkLoginRateLimit('test-ip')
 
-      expect(result).toEqual({ success: true, limit: 0, remaining: 0, reset: 0 })
+      expect(result.success).toBe(false)
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({ event: 'security.degraded', component: 'ratelimit' }),
+        expect.any(String)
+      )
+    })
+
+    it('em produção sem Redis, recusa o login e registra o evento', async () => {
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
+      vi.stubEnv('NODE_ENV', 'production')
+      const { checkLoginRateLimit } = await import('./ratelimit')
+      const { logger } = await import('@/_shared/lib/logger')
+
+      const result = await checkLoginRateLimit('test-ip')
+
+      expect(result.success).toBe(false)
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({ event: 'security.degraded', limiter: 'login' }),
+        expect.any(String)
+      )
+      vi.unstubAllEnvs()
     })
 
     it('should pass through the result when Redis responds normally', async () => {
@@ -172,6 +194,63 @@ describe('ratelimit', () => {
       expect(result).toEqual(okResult)
     })
   })
+  describe('checkTrackingRateLimit', () => {
+    it('falha fechado quando o Redis não responde', async () => {
+      process.env.UPSTASH_REDIS_REST_URL = 'https://example.upstash.io'
+      process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token'
+      mockLimit.mockRejectedValue(new Error('fetch failed'))
+      const { checkTrackingRateLimit } = await import('./ratelimit')
+
+      const result = await checkTrackingRateLimit('test-ip')
+
+      expect(result.success).toBe(false)
+    })
+  })
+
+  describe('modo estrito (produção)', () => {
+    afterEach(() => {
+      vi.unstubAllEnvs()
+    })
+
+    it('sem Redis, o envio de denúncias continua liberado mas registra o evento', async () => {
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
+      vi.stubEnv('NODE_ENV', 'production')
+      const { checkRateLimit } = await import('./ratelimit')
+      const { logger } = await import('@/_shared/lib/logger')
+
+      const result = await checkRateLimit('test-ip')
+
+      expect(result.success).toBe(true)
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({ event: 'security.degraded', limiter: 'report' }),
+        expect.any(String)
+      )
+    })
+
+    it('ALLOW_DEGRADED_SECURITY=true desliga o modo estrito', async () => {
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
+      vi.stubEnv('NODE_ENV', 'production')
+      vi.stubEnv('ALLOW_DEGRADED_SECURITY', 'true')
+      const { checkLoginRateLimit } = await import('./ratelimit')
+
+      const result = await checkLoginRateLimit('test-ip')
+
+      expect(result.success).toBe(true)
+    })
+  })
+
+  describe('pingRateLimitStore', () => {
+    it('retorna false sem Redis configurado', async () => {
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
+      const { pingRateLimitStore } = await import('./ratelimit')
+
+      expect(await pingRateLimitStore()).toBe(false)
+    })
+  })
+
   describe('hash do identificador', () => {
     const IP = '203.0.113.7'
     const SECRET = 'ab'.repeat(32)

@@ -2,6 +2,7 @@ import 'dotenv/config'
 import { PrismaClient, UserRole, ReportStatus } from '../src/_generated/prisma'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
+import { hashTrackingCode } from '../src/_shared/utils/tracking'
 
 const connectionString = process.env.DATABASE_URL
 const pool = new pg.Pool({ connectionString })
@@ -119,16 +120,16 @@ async function main() {
   console.log('📝 Creating 25 sample reports with locations and dates...')
 
   const locations = [
-    { city: 'São Paulo', state: 'SP', district: 'Centro', postalCode: '01001-000' },
-    { city: 'Rio de Janeiro', state: 'RJ', district: 'Copacabana', postalCode: '22020-001' },
-    { city: 'Belo Horizonte', state: 'MG', district: 'Savassi', postalCode: '30140-010' },
-    { city: 'Curitiba', state: 'PR', district: 'Batel', postalCode: '80420-000' },
-    { city: 'Porto Alegre', state: 'RS', district: 'Moinhos de Vento', postalCode: '90570-000' },
-    { city: 'Salvador', state: 'BA', district: 'Pelourinho', postalCode: '40026-280' },
-    { city: 'Brasília', state: 'DF', district: 'Asa Sul', postalCode: '70342-000' },
-    { city: 'Fortaleza', state: 'CE', district: 'Meireles', postalCode: '60160-230' },
-    { city: 'Manaus', state: 'AM', district: 'Adrianópolis', postalCode: '69057-000' },
-    { city: 'Recife', state: 'PE', district: 'Boa Viagem', postalCode: '51020-000' },
+    { city: 'São Paulo', state: 'SP' },
+    { city: 'Rio de Janeiro', state: 'RJ' },
+    { city: 'Belo Horizonte', state: 'MG' },
+    { city: 'Curitiba', state: 'PR' },
+    { city: 'Porto Alegre', state: 'RS' },
+    { city: 'Salvador', state: 'BA' },
+    { city: 'Brasília', state: 'DF' },
+    { city: 'Fortaleza', state: 'CE' },
+    { city: 'Manaus', state: 'AM' },
+    { city: 'Recife', state: 'PE' },
   ]
 
   const reportData = [
@@ -209,18 +210,16 @@ async function main() {
       allCategories.find((c) => c.name === reportData[dataIdx].category) || allCategories[0]
 
     await prisma.report.upsert({
-      where: { trackingCode },
+      where: { trackingCodeHash: hashTrackingCode(trackingCode) },
       update: {},
       create: {
-        trackingCode,
+        trackingCodeHash: hashTrackingCode(trackingCode),
         description: reportData[dataIdx].desc + ` (Relato ID: ${i})`,
         status: status as ReportStatus,
         categoryId: category.id,
         country: 'Brasil',
         city: locations[locIdx].city,
         state: locations[locIdx].state,
-        district: locations[locIdx].district,
-        postalCode: locations[locIdx].postalCode,
         createdAt,
         assignedToId: status !== 'PENDING' ? admin?.id : null,
         assignedDepartmentId: category.defaultDepartmentId,
