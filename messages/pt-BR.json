@@ -26,7 +26,7 @@
     "byDepartment": "Por Departamento",
     "noReports": "Nenhuma denúncia registrada ainda.",
     "noActivities": "Nenhuma atividade recente.",
-    "trackingCode": "Código",
+    "trackingCode": "Nº do caso",
     "category": "Tipo",
     "charts": {
       "volumeTitle": "Volume de Denúncias",
@@ -166,7 +166,7 @@
     "areaAdmin": "Área Administrativa",
     "systemOverview": "Visão geral do sistema de proteção",
     "recentReports": "Denúncias Recentes",
-    "code": "Código",
+    "code": "Nº do caso",
     "type": "Tipo",
     "date": "Data",
     "status": "Status",
@@ -192,7 +192,7 @@
     "archiveError": "Erro ao arquivar denúncias",
     "connectionError": "Erro de conexão",
     "Filters": {
-      "searchPlaceholder": "Pesquisar nº do caso...",
+      "searchPlaceholder": "Nº do caso...",
       "statusPlaceholder": "Status",
       "categoryPlaceholder": "Categoria",
       "countryPlaceholder": "País",

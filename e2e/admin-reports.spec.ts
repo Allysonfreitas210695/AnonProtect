@@ -28,7 +28,7 @@ test.describe('Admin - Report Management', () => {
       .first()
       .click()
     await page.waitForURL(/\/pt-BR\/admin\/report/, { timeout: 10000 })
-    const searchInput = page.getByPlaceholder(/pesquisar|buscar|search/i).first()
+    const searchInput = page.getByPlaceholder(/caso|pesquisar|buscar|search/i).first()
     await expect(searchInput).toBeVisible({ timeout: 10000 })
     await searchInput.fill('1')
     await searchInput.press('Enter')

@@ -26,7 +26,7 @@
     "byDepartment": "By Department",
     "noReports": "No reports registered yet.",
     "noActivities": "No recent activities.",
-    "trackingCode": "Code",
+    "trackingCode": "Case no.",
     "category": "Type",
     "charts": {
       "volumeTitle": "Reports Volume",
@@ -166,7 +166,7 @@
     "areaAdmin": "Administrative Area",
     "systemOverview": "Protection system overview",
     "recentReports": "Recent Reports",
-    "code": "Code",
+    "code": "Case no.",
     "type": "Type",
     "date": "Date",
     "status": "Status",
@@ -192,7 +192,7 @@
     "archiveError": "Error archiving reports",
     "connectionError": "Connection error",
     "Filters": {
-      "searchPlaceholder": "Search case number...",
+      "searchPlaceholder": "Case number...",
       "statusPlaceholder": "Status",
       "categoryPlaceholder": "Category",
       "countryPlaceholder": "Country",
